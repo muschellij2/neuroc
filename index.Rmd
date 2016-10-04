@@ -1,9 +1,19 @@
 ---
-title: "Neuroconductor Content"
+title: "Neuroconductor"
 author: "John Muschelli"
 date: '`r Sys.Date()`'
-output: html_document
+output: 
+  html_document:
+    theme: cosmo
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
 ---
+
+# Installation Guides
 
 1. [Installing devtools](installing_devtools.html)
 2. [Installing ANTsR](installing_ANTsR.html)
+
+# How to 
