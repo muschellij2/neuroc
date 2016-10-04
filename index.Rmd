@@ -1,0 +1,9 @@
+---
+title: "Neuroconductor Content"
+author: "John Muschelli"
+date: "October 4, 2016"
+output: html_document
+---
+
+1. [Installing devtools](installing_devtools.html)
+2. [Installing ANTsR](installing_ANTsR.html)
