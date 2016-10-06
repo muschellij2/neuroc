@@ -13,7 +13,12 @@ output:
 
 # Installation Guides
 
-1. [Installing devtools](installing_devtools.html)
-2. [Installing ANTsR](installing_ANTsR.html)
+1. [Installing devtools](installing_devtools/index.html)
+2. [Installing ANTsR](installing_ANTsR/index.html)
 
-# How to 
+# Tutorials
+
+1. [Brain Extraction](brain_extraction/index.html)
+2. [Tissue-Class Segmentation](tissue_class_segmentation/index.html)
+3. [fMRI analysis using ANTsR](fmri_analysis_ANTsR/index.html)
+
