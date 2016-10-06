@@ -28,6 +28,15 @@ vignettes/*.pdf
 /*_cache/
 /cache/
 
+installing_devtools/*_cache
+installing_ANTsR/*_cache
+brain_extraction/*_cache
+tissue_class_segmentation/*_cache
+fmri_analysis_ANTsR/*_cache
+
+fmri_analysis_ANTsR/113-01-fMRI_moco_img.nii.gz
+fmri_analysis_ANTsR/113-01-fMRI_moco_nuisance_filtered.nii.gz
+
 # Temporary files created by R markdown
 *.utf8.md
 *.knit.md

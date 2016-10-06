@@ -1,0 +1,145 @@
+---
+title: "An example of an fMRI analysis in FSL"
+author: "John Muschelli"
+date: "October 3, 2016"
+output: 
+  html_document:
+    theme: cosmo
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "")
+```
+
+In this tutorial we will discuss performing some preprocessing of a single subject functional MRI in FSL.  
+
+# Data Packages
+
+For this analysis, I will use one subject from the Kirby 21 data set.  The `kirby21.base` and `kirby21.fmri` packages are necessary for this analysis and have the data we will be working on.  You need devtools to install these.  Please refer to [installing devtools](installing_devtools.html) for additional instructions or troubleshooting.
+
+
+```{r, eval = FALSE}
+packages = installed.packages()
+packages = packages[, "Package"]
+if (!"kirby21.base" %in% packages) {
+  devtools::install_github("muschellij2/kirby21.base")
+}
+if (!"kirby21.fmri" %in% packages) {
+  devtools::install_github("muschellij2/kirby21.fmri")
+}
+```
+
+# Loading Data
+
+We will use the `get_image_filenames_df` function to extract the filenames on our hard disk for the T1 image and the fMRI images (4D).  
+
+```{r data}
+library(kirby21.fmri)
+library(kirby21.base)
+fnames = get_image_filenames_df(ids = 113, 
+                    modalities = c("T1", "fMRI"), 
+                    visits = c(1),
+                    long = FALSE)
+t1_fname = fnames$T1[1]
+fmri_fname = fnames$fMRI[1]
+```
+
+## Parameter file
+
+If you'd like to see the header information from the fMRI data, it is located by the following commands:
+
+```{r par_data}
+library(R.utils)
+par_file = system.file("visit_1/113/113-01-fMRI.par.gz", 
+                       package = "kirby21.fmri")
+# unzip it
+con = gunzip(par_file, temporary = TRUE, 
+             remove = FALSE, overwrite = TRUE)
+info = readLines(con = con)
+info[11:23]
+```
+
+From the paper ["Multi-parametric neuroimaging reproducibility: A 3-T resource study"](http://dx.doi.org/10.1016/j.neuroimage.2010.11.047), which this data is based on, it describes the fMRI sequence:
+
+> The sequence used for resting state functional connectivity MRI is typically identical to that used for BOLD functional MRI studies of task activation. Here, we used a 2D EPI sequence with SENSE partial-parallel imaging acceleration to obtain 3 × 3 mm (80 by 80 voxels) in-plane resolution in thirty-seven 3 mm transverse slices with 1 mm slice gap. An ascending slice order with TR/TE = 2000/30 ms, flip angle of 75°, and SENSE acceleration factor of 2 were used. SPIR was used for fat suppression. This study used an ascending slice acquisition order because a pilot studies revealed smaller motion induced artifacts with ascending slice order than with interleaved slice order. While using an ascending slice order, it was necessary to use a small slice gap to prevent cross talk between the slices. One 7-min run was recorded which provided 210 time points (discarding the first four volumes to achieve steady state).
+
+
+# Outline 
+The steps I will perform in this analysis:
+
+1. Calculation of Motion Parameters (`fslr::mcflirt`)
+1. Slice timing correction (`fslr::fsl_slicetimer`), but we need to know how the scan was taken/slice order and repetition time (TR)
+2. Motion Correction on Corrected Data (`fslr::mcflirt`)
+3. Coregistration of fMRI and a T1-weighted image (`fslr::flirt`)
+4. Registration to the Template space (`fslr::fnirt_with_affine` )
+5. De-meaning the data (fslr::fslmean(ts = TRUE))
+6. Skull stripping (fslr::fslbet)
+7. Registration to a template using the T1 and then transforming the fMRI with it
+8. Spatially smoothing the data (fslr:fslsmooth)
+9. Tissue-class segmentation (fslr::fast, ANTsR::atropos or extrantsr::otropos)?
+10. Bandpass/butterworth filtering (signal::butter, signal::buttord)
+11. Get a connectivity matrix of certain regions, you need to specify an atlas.
+
+
+
+Now we know that the head is first in (as usual) and the data was acquired in ascending order (i.e. bottom -> up) and the repetition time (TR) was 2 seconds   The 
+
+```{r fmri, cache = FALSE}
+library(neurobase)
+fmri = readnii(fmri_fname)
+ortho2(fmri, w = 1, add.orient = FALSE)
+rm(list = "fmri") # just used for cleanup 
+```
+
+```{r slice_timer, cache = TRUE}
+library(fslr)
+scorr_fname = paste0(nii.stub(fmri_fname, bn = TRUE), "_scorr.nii.gz")
+if (!file.exists(scorr_fname))
+  fsl_slicetimer(file = fmri_fname, outfile = scorr_fname, 
+                 tr = 2, direction = "z", acq_order = "contigous",
+                 indexing = "up")
+}
+```
+
+```{r image_values, eval = FALSE, include = FALSE}
+library(zoo)
+library(dplyr)
+hdr_ind = grep("^# === IMAGE INFORMATION =", info) + 1
+print(info[hdr_ind])
+start_ind = hdr_ind + 2
+end_ind = grep("^# === END OF DATA", info) - 1
+vals = info[seq(start_ind, end_ind)]
+
+hdr = info[hdr_ind]
+hdr = gsub("^#", "", hdr)
+hdr = trimws(hdr, which = "left")
+ss_hdr = strsplit(hdr, " ")[[1]]
+nc = nchar(ss_hdr)
+# add for the space
+nc = nc + 1
+df = data.frame(hdr = ss_hdr,
+                nc = nc,
+                stringsAsFactors = FALSE)
+df$hdr[ df$hdr %in% ""] = NA
+df$hdr = zoo::na.locf(df$hdr, fromLast = TRUE)
+df = df %>% group_by(hdr) %>% summarise(width = sum(nc))
+ss_hdr = setdiff(ss_hdr, "")
+df$hdr = factor(df$hdr, levels = ss_hdr)
+df = df %>% arrange(hdr)
+widths = df$width
+
+vals = sub("^ ", "", vals)
+tmpfile = tempfile(fileext = ".txt")
+writeLines(text = vals, con = tmpfile)
+
+df = read.fwf(file = tmpfile, widths = widths, header = FALSE)
+
+vals = trimws(vals)
+vals = strsplit(vals, " ")
+vals = sapply(vals, setdiff, y = "")
+```
+

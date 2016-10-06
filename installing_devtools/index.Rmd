@@ -1,0 +1,81 @@
+---
+title: "Installing devtools"
+author: "John Muschelli"
+date: "October 3, 2016"
+output: 
+  html_document:
+    theme: cosmo
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+In this tutorial, we will go through the steps of installing `devtools`, and some common errors.  You must have `devtools` installed to install from GitHub.  As all Neuroconductor packages are on GitHub, you must have `devtools` installed.
+
+
+# Mac OSX
+
+You need to install [Command Line Tools](https://developer.apple.com/library/content/technotes/tn2339/_index.html), aka the command line tools for Xcode, if you have not already.  [http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/](http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/) is a great tutorial how.
+
+# Installing devtools
+
+If you already have `devtools` installed great! (Why are you here?)  You can always reinstall the most up to date version from the steps below.
+
+```{r, eval = FALSE}
+packages = installed.packages()
+packages = packages[, "Package"]
+if (!"devtools" %in% packages) {
+  install.packages("devtools")
+}
+```
+
+# The remotes package
+If you want a lighter-weight package that has the `install_github` functionality that `devtools` provides, but not all the "development" parts of `devtools`, the `remotes` package exists just for that:
+
+```{r, eval = FALSE}
+packages = installed.packages()
+packages = packages[, "Package"]
+if (!"remotes" %in% packages) {
+  install.packages("remotes")
+}
+```
+
+In any subsequent tutorial, when you see `devtools::install_github`, just insert `remotes::install_github` and it should work just the same.
+
+
+# Updating a package
+
+In the `install_github` function, there are additional options to pass to the `install` function from `devtools`.  One of those arguments is `upgrade_dependencies`, which default is set to `TRUE`.  So if you want to install a package from GitHub, but not update any of the dependencies, then you can use `install_github(..., upgrade_dependencies = FALSE)`.  
+
+# Troubleshooting errors
+
+## git2r dependency in devtools
+
+If you cannot install `devtools`, many times it is due to `git2r`.  You should look at the installation logs and if you see something like:
+
+```
+   The OpenSSL library that is required to
+   build git2r was not found.
+
+   Please install:
+libssl-dev    (package on e.g. Debian and Ubuntu)
+openssl-devel (package on e.g. Fedora, CentOS and RHEL)
+openssl       (Homebrew package on OS X)
+```
+
+Then run `sudo apt-get libssl-dev` or `sudo yum install openssl-devel` on your respective Linux machine.  Try to re-install `devtools`.
+
+### Mac OSX
+
+For Mac, you have to [install Homebrew](http://www.howtogeek.com/211541/homebrew-for-os-x-easily-installs-desktop-apps-and-terminal-utilities/) which the tutorial is located in the link.  After Homebrew is installed you should be able to type in the Terminal:
+```
+brew update
+brew install openssl
+```
+Then try to re-install `devtools`.
+
