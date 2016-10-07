@@ -11,6 +11,8 @@ output:
       collapsed: false
 ---
 
+All code for the tutorials and installation guides can be located at [https://github.com/muschellij2/neuroc](https://github.com/muschellij2/neuroc).  Pull requests are welcome.  
+
 # Installation Guides
 
 1. [Installing devtools](installing_devtools/index.html)
