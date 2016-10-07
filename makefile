@@ -1,14 +1,17 @@
-all: 
-	cd installing_devtools && make
-	cd installing_ANTsR && make
-	cd brain_extraction && make
-	cd tissue_class_segmentation && make
-	cd fmri_analysis_ANTsR && make
-	cd fmri_analysis_fslr && make
-	cd fmri_analysis_fslr && make
-	cd preprocess_mri_within && make
+LIST = installing_devtools installing_ANTsR 
+LIST += brain_extraction
+LIST += tissue_class_segmentation
+LIST += preprocess_mri_within
+LIST += fmri_analysis_ANTsR
+LIST += fmri_analysis_fslr
+LIST += DTI_analysis_fslr
+all:
+	for fol in $(LIST) ; do \
+		pwd && echo $$fol && cp makefile.copy $$fol/makefile && cd $$fol && make && cd ../; \
+	done
 	Rscript -e "rmarkdown::render('index.Rmd')"
-	
+#  
+
 index.html: index.Rmd 
 	Rscript -e "rmarkdown::render('index.Rmd')"
 

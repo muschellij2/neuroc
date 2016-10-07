@@ -22,6 +22,7 @@ output:
 2. [Tissue-Class Segmentation](tissue_class_segmentation/index.html)
 3. [Resting-State fMRI analysis using ANTsR](fmri_analysis_ANTsR/index.html)
 4. [Resting-State fMRI analysis using fslr](fmri_analysis_ANTsR/index.html)
-4. [Processing Within-Visit Structural MRI](preprocess_mri_within/index.html)
+5. [Processing Within-Visit Structural MRI](preprocess_mri_within/index.html)
+6. [DTI analysis with fslr](DTI_analysis_fslr/index.html)
 
 

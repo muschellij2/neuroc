@@ -41,6 +41,8 @@ fmri_analysis_ANTsR/113-01-fMRI_moco_nuisance_filtered.nii.gz
 fmri_analysis_fslr/113-01-fMRI_motion_corr.nii.gz
 fmri_analysis_fslr/113-01-fMRI_scorr.nii.gz
 
+DTI_analysis_fslr/*.nii.gz
+
 preprocess_mri_within/*.nii.gz
 
 # Temporary files created by R markdown
