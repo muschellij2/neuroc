@@ -9,7 +9,7 @@ output:
     toc_depth: 3
     toc_float:
       collapsed: false
-bibliography: refs.bib      
+bibliography: ../refs.bib      
 ---
 
 ```{r setup, include=FALSE}

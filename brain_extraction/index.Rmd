@@ -9,13 +9,14 @@ output:
     toc_depth: 3
     toc_float:
       collapsed: false
-bibliography: refs.bib      
+bibliography: ../refs.bib      
 ---
 
 ```{r setup, include=FALSE}
 library(kirby21.fmri)
 library(kirby21.base)
 library(dplyr)
+library(fslr)
 library(neurobase)
 library(ANTsR)
 library(R.utils)
@@ -71,6 +72,27 @@ rm(list = "t1")
 ```
 
 Here we see the brain and other parts of the image are present.  Most notably, the neck of the subject was imaged.  Sometimes this can cause problems with segmentation and image registration.  
+
+# Attempt 1: Brain Extraction of T1 image using BET
+
+Here we will use FSL's Brain Extraction Tool (BET) to extract the brain tissue from the rest of the image.  
+
+```{r t1_naive_ss, cache = FALSE}
+library(fslr)
+outfile = nii.stub(t1_fname, bn = TRUE)
+outfile = paste0(outfile, "_SS_Naive.nii.gz")
+if (!file.exists(outfile)) {
+  ss_naive = fslbet(infile = t1_fname, outfile = outfile)
+} else {
+  ss_naive = readnii(outfile)
+}
+```
+
+```{r t1_naive_plot, cache = TRUE}
+ortho2(ss_naive)
+```
+
+We see that naively, BET does not perform well for this image.
 
 # Brain Extraction of T1 image using BET
 

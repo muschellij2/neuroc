@@ -20,7 +20,8 @@ output:
 
 1. [Brain Extraction](brain_extraction/index.html)
 2. [Tissue-Class Segmentation](tissue_class_segmentation/index.html)
-3. [fMRI analysis using ANTsR](fmri_analysis_ANTsR/index.html)
-4. [fMRI analysis using fslr](fmri_analysis_ANTsR/index.html)
+3. [Resting-State fMRI analysis using ANTsR](fmri_analysis_ANTsR/index.html)
+4. [Resting-State fMRI analysis using fslr](fmri_analysis_ANTsR/index.html)
+4. [Processing Within-Visit Structural MRI](preprocess_mri_within/index.html)
 
 
