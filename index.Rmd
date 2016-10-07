@@ -11,7 +11,7 @@ output:
       collapsed: false
 ---
 
-All code for the tutorials and installation guides can be located at [https://github.com/muschellij2/neuroc](https://github.com/muschellij2/neuroc).  Pull requests are welcome.  
+All code for the tutorials and installation guides can be located at [https://github.com/muschellij2/neuroc](https://github.com/muschellij2/neuroc).  Pull requests are welcome.   If you would like a specific tutorial or content, please [open an issue](https://github.com/muschellij2/neuroc/issues).  
 
 # Installation Guides
 
