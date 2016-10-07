@@ -33,6 +33,7 @@ installing_ANTsR/*_cache
 brain_extraction/*_cache
 tissue_class_segmentation/*_cache
 fmri_analysis_ANTsR/*_cache
+preprocess_mri_within/*_cache
 
 fmri_analysis_ANTsR/113-01-fMRI_moco_img.nii.gz
 fmri_analysis_ANTsR/113-01-fMRI_moco_nuisance_filtered.nii.gz
