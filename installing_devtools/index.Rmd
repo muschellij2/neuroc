@@ -80,3 +80,9 @@ brew install openssl
 ```
 Then try to re-install `devtools`.
 
+# Session Info
+
+```{r}
+devtools::session_info()
+```
+

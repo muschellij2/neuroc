@@ -18,6 +18,10 @@ All code for the tutorials and installation guides can be located at [https://gi
 1. [Installing devtools](installing_devtools/index.html)
 2. [Installing ANTsR](installing_ANTsR/index.html)
 
+# Required Reading
+
+1. [NIfTI Basics](nifti_basics/index.html)
+
 # Tutorials
 
 1. [Brain Extraction](brain_extraction/index.html)

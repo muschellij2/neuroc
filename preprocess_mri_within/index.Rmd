@@ -247,3 +247,10 @@ lapply(norm_reg_imgs, double_ortho, x = eve_brain)
 ```
 
 
+# Session Info
+
+```{r}
+devtools::session_info()
+```
+
+# References

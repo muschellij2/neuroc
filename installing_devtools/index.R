@@ -15,3 +15,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ##   install.packages("remotes")
 ## }
 
+## ------------------------------------------------------------------------
+devtools::session_info()
+

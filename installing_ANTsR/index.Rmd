@@ -166,3 +166,9 @@ If you have errors installing `rgl`, then according to [a StackOverflow post](ht
 sudo apt-get install r-cran-rgl
 ```
 
+
+# Session Info
+
+```{r}
+devtools::session_info()
+```

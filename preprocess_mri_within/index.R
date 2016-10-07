@@ -144,3 +144,6 @@ norm_reg_imgs = lapply(norm_reg_imgs, mask_img, mask = eve_brain_mask)
 ## ----eve_res_plot, cache = TRUE------------------------------------------
 lapply(norm_reg_imgs, double_ortho, x = eve_brain)
 
+## ------------------------------------------------------------------------
+devtools::session_info()
+

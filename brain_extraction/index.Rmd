@@ -310,3 +310,10 @@ ortho_diff(t1_fname, pred = ss, roi = spm_ss)
 ```
 
 We see that the SPM segmentation includes some of the extracranial CSF, is a bit "smoother" on the surface, and includes some areas towards the bottom of the brain near the brain stem (more CSF).  We also see on some areas of the surface, BET includes these as brain whereas SPM does not. If you are to compare the volume of the "brain" (in quotes because that may include non-tissue as CSF), you must keep these things in mind.
+
+
+# Session Info
+
+```{r}
+devtools::session_info()
+```

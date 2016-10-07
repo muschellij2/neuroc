@@ -194,3 +194,6 @@ ortho_diff(t1_fname, pred = nn_spm_ss_full, roi = spm_ss)
 ## ----spm_bet_diff, cache=TRUE--------------------------------------------
 ortho_diff(t1_fname, pred = ss, roi = spm_ss)
 
+## ------------------------------------------------------------------------
+devtools::session_info()
+

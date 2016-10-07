@@ -18,3 +18,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ## ---- eval = FALSE-------------------------------------------------------
 ## devtools::install_github( "stnava/ANTsR" )
 
+## ------------------------------------------------------------------------
+devtools::session_info()
+
