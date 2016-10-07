@@ -9,6 +9,7 @@ output:
     toc_depth: 3
     toc_float:
       collapsed: false
+    number_sections: true
 ---
 
 ```{r setup, include=FALSE}
@@ -52,7 +53,7 @@ In any subsequent tutorial, when you see `devtools::install_github`, just insert
 
 In the `install_github` function, there are additional options to pass to the `install` function from `devtools`.  One of those arguments is `upgrade_dependencies`, which default is set to `TRUE`.  So if you want to install a package from GitHub, but not update any of the dependencies, then you can use `install_github(..., upgrade_dependencies = FALSE)`.  
 
-# Troubleshooting errors
+# Troubleshooting errors 
 
 ## git2r dependency in devtools
 
