@@ -5,3 +5,17 @@ kirby21.base
 R.methodsS3
 R.oo
 R.utils
+spm12r
+dplyr
+oro.nifti
+neurobase
+ANTsR
+RColorBrewer
+matrixStats
+ggplot2
+reshape2
+animation
+zoo
+extrantsr
+kirby21.t1
+fslr

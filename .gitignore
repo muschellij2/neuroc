@@ -37,6 +37,9 @@ fmri_analysis_ANTsR/*_cache
 fmri_analysis_ANTsR/113-01-fMRI_moco_img.nii.gz
 fmri_analysis_ANTsR/113-01-fMRI_moco_nuisance_filtered.nii.gz
 
+fmri_analysis_fslr/113-01-fMRI_motion_corr.nii.gz
+fmri_analysis_fslr/113-01-fMRI_scorr.nii.gz
+
 # Temporary files created by R markdown
 *.utf8.md
 *.knit.md

@@ -79,8 +79,6 @@ Again, we can see the zoomed-in view of the image now.
 
 ## Tissue-Class Segmentation with Atropos
 
-In order to potentially mask out white matter and CSF voxels, we need some tissue-level segmentation.  Please visit the [tissue class segmentation tutorial](../tissue_class_segmentation/index.html).  We will use the results from `otropos` from this tutorial.
-
 ```{r t1_seg, cache = FALSE}
 outfile = nii.stub(t1_fname, bn = TRUE)
 prob_files = paste0(outfile,
@@ -113,13 +111,17 @@ if (!all(file.exists(
 }
 ```
 
+### Atropos results 
+
 Now we have a hard segmentation, which assigns a class with the maximum probability to that voxel.  We also have a separate probability image for each tissue class.
 
-```{r t1_seg_plot, cache = FALSE}
+```{r t1_seg_plot, cache = TRUE}
 double_ortho(ss_red, hard_seg)
 ```
 
 We see that much of the structures have been segmented well, but there may be errors.
+
+### Atropos intensity histograms 
 
 We can also look at the distribution of intensities (marginally) for each tissue class.  In `atropos`, the classes are ordered by mean intensity, so we can re-assign them to the corresponding tissue class
 ```{r t1_val_plot, cache = TRUE}
@@ -127,7 +129,70 @@ df = data.frame(value = ss_red[ss_red > 0],
                 class = hard_seg[ss_red > 0])
 df$class = c("CSF", "GM", "WM")[df$class]
 ggplot(df, aes(x = value, colour = factor(class))) + geom_line(stat = "density")
+rm(list = "df")
 ```
+
+
+## Tissue-Class Segmentation with FAST
+
+```{r t1_fast_seg, cache = FALSE}
+library(fslr)
+outfile = nii.stub(t1_fname, bn = TRUE)
+outfile = paste0(outfile, "_FAST")
+prob_files = paste0(outfile,
+                    "_pve_", 0:2,
+                    ".nii.gz")
+seg_outfile = paste0(outfile, "_Seg.nii.gz")
+
+if (!all(file.exists(
+  c(seg_outfile, prob_files)
+  ))) {
+  fast_hard_seg = fast(file = ss_red, 
+                   outfile = outfile, 
+                   out_type = "seg",
+                   opts = "--nobias")
+  writenii(fast_hard_seg, seg_outfile)
+} else {
+  fast_hard_seg = readnii(seg_outfile)
+}
+fast_seg = vector(mode = "list", length = 3)
+for (i in 1:3) {
+  fast_seg[[i]] = readnii(prob_files[i]) 
+}  
+```
+
+### FAST results 
+Let's see the results of the FAST segmentation:
+
+```{r fast_seg_plot, cache = TRUE}
+double_ortho(ss_red, hard_seg)
+```
+
+### FAST intensity histograms 
+
+Again, we can look at the distribution of values, ad now we can compare distributions of the values from FAST to that of atropos.
+
+```{r fast_val_plot, cache = TRUE}
+df = data.frame(value = ss_red[ss_red > 0],
+                fast = fast_hard_seg[ss_red > 0],
+                atropos = hard_seg[ss_red > 0],
+                ind = which(ss_red > 0)
+                )
+df = reshape2::melt(df, id.vars = c("ind", "value"), 
+                    measure.vars = c("fast", "atropos"),
+                    value.name = "class",
+                    variable.name = "segmentation")
+df = df %>% arrange(ind)
+df$ind = NULL
+
+df$class = c("CSF", "GM", "WM")[df$class]
+ggplot(df, aes(x = value, colour = factor(class))) + 
+  geom_line(stat = "density") + 
+  xlim(c(0, 1e6)) +
+  facet_wrap(~ segmentation, ncol = 1)
+rm(list = "df")
+```
+
 
 ## Tissue-Class Segmentation with SPM
 
@@ -145,6 +210,8 @@ dd = dropEmptyImageDimensions(
 spm_hard_seg_red = dd$other.imgs
 ```
 
+
+### SPM results
 
 ```{r t1_spm_seg_plot, cache = TRUE}
 double_ortho(ss_red, spm_hard_seg_red)
@@ -198,7 +265,32 @@ z = floor(nsli(ss_red)/2)
 multi_overlay(x, y, z = z, col.y = alpha(hotmetal(), 0.25))
 ```
 
+### SPM intensity histograms 
+
+Although there may be places in the brain where SPM calls a class CSF, WM, or GM where the brain mask is zero, we will exclude these in the comparison to fast and atropos for a common comparison.  We will make sure that if voxels within the brain mask are labeled as zero in the SPM segmentation, we will denote these as `Background`.
+
+```{r spm_val_plot, cache = TRUE}
+df = data.frame(value = ss_red[ss_red > 0],
+                fast = fast_hard_seg[ss_red > 0],
+                atropos = hard_seg[ss_red > 0],
+                spm = spm_recode[ss_red > 0],
+                ind = which(ss_red > 0)
+                )
+df = reshape2::melt(df, id.vars = c("ind", "value"), 
+                    measure.vars = c("fast", "atropos", "spm"),
+                    value.name = "class",
+                    variable.name = "segmentation")
+df = df %>% arrange(ind)
+df$ind = NULL
+
+df$class = c("Background", "CSF", "GM", "WM")[df$class + 1]
+ggplot(df, aes(x = value, colour = factor(class))) + 
+  geom_line(stat = "density") + 
+  xlim(c(0, 1e6)) +
+  facet_wrap(~ segmentation, ncol = 1)
+rm(list = "df")
+```
 
 ## Discussion
 
-Note, `atropos` and `fast` generally require a skull-stripped image.  Many skull-stripping algorithms remove the extra-cortical areas of the brain but inside the skull, which generally are CSF spaces with meninges.  These CSF spaces are dropped after skull-stripping/brain extraction.  If we are trying to consistently measure the 
+Note, `atropos` and `fast` generally require a skull-stripped image.  Many skull-stripping algorithms remove the extra-cortical areas of the brain but inside the skull, which generally are CSF spaces with meninges.  These CSF spaces are dropped after skull-stripping/brain extraction.  If we are trying to consistently measure the CSF or "whole brain volume" (if that includes CSF spaces), this may cause issues.  The SPM segmentation usually includes more CSF spaces, but we have shown in the [brain extraction tutorial](../brain_extraction/index.html) that there are areas that BET denotes as brain and SPM does not on the surface.   
