@@ -9,6 +9,7 @@ output:
     toc_depth: 3
     toc_float:
       collapsed: false
+    number_sections: true      
 bibliography: ../refs.bib      
 ---
 
@@ -47,7 +48,7 @@ if (!"kirby21.t1" %in% packages) {
 }
 ```
 
-# Loading Data
+## Loading Data
 
 We will use the `get_image_filenames_df` function to extract the filenames on our hard disk for the T1 image.  
 

@@ -9,6 +9,7 @@ output:
     toc_depth: 3
     toc_float:
       collapsed: false
+    number_sections: true      
 ---
 
 ```{r setup, include=FALSE}
