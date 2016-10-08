@@ -151,6 +151,18 @@ n4_proc_imgs = plyr::llply(
   .progress = "text")
 ```
 
+Here we will write out the processed images for later use (in other tutorials):
+
+```{r write_n4_ss, cache = FALSE}
+outfiles = nii.stub(visit_1, bn = TRUE)
+outfiles = paste0(outfiles, "_proc_N4_SS.nii.gz")
+if (!all(file.exists(outfiles))) {
+  mapply(function(img, outfile) {
+    writenii(img, filename = outfile)
+  }, n4_proc_imgs, outfiles)
+}
+```
+
 
 # Intensity Normalization
 
@@ -240,7 +252,7 @@ norm_reg_imgs = lapply(norm_reg_files, readnii)
 norm_reg_imgs = lapply(norm_reg_imgs, mask_img, mask = eve_brain_mask)
 ```
 
-Below Here we see good congruence from the template and the corresponding images from this patient.
+Below we see good congruence from the template and the corresponding images from this patient.
 
 ```{r eve_res_plot, cache = TRUE}
 lapply(norm_reg_imgs, double_ortho, x = eve_brain)
