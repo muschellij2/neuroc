@@ -30,5 +30,6 @@ All code for the tutorials and installation guides can be located at [https://gi
 4. [Resting-State fMRI analysis using fslr](fmri_analysis_ANTsR/index.html)
 5. [Processing Within-Visit Structural MRI](preprocess_mri_within/index.html)
 6. [DTI analysis with fslr](DTI_analysis_fslr/index.html)
+2. [Cortical Thickness Estimation (NOT DONE)](cortical_thickness/index.html)
 
 

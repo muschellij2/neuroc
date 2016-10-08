@@ -2,6 +2,7 @@ LIST = installing_devtools installing_ANTsR
 LIST += nifti_basics
 LIST += brain_extraction
 LIST += tissue_class_segmentation
+LIST += cortical_thickness
 LIST += preprocess_mri_within
 LIST += fmri_analysis_ANTsR
 LIST += fmri_analysis_fslr
