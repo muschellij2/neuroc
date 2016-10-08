@@ -90,6 +90,15 @@ n4_proc_imgs = plyr::llply(
   retimg = TRUE,
   .progress = "text")
 
+## ----write_n4_ss, cache = FALSE------------------------------------------
+outfiles = nii.stub(visit_1, bn = TRUE)
+outfiles = paste0(outfiles, "_proc_N4_SS.nii.gz")
+if (!all(file.exists(outfiles))) {
+  mapply(function(img, outfile) {
+    writenii(img, filename = outfile)
+  }, n4_proc_imgs, outfiles)
+}
+
 ## ----intensity_normalize, cache = FALSE----------------------------------
 norm_imgs = plyr::llply(
   n4_proc_imgs, 
