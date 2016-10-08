@@ -1,5 +1,5 @@
 ---
-title: "Labeling an Image"
+title: "Labeling Brain Structures"
 author: "John Muschelli"
 date: "October 3, 2016"
 output: 
@@ -317,7 +317,8 @@ g = nlong %>% filter(str_detect(structure, "thalamus")) %>%
   guides(colour = guide_legend(title = NULL)) +
   transparent_legend
 g + ggtitle("Native Space Thalamus")
-(g + ggtitle("Eve Space Thalamus")) %+% ( nlong %>% filter(str_detect(structure, "thalamus")) )
+(g + ggtitle("Eve Space Thalamus")) %+% 
+  (nlong %>% filter(str_detect(structure, "thalamus")))
 rm(list = "g")
 ```
 
@@ -326,6 +327,8 @@ rm(list = "g")
 There are multiple procedures that exist for labeling a native-space T1 image.  The registration of Eve to the native space image is an example of labeling with one atlas.  One of those procedures is taking a series of templates, with corresponding atlases, and registering these templates to the native space image and transforming the atlases as above.  
 
 After registering these atlases, the procedure of combining these atlases into a final segmentation/labeling can be called fusion.  This multi-atlas, label fusion (MALF) is a general procedure where much methodological work has been in combining the labels (the fusion part).  The easiest method for combining these labels can be called simple voting, where the voxel label is designated by the label that has the maximum number of votes from each template.  
+
+The `extrantsr::malf` function allows for a simple voting scheme with multi-atlas label fusion.
 
 
 # Session Info
