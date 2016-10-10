@@ -16,7 +16,9 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-In this tutorial, we will go through the steps of installing `devtools`, and some common errors.  You must have `devtools` installed to install from GitHub.  As all Neuroconductor packages are on GitHub, you must have `devtools` installed.
+As Neuroconductor is GitHub-based, we will need a way for R to install packages directly from GitHub.  The `devtools` package provides this functionality.  In this tutorial, we will go through the steps of installing `devtools`, and some common problems.  You must have `devtools` installed to install from GitHub in subsequent tutorials on installing Neuroconductor packages.
+
+There are other packages that will do this and are more lightweight (see `remotes` and `ghit`), but we will focus on `devtools`. 
 
 
 # Mac OSX
@@ -35,7 +37,7 @@ if (!"devtools" %in% packages) {
 }
 ```
 
-# The remotes package
+# The `remotes` and `ghit` packages
 If you want a lighter-weight package that has the `install_github` functionality that `devtools` provides, but not all the "development" parts of `devtools`, the `remotes` package exists just for that:
 
 ```{r, eval = FALSE}
@@ -45,6 +47,8 @@ if (!"remotes" %in% packages) {
   install.packages("remotes")
 }
 ```
+
+The `ghit` package is the lightest-weight package I have seen which has a `install_github` funciton, but may have some limited functionality compared to `remotes` in the functionality of installing package with dependencies in other systems, such as BitBucket.
 
 In any subsequent tutorial, when you see `devtools::install_github`, just insert `remotes::install_github` and it should work just the same.
 

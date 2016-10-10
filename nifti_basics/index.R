@@ -6,6 +6,15 @@ library(EveTemplate)
 library(ggplot2)
 knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "")
 
+## ---- eval = FALSE-------------------------------------------------------
+## packages = installed.packages()
+## packages = packages[, "Package"]
+## if (!"oro.nifti" %in% packages) {
+##   install.packages("oro.nifti")
+##   ### development version
+##   # devtools::install_github("bjw34032/oro.nifti")
+## }
+
 ## ----nifti_obj-----------------------------------------------------------
 library(oro.nifti)
 set.seed(20161007)

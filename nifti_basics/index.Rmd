@@ -28,9 +28,22 @@ Note: Throughout this post, I will refer to an image on hard disk as a NIfTI, wh
 
 In this tutorial we will discuss the basics of the `nifti` object in R.  There are many objects in R that represent imaging data.  The Neuroconductor project chose the `nifti` object from the `oro.nifti` package as one of the the basic building blocks because it has been widely used in other packages, has been tested over a period of time, and inherits the properties of an `array` in R. 
 
+To run this code, you must have `oro.nifti` installed.  You can either use the stable version on CRAN (using `install.packages`) or the development version (using `devtools::install_github`):
+
+```{r, eval = FALSE}
+packages = installed.packages()
+packages = packages[, "Package"]
+if (!"oro.nifti" %in% packages) {
+  install.packages("oro.nifti")
+  ### development version
+  # devtools::install_github("bjw34032/oro.nifti")
+}
+```
+
 ## S4 Implementation
 
 As `nifti` objects inherits the properties of an `array`, you can perform a series of operations on them, such as addition/subtraction/division, as you would an `array`.  A `nifti` object has additional attributes and the `nifti` object is an S4 object.  This means that you do not reference additional information using the `$` operator.  
+
 
 ```{r nifti_obj}
 library(oro.nifti)

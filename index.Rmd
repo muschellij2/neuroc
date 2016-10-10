@@ -1,28 +1,29 @@
 ---
 title: "Neuroconductor"
-author: "John Muschelli"
 date: '`r Sys.Date()`'
 output: 
   html_document:
     theme: cosmo
     toc: true
-    toc_depth: 3
+    toc_depth: 1
     toc_float:
       collapsed: false
 ---
 
-All code for the tutorials and installation guides can be located at [https://github.com/muschellij2/neuroc](https://github.com/muschellij2/neuroc).  Pull requests are welcome.   If you would like a specific tutorial or content, please [open an issue](https://github.com/muschellij2/neuroc/issues).  
+# Frequently Asked Questions (FAQ)
 
-# Installation Guides
+Please visit the [FAQ](faq/index.html) for information on how to begin.
+
+# Installation Guides {#install}
 
 1. [Installing devtools](installing_devtools/index.html)
 2. [Installing ANTsR](installing_ANTsR/index.html)
 
-# Required Reading
+# Required Readings {#req}
 
 1. [NIfTI Basics](nifti_basics/index.html)
 
-# Tutorials
+# Tutorials {#tutorials}
 
 1. [Brain Extraction](brain_extraction/index.html)
 2. [Tissue-Class Segmentation](tissue_class_segmentation/index.html)

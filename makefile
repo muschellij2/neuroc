@@ -1,4 +1,5 @@
 LIST = installing_devtools installing_ANTsR 
+LIST += faq
 LIST += nifti_basics
 LIST += brain_extraction
 LIST += tissue_class_segmentation

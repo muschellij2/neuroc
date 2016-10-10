@@ -227,7 +227,8 @@ div.tocify {
 </div>
 
 
-<p>In this tutorial, we will go through the steps of installing <code>devtools</code>, and some common errors. You must have <code>devtools</code> installed to install from GitHub. As all Neuroconductor packages are on GitHub, you must have <code>devtools</code> installed.</p>
+<p>As Neuroconductor is GitHub-based, we will need a way for R to install packages directly from GitHub. The <code>devtools</code> package provides this functionality. In this tutorial, we will go through the steps of installing <code>devtools</code>, and some common problems. You must have <code>devtools</code> installed to install from GitHub in subsequent tutorials on installing Neuroconductor packages.</p>
+<p>There are other packages that will do this and are more lightweight (see <code>remotes</code> and <code>ghit</code>), but we will focus on <code>devtools</code>.</p>
 <div id="mac-osx" class="section level1">
 <h1><span class="header-section-number">1</span> Mac OSX</h1>
 <p>You need to install <a href="https://developer.apple.com/library/content/technotes/tn2339/_index.html">Command Line Tools</a>, aka the command line tools for Xcode, if you have not already. <a href="http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/" class="uri">http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/</a> is a great tutorial how.</p>
@@ -241,14 +242,15 @@ if (!&quot;devtools&quot; %in% packages) {
   install.packages(&quot;devtools&quot;)
 }</code></pre>
 </div>
-<div id="the-remotes-package" class="section level1">
-<h1><span class="header-section-number">3</span> The remotes package</h1>
+<div id="the-remotes-and-ghit-packages" class="section level1">
+<h1><span class="header-section-number">3</span> The <code>remotes</code> and <code>ghit</code> packages</h1>
 <p>If you want a lighter-weight package that has the <code>install_github</code> functionality that <code>devtools</code> provides, but not all the “development” parts of <code>devtools</code>, the <code>remotes</code> package exists just for that:</p>
 <pre class="r"><code>packages = installed.packages()
 packages = packages[, &quot;Package&quot;]
 if (!&quot;remotes&quot; %in% packages) {
   install.packages(&quot;remotes&quot;)
 }</code></pre>
+<p>The <code>ghit</code> package is the lightest-weight package I have seen which has a <code>install_github</code> funciton, but may have some limited functionality compared to <code>remotes</code> in the functionality of installing package with dependencies in other systems, such as BitBucket.</p>
 <p>In any subsequent tutorial, when you see <code>devtools::install_github</code>, just insert <code>remotes::install_github</code> and it should work just the same.</p>
 </div>
 <div id="updating-a-package" class="section level1">
@@ -288,7 +290,7 @@ brew install openssl</code></pre>
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2016-10-07</code></pre>
+##  date     2016-10-10</code></pre>
 <pre><code>## Packages ------------------------------------------------------------------</code></pre>
 <pre><code>##  package    * version  date       source                            
 ##  assertthat   0.1      2013-12-06 CRAN (R 3.2.0)                    

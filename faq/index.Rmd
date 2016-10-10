@@ -1,0 +1,86 @@
+---
+title: "Frequently Asked Questions (FAQ)"
+date: '`r Sys.Date()`'
+output: 
+  html_document:
+    theme: cosmo
+    includes:
+      in_header: header.html      
+---
+
+```{r, echo=FALSE, results='asis'}
+library(htmltools)
+func = function(id, title, inner = FALSE){
+  id_no = paste0("#", id)
+  b = paste0('<div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="', id_no, '">', title, '</a>
+                </h4>
+            </div>
+            <div id="', id, '"', ' name="', id, '" class="panel-collapse collapse ', ifelse(inner, "in", ""), '">
+                <div class="panel-body">
+                    ')
+  HTML(b)
+}
+ender = HTML('</div> </div> </div>')
+start = HTML('<div class="bs-example">
+    <div class="panel-group" id="accordion">')
+end = HTML('</div> </div>')
+```
+
+
+`r start`
+
+`r func(id = "faq_what_is", title = "What is Neuroconductor?", inner = TRUE)`
+
+<!-- ## What is Neuroconductor? -->
+
+Neuroconductor is a GitHub-based repository of R packages generally related to neuroimaging analyses and processing.  The goals for the community are:
+
+1.  Centralize these packages in one place
+2.  Provide detailed howtos and tutorials (below) for users to easily set up and start using these packages
+3.  Allow for more feedback for feature requests and contributions to these packages
+
+The goals for the package developers are:
+
+1. Provide feedback on packages and features
+2. Help developers pass R CMD check with more detailed feedback and pull requests
+3. Check packages in a system with 3rd party imaging software (e.g. FSL, Freesurfer, AFNI, etc.) installed
+
+`r ender`
+
+`r func(id = "faq_who", title = "Who developed Neuroconductor?")`
+
+<!-- ## Who developed Neuroconductor? -->
+
+[John Muschelli](http://johnmuschelli.com/), [Jean-Philippe Fortin](https://jfortinbiostats.com/), [Adi Gherman](http://www.jhsph.edu/faculty/directory/profile/3326/adrian-gherman), [Brian Caffo](http://www.bcaffo.com/) and [Ciprian Crainiceanu](http://www.biostat.jhsph.edu/~ccrainic/) all have contributed a significant amount of time to the project.
+
+`r ender`
+
+`r func(id = "faq_where", title = "Where can I get the code for the tutorial/howto?")`
+
+<!-- ## Where can I get the code for the tutorial/howto? -->
+
+All code for the tutorials and installation guides can be located at [https://github.com/muschellij2/neuroc](https://github.com/muschellij2/neuroc).  Pull requests are welcome.   If you would like a specific tutorial or content, please [open an issue](https://github.com/muschellij2/neuroc/issues).  
+
+`r ender`
+
+
+`r func(id = "faq_start", title = "Where should I start?")`
+
+<!-- ## Where should I start? -->
+
+The workflow is that one would go through [Installation Guides](../index.html), then [Required Readings](../index.html), and then to any specific [Tutorial](../index.html) that a reader would like to learn about. 
+`r ender`
+
+
+`r func(id = "faq_error", title = "What if something doesn't work?")`
+
+<!-- ## What if something doesn't work? -->
+
+Please [open an issue on GitHub](https://github.com/muschellij2/neuroc/issues).  
+
+`r ender`
+
+`r end`
