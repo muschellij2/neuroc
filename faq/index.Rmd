@@ -50,6 +50,15 @@ The goals for the package developers are:
 
 `r ender`
 
+`r func(id = "faq_what_is", title = "What operating systems are supported?", inner = TRUE)`
+
+The tutorials have been tested for Unix-based systems, specifically Linux and Mac OSX.  Although we do not currently support it, [Windows 10 has a Linux subsystem ](https://msdn.microsoft.com/en-us/commandline/wsl/install_guide), which may allow for a working installation of all the dependencies of Neuroconductor. 
+
+Although still untested there is a good [tutorial on running FSL on Windows](http://www.nemotos.net/?p=1481) as well as [ANTsR on Windows](https://github.com/stnava/ANTsR/wiki/Installing-ANTsR-in-Windows-10-(along-with-FSL,-Rstudio,-Freesurfer,-etc)).  
+
+`r ender`
+
+
 `r func(id = "faq_who", title = "Who developed Neuroconductor?")`
 
 <!-- ## Who developed Neuroconductor? -->

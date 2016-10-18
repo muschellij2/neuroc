@@ -37,6 +37,7 @@ preprocess_mri_within/*_cache
 nifti_basics/*_cache
 cortical_thickness/*_cache
 label_image/*_cache
+ms_lesion/*_cache
 
 fmri_analysis_ANTsR/113-01-fMRI_moco_img.nii.gz
 fmri_analysis_ANTsR/113-01-fMRI_moco_nuisance_filtered.nii.gz
@@ -49,6 +50,8 @@ DTI_analysis_fslr/*.nii.gz
 preprocess_mri_within/*.nii.gz
 
 label_image/*.nii.gz
+
+ms_lesion/data/*.nii.gz
 
 # Temporary files created by R markdown
 *.utf8.md

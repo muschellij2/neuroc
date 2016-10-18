@@ -246,34 +246,38 @@ if (!&quot;devtools&quot; %in% packages) {
 <h1><span class="header-section-number">3</span> Mac OSX</h1>
 <p>You need to install <a href="https://developer.apple.com/library/content/technotes/tn2339/_index.html">Command Line Tools</a>, aka the command line tools for Xcode, if you have not already. <a href="http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/" class="uri">http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/</a> is a great tutorial how.</p>
 </div>
+<div id="windows" class="section level1">
+<h1><span class="header-section-number">4</span> Windows</h1>
+<p>Although still untested there is a good <a href="http://www.nemotos.net/?p=1481">tutorial on running FSL on Windows</a> as well as <a href="https://github.com/stnava/ANTsR/wiki/Installing-ANTsR-in-Windows-10-(along-with-FSL,-Rstudio,-Freesurfer,-etc)">ANTsR on Windows through Linux Subsystem</a>.</p>
+</div>
 <div id="cmake-and-git" class="section level1">
-<h1><span class="header-section-number">4</span> <code>cmake</code> and <code>git</code></h1>
+<h1><span class="header-section-number">5</span> <code>cmake</code> and <code>git</code></h1>
 <p><a href="https://github.com/stnava/ANTsR"><code>ANTsR</code></a> depends on <a href="https://github.com/stnava/ITKR"><code>ITKR</code></a>, which states in the <a href="https://github.com/stnava/ITKR/blob/master/DESCRIPTION">DESCRIPTION file</a>:</p>
 <pre><code>OS_type: unix
 SystemRequirements: cmake, git, clang (recommended)</code></pre>
 <p>so you must install <code>git</code> and <code>cmake</code>. Also, you <strong>must have a Unix-based</strong> system get these programs to work, so Windows users are out of luck. The continuing discussion will <strong>only</strong> support Linux variants and Mac OSX.</p>
 <div id="setting-the-path" class="section level2">
-<h2><span class="header-section-number">4.1</span> Setting the PATH</h2>
+<h2><span class="header-section-number">5.1</span> Setting the PATH</h2>
 <p>In either Linux or Mac OSX, there is a <code>PATH</code> <a href="https://en.wikipedia.org/wiki/Environment_variable">“environment variable”</a>. This tells your computer which folders to look in when you type in a command. For example, the <code>cd</code> command changes directories and the code (or compiled code) to do that is located in a folder. When you type <code>cd</code>, your computer looks (in order) in the folders specified in the <code>PATH</code> variable.</p>
 <p>In a shell (discussed later), you can type</p>
 <pre><code>which cd</code></pre>
 <p>and find the executable that you are calling when you actually execute the <code>cd</code> command.</p>
 </div>
 <div id="testing-if-cmake-and-git-are-installed" class="section level2">
-<h2><span class="header-section-number">4.2</span> Testing if <code>cmake</code> and <code>git</code> are installed</h2>
+<h2><span class="header-section-number">5.2</span> Testing if <code>cmake</code> and <code>git</code> are installed</h2>
 <p>Below are some instructions testing whether <code>git</code> and <code>cmake</code> are installed. If they are not installed, then there are instructions to install them.</p>
 <div id="mac-osx-1" class="section level3">
-<h3><span class="header-section-number">4.2.1</span> Mac OSX</h3>
+<h3><span class="header-section-number">5.2.1</span> Mac OSX</h3>
 <p>If you are on Mac OSX open up the <a href="http://www.macworld.co.uk/feature/mac-software/get-more-out-of-os-x-terminal-3608274/">Terminal</a> and type</p>
 <pre><code>which cmake
 which git</code></pre>
 <p>and if no paths are returned, then you don’t have these installed.</p>
 <div id="installing-git" class="section level4">
-<h4><span class="header-section-number">4.2.1.1</span> Installing Git</h4>
+<h4><span class="header-section-number">5.2.1.1</span> Installing Git</h4>
 <p>Please go to <a href="https://www.atlassian.com/git/tutorials/install-git/mac-os-x" class="uri">https://www.atlassian.com/git/tutorials/install-git/mac-os-x</a> if you do not have <code>git</code> installed. It is a good and comprehensive tutorial on how to install <code>git</code> (but you may already have it installed).</p>
 </div>
 <div id="installing-cmake" class="section level4">
-<h4><span class="header-section-number">4.2.1.2</span> Installing CMake</h4>
+<h4><span class="header-section-number">5.2.1.2</span> Installing CMake</h4>
 <p>You can download <a href="https://cmake.org/download/">CMake</a> and you can download either the Binary (recommended) or the Source (more advanced, not covered here - see install instructions from CMake website).</p>
 <p>After downloading the Binary, you will have the CMake application. If you use the dmg, you can drag and drop the application into the <code>/Applications</code> folder. If you use <code>bash</code> (I believe is the default), then open the Terminal, type <code>vi ~/.bash_profile</code>. This will open an editor (<code>vi</code>) and type the letter <code>i</code>, go to the bottom of the document, and copy and paste</p>
 <pre><code>export PATH=$PATH:/Applications/CMake.app/Contents/bin/</code></pre>
@@ -281,58 +285,58 @@ which git</code></pre>
 </div>
 </div>
 <div id="linux" class="section level3">
-<h3><span class="header-section-number">4.2.2</span> Linux</h3>
+<h3><span class="header-section-number">5.2.2</span> Linux</h3>
 <p>You open up the <a href="http://www.howtogeek.com/howto/22283/four-ways-to-get-instant-access-to-a-terminal-in-linux/">Terminal</a> and type :</p>
 <pre><code>which cmake
 which git</code></pre>
 <p>and if no paths are returned, then you don’t have these installed.</p>
 <div id="installing-git-1" class="section level4">
-<h4><span class="header-section-number">4.2.2.1</span> Installing git</h4>
+<h4><span class="header-section-number">5.2.2.1</span> Installing git</h4>
 <p>Depending on the variant of Linux you are on, the following commands should work:</p>
 <pre class="bash"><code>sudo apt-get install git # ubuntu/debian
 sudo yum install git # centos/fedora</code></pre>
 </div>
 <div id="installing-cmake-1" class="section level4">
-<h4><span class="header-section-number">4.2.2.2</span> Installing cmake</h4>
+<h4><span class="header-section-number">5.2.2.2</span> Installing cmake</h4>
 <p><a href="http://askubuntu.com/questions/610291/how-to-install-cmake-3-2-on-ubuntu-14-04" class="uri">http://askubuntu.com/questions/610291/how-to-install-cmake-3-2-on-ubuntu-14-04</a> is a good discussion on how to install <code>cmake</code> on Ubuntu. <a href="https://help.directadmin.com/item.php?id=494" class="uri">https://help.directadmin.com/item.php?id=494</a> is a good discussion on how to install <code>cmake</code> on Centos (hint <code>sudo yum install cmake</code>).</p>
 </div>
 </div>
 </div>
 </div>
 <div id="installing-itkr" class="section level1">
-<h1><span class="header-section-number">5</span> Installing ITKR</h1>
+<h1><span class="header-section-number">6</span> Installing ITKR</h1>
 <p>After <code>devtools</code> is installed, you can update <code>ITKR</code>:</p>
 <pre class="r"><code>devtools::install_github( &quot;stnava/ITKR&quot; )</code></pre>
 <p>This will take a lot of time to compile and such.</p>
 </div>
 <div id="installing-antsr" class="section level1">
-<h1><span class="header-section-number">6</span> Installing ANTsR</h1>
+<h1><span class="header-section-number">7</span> Installing ANTsR</h1>
 <p>If <code>ITKR</code> did not install, stop. Stop here. <code>ANTsR</code> cannot work without <code>ITKR</code>. If you think <code>ITKR</code> has a configuration problem and <strong>NOT</strong> a problem with your setup, you should <a href="https://github.com/stnava/ITKR/issues">open an issue</a> and see if the authors would be able to fix it. Make sure you try the same steps on another machine (or virtual machine) before saying that something is “broken”.</p>
 <p>Again, we can install <code>ANTsR</code> using `devtools:</p>
 <pre class="r"><code>devtools::install_github( &quot;stnava/ANTsR&quot; )</code></pre>
 <p>This also will take a lot of time to compile.</p>
 </div>
 <div id="updating-antsr" class="section level1">
-<h1><span class="header-section-number">7</span> Updating ANTsR</h1>
+<h1><span class="header-section-number">8</span> Updating ANTsR</h1>
 <p><code>ANTsR</code> takes a long time to compile and <code>ITKR</code> takes even longer. If you want to re-install or update <code>ANTsR</code> from GitHub, but not update any of the dependencies (including <code>ITKR</code>), then you should run:</p>
 <pre class="r"><code>devtools::install_github(&quot;stnava/ANTsR&quot;, upgrade_dependencies = FALSE)</code></pre>
 </div>
 <div id="troubleshooting-errors" class="section level1">
-<h1><span class="header-section-number">8</span> Troubleshooting errors</h1>
+<h1><span class="header-section-number">9</span> Troubleshooting errors</h1>
 <p>If you see the following error when installing ITKR:</p>
 <pre><code>./configure: line 26: cmake: command not found</code></pre>
 <p>guess what? <code>cmake</code> cannot be found. You either need to repeat the steps above or try to install ITKR using a Terminal (by calling <code>R</code>) instead of RStudio or the R application. This is due to some environment variables (not <code>PATH</code> though) not being available to those programs. Also, make sure you put <code>export</code> before <code>PATH</code>, and make sure <code>PATH</code> is not defined somewhere lower in the <code>~/.bash_profile</code> and overwrites your changes.</p>
 <p>You can see all of <code>PATH</code> by typing in the Terminal:</p>
 <pre><code>echo ${PATH}</code></pre>
 <div id="rgl" class="section level2">
-<h2><span class="header-section-number">8.1</span> RGL</h2>
+<h2><span class="header-section-number">9.1</span> RGL</h2>
 <p>One of the packages <code>ANTsR</code> suggests is <code>rgl</code>. For Mac OSX, this should be installed with the package if not already installed, which usually works OK. On some Linux variants like Ubuntu, the installation may fail.</p>
 <p>If you have errors installing <code>rgl</code>, then according to <a href="http://stackoverflow.com/questions/31820865/error-in-installing-rgl-package">a StackOverflow post</a>, you can install using the following command:</p>
 <pre><code>sudo apt-get install r-cran-rgl</code></pre>
 </div>
 </div>
 <div id="session-info" class="section level1">
-<h1><span class="header-section-number">9</span> Session Info</h1>
+<h1><span class="header-section-number">10</span> Session Info</h1>
 <pre class="r"><code>devtools::session_info()</code></pre>
 <pre><code>## Session info --------------------------------------------------------------</code></pre>
 <pre><code>##  setting  value                       
@@ -342,7 +346,7 @@ sudo yum install git # centos/fedora</code></pre>
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2016-10-07</code></pre>
+##  date     2016-10-10</code></pre>
 <pre><code>## Packages ------------------------------------------------------------------</code></pre>
 <pre><code>##  package    * version  date       source                            
 ##  assertthat   0.1      2013-12-06 CRAN (R 3.2.0)                    
