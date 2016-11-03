@@ -218,7 +218,7 @@ We see that the registration seems to have performed well in that the same slice
 Now that we've performed preprocessing of the data, we can create a dataset of these images whole-brain normalized and a series of smoothed images of the data.
 
 ```{r oasis_df, cache = FALSE, eval = TRUE}
-df = oasis_train_dataframe(
+df_list = oasis_train_dataframe(
   flair = outfiles["FLAIR"],
   t1 = outfiles["T1"],
   t2 = outfiles["T2"],
@@ -227,9 +227,9 @@ df = oasis_train_dataframe(
   brain_mask = outfiles["brain_mask"],
   eroder = "oasis")
 
-oasis_dataframe = df$oasis_dataframe
-brain_mask = df$brain_mask
-top_voxels = df$voxel_selection
+oasis_dataframe = df_list$oasis_dataframe
+brain_mask = df_list$brain_mask
+top_voxels = df_list$voxel_selection
 ```
 
 We will use the model included in the `oasis` package since we do not currently have a gold standard.   After predicting, we smooth the probability map using adjacent voxel probabilities.  We then threshold this probability map to give a binary prediction of lesions.
@@ -297,17 +297,17 @@ if (!check) {
 dat = ss[[1]]
 print(dat)
 # preparing output filenames
-outfiles = nii.stub(dat)
-n4_brain_mask = gsub("_T1$", "", outfiles["T1"])
+ants_outfiles = nii.stub(dat)
+n4_brain_mask = gsub("_T1$", "", ants_outfiles["T1"])
 n4_brain_mask = paste0(n4_brain_mask, "_N4_Brain_Mask.nii.gz")
-outfiles = paste0(outfiles, "_ants_preprocessed.nii.gz")
-names(outfiles) = names(dat)
-outfiles = outfiles[ names(outfiles) != "mask"]
+ants_outfiles = paste0(ants_outfiles, "_ants_preprocessed.nii.gz")
+names(ants_outfiles) = names(dat)
+ants_outfiles = ants_outfiles[ names(ants_outfiles) != "mask"]
 
-if (!all(file.exists(outfiles))) {
+if (!all(file.exists(ants_outfiles))) {
   pre = preprocess_mri_within(
     files = dat[c("T1", "T2", "FLAIR", "PD")],
-    outfiles = outfiles[c("T1", "T2", "FLAIR", "PD")],
+    outfiles = ants_outfiles[c("T1", "T2", "FLAIR", "PD")],
     correct = TRUE,
     correction = "N4",
     skull_strip = FALSE,
@@ -315,13 +315,13 @@ if (!all(file.exists(outfiles))) {
     interpolator = "LanczosWindowedSinc")
   
   ss = fslbet_robust(
-    outfiles["T1"], 
+    ants_outfiles["T1"], 
     correct = FALSE,
     bet.opts = "-v")
   ss = ss > 0
   writenii(ss, filename = n4_brain_mask)
   
-  imgs = lapply(outfiles[c("T1", "T2", "FLAIR", "PD")],
+  imgs = lapply(ants_outfiles[c("T1", "T2", "FLAIR", "PD")],
                 readnii)
   imgs = lapply(imgs, mask_img, ss)
   
@@ -329,7 +329,33 @@ if (!all(file.exists(outfiles))) {
                 mask = ss)
   mapply(function(img, fname){
     writenii(img, filename = fname)
-  }, imgs, outfiles[c("T1", "T2", "FLAIR", "PD")])
+  }, imgs, ants_outfiles[c("T1", "T2", "FLAIR", "PD")])
   
 }
+```
+
+```{r ants_df, eval = FALSE}
+L = oasis_train_dataframe(
+  flair = ants_outfiles["FLAIR"],
+  t1 = ants_outfiles["T1"],
+  t2 = ants_outfiles["T2"],
+  pd = ants_outfiles["PD"],
+  preproc = FALSE,
+  brain_mask = n4_brain_mask,
+  eroder = "oasis")
+
+ants_oasis_dataframe = L$oasis_dataframe
+ants_brain_mask = L$brain_mask
+ants_top_voxels = L$voxel_selection
+```
+```{r cluster, eval = FALSE}
+library(cluster)
+km = kmeans(x = ants_oasis_dataframe, centers = 4)
+km_img = niftiarr(ants_brain_mask, 0)
+km_img[ants_top_voxels == 1] = km$cluster
+n4_flair = readnii(ants_outfiles["FLAIR"])
+res = clara(x = ants_oasis_dataframe, k = 4)
+cl_img = niftiarr(ants_brain_mask, 0)
+cl_img[ants_top_voxels == 1] = res$clustering
+ortho2(n4_flair, cl_img > 3, col.y = scales::alpha("red", 0.5))
 ```

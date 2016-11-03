@@ -9,8 +9,14 @@ output:
     toc_depth: 3
     toc_float:
       collapsed: false
-    number_sections: true      
+    number_sections: true
 ---
+
+<style type="text/css">
+div.tocify {
+  max-height: 50%;
+}
+</style>
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
