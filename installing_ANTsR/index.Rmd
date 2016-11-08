@@ -22,11 +22,11 @@ div.tocify {
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-In this tutorial, we will go through the steps of installing ANTsR, including those for ITKR.
+In this tutorial, we will go through the steps of installing `ANTsR`, including those for `ITKR`.
 
+There are 2 options for installing `ITKR` and `ANTsR`: one is using `devtools` and the other is installing the binaries.  We recommend installing the binary file of `ITKR` and using `devtools` to install `ANTsR`.  
 
-
-# Option 2: Using Devtools
+# Option 1: Using Devtools
 ## Install devtools
 
 You must have `devtools` installed to install from GitHub.
@@ -126,6 +126,9 @@ sudo yum install git # centos/fedora
 
 ## Installing ITKR
 
+**You must install `ITKR` and `ANTsR` from R from a Terminal NOT from a GUI (RStudio/R application).**
+
+
 After `devtools` is installed, you can update `ITKR`:
 ```{r, eval = FALSE}
 devtools::install_github( "stnava/ITKR" )
@@ -136,6 +139,8 @@ This will take a lot of time to compile and such.
 
 
 ## Installing ANTsR
+
+**You must install `ITKR` and `ANTsR` from R from a Terminal NOT from a GUI (RStudio/R application).**
 
 If `ITKR` did not install, stop.  Stop here.  `ANTsR` cannot work without `ITKR`.  If you think `ITKR` has a configuration problem and **NOT** a problem with your setup, you should [open an issue](https://github.com/stnava/ITKR/issues) and see if the authors would be able to fix it.  Make sure you try the same steps on another machine (or virtual machine) before saying that something is "broken".  
 

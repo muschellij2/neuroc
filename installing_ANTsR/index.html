@@ -232,9 +232,10 @@ div.tocify {
   max-height: 50%;
 }
 </style>
-<p>In this tutorial, we will go through the steps of installing ANTsR, including those for ITKR.</p>
-<div id="option-2-using-devtools" class="section level1">
-<h1><span class="header-section-number">1</span> Option 2: Using Devtools</h1>
+<p>In this tutorial, we will go through the steps of installing <code>ANTsR</code>, including those for <code>ITKR</code>.</p>
+<p>There are 2 options for installing <code>ITKR</code> and <code>ANTsR</code>: one is using <code>devtools</code> and the other is installing the binaries. We recommend installing the binary file of <code>ITKR</code> and using <code>devtools</code> to install <code>ANTsR</code>.</p>
+<div id="option-1-using-devtools" class="section level1">
+<h1><span class="header-section-number">1</span> Option 1: Using Devtools</h1>
 <div id="install-devtools" class="section level2">
 <h2><span class="header-section-number">1.1</span> Install devtools</h2>
 <p>You must have <code>devtools</code> installed to install from GitHub.</p>
@@ -308,12 +309,14 @@ sudo yum install git # centos/fedora</code></pre>
 </div>
 <div id="installing-itkr" class="section level2">
 <h2><span class="header-section-number">1.7</span> Installing ITKR</h2>
+<p><strong>You must install <code>ITKR</code> and <code>ANTsR</code> from R from a Terminal NOT from a GUI (RStudio/R application).</strong></p>
 <p>After <code>devtools</code> is installed, you can update <code>ITKR</code>:</p>
 <pre class="r"><code>devtools::install_github( &quot;stnava/ITKR&quot; )</code></pre>
 <p>This will take a lot of time to compile and such.</p>
 </div>
 <div id="installing-antsr" class="section level2">
 <h2><span class="header-section-number">1.8</span> Installing ANTsR</h2>
+<p><strong>You must install <code>ITKR</code> and <code>ANTsR</code> from R from a Terminal NOT from a GUI (RStudio/R application).</strong></p>
 <p>If <code>ITKR</code> did not install, stop. Stop here. <code>ANTsR</code> cannot work without <code>ITKR</code>. If you think <code>ITKR</code> has a configuration problem and <strong>NOT</strong> a problem with your setup, you should <a href="https://github.com/stnava/ITKR/issues">open an issue</a> and see if the authors would be able to fix it. Make sure you try the same steps on another machine (or virtual machine) before saying that something is “broken”.</p>
 <p>Again, we can install <code>ANTsR</code> using `devtools:</p>
 <pre class="r"><code>devtools::install_github( &quot;stnava/ANTsR&quot; )</code></pre>
