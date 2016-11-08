@@ -96,7 +96,7 @@ You can download [CMake](https://cmake.org/download/) and you can download eithe
 
 After downloading the Binary, you will have the CMake application.  If you use the dmg, you can drag and drop the application into the `/Applications` folder.  If you use `bash` (I believe is the default), then open the Terminal, type `vi ~/.bash_profile`.  This will open an editor (`vi`) and type the letter `i`, go to the bottom of the document, and copy and paste
 ```
-export PATH=$PATH:/Applications/CMake.app/Contents/bin/
+export PATH=$PATH:/Applications/CMake.app/Contents/bin
 ```
 to the bottom.  To exit type `ESC+:+wq`.  The `ESC` escapes anything you were doing (like inserting text), the colon is telling `vi` you're in "Colon mode, the `w` means write the file, and `q` means quit.  If you edited a file and don't want to save changes, use `:q!` (quitting and not saving/writing).  
 

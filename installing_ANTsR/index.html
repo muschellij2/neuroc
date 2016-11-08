@@ -285,7 +285,7 @@ which git</code></pre>
 <h4><span class="header-section-number">5.2.1.2</span> Installing CMake</h4>
 <p>You can download <a href="https://cmake.org/download/">CMake</a> and you can download either the Binary (recommended) or the Source (more advanced, not covered here - see install instructions from CMake website).</p>
 <p>After downloading the Binary, you will have the CMake application. If you use the dmg, you can drag and drop the application into the <code>/Applications</code> folder. If you use <code>bash</code> (I believe is the default), then open the Terminal, type <code>vi ~/.bash_profile</code>. This will open an editor (<code>vi</code>) and type the letter <code>i</code>, go to the bottom of the document, and copy and paste</p>
-<pre><code>export PATH=$PATH:/Applications/CMake.app/Contents/bin/</code></pre>
+<pre><code>export PATH=$PATH:/Applications/CMake.app/Contents/bin</code></pre>
 <p>to the bottom. To exit type <code>ESC+:+wq</code>. The <code>ESC</code> escapes anything you were doing (like inserting text), the colon is telling <code>vi</code> you’re in “Colon mode, the <code>w</code> means write the file, and <code>q</code> means quit. If you edited a file and don’t want to save changes, use <code>:q!</code> (quitting and not saving/writing).</p>
 </div>
 </div>
@@ -351,10 +351,11 @@ sudo yum install git # centos/fedora</code></pre>
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2016-11-03</code></pre>
+##  date     2016-11-08</code></pre>
 <pre><code>## Packages ------------------------------------------------------------------</code></pre>
 <pre><code>##  package    * version date       source                            
 ##  assertthat   0.1     2013-12-06 CRAN (R 3.2.0)                    
+##  colorout   * 1.1-0   2015-04-20 Github (jalvesaq/colorout@1539f1f)
 ##  devtools     1.12.0  2016-06-24 CRAN (R 3.3.0)                    
 ##  digest       0.6.10  2016-08-02 cran (@0.6.10)                    
 ##  evaluate     0.9     2016-04-29 CRAN (R 3.2.5)                    

@@ -189,7 +189,7 @@ ants_outfiles = ants_outfiles[ names(ants_outfiles) != "mask"]
 if (!all(file.exists(ants_outfiles))) {
   pre = preprocess_mri_within(
     files = dat[c("T1", "T2", "FLAIR", "PD")],
-    ants_outfiles = ants_outfiles[c("T1", "T2", "FLAIR", "PD")],
+    outfiles = ants_outfiles[c("T1", "T2", "FLAIR", "PD")],
     correct = TRUE,
     correction = "N4",
     skull_strip = FALSE,
@@ -197,13 +197,13 @@ if (!all(file.exists(ants_outfiles))) {
     interpolator = "LanczosWindowedSinc")
   
   ss = fslbet_robust(
-    outfiles["T1"], 
+    ants_outfiles["T1"], 
     correct = FALSE,
     bet.opts = "-v")
   ss = ss > 0
   writenii(ss, filename = n4_brain_mask)
   
-  imgs = lapply(outfiles[c("T1", "T2", "FLAIR", "PD")],
+  imgs = lapply(ants_outfiles[c("T1", "T2", "FLAIR", "PD")],
                 readnii)
   imgs = lapply(imgs, mask_img, ss)
   
@@ -211,7 +211,7 @@ if (!all(file.exists(ants_outfiles))) {
                 mask = ss)
   mapply(function(img, fname){
     writenii(img, filename = fname)
-  }, imgs, outfiles[c("T1", "T2", "FLAIR", "PD")])
+  }, imgs, ants_outfiles[c("T1", "T2", "FLAIR", "PD")])
   
 }
 
