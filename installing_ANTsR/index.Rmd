@@ -24,11 +24,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 In this tutorial, we will go through the steps of installing ANTsR, including those for ITKR.
 
-# Installing Binaries
 
-If you go to the [Release Page for ANTsR](https://github.com/stnava/ANTsR/releases) they have pre-built binary releases for different systems.  If not specified, a `.tgz` should be the binary for the Mac OSX version and the `.tar.gz` should be that for a PC/Linux.  You should check to see when the last release was made as some of these may be largely outdated, may not have the latest bug fixes, and may not be versioned corresponding to some common rules.
 
-# Install devtools
+# Option 2: Using Devtools
+## Install devtools
 
 You must have `devtools` installed to install from GitHub.
 
@@ -42,16 +41,16 @@ if (!"devtools" %in% packages) {
 
 Please refer to [installing devtools](../installing_devtools/index.html) for additional instructions or troubleshooting.
 
-# Mac OSX
+## Mac OSX
 
 You need to install [Command Line Tools](https://developer.apple.com/library/content/technotes/tn2339/_index.html), aka the command line tools for Xcode, if you have not already.  [http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/](http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/) is a great tutorial how.
 
-# Windows
+## Windows
 
 Although still untested there is a good [tutorial on running FSL on Windows](http://www.nemotos.net/?p=1481) as well as [ANTsR on Windows through Linux Subsystem](https://github.com/stnava/ANTsR/wiki/Installing-ANTsR-in-Windows-10-(along-with-FSL,-Rstudio,-Freesurfer,-etc)).  
 
 
-# `cmake` and `git`
+## `cmake` and `git`
 
 [`ANTsR`](https://github.com/stnava/ANTsR) depends on [`ITKR`](https://github.com/stnava/ITKR), which states in the [DESCRIPTION file](https://github.com/stnava/ITKR/blob/master/DESCRIPTION):
 
@@ -125,7 +124,7 @@ sudo yum install git # centos/fedora
 
 
 
-# Installing ITKR
+## Installing ITKR
 
 After `devtools` is installed, you can update `ITKR`:
 ```{r, eval = FALSE}
@@ -136,7 +135,7 @@ This will take a lot of time to compile and such.
 
 
 
-# Installing ANTsR
+## Installing ANTsR
 
 If `ITKR` did not install, stop.  Stop here.  `ANTsR` cannot work without `ITKR`.  If you think `ITKR` has a configuration problem and **NOT** a problem with your setup, you should [open an issue](https://github.com/stnava/ITKR/issues) and see if the authors would be able to fix it.  Make sure you try the same steps on another machine (or virtual machine) before saying that something is "broken".  
 
@@ -148,13 +147,17 @@ devtools::install_github( "stnava/ANTsR" )
 
 This also will take a lot of time to compile.
 
-# Updating ANTsR
+## Updating ANTsR
 
 `ANTsR` takes a long time to compile and `ITKR` takes even longer.   If you want to re-install or update `ANTsR` from GitHub, but not update any of the dependencies (including `ITKR`), then you should run: 
 ```r
 devtools::install_github("stnava/ANTsR", upgrade_dependencies = FALSE)
 ```
 
+
+# Option 2: Installing Binaries
+
+If you go to the [Release Page for ANTsR](https://github.com/stnava/ANTsR/releases) they have pre-built binary releases for different systems.  If not specified, a `.tgz` should be the binary for the Mac OSX version and the `.tar.gz` should be that for a PC/Linux.  You should check to see when the last release was made as some of these may be largely outdated, may not have the latest bug fixes, and may not be versioned corresponding to some common rules.
 
 # Troubleshooting errors
 
