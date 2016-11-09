@@ -15,10 +15,13 @@ all:
 		pwd && echo $$fol && cp makefile.copy $$fol/makefile && cd $$fol && make && cd ../; \
 	done
 	Rscript -e "rmarkdown::render('index.Rmd')"
+	Rscript -e "source('notoc.R')"
+	Rscript -e "rmarkdown::render('index_notoc.Rmd')"
 #  
 
 index.html: index.Rmd 
 	Rscript -e "rmarkdown::render('index.Rmd')"
+
 
 clean: 
 	rm index.html
