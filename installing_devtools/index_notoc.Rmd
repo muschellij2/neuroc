@@ -18,7 +18,7 @@ There are other packages that will do this and are more lightweight (see `remote
 
 # Mac OSX
 
-You need to install [Command Line Tools](https://developer.apple.com/library/content/technotes/tn2339/_index_notoc.html), aka the command line tools for Xcode, if you have not already.  [http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/](http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/) is a great tutorial how.
+You need to install [Command Line Tools](https://developer.apple.com/library/content/technotes/tn2339/_index.html), aka the command line tools for Xcode, if you have not already.  [http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/](http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/) is a great tutorial how.
 
 # Installing devtools
 

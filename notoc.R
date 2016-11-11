@@ -2,17 +2,26 @@ rm(list = ls())
 library(rmarkdown)
 library(yaml)
 library(tools)
+library(stringr)
 fname = "index.Rmd"
+all_indices = list.files(pattern = "[.]Rmd$",
+                         recursive = TRUE)
+all_indices = all_indices[ grep("notoc[.]Rmd$", all_indices, invert = TRUE)]
+all_indices = all_indices[ file.exists(gsub(".Rmd$", ".md", all_indices))]
+all_indices = setdiff(all_indices, "index.Rmd")
+fname = all_indices[12]
+subber = TRUE
 
 notoc = function(
   fname = "index.Rmd",
-  renderIt = FALSE) {
-  
+  renderIt = FALSE,
+  subber = TRUE) {
+
   
   index = readLines(fname)
   md_file = sub(".Rmd$", ".md", fname)
   if (file.exists(md_file)) {
-      md = readLines(md_file)
+    md = readLines(md_file)
     outfile = paste0(file_path_sans_ext(fname),
                      "_notoc.Rmd")
     
@@ -35,11 +44,65 @@ notoc = function(
     
     # index[seq(ind[2] + 1, length(index))]
     index_notoc = c("---", yaml, "---", md)
-    index_notoc = gsub("index[.]html", "index_notoc.html", index_notoc)
+    if (subber) {
+      app = "[.][.]/"
+    } else {
+      app = ""
+    }
+    ###############################
+    # Replacing references with the neuroc ones for index
+    ###############################
+    index_notoc = gsub("(../index.html)", "(neuroc-help)", index_notoc, 
+                       fixed = TRUE)
     
+    ###############################
+    # Finding references to other tutorials
+    ###############################    
+    change_ind = grep(paste0("\\(", app, ".+/index[.]html\\)"), 
+                      index_notoc)
+
+    ###############################
+    # Doing the simple/stupid way of string matching
+    ###############################
+    dumb_string = "XXXXXX"
+    dumb_out = paste0("](", dumb_string, "___", "\\L\\1___", dumb_string, ")")
+    
+    ###############################
+    # replace stuff with dumb_string to split
+    ###############################
+    index_notoc = gsub(paste0("\\]\\(", app, "(.+)/index[.]html\\)"), 
+                       dumb_out, index_notoc,
+                       perl = TRUE)
+    
+    # split it
+    index_notoc = strsplit(index_notoc,
+                           split = dumb_string,
+                           fixed = TRUE)
+    # print(index_notoc[change_ind])
+    
+    # replacing with neuroc-help- in the front
+    index_notoc[change_ind] = lapply(
+      index_notoc[change_ind], 
+      function(x) {
+        ind = grepl("^___", x)
+        x[ind] = gsub("___", "", x[ind])
+        x[ind] = gsub("_", "-", x[ind])
+        x[ind] = paste0("neuroc-help-", x[ind])
+        x = paste(x, collapse = "")
+        return(x)
+      })
+    
+    # just making character(0)
+    index_notoc = sapply(index_notoc, function(x) {
+      if (length(x) == 0) {
+        x = ""
+      }
+      return(x)
+    })
+
     if (file.exists(outfile)) {
       check = readLines(outfile)
-      
+
       if (!identical(check, index_notoc)) {
         writeLines(text = index_notoc, con = outfile)
       } else {
@@ -48,22 +111,17 @@ notoc = function(
     } else {
       writeLines(text = index_notoc, con = outfile)
     }
-    
+
     if (renderIt) {
       rmarkdown::render(input = outfile)
     }
-    
+
     return(file.exists(outfile))
   } else {
     return(FALSE)
   }
 }
 
-notoc("index.Rmd", renderIt = FALSE)
+notoc("index.Rmd", renderIt = FALSE, subber = FALSE)
 
-all_indices = list.files(pattern = "[.]Rmd$",
-                         recursive = TRUE)
-all_indices = all_indices[ grep("notoc[.]Rmd$", all_indices, invert = TRUE)]
-all_indices = all_indices[ file.exists(gsub(".Rmd$", ".md", all_indices))]
-all_indices = setdiff(all_indices, "index.Rmd")
 sapply(all_indices, notoc)

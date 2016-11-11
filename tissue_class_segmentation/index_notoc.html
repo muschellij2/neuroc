@@ -128,7 +128,7 @@ October 3, 2016</p>
 </div>
 <div id="data-packages" class="section level1">
 <h1><span class="header-section-number">2</span> Data Packages</h1>
-<p>For this analysis, I will use one subject from the Kirby 21 data set. The <code>kirby21.base</code> and <code>kirby21.fmri</code> packages are necessary for this analysis and have the data we will be working on. You need devtools to install these. Please refer to <a href="../installing_devtools/index_notoc.html">installing devtools</a> for additional instructions or troubleshooting.</p>
+<p>For this analysis, I will use one subject from the Kirby 21 data set. The <code>kirby21.base</code> and <code>kirby21.fmri</code> packages are necessary for this analysis and have the data we will be working on. You need devtools to install these. Please refer to <a href="neuroc-help-installing-devtools">installing devtools</a> for additional instructions or troubleshooting.</p>
 <pre class="r"><code>packages = installed.packages()
 packages = packages[, &quot;Package&quot;]
 if (!&quot;kirby21.base&quot; %in% packages) {
@@ -153,7 +153,7 @@ t1_fname = fnames$T1[1]</code></pre>
 <h1><span class="header-section-number">4</span> Using information from the T1 image</h1>
 <div id="brain-extracted-image" class="section level2">
 <h2><span class="header-section-number">4.1</span> Brain extracted image</h2>
-<p>Please visit the <a href="../brain_extraction/index_notoc.html">brain extraction tutorial</a> on how to extract a brain from this image. We will use the output from <code>fslbet_robust</code> from that tutorial.</p>
+<p>Please visit the <a href="neuroc-help-brain-extraction">brain extraction tutorial</a> on how to extract a brain from this image. We will use the output from <code>fslbet_robust</code> from that tutorial.</p>
 <pre class="r"><code>outfile = nii.stub(t1_fname, bn = TRUE)
 outfile = file.path(&quot;..&quot;, &quot;brain_extraction&quot;, outfile)
 outfile = paste0(outfile, &quot;_SS.nii.gz&quot;)
@@ -272,7 +272,7 @@ ggplot(df, aes(x = value, colour = factor(class))) +
 </div>
 <div id="tissue-class-segmentation-with-spm" class="section level2">
 <h2><span class="header-section-number">4.4</span> Tissue-Class Segmentation with SPM</h2>
-<p>In the <a href="../brain_extraction/index_notoc.html">brain extraction tutorial</a> we discuss the SPM segmenation procedures and show how to use them to produce hard segmentations, probability maps, and a brain extracted image. We will use the results of that tutorial to compare to that of <code>atropos</code>. We will exclude any tissues outside of GM, WM, and CSF (those &gt; 3).</p>
+<p>In the <a href="neuroc-help-brain-extraction">brain extraction tutorial</a> we discuss the SPM segmenation procedures and show how to use them to produce hard segmentations, probability maps, and a brain extracted image. We will use the results of that tutorial to compare to that of <code>atropos</code>. We will exclude any tissues outside of GM, WM, and CSF (those &gt; 3).</p>
 <pre class="r"><code>outfile = nii.stub(t1_fname, bn = TRUE)
 outfile = file.path(&quot;..&quot;, &quot;brain_extraction&quot;, outfile)
 outfile = paste0(outfile, &quot;_SPM_Seg.nii.gz&quot;)
@@ -352,7 +352,7 @@ ggplot(df, aes(x = value, colour = factor(class))) +
 </div>
 <div id="discussion" class="section level2">
 <h2><span class="header-section-number">4.5</span> Discussion</h2>
-<p>Note, <code>atropos</code> and <code>fast</code> generally require a skull-stripped image. Many skull-stripping algorithms remove the extra-cortical areas of the brain but inside the skull, which generally are CSF spaces with meninges. These CSF spaces are dropped after skull-stripping/brain extraction. If we are trying to consistently measure the CSF or “whole brain volume” (if that includes CSF spaces), this may cause issues. The SPM segmentation usually includes more CSF spaces, but we have shown in the <a href="../brain_extraction/index_notoc.html">brain extraction tutorial</a> that there are areas that BET denotes as brain and SPM does not on the surface.</p>
+<p>Note, <code>atropos</code> and <code>fast</code> generally require a skull-stripped image. Many skull-stripping algorithms remove the extra-cortical areas of the brain but inside the skull, which generally are CSF spaces with meninges. These CSF spaces are dropped after skull-stripping/brain extraction. If we are trying to consistently measure the CSF or “whole brain volume” (if that includes CSF spaces), this may cause issues. The SPM segmentation usually includes more CSF spaces, but we have shown in the <a href="neuroc-help-brain-extraction">brain extraction tutorial</a> that there are areas that BET denotes as brain and SPM does not on the surface.</p>
 </div>
 </div>
 

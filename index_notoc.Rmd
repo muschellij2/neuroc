@@ -8,29 +8,29 @@ output:
 
 # Frequently Asked Questions (FAQ)
 
-Please visit the [FAQ](faq/index_notoc.html) for information on how to begin.
+Please visit the [FAQ](neuroc-help-faq) for information on how to begin.
 
 # Installation Guides {#install}
 
-1. [Installing devtools](installing_devtools/index_notoc.html)
-2. [Installing ANTsR](installing_ANTsR/index_notoc.html)
+1. [Installing devtools](neuroc-help-installing-devtools)
+2. [Installing ANTsR](neuroc-help-installing-antsr)
 
 # Required Readings {#req}
 
-1. [NIfTI Basics](nifti_basics/index_notoc.html)
+1. [NIfTI Basics](neuroc-help-nifti-basics)
 
 # General Tutorials {#tutorials}
 
-1. [Brain Extraction](brain_extraction/index_notoc.html)
-2. [Tissue-Class Segmentation](tissue_class_segmentation/index_notoc.html)
-3. [Labeling Brain Structures](label_image/index_notoc.html)
-4. [Resting-State fMRI analysis using ANTsR](fmri_analysis_ANTsR/index_notoc.html)
-5. [Resting-State fMRI analysis using fslr](fmri_analysis_ANTsR/index_notoc.html)
-6. [Processing Within-Visit Structural MRI](preprocess_mri_within/index_notoc.html)
-7. [DTI analysis with fslr](DTI_analysis_fslr/index_notoc.html)
-8. [Cortical Thickness Estimation (NOT DONE)](cortical_thickness/index_notoc.html)
+1. [Brain Extraction](neuroc-help-brain-extraction)
+2. [Tissue-Class Segmentation](neuroc-help-tissue-class-segmentation)
+3. [Labeling Brain Structures](neuroc-help-label-image)
+4. [Resting-State fMRI analysis using ANTsR](neuroc-help-fmri-analysis-antsr)
+5. [Resting-State fMRI analysis using fslr](neuroc-help-fmri-analysis-antsr)
+6. [Processing Within-Visit Structural MRI](neuroc-help-preprocess-mri-within)
+7. [DTI analysis with fslr](neuroc-help-dti-analysis-fslr)
+8. [Cortical Thickness Estimation (NOT DONE)](neuroc-help-cortical-thickness)
 
 # Disease-specific Tutorials
 
-1. [Multiple Sclerosis Lesion Segmentation](ms_lesion/index_notoc.html)
+1. [Multiple Sclerosis Lesion Segmentation](neuroc-help-ms-lesion)
 

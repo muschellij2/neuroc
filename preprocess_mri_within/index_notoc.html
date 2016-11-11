@@ -128,7 +128,7 @@ October 3, 2016</p>
 </div>
 <div id="data-packages" class="section level1">
 <h1><span class="header-section-number">2</span> Data Packages</h1>
-<p>For this analysis, I will use one subject from the Kirby 21 data set. The <code>kirby21.base</code> and <code>kirby21.fmri</code> packages are necessary for this analysis and have the data we will be working on. You need devtools to install these. Please refer to <a href="../installing_devtools/index_notoc.html">installing devtools</a> for additional instructions or troubleshooting.</p>
+<p>For this analysis, I will use one subject from the Kirby 21 data set. The <code>kirby21.base</code> and <code>kirby21.fmri</code> packages are necessary for this analysis and have the data we will be working on. You need devtools to install these. Please refer to <a href="neuroc-help-installing-devtools">installing devtools</a> for additional instructions or troubleshooting.</p>
 <pre class="r"><code>packages = installed.packages()
 packages = packages[, &quot;Package&quot;]
 if (!&quot;kirby21.base&quot; %in% packages) {
@@ -168,7 +168,7 @@ visit_2 = visit_2[run_mods]</code></pre>
 <li>Estimate the transformation to the first file (T1 image).</li>
 <li>Perform this transformation, registering the images, and interpolating the images using a Lanczos windowed sinc interpolator.</li>
 </ol>
-<p><code>preprocess_mri_within</code> can also perform skull stripping using BET, but we have shown in the <a href="../brain_extraction/index_notoc.html">brain extraction tutorial</a> that running BET without running neck removal.</p>
+<p><code>preprocess_mri_within</code> can also perform skull stripping using BET, but we have shown in the <a href="neuroc-help-brain-extraction">brain extraction tutorial</a> that running BET without running neck removal.</p>
 <pre class="r"><code>library(extrantsr)
 outfiles = nii.stub(visit_1, bn = TRUE)
 proc_files = paste0(outfiles, &quot;_proc.nii.gz&quot;)
@@ -194,7 +194,7 @@ $FLAIR
 NULL</code></pre>
 <div id="brain-extraction-of-the-t1-image" class="section level2">
 <h2><span class="header-section-number">4.1</span> Brain Extraction of the T1 image</h2>
-<p>Similar to the <a href="../brain_extraction/index_notoc.html">brain extraction tutorial</a>, we can run <code>fslbet_robust</code> to get a good brain mask for the T1 image.</p>
+<p>Similar to the <a href="neuroc-help-brain-extraction">brain extraction tutorial</a>, we can run <code>fslbet_robust</code> to get a good brain mask for the T1 image.</p>
 <pre class="r"><code>outfile = nii.stub(visit_1[&quot;T1&quot;], bn = TRUE)
 outfile = paste0(outfile, &quot;_SS.nii.gz&quot;)
 if (!file.exists(outfile)) {
