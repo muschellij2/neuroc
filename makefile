@@ -1,6 +1,7 @@
 LIST = installing_devtools installing_ANTsR 
 LIST += faq
 LIST += nifti_basics
+LIST += label_image
 LIST += brain_extraction
 LIST += tissue_class_segmentation
 LIST += cortical_thickness
@@ -16,9 +17,10 @@ all:
 	done
 	Rscript -e "source('notoc.R')"
 	for fol in $(LIST) ; do \
-		cd $$fol && make && cd ../; \
+		cd $$fol && make index_notoc.html && cd ../; \
 	done
 	Rscript -e "rmarkdown::render('index.Rmd')"
+	Rscript -e "rmarkdown::render('index_notoc.Rmd')"
 #  
 
 index.html: index.Rmd 
