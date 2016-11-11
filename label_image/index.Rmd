@@ -4,6 +4,7 @@ author: "John Muschelli"
 date: "October 3, 2016"
 output: 
   html_document:
+    keep_md: true
     theme: cosmo
     toc: true
     toc_depth: 3
@@ -25,7 +26,8 @@ library(extrantsr)
 library(ggplot2)
 library(reshape2)
 library(stringr)
-knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "")
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "",
+                      cache.path = "index_cache/html/")
 ```
 
 In [Processing Within-Visit MRI](../preprocess_mri_within/index.html) we show how to register a T1-weighted image to the Eve template.  The Eve template has two full brain segmentations and one white matter segmentations, each done by hand.  I will refer to these as "atlases" because they tell you "where" you are in the brain with the corresponding labels.

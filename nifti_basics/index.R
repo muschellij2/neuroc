@@ -4,7 +4,8 @@ library(oro.nifti)
 library(methods)
 library(EveTemplate)
 library(ggplot2)
-knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "")
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "",
+                      cache.path = "index_cache/html/")
 
 ## ---- eval = FALSE-------------------------------------------------------
 ## packages = installed.packages()

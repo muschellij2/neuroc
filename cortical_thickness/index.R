@@ -17,14 +17,29 @@ seg = paste0(stub, "_Seg.nii.gz")
 wm_prob = paste0(stub, "_prob_2.nii.gz")
 gm_prob = paste0(stub, "_prob_3.nii.gz")
 
-## ----kk, cache=FALSE-----------------------------------------------------
-s = antsImageRead(seg)
-g = antsImageRead(gm_prob)
-w = antsImageRead(wm_prob)
-out = kellyKapowski(s = s, g = g, w = w, its = 50, r = 0.025, m = 1.5)
-cort = extrantsr::ants2oro(out)
+## ----kk_show, eval = FALSE, echo = TRUE----------------------------------
+## s = antsImageRead(seg)
+## g = antsImageRead(gm_prob)
+## w = antsImageRead(wm_prob)
+## out = kellyKapowski(s = s, g = g, w = w, its = 50, r = 0.025, m = 1.5)
+## cort = extrantsr::ants2oro(out)
+
+## ----kk_run, cache = TRUE, eval = TRUE, echo = FALSE---------------------
+outfile = paste0(base_fname, "_cort_thick.nii.gz")
+if (!file.exists(outfile)) {
+  s = antsImageRead(seg)
+  g = antsImageRead(gm_prob)
+  w = antsImageRead(wm_prob)
+  out = kellyKapowski(s = s, g = g, w = w, its = 50, r = 0.025, m = 1.5)
+  cort = extrantsr::ants2oro(out)
+  writenii(cort, filename = outfile)
+} 
+
+## ----cort_read, echo = FALSE, eval = TRUE, cache = FALSE-----------------
+cort = readnii(outfile)
 ss = readnii(orig)
-img = dropEmptyImageDimensions(ss)
+dd = dropEmptyImageDimensions(ss, keep_ind = TRUE)
+img = apply_empty_dim(img = ss, inds = dd$inds)
 
 ## ----plot_cort-----------------------------------------------------------
 ortho2(cort)
@@ -33,7 +48,7 @@ ortho2(cort)
 hist(c(cort[cort > 0]), breaks = 2000)
 
 ## ----thresh_cort---------------------------------------------------------
-ortho2(cort, cort > 1)
+ortho2(cort, cort > 0.1)
 
 ## ----overlay_cort--------------------------------------------------------
 ortho2(img, cort)

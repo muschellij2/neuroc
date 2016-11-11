@@ -12,7 +12,8 @@ library(ggplot2)
 library(reshape2)
 library(animation)
 library(zoo)
-knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "")
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "",
+                      cache.path = "index_cache/html/")
 
 ## ---- eval = FALSE-------------------------------------------------------
 ## packages = installed.packages()

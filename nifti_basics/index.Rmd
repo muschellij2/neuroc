@@ -4,6 +4,7 @@ author: "John Muschelli"
 date: "October 3, 2016"
 output: 
   html_document:
+    keep_md: true
     theme: cosmo
     toc: true
     toc_depth: 3
@@ -19,7 +20,8 @@ library(oro.nifti)
 library(methods)
 library(EveTemplate)
 library(ggplot2)
-knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "")
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "",
+                      cache.path = "index_cache/html/")
 ```
 
 # The nifti object

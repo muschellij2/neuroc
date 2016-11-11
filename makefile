@@ -12,11 +12,13 @@ LIST += ms_lesion
 
 all:
 	for fol in $(LIST) ; do \
-		pwd && echo $$fol && cp makefile.copy $$fol/makefile && cd $$fol && make && cd ../; \
+		pwd && echo $$fol && cp makefile.copy $$fol/makefile && cd $$fol && make index.html && cd ../; \
+	done
+	Rscript -e "source('notoc.R')"
+	for fol in $(LIST) ; do \
+		cd $$fol && make && cd ../; \
 	done
 	Rscript -e "rmarkdown::render('index.Rmd')"
-	Rscript -e "source('notoc.R')"
-	Rscript -e "rmarkdown::render('index_notoc.Rmd')"
 #  
 
 index.html: index.Rmd 

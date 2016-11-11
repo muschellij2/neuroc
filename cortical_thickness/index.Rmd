@@ -4,6 +4,7 @@ author: "John Muschelli"
 date: "October 3, 2016"
 output: 
   html_document:
+    keep_md: true
     theme: cosmo
     toc: true
     toc_depth: 3
@@ -35,14 +36,30 @@ gm_prob = paste0(stub, "_prob_3.nii.gz")
 ```
 
 
-```{r kk, cache=FALSE}
+```{r kk_show, eval = FALSE, echo = TRUE}
 s = antsImageRead(seg)
 g = antsImageRead(gm_prob)
 w = antsImageRead(wm_prob)
 out = kellyKapowski(s = s, g = g, w = w, its = 50, r = 0.025, m = 1.5)
 cort = extrantsr::ants2oro(out)
+```
+
+```{r kk_run, cache = TRUE, eval = TRUE, echo = FALSE}
+outfile = paste0(base_fname, "_cort_thick.nii.gz")
+if (!file.exists(outfile)) {
+  s = antsImageRead(seg)
+  g = antsImageRead(gm_prob)
+  w = antsImageRead(wm_prob)
+  out = kellyKapowski(s = s, g = g, w = w, its = 50, r = 0.025, m = 1.5)
+  cort = extrantsr::ants2oro(out)
+  writenii(cort, filename = outfile)
+} 
+```
+```{r cort_read, echo = FALSE, eval = TRUE, cache = FALSE}
+cort = readnii(outfile)
 ss = readnii(orig)
-img = dropEmptyImageDimensions(ss)
+dd = dropEmptyImageDimensions(ss, keep_ind = TRUE)
+img = apply_empty_dim(img = ss, inds = dd$inds)
 ```
 
 ```{r plot_cort}
@@ -54,7 +71,7 @@ hist(c(cort[cort > 0]), breaks = 2000)
 ```
 
 ```{r thresh_cort}
-ortho2(cort, cort > 1)
+ortho2(cort, cort > 0.1)
 ```
 
 ```{r overlay_cort}

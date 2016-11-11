@@ -4,6 +4,7 @@ author: "John Muschelli"
 date: "October 3, 2016"
 output: 
   html_document:
+    keep_md: true
     theme: cosmo
     toc: true
     toc_depth: 3
