@@ -22,7 +22,7 @@ where `PACKAGE` is the name of the package you'd like to install, such as `fslr`
 source("http://neuroconductor.org/neurocLite.R")
 neuro_install(c("fslr", "hcp"))
 ```
-## `neurocLite`: an alias for `neuroc_install`
+### `neurocLite`: an alias for `neuroc_install`
 
 As Bioconductor uses the `biocLite` function to install packages, we have created a duplicate of `neuro_install`, called `neurocLite`, for ease of use for those users accustomed to Bioconductor.  The same command could have been executed as follows:
 
@@ -31,7 +31,7 @@ source("http://neuroconductor.org/neurocLite.R")
 neurocLite(c("fslr", "hcp"))
 ```
 
-## Installing `neurocInstall`
+### Installing the `neurocInstall` package
 
 The `neurocInstall` package contains the `neurocLite`/`neuro_install` functions, as well as others relevant for Neuroconductor.  You can install the package as follows:
 
@@ -43,7 +43,7 @@ neuro_install("neurocInstall")
 
 After installation, you can use `neurocInstall::neuroc_install()` to install packages without source-ing the URL above.
 
-## Installing Neuroconductor Packages without Upgrading Dependencies
+## Installing Neuroconductor Packages without upgrading dependencies
 
 The `neurocLite`/`neuro_install` functions depend on `devtools::install_github`, which will upgrade dependencies by default, which is recommended.  If you would like to install a package, but not upgrade the dependencies (missing dependencies will still be installed), you can set the `upgrade_dependencies` argument to `FALSE`:
 
@@ -52,7 +52,7 @@ The `neurocLite`/`neuro_install` functions depend on `devtools::install_github`,
 neurocLite(c("fslr", "hcp"), upgrade_dependencies = FALSE)
 ```
 
-# Installing and Starting R 
+# Installing and starting R 
 
 1.  Download the most recent version of R from [https://cran.r-project.org/](https://cran.r-project.org/). There are detailed instructions on the R website as well as the specific R installation for the platform you are using, typically Linux, OSX, and Windows.
 
@@ -61,7 +61,7 @@ neurocLite(c("fslr", "hcp"), upgrade_dependencies = FALSE)
 3.  For learning R, there are many resources such as [Try-R at codeschool](http://tryr.codeschool.com/) and [DataCamp](https://www.datacamp.com/getting-started?step=2&track=r).
 
 
-## Packages not available on Neuroconductor
+# Packages not available on Neuroconductor
 
 If a package is not in the Neuroconductor [list of packages ](http://neuroconductor.org/list-current-packages), then it is not located on the [Neuroconductor Github](https://github.com/neuroconductor?tab=repositories).  Therefore, when installing, you'll get the following error:
 
