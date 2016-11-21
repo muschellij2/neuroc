@@ -121,18 +121,18 @@ $(document).ready(function () {
 
 
 <div id="installing-devtools" class="section level1">
-<h1><span class="header-section-number">1</span> Installing devtools</h1>
+<h1>Installing devtools</h1>
 <p>John Muschelli<br />
 October 3, 2016</p>
 <p>As Neuroconductor is GitHub-based, we will need a way for R to install packages directly from GitHub. The <code>devtools</code> package provides this functionality. In this tutorial, we will go through the steps of installing <code>devtools</code>, and some common problems. You must have <code>devtools</code> installed to install from GitHub in subsequent tutorials on installing Neuroconductor packages.</p>
 <p>There are other packages that will do this and are more lightweight (see <code>remotes</code> and <code>ghit</code>), but we will focus on <code>devtools</code>.</p>
 </div>
 <div id="mac-osx" class="section level1">
-<h1><span class="header-section-number">2</span> Mac OSX</h1>
+<h1>Mac OSX</h1>
 <p>You need to install <a href="https://developer.apple.com/library/content/technotes/tn2339/_index.html">Command Line Tools</a>, aka the command line tools for Xcode, if you have not already. <a href="http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/" class="uri">http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/</a> is a great tutorial how.</p>
 </div>
 <div id="installing-devtools-1" class="section level1">
-<h1><span class="header-section-number">3</span> Installing devtools</h1>
+<h1>Installing devtools</h1>
 <p>If you already have <code>devtools</code> installed great! (Why are you here?) You can always reinstall the most up to date version from the steps below.</p>
 <pre class="r"><code>packages = installed.packages()
 packages = packages[, &quot;Package&quot;]
@@ -141,7 +141,7 @@ if (!&quot;devtools&quot; %in% packages) {
 }</code></pre>
 </div>
 <div id="the-remotes-and-ghit-packages" class="section level1">
-<h1><span class="header-section-number">4</span> The <code>remotes</code> and <code>ghit</code> packages</h1>
+<h1>The <code>remotes</code> and <code>ghit</code> packages</h1>
 <p>If you want a lighter-weight package that has the <code>install_github</code> functionality that <code>devtools</code> provides, but not all the “development” parts of <code>devtools</code>, the <code>remotes</code> package exists just for that:</p>
 <pre class="r"><code>packages = installed.packages()
 packages = packages[, &quot;Package&quot;]
@@ -152,13 +152,13 @@ if (!&quot;remotes&quot; %in% packages) {
 <p>In any subsequent tutorial, when you see <code>devtools::install_github</code>, just insert <code>remotes::install_github</code> and it should work just the same.</p>
 </div>
 <div id="updating-a-package" class="section level1">
-<h1><span class="header-section-number">5</span> Updating a package</h1>
+<h1>Updating a package</h1>
 <p>In the <code>install_github</code> function, there are additional options to pass to the <code>install</code> function from <code>devtools</code>. One of those arguments is <code>upgrade_dependencies</code>, which default is set to <code>TRUE</code>. So if you want to install a package from GitHub, but not update any of the dependencies, then you can use <code>install_github(..., upgrade_dependencies = FALSE)</code>.</p>
 </div>
 <div id="troubleshooting-errors" class="section level1">
-<h1><span class="header-section-number">6</span> Troubleshooting errors</h1>
+<h1>Troubleshooting errors</h1>
 <div id="git2r-dependency-in-devtools" class="section level2">
-<h2><span class="header-section-number">6.1</span> git2r dependency in devtools</h2>
+<h2>git2r dependency in devtools</h2>
 <p>If you cannot install <code>devtools</code>, many times it is due to <code>git2r</code>. You should look at the installation logs and if you see something like:</p>
 <pre><code>   The OpenSSL library that is required to
    build git2r was not found.
@@ -169,7 +169,7 @@ openssl-devel (package on e.g. Fedora, CentOS and RHEL)
 openssl       (Homebrew package on OS X)</code></pre>
 <p>Then run <code>sudo apt-get libssl-dev</code> or <code>sudo yum install openssl-devel</code> on your respective Linux machine. Try to re-install <code>devtools</code>.</p>
 <div id="mac-osx-1" class="section level3">
-<h3><span class="header-section-number">6.1.1</span> Mac OSX</h3>
+<h3>Mac OSX</h3>
 <p>For Mac, you have to <a href="http://www.howtogeek.com/211541/homebrew-for-os-x-easily-installs-desktop-apps-and-terminal-utilities/">install Homebrew</a> which the tutorial is located in the link. After Homebrew is installed you should be able to type in the Terminal:</p>
 <pre><code>brew update
 brew install openssl</code></pre>
@@ -178,7 +178,7 @@ brew install openssl</code></pre>
 </div>
 </div>
 <div id="session-info" class="section level1">
-<h1><span class="header-section-number">7</span> Session Info</h1>
+<h1>Session Info</h1>
 <pre class="r"><code>devtools::session_info()</code></pre>
 <pre><code>## Session info --------------------------------------------------------------</code></pre>
 <pre><code>##  setting  value                       

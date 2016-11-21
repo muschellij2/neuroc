@@ -121,7 +121,7 @@ $(document).ready(function () {
 
 
 <div id="an-example-of-an-fmri-analysis-in-fsl" class="section level1">
-<h1><span class="header-section-number">1</span> An example of an fMRI analysis in FSL</h1>
+<h1>An example of an fMRI analysis in FSL</h1>
 <p>John Muschelli<br />
 October 3, 2016</p>
 <pre class="r"><code>library(fslr)</code></pre>
@@ -133,7 +133,7 @@ library(extrantsr)</code></pre>
 <p>In this tutorial we will discuss performing some preprocessing of a single subject functional MRI in FSL.</p>
 </div>
 <div id="data-packages" class="section level1">
-<h1><span class="header-section-number">2</span> Data Packages</h1>
+<h1>Data Packages</h1>
 <p>For this analysis, I will use one subject from the Kirby 21 data set. The <code>kirby21.base</code> and <code>kirby21.fmri</code> packages are necessary for this analysis and have the data we will be working on. You need devtools to install these. Please refer to <a href="neuroc-help-installing-devtools">installing devtools</a> for additional instructions or troubleshooting.</p>
 <pre class="r"><code>packages = installed.packages()
 packages = packages[, &quot;Package&quot;]
@@ -145,7 +145,7 @@ if (!&quot;kirby21.fmri&quot; %in% packages) {
 }</code></pre>
 </div>
 <div id="loading-data" class="section level1">
-<h1><span class="header-section-number">3</span> Loading Data</h1>
+<h1>Loading Data</h1>
 <p>We will use the <code>get_image_filenames_df</code> function to extract the filenames on our hard disk for the T1 image and the fMRI images (4D).</p>
 <pre class="r"><code>library(kirby21.fmri)
 library(kirby21.base)
@@ -157,7 +157,7 @@ t1_fname = fnames$T1[1]
 fmri_fname = fnames$fMRI[1]
 base_fname = nii.stub(fmri_fname, bn = TRUE)</code></pre>
 <div id="parameter-file" class="section level2">
-<h2><span class="header-section-number">3.1</span> Parameter file</h2>
+<h2>Parameter file</h2>
 <p>If you’d like to see the header information from the fMRI data, it is located by the following commands:</p>
 <pre class="r"><code>library(R.utils)
 par_file = system.file(&quot;visit_1/113/113-01-fMRI.par.gz&quot;, 
@@ -187,7 +187,7 @@ info[11:23]</code></pre>
 </div>
 </div>
 <div id="outline" class="section level1">
-<h1><span class="header-section-number">4</span> Outline</h1>
+<h1>Outline</h1>
 <p>The steps I will perform in this analysis:</p>
 <ol style="list-style-type: decimal">
 <li>Calculation of Motion Parameters (<code>fslr::mcflirt</code>)</li>
@@ -210,7 +210,7 @@ ortho2(fmri, w = 1, add.orient = FALSE)</code></pre>
 <pre class="r"><code>rm(list = &quot;fmri&quot;) # just used for cleanup </code></pre>
 </div>
 <div id="stabilization-of-signal" class="section level1">
-<h1><span class="header-section-number">5</span> Stabilization of Signal</h1>
+<h1>Stabilization of Signal</h1>
 <p>Volumes corresponding to the first 10 seconds of the rs-fMRI scan were dropped to allow for magnetization stabilization.</p>
 <pre class="r"><code>fmri = readnii(fmri_fname)
 tr = 2 # 2 seconds
@@ -218,7 +218,7 @@ first_scan = floor(10.0 / tr) + 1 # 10 seconds &quot;stabilization of signal&quo
 sub_fmri = subset_4d(fmri, first_scan:ntim(fmri))</code></pre>
 </div>
 <div id="slice-timing-correction" class="section level1">
-<h1><span class="header-section-number">6</span> Slice Timing Correction</h1>
+<h1>Slice Timing Correction</h1>
 <pre class="r"><code>library(fslr)
 scorr_fname = paste0(base_fname, &quot;_scorr.nii.gz&quot;)
 if (!file.exists(scorr_fname)) {
@@ -231,7 +231,7 @@ if (!file.exists(scorr_fname)) {
 }</code></pre>
 </div>
 <div id="slice-timing-correction-1" class="section level1">
-<h1><span class="header-section-number">7</span> Slice Timing Correction</h1>
+<h1>Slice Timing Correction</h1>
 <p>Similarly to the ANTsR processing, we can set <code>opts = &quot;-meanvol&quot;</code> so that the motion correction registers the images to the mean of the time series. The default otherwise is to register to the scan in the middle (closest to number of time points / 2). You can supercede this with either specifying <code>-refvol</code> for which time point to register to, or <code>-reffile</code> to specify a volume to register to. You can think of <code>-meanvol</code> as a wrapper for making the mean time series (using <code>fslmaths(opt = &quot;-Tmean&quot;)</code>) and then passing that in as a <code>reffile</code>. We will do this explicitly in the code below. The <code>-plots</code> arguments outputs a <code>.par</code> file so that we can read the motion parameters after <code>mcflirt</code> is run.</p>
 <pre class="r"><code>moco_fname = paste0(base_fname, 
                     &quot;_motion_corr.nii.gz&quot;)
@@ -277,7 +277,7 @@ head(moco_params)</code></pre>
 [5,]  0.0412824
 [6,]  0.0439374</code></pre>
 <div id="lets-make-a-matrix" class="section level2">
-<h2><span class="header-section-number">7.1</span> Let’s Make a Matrix!</h2>
+<h2>Let’s Make a Matrix!</h2>
 <p><code>img_ts_to_matrix</code> creates <span class="math inline">\(V\times T\)</span> matrix, <span class="math inline">\(V\)</span> voxels in mask, unlike <code>ANTsR::timeseries2matrix</code>. Therefore, we transpose the matrix so that it is consistent with the <a href="neuroc-help-fmri-analysis-antsr">ANTsR tutorial for fMRI</a> and so <code>boldMatrix</code> is <span class="math inline">\(T\times V\)</span>. We will get the average of the co-registered image using <code>fslmaths</code>. We wil use this average image to get a mask using the <code>oMask</code> function, which calls <code>getMask</code>, but for <code>nifti</code> objects. We will then zero out the average image using the mask image.</p>
 <pre class="r"><code>moco_avg_img = fslmaths(moco_fname, opts = &quot;-Tmean&quot;)</code></pre>
 <pre><code>fslmaths &quot;/Users/johnmuschelli/Dropbox/Projects/neuroc/fmri_analysis_fslr/113-01-fMRI_motion_corr.nii.gz&quot;  -Tmean &quot;/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpI6VptD/file1258356d1352e&quot;;</code></pre>
@@ -315,7 +315,7 @@ boldMatrix = img_ts_to_matrix(
 boldMatrix = t(boldMatrix)
 boldMatrix = boldMatrix[ , maskImage == 1]</code></pre>
 <div id="calculation-of-dvars" class="section level3">
-<h3><span class="header-section-number">7.1.1</span> Calculation of DVARS</h3>
+<h3>Calculation of DVARS</h3>
 <p>With this <code>boldMatrix</code>, we can calculate a series of information. For example, we can calculate DVARS based on the motion corrected data. We can also compare the DVARS to the DVARS calculated from the non-realigned data.</p>
 <p>Here we show how you can still use <code>ANTsR::computeDVARS</code> to calculate DVARS. The first element of <code>dvars</code> is the mean of the <code>my_dvars</code>. By the definition of <span class="citation">@power2012spurious</span>, the first element of DVARS should be zero.</p>
 <p>Here we will multiply the 3 first motion parameters (roll, pitch, yaw) by 50 to convert radians to millimeters by assuming a brain radius of 50 mm, as similar to <span class="citation">@power2012spurious</span>. The next 3 parameters are in terms of millimeters (x, y, z). We will plot each of the parameters on the same scale to look at the motion for each scan.</p>
@@ -357,7 +357,7 @@ for (i in 2:ncol(mp)) {
 <pre class="r"><code>rm(list = &quot;mp&quot;)</code></pre>
 </div>
 <div id="heatmap-of-the-values" class="section level3">
-<h3><span class="header-section-number">7.1.2</span> Heatmap of the values</h3>
+<h3>Heatmap of the values</h3>
 <p>We can look at the full trajectory of each voxel over each scan. We scaled the data (by column, which is voxel), which is somewhat equivalent to doing whole-brain z-score normalization of the fMRI.</p>
 <p>We can find the index which has the highest mean value, which may indicate some motion artifact.</p>
 <pre class="r"><code>library(RColorBrewer)

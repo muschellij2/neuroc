@@ -10,6 +10,8 @@ LIST += fmri_analysis_ANTsR
 LIST += fmri_analysis_fslr
 LIST += DTI_analysis_fslr
 LIST += ms_lesion
+LIST += hcp
+LIST += install
 
 all:
 	for fol in $(LIST) ; do \

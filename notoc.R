@@ -9,7 +9,7 @@ all_indices = list.files(pattern = "[.]Rmd$",
 all_indices = all_indices[ grep("notoc[.]Rmd$", all_indices, invert = TRUE)]
 all_indices = all_indices[ file.exists(gsub(".Rmd$", ".md", all_indices))]
 all_indices = setdiff(all_indices, "index.Rmd")
-fname = all_indices[4]
+fname = all_indices[1]
 subber = TRUE
 
 notoc = function(
@@ -36,6 +36,8 @@ notoc = function(
     doc$output$html_document$toc_depth = NULL
     doc$output$html_document$toc_float = NULL
     doc$output$html_document$keep_md = NULL
+    # remove numbered sections
+    doc$output$html_document$number_sections = NULL
     doc$date = NULL
     doc$title = NULL
     

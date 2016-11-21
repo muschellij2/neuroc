@@ -19,6 +19,9 @@ Please visit the [FAQ](neuroc-help-faq) for information on how to begin.
 
 1. [NIfTI Basics](neuroc-help-nifti-basics)
 
+# Data
+1. [Downloading Human Connectome Project Data](neuroc-help-hcp)
+
 # General Tutorials {#tutorials}
 
 1. [Brain Extraction](neuroc-help-brain-extraction)

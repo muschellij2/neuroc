@@ -3,7 +3,6 @@ author: John Muschelli
 output:
   html_document:
     theme: cosmo
-    number_sections: yes
 bibliography: ../refs.bib
 ---
 # Brain Extraction/Segmentation

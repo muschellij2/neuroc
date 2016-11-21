@@ -3,7 +3,6 @@ author: John Muschelli
 output:
   html_document:
     theme: cosmo
-    number_sections: yes
 ---
 # An example of an fMRI analysis in FSL
 John Muschelli  

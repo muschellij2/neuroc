@@ -3,7 +3,6 @@ author: John Muschelli
 output:
   html_document:
     theme: cosmo
-    number_sections: yes
 ---
 # DTI Analysis in fslr
 John Muschelli  

@@ -14,6 +14,9 @@ Please visit the [FAQ](faq/index.html) for information on how to begin.
 
 1. [NIfTI Basics](nifti_basics/index.html)
 
+# Data
+1. [Downloading Human Connectome Project Data](hcp/index.html)
+
 # General Tutorials {#tutorials}
 
 1. [Brain Extraction](brain_extraction/index.html)
