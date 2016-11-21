@@ -6,7 +6,7 @@ output:
 
 
 
-# Using Neuroconductor
+# Installing Neuroconductor Packages 
 
 [Install and start the latest release version of R](#installing-and-starting-r) and then you can install a package using the following command:
 
@@ -22,8 +22,9 @@ where `PACKAGE` is the name of the package you'd like to install, such as `fslr`
 source("http://neuroconductor.org/neurocLite.R")
 neuro_install(c("fslr", "hcp"))
 ```
+## `neurocLite`: an alias for `neuroc_install`
 
-As with Bioconductor, which uses the `biocLite` function to install packages, we have created a duplicate of `neuro_install`, called `neurocLite`, so that the same command could have been executed as follows:
+As Bioconductor uses the `biocLite` function to install packages, we have created a duplicate of `neuro_install`, called `neurocLite`, for ease of use for those users accustomed to Bioconductor.  The same command could have been executed as follows:
 
 ```r
 source("http://neuroconductor.org/neurocLite.R")
@@ -40,7 +41,7 @@ source("http://neuroconductor.org/neurocLite.R")
 neuro_install("neurocInstall")
 ```
 
-In the future, you can use `neurocInstall::neuroc_install()` to install packages without source-ing the URL above.
+After installation, you can use `neurocInstall::neuroc_install()` to install packages without source-ing the URL above.
 
 # Installing and Starting R 
 

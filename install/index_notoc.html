@@ -119,8 +119,8 @@ $(document).ready(function () {
 </div>
 
 
-<div id="using-neuroconductor" class="section level1">
-<h1>Using Neuroconductor</h1>
+<div id="installing-neuroconductor-packages" class="section level1">
+<h1>Installing Neuroconductor Packages</h1>
 <p><a href="#installing-and-starting-r">Install and start the latest release version of R</a> and then you can install a package using the following command:</p>
 <pre class="r"><code>## try https:// if http:// URLs are supported
 source(&quot;http://neuroconductor.org/neurocLite.R&quot;)
@@ -128,15 +128,18 @@ neuro_install(&quot;PACKAGE&quot;)</code></pre>
 <p>where <code>PACKAGE</code> is the name of the package you’d like to install, such as <code>fslr</code>. For example, if we want to install <code>hcp</code> and <code>fslr</code> we can run:</p>
 <pre class="r"><code>source(&quot;http://neuroconductor.org/neurocLite.R&quot;)
 neuro_install(c(&quot;fslr&quot;, &quot;hcp&quot;))</code></pre>
-<p>As with Bioconductor, which uses the <code>biocLite</code> function to install packages, we have created a duplicate of <code>neuro_install</code>, called <code>neurocLite</code>, so that the same command could have been executed as follows:</p>
+<div id="neuroclite-an-alias-for-neuroc_install" class="section level2">
+<h2><code>neurocLite</code>: an alias for <code>neuroc_install</code></h2>
+<p>As Bioconductor uses the <code>biocLite</code> function to install packages, we have created a duplicate of <code>neuro_install</code>, called <code>neurocLite</code>, for ease of use for those users accustomed to Bioconductor. The same command could have been executed as follows:</p>
 <pre class="r"><code>source(&quot;http://neuroconductor.org/neurocLite.R&quot;)
 neurocLite(c(&quot;fslr&quot;, &quot;hcp&quot;))</code></pre>
+</div>
 <div id="installing-neurocinstall" class="section level2">
 <h2>Installing <code>neurocInstall</code></h2>
 <p>The <code>neurocInstall</code> package contains the <code>neurocLite</code>/<code>neuro_install</code> functions, as well as others relevant for Neuroconductor. You can install the package as follows:</p>
 <pre class="r"><code>source(&quot;http://neuroconductor.org/neurocLite.R&quot;)
 neuro_install(&quot;neurocInstall&quot;)</code></pre>
-<p>In the future, you can use <code>neurocInstall::neuroc_install()</code> to install packages without source-ing the URL above.</p>
+<p>After installation, you can use <code>neurocInstall::neuroc_install()</code> to install packages without source-ing the URL above.</p>
 </div>
 </div>
 <div id="installing-and-starting-r" class="section level1">
