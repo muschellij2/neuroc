@@ -38,6 +38,15 @@ neuro_install("neurocInstall")
 
 After installation, you can use `neurocInstall::neuroc_install()` to install packages without source-ing the URL above.
 
+## Installing Neuroconductor Packages without Upgrading Dependencies
+
+The `neurocLite`/`neuro_install` functions depend on `devtools::install_github`, which will upgrade dependencies by default, which is recommended.  If you would like to install a package, but not upgrade the dependencies (missing dependencies will still be installed), you can set the `upgrade_dependencies` argument to `FALSE`:
+
+
+```r
+neurocLite(c("fslr", "hcp"), upgrade_dependencies = FALSE)
+```
+
 # Installing and Starting R 
 
 1.  Download the most recent version of R from [https://cran.r-project.org/](https://cran.r-project.org/). There are detailed instructions on the R website as well as the specific R installation for the platform you are using, typically Linux, OSX, and Windows.
@@ -45,3 +54,16 @@ After installation, you can use `neurocInstall::neuroc_install()` to install pac
 2.  Start R; we recommend using R through [RStudio](https://www.rstudio.com/).  You can start R using RStudio (Windows, OSX, Linux), typing "R" at in a terminal (Linux or OSX), or using the R application either by double-clicking on the R application (Windows and OSX).
 
 3.  For learning R, there are many resources such as [Try-R at codeschool](http://tryr.codeschool.com/) and [DataCamp](https://www.datacamp.com/getting-started?step=2&track=r).
+
+
+## Packages not available on Neuroconductor
+
+If a package is not in the Neuroconductor [list of packages ](http://neuroconductor.org/list-current-packages), then it is not located on the [Neuroconductor Github](https://github.com/neuroconductor?tab=repositories).  Therefore, when installing, you'll get the following error:
+
+```
+Error in neuro_install(...) : 
+  Package(s) PACKAGE_TRIED_TO_INSTALL are not in neuroconductor
+```
+
+Once a package is located on the list of packages, then it will be available to install. 
+

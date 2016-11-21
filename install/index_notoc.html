@@ -141,6 +141,11 @@ neurocLite(c(&quot;fslr&quot;, &quot;hcp&quot;))</code></pre>
 neuro_install(&quot;neurocInstall&quot;)</code></pre>
 <p>After installation, you can use <code>neurocInstall::neuroc_install()</code> to install packages without source-ing the URL above.</p>
 </div>
+<div id="installing-neuroconductor-packages-without-upgrading-dependencies" class="section level2">
+<h2>Installing Neuroconductor Packages without Upgrading Dependencies</h2>
+<p>The <code>neurocLite</code>/<code>neuro_install</code> functions depend on <code>devtools::install_github</code>, which will upgrade dependencies by default, which is recommended. If you would like to install a package, but not upgrade the dependencies (missing dependencies will still be installed), you can set the <code>upgrade_dependencies</code> argument to <code>FALSE</code>:</p>
+<pre class="r"><code>neurocLite(c(&quot;fslr&quot;, &quot;hcp&quot;), upgrade_dependencies = FALSE)</code></pre>
+</div>
 </div>
 <div id="installing-and-starting-r" class="section level1">
 <h1>Installing and Starting R</h1>
@@ -149,6 +154,13 @@ neuro_install(&quot;neurocInstall&quot;)</code></pre>
 <li><p>Start R; we recommend using R through <a href="https://www.rstudio.com/">RStudio</a>. You can start R using RStudio (Windows, OSX, Linux), typing “R” at in a terminal (Linux or OSX), or using the R application either by double-clicking on the R application (Windows and OSX).</p></li>
 <li><p>For learning R, there are many resources such as <a href="http://tryr.codeschool.com/">Try-R at codeschool</a> and <a href="https://www.datacamp.com/getting-started?step=2&amp;track=r">DataCamp</a>.</p></li>
 </ol>
+<div id="packages-not-available-on-neuroconductor" class="section level2">
+<h2>Packages not available on Neuroconductor</h2>
+<p>If a package is not in the Neuroconductor <a href="http://neuroconductor.org/list-current-packages">list of packages</a>, then it is not located on the <a href="https://github.com/neuroconductor?tab=repositories">Neuroconductor Github</a>. Therefore, when installing, you’ll get the following error:</p>
+<pre><code>Error in neuro_install(...) : 
+  Package(s) PACKAGE_TRIED_TO_INSTALL are not in neuroconductor</code></pre>
+<p>Once a package is located on the list of packages, then it will be available to install.</p>
+</div>
 </div>
 
 

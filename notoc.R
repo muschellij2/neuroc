@@ -66,7 +66,7 @@ notoc = function(
     ###############################
     # Doing the simple/stupid way of string matching
     ###############################
-    dumb_string = "XXXXXX"
+    dumb_string = "XZXZXZXZ"
     dumb_out = paste0("](", dumb_string, "___", "\\L\\1___", dumb_string, ")")
     
     ###############################
