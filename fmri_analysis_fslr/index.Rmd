@@ -1,7 +1,7 @@
 ---
 title: "An example of an fMRI analysis in FSL"
 author: "John Muschelli"
-date: "October 3, 2016"
+date: "`r Sys.Date()`"
 output: 
   html_document:
     keep_md: true
@@ -18,6 +18,7 @@ knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "")
 ```
 
 ```{r libs, cache = FALSE}
+library(methods)
 library(fslr)
 library(neurobase)
 library(extrantsr)

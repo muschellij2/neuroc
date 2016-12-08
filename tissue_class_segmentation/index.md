@@ -1,6 +1,6 @@
 # Tissue Class Segmentation
 John Muschelli  
-October 3, 2016  
+`r Sys.Date()`  
 
 
 

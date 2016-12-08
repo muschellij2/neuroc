@@ -1,13 +1,9 @@
 ---
-author: John Muschelli
 output:
   html_document:
     theme: cosmo
 bibliography: ../refs.bib
 ---
-# Getting Data from the Human Connectome Project (HCP)
-John Muschelli  
-`r Sys.Date()`  
 
 
 

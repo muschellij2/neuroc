@@ -1,13 +1,9 @@
 ---
-author: John Muschelli
 output:
   html_document:
     theme: cosmo
 bibliography: ../refs.bib
 ---
-# Brain Extraction/Segmentation
-John Muschelli  
-October 3, 2016  
 
 
 

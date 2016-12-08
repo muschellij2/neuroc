@@ -3,8 +3,6 @@ output:
   html_document:
     theme: cosmo
 ---
-# Neuroconductor
-`r Sys.Date()`  
 
 # Frequently Asked Questions (FAQ)
 

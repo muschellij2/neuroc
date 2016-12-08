@@ -1,12 +1,8 @@
 ---
-author: John Muschelli
 output:
   html_document:
     theme: cosmo
 ---
-# Installing ANTsR
-John Muschelli  
-`r Sys.Date()`  
 
 <style type="text/css">
 div.tocify {

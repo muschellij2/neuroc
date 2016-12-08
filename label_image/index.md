@@ -1,6 +1,6 @@
 # Labeling Brain Structures
 John Muschelli  
-October 3, 2016  
+`r Sys.Date()`  
 
 
 

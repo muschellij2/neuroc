@@ -1,6 +1,6 @@
 # An example of an fMRI analysis in ANTsR
 John Muschelli  
-October 3, 2016  
+`r Sys.Date()`  
 
 
 

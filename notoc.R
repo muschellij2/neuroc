@@ -9,7 +9,7 @@ all_indices = list.files(pattern = "[.]Rmd$",
 all_indices = all_indices[ grep("notoc[.]Rmd$", all_indices, invert = TRUE)]
 all_indices = all_indices[ file.exists(gsub(".Rmd$", ".md", all_indices))]
 all_indices = setdiff(all_indices, "index.Rmd")
-fname = all_indices[1]
+fname = all_indices[2]
 subber = TRUE
 
 notoc = function(
@@ -22,6 +22,14 @@ notoc = function(
   md_file = sub(".Rmd$", ".md", fname)
   if (file.exists(md_file)) {
     md = readLines(md_file)
+    
+    # HACK
+    # using date to limit the header stuff
+    # remove titles and such
+    date_ind = grep("^`r Sys", md)
+    if (length(date_ind) > 0) {
+      md = md[ seq(date_ind + 1, length(md)) ]
+    }
     outfile = paste0(file_path_sans_ext(fname),
                      "_notoc.Rmd")
     
@@ -40,6 +48,7 @@ notoc = function(
     doc$output$html_document$number_sections = NULL
     doc$date = NULL
     doc$title = NULL
+    doc$author = NULL
     
     yaml = as.yaml(doc)
     yaml = strsplit(yaml, "\n")[[1]]
@@ -94,7 +103,7 @@ notoc = function(
         return(x)
       })
     
-    # just making character(0)
+    # just making character(0) into ""
     index_notoc = sapply(index_notoc, function(x) {
       if (length(x) == 0) {
         x = ""

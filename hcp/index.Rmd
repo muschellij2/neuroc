@@ -1,7 +1,7 @@
 ---
 title: "Getting Data from the Human Connectome Project (HCP)"
 author: "John Muschelli"
-date: '`r Sys.Date()`'
+date: "`r Sys.Date()`"
 output:
   html_document:
     keep_md: yes

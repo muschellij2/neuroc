@@ -5,8 +5,6 @@ output:
     includes:
       in_header: header.html
 ---
-# Frequently Asked Questions (FAQ)
-`r Sys.Date()`  
 
 
 

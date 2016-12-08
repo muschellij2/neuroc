@@ -1,11 +1,12 @@
 # An example of an fMRI analysis in FSL
 John Muschelli  
-October 3, 2016  
+`r Sys.Date()`  
 
 
 
 
 ```r
+library(methods)
 library(fslr)
 ```
 
@@ -14,7 +15,7 @@ Loading required package: oro.nifti
 ```
 
 ```
-oro.nifti 0.6.2
+oro.nifti 0.7.2
 ```
 
 ```
@@ -224,7 +225,7 @@ moco_avg_img = fslmaths(moco_fname, opts = "-Tmean")
 ```
 
 ```
-fslmaths "/Users/johnmuschelli/Dropbox/Projects/neuroc/fmri_analysis_fslr/113-01-fMRI_motion_corr.nii.gz"  -Tmean "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpI6VptD/file1258356d1352e";
+fslmaths "/Users/johnmuschelli/Dropbox/Projects/neuroc/fmri_analysis_fslr/113-01-fMRI_motion_corr.nii.gz"  -Tmean "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpSjnW8t/file15a142d035e60";
 ```
 
 ```r
@@ -238,7 +239,7 @@ bet_mask = fslbet(moco_avg_img) > 0
 ```
 
 ```
-bet2 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpI6VptD/file125833a2879ba.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpI6VptD/file125832c8c7837" 
+bet2 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpSjnW8t/file15a14197f2d8e.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpSjnW8t/file15a143e69dc2" 
 ```
 
 ```r

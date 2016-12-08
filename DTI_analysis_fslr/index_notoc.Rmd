@@ -1,12 +1,8 @@
 ---
-author: John Muschelli
 output:
   html_document:
     theme: cosmo
 ---
-# DTI Analysis in fslr
-John Muschelli  
-October 3, 2016  
 
 
 

@@ -1,6 +1,6 @@
 # NIfTI Basics
 John Muschelli  
-October 3, 2016  
+`r Sys.Date()`  
 
 
 
