@@ -1,7 +1,6 @@
 ---
 output:
-  html_document:
-    theme: cosmo
+  html_document: {}
 ---
 
 # Frequently Asked Questions (FAQ)

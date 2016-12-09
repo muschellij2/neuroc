@@ -49,6 +49,7 @@ notoc = function(
     doc$date = NULL
     doc$title = NULL
     doc$author = NULL
+    doc$output$html_document$theme = NULL
     
     yaml = as.yaml(doc)
     yaml = strsplit(yaml, "\n")[[1]]

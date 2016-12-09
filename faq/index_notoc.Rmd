@@ -1,7 +1,6 @@
 ---
 output:
   html_document:
-    theme: cosmo
     includes:
       in_header: header.html
 ---
