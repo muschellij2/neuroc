@@ -304,3 +304,13 @@ if (!file.exists(gif_name)) {
 ![](bad_dimension.gif)
 
 Much of the rest of the commands are again within R or already implemented in `ANTSR`.  Analyses in FSL commonly use independent components analysis (ICA) with the `melodic` command.  We will not cover that here and will cover it in a subsequent tutorial.
+
+
+
+# Session Info
+
+```{r, cache = FALSE}
+devtools::session_info()
+```
+
+# References

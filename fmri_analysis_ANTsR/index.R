@@ -224,3 +224,6 @@ colnames(long) = c("scan_num", "component", "value")
 
 ggplot(long, aes(x = scan_num, y = value)) + geom_line() + facet_wrap(~component, ncol = 1)
 
+## ---- cache = FALSE------------------------------------------------------
+devtools::session_info()
+

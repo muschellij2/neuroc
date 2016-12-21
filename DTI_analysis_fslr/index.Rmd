@@ -215,3 +215,14 @@ xfibres(infile = outfile,
 ```
         
 We are currently implementing `probtracx2` and an overall wrapper for all these functions to work as a pipeline.
+
+
+
+# Session Info
+
+```{r, cache = FALSE}
+devtools::session_info()
+```
+
+# References
+

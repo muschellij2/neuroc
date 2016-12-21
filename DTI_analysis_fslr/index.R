@@ -130,3 +130,6 @@ rm(list = "mask")
 ##         bvals = b_vals,
 ##         mask = mask_fname)
 
+## ---- cache = FALSE------------------------------------------------------
+devtools::session_info()
+

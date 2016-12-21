@@ -188,3 +188,6 @@ if (!file.exists(gif_name)) {
   }, movie.name = gif_name)
 }
 
+## ---- cache = FALSE------------------------------------------------------
+devtools::session_info()
+

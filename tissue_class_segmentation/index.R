@@ -202,3 +202,6 @@ ggplot(df, aes(x = value, colour = factor(class))) +
   facet_wrap(~ segmentation, ncol = 1)
 rm(list = "df")
 
+## ---- cache = FALSE------------------------------------------------------
+devtools::session_info()
+

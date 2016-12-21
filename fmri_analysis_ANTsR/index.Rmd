@@ -347,3 +347,12 @@ ggplot(long, aes(x = scan_num, y = value)) + geom_line() + facet_wrap(~component
 
 
 
+
+# Session Info
+
+```{r, cache = FALSE}
+devtools::session_info()
+```
+
+# References
+

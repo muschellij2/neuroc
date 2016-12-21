@@ -77,3 +77,12 @@ Error in neuro_install(...) :
 
 Once a package is located on the list of packages, then it will be available to install. 
 
+
+
+# Session Info
+
+```{r, cache = FALSE}
+devtools::session_info()
+```
+
+# References

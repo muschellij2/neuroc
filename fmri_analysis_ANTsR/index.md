@@ -406,3 +406,83 @@ ggplot(long, aes(x = scan_num, y = value)) + geom_line() + facet_wrap(~component
 
 
 
+
+# Session Info
+
+
+```r
+devtools::session_info()
+```
+
+```
+Session info -------------------------------------------------------------
+```
+
+```
+ setting  value                       
+ version  R version 3.3.1 (2016-06-21)
+ system   x86_64, darwin13.4.0        
+ ui       X11                         
+ language (EN)                        
+ collate  en_US.UTF-8                 
+ tz       America/New_York            
+ date     2016-12-21                  
+```
+
+```
+Packages -----------------------------------------------------------------
+```
+
+```
+ package      * version     date       source                             
+ abind          1.4-5       2016-07-21 cran (@1.4-5)                      
+ animation    * 2.4         2015-08-16 CRAN (R 3.2.0)                     
+ ANTsR        * 0.3.3       2016-11-17 Github (stnava/ANTsR@063700b)      
+ assertthat     0.1         2013-12-06 CRAN (R 3.2.0)                     
+ backports      1.0.4       2016-10-24 CRAN (R 3.3.0)                     
+ bitops         1.0-6       2013-08-17 CRAN (R 3.2.0)                     
+ colorout     * 1.1-0       2015-04-20 Github (jalvesaq/colorout@1539f1f) 
+ colorspace     1.3-0       2016-11-10 CRAN (R 3.3.2)                     
+ DBI            0.5-1       2016-09-10 CRAN (R 3.3.0)                     
+ devtools       1.12.0.9000 2016-12-08 Github (hadley/devtools@1ce84b0)   
+ digest         0.6.10      2016-08-02 cran (@0.6.10)                     
+ dplyr        * 0.5.0       2016-06-24 CRAN (R 3.3.0)                     
+ evaluate       0.10        2016-10-11 CRAN (R 3.3.0)                     
+ ggplot2      * 2.2.0       2016-11-11 CRAN (R 3.3.2)                     
+ gtable         0.2.0       2016-02-26 CRAN (R 3.2.3)                     
+ htmltools      0.3.6       2016-12-08 Github (rstudio/htmltools@4fbf990) 
+ kirby21.base * 1.4.2       2016-10-05 local                              
+ kirby21.fmri * 1.4         2016-09-29 local (@1.4)                       
+ knitr          1.15.1      2016-11-22 cran (@1.15.1)                     
+ lattice        0.20-34     2016-09-06 CRAN (R 3.3.0)                     
+ lazyeval       0.2.0       2016-06-12 CRAN (R 3.3.0)                     
+ magrittr       1.5         2014-11-22 CRAN (R 3.2.0)                     
+ matrixStats  * 0.51.0      2016-10-09 cran (@0.51.0)                     
+ memoise        1.0.0       2016-01-29 CRAN (R 3.2.3)                     
+ munsell        0.4.3       2016-02-13 CRAN (R 3.2.3)                     
+ neurobase    * 1.9.1       2016-12-21 local                              
+ oro.nifti    * 0.7.2       2016-12-21 Github (bjw34032/oro.nifti@a713047)
+ pkgbuild       0.0.0.9000  2016-12-08 Github (r-pkgs/pkgbuild@65eace0)   
+ pkgload        0.0.0.9000  2016-12-08 Github (r-pkgs/pkgload@def2b10)    
+ plyr           1.8.4       2016-06-08 CRAN (R 3.3.0)                     
+ R.methodsS3  * 1.7.1       2016-02-16 CRAN (R 3.2.3)                     
+ R.oo         * 1.21.0      2016-11-01 cran (@1.21.0)                     
+ R.utils      * 2.5.0       2016-11-07 cran (@2.5.0)                      
+ R6             2.2.0       2016-10-05 cran (@2.2.0)                      
+ RColorBrewer * 1.1-2       2014-12-07 CRAN (R 3.2.0)                     
+ Rcpp           0.12.8.2    2016-12-08 Github (RcppCore/Rcpp@8c7246e)     
+ reshape2     * 1.4.2       2016-10-22 CRAN (R 3.3.0)                     
+ rmarkdown      1.2.9000    2016-12-08 Github (rstudio/rmarkdown@7a3df75) 
+ RNifti         0.3.0       2016-12-08 cran (@0.3.0)                      
+ rprojroot      1.1         2016-10-29 cran (@1.1)                        
+ scales         0.4.1       2016-11-09 CRAN (R 3.3.2)                     
+ stringi        1.1.2       2016-10-01 CRAN (R 3.3.0)                     
+ stringr        1.1.0       2016-08-19 cran (@1.1.0)                      
+ tibble         1.2         2016-08-26 CRAN (R 3.3.0)                     
+ withr          1.0.2       2016-06-20 CRAN (R 3.3.0)                     
+ yaml           2.1.14      2016-11-12 CRAN (R 3.3.2)                     
+ zoo          * 1.7-13      2016-05-03 CRAN (R 3.2.4)                     
+```
+
+# References
+

@@ -21,3 +21,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ## ---- eval = FALSE-------------------------------------------------------
 ## neurocLite(c("fslr", "hcp"), upgrade_dependencies = FALSE)
 
+## ---- cache = FALSE------------------------------------------------------
+devtools::session_info()
+

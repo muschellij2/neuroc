@@ -80,3 +80,12 @@ ortho2(cort, cort > 0.1)
 ```{r overlay_cort}
 ortho2(img, cort)
 ```
+
+
+# Session Info
+
+```{r, cache = FALSE}
+devtools::session_info()
+```
+
+# References
