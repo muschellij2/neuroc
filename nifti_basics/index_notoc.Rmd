@@ -4,6 +4,9 @@ output:
 bibliography: ../refs.bib
 ---
 
+All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/nifti_basics/index.R).
+
+
 
 
 # The nifti object

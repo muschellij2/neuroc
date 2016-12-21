@@ -2,6 +2,9 @@
 John Muschelli  
 `r Sys.Date()`  
 
+All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/installing_devtools/index.R).
+
+
 
 
 As Neuroconductor is GitHub-based, we will need a way for R to install packages directly from GitHub.  The `devtools` package provides this functionality.  In this tutorial, we will go through the steps of installing `devtools`, and some common problems.  You must have `devtools` installed to install from GitHub in subsequent tutorials on installing Neuroconductor packages.
@@ -93,7 +96,7 @@ devtools::session_info()
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2016-12-08
+##  date     2016-12-21
 ```
 
 ```

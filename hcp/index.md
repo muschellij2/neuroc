@@ -3,6 +3,9 @@ John Muschelli
 `r Sys.Date()`  
 
 
+All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/hcp/index.R).
+
+
 
 # Human Connectome Project (HCP)
 The [Human Connectome Project](https://www.humanconnectome.org/) (HCP) is a consortium of sites whose goal is to map "human brain circuitry in a target number of 1200 healthy adults using cutting-edge methods of noninvasive neuroimaging" ([https://www.humanconnectome.org/](https://www.humanconnectome.org/)).  It includes a large cohort of individuals with a vast amount of neuroimaging data ranging from structural magnetic resonance imaging (MRI), functional MRI -- both during tasks and resting-state-- and diffusion tensor imaging (DTI), from multiple sites. 

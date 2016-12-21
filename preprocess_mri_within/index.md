@@ -2,6 +2,9 @@
 John Muschelli  
 `r Sys.Date()`  
 
+All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/preprocess_mri_within/index.R).
+
+
 
 
 In this tutorial we will discuss within a visit registration (co-registration) of multi-sequence MRI images.

@@ -3,6 +3,9 @@ output:
   html_document: {}
 ---
 
+All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/fmri_analysis_fslr/index.R).
+
+
 
 
 
@@ -226,7 +229,7 @@ moco_avg_img = fslmaths(moco_fname, opts = "-Tmean")
 ```
 
 ```
-fslmaths "/Users/johnmuschelli/Dropbox/Projects/neuroc/fmri_analysis_fslr/113-01-fMRI_motion_corr.nii.gz"  -Tmean "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpSjnW8t/file15a142d035e60";
+fslmaths "/Users/johnmuschelli/Dropbox/Projects/neuroc/fmri_analysis_fslr/113-01-fMRI_motion_corr.nii.gz"  -Tmean "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpi2cPcD/file9c7f51842b30";
 ```
 
 ```r
@@ -240,7 +243,7 @@ bet_mask = fslbet(moco_avg_img) > 0
 ```
 
 ```
-bet2 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpSjnW8t/file15a14197f2d8e.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpSjnW8t/file15a143e69dc2" 
+bet2 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpi2cPcD/file9c7f20088616.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpi2cPcD/file9c7f2f4f51e" 
 ```
 
 ```r

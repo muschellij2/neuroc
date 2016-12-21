@@ -1,6 +1,8 @@
 # Frequently Asked Questions (FAQ)
 `r Sys.Date()`  
 
+All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/faq/index.R).
+
 
 
 

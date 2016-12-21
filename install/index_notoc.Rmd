@@ -5,6 +5,8 @@ output:
 
 
 
+All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/install/index.R).
+
 # Installing Neuroconductor Packages 
 
 [Install and start the latest release version of R](#installing-and-starting-r) and then you can install a package using the following command:

@@ -12,10 +12,12 @@ all_indices = setdiff(all_indices, "index.Rmd")
 fname = all_indices[2]
 subber = TRUE
 
+
 notoc = function(
   fname = "index.Rmd",
   renderIt = FALSE,
-  subber = TRUE) {
+  subber = TRUE,
+  addR = TRUE) {
 
   
   index = readLines(fname)
@@ -134,6 +136,9 @@ notoc = function(
   }
 }
 
-notoc("index.Rmd", renderIt = FALSE, subber = FALSE)
+notoc("index.Rmd", 
+      renderIt = FALSE, 
+      subber = FALSE,
+      addR = FALSE)
 
 sapply(all_indices, notoc)

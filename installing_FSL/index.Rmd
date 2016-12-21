@@ -13,6 +13,8 @@ output:
     number_sections: true
 ---
 
+All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/installing_FSL/index.R).
+
 <style type="text/css">
 div.tocify {
   max-height: 50%;

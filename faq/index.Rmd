@@ -9,6 +9,8 @@ output:
       in_header: header.html      
 ---
 
+All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/faq/index.R).
+
 ```{r, echo=FALSE, results='asis'}
 library(htmltools)
 func = function(id, title, inner = FALSE){

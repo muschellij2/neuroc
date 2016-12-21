@@ -14,6 +14,9 @@ output:
 bibliography: ../refs.bib      
 ---
 
+All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/nifti_basics/index.R).
+
+
 ```{r setup, include=FALSE}
 library(neurobase)
 library(oro.nifti)

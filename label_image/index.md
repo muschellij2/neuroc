@@ -2,6 +2,8 @@
 John Muschelli  
 `r Sys.Date()`  
 
+All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/label_image/index.R).
+
 
 
 In [Processing Within-Visit MRI](../preprocess_mri_within/index.html) we show how to register a T1-weighted image to the Eve template.  The Eve template has two full brain segmentations and one white matter segmentations, each done by hand.  I will refer to these as "atlases" because they tell you "where" you are in the brain with the corresponding labels.

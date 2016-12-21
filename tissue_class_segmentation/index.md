@@ -2,6 +2,8 @@
 John Muschelli  
 `r Sys.Date()`  
 
+All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/tissue_class_segmentation/index.R).
+
 
 
 In this tutorial we will discuss performing tissue class segmentation using `atropos` in `ANTsR` and it's wrapper function in `extrantsr`, `otropos`. 

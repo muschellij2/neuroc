@@ -6,6 +6,8 @@ bibliography: ../refs.bib
 
 
 
+All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/brain_extraction/index.R).
+
 In this tutorial we will discuss performing brain segmentation using the brain extraction tool (BET) in `fsl` and a robust version using a wrapper function in `extrantsr`, `fslbet_robust`. 
 
 # Data Packages

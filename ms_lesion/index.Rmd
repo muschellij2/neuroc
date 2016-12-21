@@ -14,7 +14,11 @@ output:
 bibliography: ../refs.bib      
 ---
 
+All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/ms_lesion/index.R).
+
+
 ```{r setup, include=FALSE}
+library(methods)
 library(oasis)
 library(extrantsr)
 library(neurobase)

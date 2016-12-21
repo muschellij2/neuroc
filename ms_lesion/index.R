@@ -1,4 +1,5 @@
 ## ----setup, include=FALSE------------------------------------------------
+library(methods)
 library(oasis)
 library(extrantsr)
 library(neurobase)
