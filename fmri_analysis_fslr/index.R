@@ -2,6 +2,7 @@
 knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "")
 
 ## ----libs, cache = FALSE-------------------------------------------------
+library(methods)
 library(fslr)
 library(neurobase)
 library(extrantsr)

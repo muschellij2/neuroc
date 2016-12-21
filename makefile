@@ -15,7 +15,7 @@ LIST += install
 
 all:
 	for fol in $(LIST) ; do \
-		pwd && echo $$fol && cp makefile.copy $$fol/makefile && cd $$fol && make index.html && cd ../; \
+		pwd && echo $$fol && cp makefile.copy $$fol/makefile && cd $$fol && make all && cd ../; \
 	done
 	Rscript -e "source('notoc.R')"
 	for fol in $(LIST) ; do \
