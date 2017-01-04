@@ -1,6 +1,7 @@
 ---
 output:
-  html_document: {}
+  html_document:
+    theme: null
 ---
 
 # Frequently Asked Questions (FAQ)

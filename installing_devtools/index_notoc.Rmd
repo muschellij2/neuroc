@@ -1,6 +1,7 @@
 ---
 output:
-  html_document: {}
+  html_document:
+    theme: null
 ---
 
 All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/installing_devtools/index.R).

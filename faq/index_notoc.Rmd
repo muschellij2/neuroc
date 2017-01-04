@@ -1,6 +1,7 @@
 ---
 output:
   html_document:
+    theme: null
     includes:
       in_header: header.html
 ---

@@ -48,13 +48,19 @@ notoc = function(
     doc$output$html_document$keep_md = NULL
     # remove numbered sections
     doc$output$html_document$number_sections = NULL
+
+    
     doc$date = NULL
     doc$title = NULL
     doc$author = NULL
-    doc$output$html_document$theme = NULL
+    # doc$output$html_document$theme = "null"
+    # doc$output$html_document$highlight = "null"
+    # highlight: null    
+    doc$output$html_document$theme = "null"
     
     yaml = as.yaml(doc)
     yaml = strsplit(yaml, "\n")[[1]]
+    yaml = gsub("'null'", "null", yaml)
     
     # index[seq(ind[2] + 1, length(index))]
     index_notoc = c("---", yaml, "---", md)
