@@ -57,7 +57,7 @@ notoc = function(
     # doc$output$html_document$highlight = "null"
     # highlight: null    
     doc$output$html_document$theme = "null"
-    doc$output$html_document$highlight = "null"
+    # doc$output$html_document$highlight = "null"
     doc$output$html_document$self_contained = "false"
 
     

@@ -4,7 +4,6 @@ output:
     theme: null
     includes:
       in_header: header.html
-    highlight: null
     self_contained: false
 ---
 
