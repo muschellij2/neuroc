@@ -2,7 +2,7 @@
 John Muschelli  
 `r Sys.Date()`  
 
-This is the new format.
+Highlighting on.
 
 All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/hcp/index.R).
 
