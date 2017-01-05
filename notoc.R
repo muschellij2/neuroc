@@ -57,10 +57,14 @@ notoc = function(
     # doc$output$html_document$highlight = "null"
     # highlight: null    
     doc$output$html_document$theme = "null"
+    doc$output$html_document$highlight = "null"
+    doc$output$html_document$self_contained = "false"
+
     
     yaml = as.yaml(doc)
     yaml = strsplit(yaml, "\n")[[1]]
     yaml = gsub("'null'", "null", yaml)
+    yaml = gsub("'false'", "false", yaml)
     
     # index[seq(ind[2] + 1, length(index))]
     index_notoc = c("---", yaml, "---", md)

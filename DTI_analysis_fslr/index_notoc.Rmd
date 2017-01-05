@@ -2,6 +2,8 @@
 output:
   html_document:
     theme: null
+    highlight: null
+    self_contained: false
 ---
 
 
