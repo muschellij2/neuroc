@@ -2,6 +2,7 @@
 John Muschelli  
 `r Sys.Date()`  
 
+This is the new format.
 
 All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/hcp/index.R).
 
@@ -132,13 +133,13 @@ Session info -------------------------------------------------------------
 
 ```
  setting  value                       
- version  R version 3.3.1 (2016-06-21)
+ version  R version 3.3.2 (2016-10-31)
  system   x86_64, darwin13.4.0        
  ui       X11                         
  language (EN)                        
  collate  en_US.UTF-8                 
  tz       America/New_York            
- date     2016-12-21                  
+ date     2017-01-05                  
 ```
 
 ```
@@ -154,7 +155,7 @@ Packages -----------------------------------------------------------------
  curl         2.3         2016-11-24 cran (@2.3)                       
  DBI          0.5-1       2016-09-10 CRAN (R 3.3.0)                    
  devtools     1.12.0.9000 2016-12-08 Github (hadley/devtools@1ce84b0)  
- digest       0.6.10      2016-08-02 cran (@0.6.10)                    
+ digest       0.6.11      2017-01-03 CRAN (R 3.3.2)                    
  dplyr      * 0.5.0       2016-06-24 CRAN (R 3.3.0)                    
  evaluate     0.10        2016-10-11 CRAN (R 3.3.0)                    
  hcp        * 0.4.10      2016-11-18 local                             
@@ -168,7 +169,7 @@ Packages -----------------------------------------------------------------
  pkgload      0.0.0.9000  2016-12-08 Github (r-pkgs/pkgload@def2b10)   
  R6           2.2.0       2016-10-05 cran (@2.2.0)                     
  Rcpp         0.12.8.2    2016-12-08 Github (RcppCore/Rcpp@8c7246e)    
- rmarkdown    1.2.9000    2016-12-08 Github (rstudio/rmarkdown@7a3df75)
+ rmarkdown    1.3         2017-01-03 Github (rstudio/rmarkdown@3276760)
  rprojroot    1.1         2016-10-29 cran (@1.1)                       
  stringi      1.1.2       2016-10-01 CRAN (R 3.3.0)                    
  stringr      1.1.0       2016-08-19 cran (@1.1.0)                     
