@@ -4,7 +4,6 @@ output:
     theme: null
     includes:
       in_header: header.html
-    self_contained: false
 ---
 
 All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/faq/index.R).

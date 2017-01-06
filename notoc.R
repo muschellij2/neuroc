@@ -58,7 +58,7 @@ notoc = function(
     # highlight: null    
     doc$output$html_document$theme = "null"
     # doc$output$html_document$highlight = "null"
-    doc$output$html_document$self_contained = "false"
+    # doc$output$html_document$self_contained = "false"
 
     
     yaml = as.yaml(doc)

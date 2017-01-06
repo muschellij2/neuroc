@@ -2,7 +2,6 @@
 output:
   html_document:
     theme: null
-    self_contained: false
 ---
 
 All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/installing_ANTsR/index.R).
