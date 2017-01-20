@@ -45,21 +45,21 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <h1>Installing Neuroconductor Packages</h1>
 <p><a href="#installing-and-starting-r">Install and start the latest release version of R</a> and then you can install a package using the following command:</p>
 <pre class="r"><code>## try https:// if http:// URLs are supported
-source(&quot;http://neuroconductor.org/neurocLite.R&quot;)
+source(&quot;https://neuroconductor.org/neurocLite.R&quot;)
 neuro_install(&quot;PACKAGE&quot;)</code></pre>
 <p>where <code>PACKAGE</code> is the name of the package you’d like to install, such as <code>fslr</code>. For example, if we want to install <code>hcp</code> and <code>fslr</code> we can run:</p>
-<pre class="r"><code>source(&quot;http://neuroconductor.org/neurocLite.R&quot;)
+<pre class="r"><code>source(&quot;https://neuroconductor.org/neurocLite.R&quot;)
 neuro_install(c(&quot;fslr&quot;, &quot;hcp&quot;))</code></pre>
 <div id="neuroclite-an-alias-for-neuroc_install" class="section level3">
 <h3><code>neurocLite</code>: an alias for <code>neuroc_install</code></h3>
 <p>As Bioconductor uses the <code>biocLite</code> function to install packages, we have created a duplicate of <code>neuro_install</code>, called <code>neurocLite</code>, for ease of use for those users accustomed to Bioconductor. The same command could have been executed as follows:</p>
-<pre class="r"><code>source(&quot;http://neuroconductor.org/neurocLite.R&quot;)
+<pre class="r"><code>source(&quot;https://neuroconductor.org/neurocLite.R&quot;)
 neurocLite(c(&quot;fslr&quot;, &quot;hcp&quot;))</code></pre>
 </div>
 <div id="installing-the-neurocinstall-package" class="section level3">
 <h3>Installing the <code>neurocInstall</code> package</h3>
 <p>The <code>neurocInstall</code> package contains the <code>neurocLite</code>/<code>neuro_install</code> functions, as well as others relevant for Neuroconductor. You can install the package as follows:</p>
-<pre class="r"><code>source(&quot;http://neuroconductor.org/neurocLite.R&quot;)
+<pre class="r"><code>source(&quot;https://neuroconductor.org/neurocLite.R&quot;)
 neuro_install(&quot;neurocInstall&quot;)</code></pre>
 <p>After installation, you can use <code>neurocInstall::neuroc_install()</code> to install packages without source-ing the URL above.</p>
 </div>
@@ -79,7 +79,7 @@ neuro_install(&quot;neurocInstall&quot;)</code></pre>
 </div>
 <div id="packages-not-available-on-neuroconductor" class="section level1">
 <h1>Packages not available on Neuroconductor</h1>
-<p>If a package is not in the Neuroconductor <a href="http://neuroconductor.org/list-current-packages">list of packages</a>, then it is not located on the <a href="https://github.com/neuroconductor?tab=repositories">Neuroconductor Github</a>. Therefore, when installing, you’ll get the following error:</p>
+<p>If a package is not in the Neuroconductor <a href="https://neuroconductor.org/list-current-packages">list of packages</a>, then it is not located on the <a href="https://github.com/neuroconductor?tab=repositories">Neuroconductor Github</a>. Therefore, when installing, you’ll get the following error:</p>
 <pre><code>Error in neuro_install(...) : 
   Package(s) PACKAGE_TRIED_TO_INSTALL are not in neuroconductor</code></pre>
 <p>Once a package is located on the list of packages, then it will be available to install.</p>
@@ -89,19 +89,19 @@ neuro_install(&quot;neurocInstall&quot;)</code></pre>
 <pre class="r"><code>devtools::session_info()</code></pre>
 <pre><code>## Session info -------------------------------------------------------------</code></pre>
 <pre><code>##  setting  value                       
-##  version  R version 3.3.1 (2016-06-21)
+##  version  R version 3.3.2 (2016-10-31)
 ##  system   x86_64, darwin13.4.0        
 ##  ui       X11                         
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2016-12-21</code></pre>
+##  date     2017-01-20</code></pre>
 <pre><code>## Packages -----------------------------------------------------------------</code></pre>
 <pre><code>##  package   * version     date       source                            
 ##  backports   1.0.4       2016-10-24 CRAN (R 3.3.0)                    
 ##  colorout  * 1.1-0       2015-04-20 Github (jalvesaq/colorout@1539f1f)
 ##  devtools    1.12.0.9000 2016-12-08 Github (hadley/devtools@1ce84b0)  
-##  digest      0.6.10      2016-08-02 cran (@0.6.10)                    
+##  digest      0.6.11      2017-01-03 CRAN (R 3.3.2)                    
 ##  evaluate    0.10        2016-10-11 CRAN (R 3.3.0)                    
 ##  htmltools   0.3.6       2016-12-08 Github (rstudio/htmltools@4fbf990)
 ##  knitr       1.15.1      2016-11-22 cran (@1.15.1)                    
@@ -110,7 +110,7 @@ neuro_install(&quot;neurocInstall&quot;)</code></pre>
 ##  pkgbuild    0.0.0.9000  2016-12-08 Github (r-pkgs/pkgbuild@65eace0)  
 ##  pkgload     0.0.0.9000  2016-12-08 Github (r-pkgs/pkgload@def2b10)   
 ##  Rcpp        0.12.8.2    2016-12-08 Github (RcppCore/Rcpp@8c7246e)    
-##  rmarkdown   1.2.9000    2016-12-08 Github (rstudio/rmarkdown@7a3df75)
+##  rmarkdown   1.3         2017-01-03 Github (rstudio/rmarkdown@3276760)
 ##  rprojroot   1.1         2016-10-29 cran (@1.1)                       
 ##  stringi     1.1.2       2016-10-01 CRAN (R 3.3.0)                    
 ##  stringr     1.1.0       2016-08-19 cran (@1.1.0)                     
