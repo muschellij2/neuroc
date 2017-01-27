@@ -18,7 +18,9 @@ All code for this document is located at [here](https://raw.githubusercontent.co
 
 # Installing Neuroconductor Packages 
 
-[Install and start the latest release version of R](#installing-and-starting-r) and then you can install a package using the following command:
+[Install and start the latest release version of R](#installing-and-starting-r).  Although the installer will try to download and install `devtools`, there may be some system requirements for `devtools` that you may need before going forward.  Please visit [installing devtools](../installing_devtools/index.html) before going forward if you do not have `devtools` currently installed. 
+
+Then, you can install a package using the following command:
 
 ```{r, eval = FALSE}
 ## try https:// if http:// URLs are supported

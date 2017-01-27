@@ -5,7 +5,9 @@ All code for this document is located at [here](https://raw.githubusercontent.co
 
 # Installing Neuroconductor Packages 
 
-[Install and start the latest release version of R](#installing-and-starting-r) and then you can install a package using the following command:
+[Install and start the latest release version of R](#installing-and-starting-r).  Although the installer will try to download and install `devtools`, there may be some system requirements for `devtools` that you may need before going forward.  Please visit [installing devtools](../installing_devtools/index.html) before going forward if you do not have `devtools` currently installed. 
+
+Then, you can install a package using the following command:
 
 
 ```r
@@ -90,7 +92,7 @@ devtools::session_info()
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2017-01-20
+##  date     2017-01-27
 ```
 
 ```
@@ -101,7 +103,7 @@ devtools::session_info()
 ##  package   * version     date       source                            
 ##  backports   1.0.4       2016-10-24 CRAN (R 3.3.0)                    
 ##  colorout  * 1.1-0       2015-04-20 Github (jalvesaq/colorout@1539f1f)
-##  devtools    1.12.0.9000 2016-12-08 Github (hadley/devtools@1ce84b0)  
+##  devtools    1.12.0.9000 2017-01-23 Github (hadley/devtools@1ce84b0)  
 ##  digest      0.6.11      2017-01-03 CRAN (R 3.3.2)                    
 ##  evaluate    0.10        2016-10-11 CRAN (R 3.3.0)                    
 ##  htmltools   0.3.6       2016-12-08 Github (rstudio/htmltools@4fbf990)

@@ -226,7 +226,8 @@ div.tocify {
 <p>All code for this document is located at <a href="https://raw.githubusercontent.com/muschellij2/neuroc/master/install/index.R">here</a>.</p>
 <div id="installing-neuroconductor-packages" class="section level1">
 <h1><span class="header-section-number">1</span> Installing Neuroconductor Packages</h1>
-<p><a href="#installing-and-starting-r">Install and start the latest release version of R</a> and then you can install a package using the following command:</p>
+<p><a href="#installing-and-starting-r">Install and start the latest release version of R</a>. Although the installer will try to download and install <code>devtools</code>, there may be some system requirements for <code>devtools</code> that you may need before going forward. Please visit <a href="../installing_devtools/index.html">installing devtools</a> before going forward if you do not have <code>devtools</code> currently installed.</p>
+<p>Then, you can install a package using the following command:</p>
 <pre class="r"><code>## try https:// if http:// URLs are supported
 source(&quot;https://neuroconductor.org/neurocLite.R&quot;)
 neuro_install(&quot;PACKAGE&quot;)</code></pre>
@@ -278,12 +279,12 @@ neuro_install(&quot;neurocInstall&quot;)</code></pre>
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2017-01-20</code></pre>
+##  date     2017-01-27</code></pre>
 <pre><code>## Packages -----------------------------------------------------------------</code></pre>
 <pre><code>##  package   * version     date       source                            
 ##  backports   1.0.4       2016-10-24 CRAN (R 3.3.0)                    
 ##  colorout  * 1.1-0       2015-04-20 Github (jalvesaq/colorout@1539f1f)
-##  devtools    1.12.0.9000 2016-12-08 Github (hadley/devtools@1ce84b0)  
+##  devtools    1.12.0.9000 2017-01-23 Github (hadley/devtools@1ce84b0)  
 ##  digest      0.6.11      2017-01-03 CRAN (R 3.3.2)                    
 ##  evaluate    0.10        2016-10-11 CRAN (R 3.3.0)                    
 ##  htmltools   0.3.6       2016-12-08 Github (rstudio/htmltools@4fbf990)

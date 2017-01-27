@@ -4,6 +4,9 @@ John Muschelli
 
 All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/installing_devtools/index.R).
 
+# First Pass
+
+Overall, RStudio provides a fantastic tutorial and discussion on [installing devtools](https://www.rstudio.com/products/rpackages/devtools/).  Please consult this before the rest of the document.  If you have errors, please see below.
 
 
 
@@ -90,13 +93,13 @@ devtools::session_info()
 
 ```
 ##  setting  value                       
-##  version  R version 3.3.1 (2016-06-21)
+##  version  R version 3.3.2 (2016-10-31)
 ##  system   x86_64, darwin13.4.0        
 ##  ui       X11                         
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2016-12-21
+##  date     2017-01-27
 ```
 
 ```
@@ -107,8 +110,8 @@ devtools::session_info()
 ##  package   * version     date       source                            
 ##  backports   1.0.4       2016-10-24 CRAN (R 3.3.0)                    
 ##  colorout  * 1.1-0       2015-04-20 Github (jalvesaq/colorout@1539f1f)
-##  devtools    1.12.0.9000 2016-12-08 Github (hadley/devtools@1ce84b0)  
-##  digest      0.6.10      2016-08-02 cran (@0.6.10)                    
+##  devtools    1.12.0.9000 2017-01-23 Github (hadley/devtools@1ce84b0)  
+##  digest      0.6.11      2017-01-03 CRAN (R 3.3.2)                    
 ##  evaluate    0.10        2016-10-11 CRAN (R 3.3.0)                    
 ##  htmltools   0.3.6       2016-12-08 Github (rstudio/htmltools@4fbf990)
 ##  knitr       1.15.1      2016-11-22 cran (@1.15.1)                    
@@ -117,7 +120,7 @@ devtools::session_info()
 ##  pkgbuild    0.0.0.9000  2016-12-08 Github (r-pkgs/pkgbuild@65eace0)  
 ##  pkgload     0.0.0.9000  2016-12-08 Github (r-pkgs/pkgload@def2b10)   
 ##  Rcpp        0.12.8.2    2016-12-08 Github (RcppCore/Rcpp@8c7246e)    
-##  rmarkdown   1.2.9000    2016-12-08 Github (rstudio/rmarkdown@7a3df75)
+##  rmarkdown   1.3         2017-01-03 Github (rstudio/rmarkdown@3276760)
 ##  rprojroot   1.1         2016-10-29 cran (@1.1)                       
 ##  stringi     1.1.2       2016-10-01 CRAN (R 3.3.0)                    
 ##  stringr     1.1.0       2016-08-19 cran (@1.1.0)                     
