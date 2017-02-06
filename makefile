@@ -9,15 +9,16 @@ LIST += preprocess_mri_within
 LIST += fmri_analysis_ANTsR
 LIST += fmri_analysis_fslr
 LIST += DTI_analysis_fslr
+LIST += DTI_analysis_rcamino
 LIST += ms_lesion
 LIST += hcp
 LIST += install
 
 all:
+	Rscript -e "source('notoc.R')"
 	for fol in $(LIST) ; do \
 		pwd && echo $$fol && cp makefile.copy $$fol/makefile && cd $$fol && make all && cd ../; \
 	done
-	Rscript -e "source('notoc.R')"
 	for fol in $(LIST) ; do \
 		cd $$fol && make index_notoc.html && cd ../; \
 	done
