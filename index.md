@@ -26,7 +26,8 @@ Please visit the [FAQ](faq/index.html) for information on how to begin.
 5. [Resting-State fMRI analysis using fslr](fmri_analysis_ANTsR/index.html)
 6. [Processing Within-Visit Structural MRI](preprocess_mri_within/index.html)
 7. [DTI analysis with fslr](DTI_analysis_fslr/index.html)
-8. [Cortical Thickness Estimation (NOT DONE)](cortical_thickness/index.html)
+8. [DTI analysis with Camino](DTI_analysis_rcamino/index.html)
+9. [Cortical Thickness Estimation (NOT DONE)](cortical_thickness/index.html)
 
 # Disease-specific Tutorials
 
