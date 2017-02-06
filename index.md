@@ -23,7 +23,7 @@ Please visit the [FAQ](faq/index.html) for information on how to begin.
 2. [Tissue-Class Segmentation](tissue_class_segmentation/index.html)
 3. [Labeling Brain Structures](label_image/index.html)
 4. [Resting-State fMRI analysis using ANTsR](fmri_analysis_ANTsR/index.html)
-5. [Resting-State fMRI analysis using fslr](fmri_analysis_ANTsR/index.html)
+5. [Resting-State fMRI analysis using fslr](fmri_analysis_fslr/index.html)
 6. [Processing Within-Visit Structural MRI](preprocess_mri_within/index.html)
 7. [DTI analysis with fslr](DTI_analysis_fslr/index.html)
 8. [DTI analysis with Camino](DTI_analysis_rcamino/index.html)

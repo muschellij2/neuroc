@@ -26,10 +26,11 @@ Please visit the [FAQ](neuroc-help-faq) for information on how to begin.
 2. [Tissue-Class Segmentation](neuroc-help-tissue-class-segmentation)
 3. [Labeling Brain Structures](neuroc-help-label-image)
 4. [Resting-State fMRI analysis using ANTsR](neuroc-help-fmri-analysis-antsr)
-5. [Resting-State fMRI analysis using fslr](neuroc-help-fmri-analysis-antsr)
+5. [Resting-State fMRI analysis using fslr](neuroc-help-fmri-analysis-fslr)
 6. [Processing Within-Visit Structural MRI](neuroc-help-preprocess-mri-within)
 7. [DTI analysis with fslr](neuroc-help-dti-analysis-fslr)
-8. [Cortical Thickness Estimation (NOT DONE)](neuroc-help-cortical-thickness)
+8. [DTI analysis with Camino](neuroc-help-dti-analysis-rcamino)
+9. [Cortical Thickness Estimation (NOT DONE)](neuroc-help-cortical-thickness)
 
 # Disease-specific Tutorials
 
