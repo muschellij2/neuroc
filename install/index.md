@@ -11,7 +11,7 @@ Then, you can install a package using the following command:
 
 
 ```r
-## try https:// if http:// URLs are supported
+## try http:// if https:// URLs are supported
 source("https://neuroconductor.org/neurocLite.R")
 neuro_install("PACKAGE")
 ```
@@ -92,7 +92,7 @@ devtools::session_info()
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2017-01-27
+##  date     2017-02-08
 ```
 
 ```

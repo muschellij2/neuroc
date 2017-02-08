@@ -1,0 +1,187 @@
+---
+title: "MALF of the Insula on an ABIDE patient"
+author: "John Muschelli"
+date: '`r Sys.Date()`'
+output: 
+  html_document:
+    keep_md: true
+    theme: cosmo
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+    number_sections: true
+bibliography: ../refs.bib      
+---
+
+All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/malf_insula/index.R).
+
+
+```{r setup, include=FALSE}
+library(methods)
+knitr::opts_chunk$set(echo = TRUE, cache = FALSE, comment = "")
+```
+
+# Package Version
+
+This tutorial requires the `hcp` package (>= 0.5):
+
+```{r}
+ver = installed.packages()["hcp", "Version"]
+if (compareVersion(ver, "0.5") < 0) {
+  stop(paste0("Need to update hcp, ", 
+              "devtools::install_github('muschellij2/hcp')")
+  )
+}
+```
+# Data
+
+We will be using the data from the Autism Brain Imaging Data Exchange [ABIDE](http://fcon_1000.projects.nitrc.org/indi/abide/) [@di2014autism].  The data consists of a children with and without autism from the 1000 Functional Connectomes Project and INDI. I chose a child that was young (around 8 years old) so that we can see if this method works for younger brains:
+
+```{r get_data}
+library(hcp)
+fcp_data = download_hcp_file(
+    paste0("data/Projects/ABIDE/RawData/", 
+        "KKI/0050784/session_1/anat_1/",
+        "mprage.nii.gz"),
+    bucket = "fcp-indi",
+    sign = FALSE)
+print(fcp_data)
+```
+
+Note, you do not need an API key for this data.  We have an MPRAGE for this child downloaded to the disk.
+
+## Visualization
+
+```{r orig_ortho}
+library(neurobase)
+std_img = readnii(fcp_data)
+ortho2(std_img)
+```
+
+## Reorientation
+Although this image seems to be in RPI orientation, we can check using `getForms`:
+
+```{r forms}
+library(fslr)
+getForms(fcp_data)[c("ssor", "sqor")]
+```
+
+This image is indeed in RPI, but we may want to ensure this is the case an use the `rpi_orient` function from fslr so that each image would be in the same orientation:
+
+```{r reor}
+reor = rpi_orient(fcp_data)
+img = reor$img
+```
+
+## Brain Extraction
+
+Here we will use `fslbet_robust` to skull strip the image.  The "robust"
+```{r bet}
+library(extrantsr)
+bet = fslbet_robust(img, swapdim = FALSE)
+```
+
+```{r plot_bet}
+ortho2(robust_window(img), bet)
+```
+
+```{r obet}
+rb = robust_window(img)
+bet2 = fslbet_robust(rb, swapdim = FALSE)
+```
+```{r obet2}
+ortho2(robust_window(img), bet2)
+```
+
+### Zooming in 
+
+Now that we have only the brain image, we can drop extraneous dimensions.  This dropping is for visualization, but also we may not want these extra dimensions affecting any registration.  
+
+```{r dropping}
+dd = dropEmptyImageDimensions(bet > 0,
+    other.imgs = bet)
+run_img = dd$other.imgs
+```
+
+```{r orun}
+ortho2(run_img)
+ortho2(robust_window(run_img))
+```
+
+
+## Labeled data
+
+```{r get_labs, eval = FALSE}
+root_template_dir = file.path(
+    "/dcl01/smart/data", 
+    "structural", 
+    "Templates", 
+    "MICCAI-2012-Multi-Atlas-Challenge-Data")
+template_dir = file.path(root_template_dir,
+    "all-images")
+```
+
+```{r labs, eval = FALSE}
+library(readr)
+labs = read_csv(file.path(root_template_dir,
+    "MICCAI-Challenge-2012-Label-Information.csv"))
+
+niis = list.files(
+    path = template_dir,
+    pattern = ".nii.gz", 
+    full.names = TRUE)
+bases = nii.stub(niis, bn = TRUE)
+templates = niis[grep("_3$", bases)]
+
+df = data.frame(
+    template = templates,
+    stringsAsFactors = FALSE)
+df$ss_template = paste0(
+    nii.stub(df$template),
+    "_SS.nii.gz")
+df$label = paste0(
+    nii.stub(df$template),
+    "_glm.nii.gz")
+stopifnot(all(file.exists(unlist(df))))
+
+indices = labs[grep("sula", tolower(labs$name)),]
+indices = indices$label
+```
+
+```{r reading_data, eval = FALSE}
+library(pbapply)
+lab_list = pblapply(df$label,
+    function(x) {
+    img = fast_readnii(x)
+    niftiarr(img, 
+        img %in% indices
+        )    
+})
+
+temp_list = pblapply(df$ss_template, readnii)
+
+inds = 1:10
+tlist = temp_list[inds]
+llist = lab_list[inds]
+```
+
+```{r running_malf, eval = FALSE}
+res = malf(infile = run_img,
+    template.images = tlist,
+    template.structs = llist,
+    keep_images = FALSE,
+    outfile = "test_malf_mprage_insula.nii.gz")
+
+wimg = robust_window(run_img)
+png("test_malf_image.png")
+ortho2(wimg, xyz = xyz(res))
+dev.off()
+
+
+png("test_malf_image_overlay.png")
+ortho2(wimg, res, xyz = xyz(res), 
+    col.y = scales::alpha("red", 0.5))
+dev.off()
+```
+

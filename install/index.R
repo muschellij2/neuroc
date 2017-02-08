@@ -2,7 +2,7 @@
 knitr::opts_chunk$set(echo = TRUE)
 
 ## ---- eval = FALSE-------------------------------------------------------
-## ## try https:// if http:// URLs are supported
+## ## try http:// if https:// URLs are supported
 ## source("https://neuroconductor.org/neurocLite.R")
 ## neuro_install("PACKAGE")
 

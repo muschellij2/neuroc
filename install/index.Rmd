@@ -23,7 +23,7 @@ All code for this document is located at [here](https://raw.githubusercontent.co
 Then, you can install a package using the following command:
 
 ```{r, eval = FALSE}
-## try https:// if http:// URLs are supported
+## try http:// if https:// URLs are supported
 source("https://neuroconductor.org/neurocLite.R")
 neuro_install("PACKAGE")
 ```

@@ -11,6 +11,7 @@ LIST += fmri_analysis_fslr
 LIST += DTI_analysis_fslr
 LIST += DTI_analysis_rcamino
 LIST += ms_lesion
+LIST += malf_insula
 LIST += hcp
 LIST += install
 
