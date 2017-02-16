@@ -48,7 +48,10 @@ notoc = function(
     doc$output$html_document$keep_md = NULL
     # remove numbered sections
     doc$output$html_document$number_sections = NULL
-
+    
+    if (grepl("^faq", fname)) {
+      doc$output$html_document$includes = NULL
+    }
     
     doc$date = NULL
     doc$title = NULL
