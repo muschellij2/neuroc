@@ -17,6 +17,7 @@ LIST += install
 
 all:
 	Rscript -e "source('notoc.R')"
+	Rscript -e "source('make_links.R')"
 	for fol in $(LIST) ; do \
 		pwd && echo $$fol && cp makefile.copy $$fol/makefile && cd $$fol && make all && cd ../; \
 	done
