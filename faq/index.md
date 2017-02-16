@@ -1,5 +1,12 @@
 # Frequently Asked Questions (FAQ)
 
+<style type="text/css">
+    .bs-example{
+        margin: 20px;
+    }
+</style>
+
+
 All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/faq/index.R).
 
 
