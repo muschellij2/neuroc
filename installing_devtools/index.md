@@ -21,7 +21,7 @@ You need to install [Command Line Tools](https://developer.apple.com/library/con
 
 # Installing devtools
 
-If you already have `devtools` installed great! (Why are you here?)  You can always reinstall the most up to date version from the steps below.
+If you already have `devtools` installed great! (Why are you in this section?)  You can always reinstall the most up to date version from the steps below.
 
 
 ```r
@@ -44,7 +44,7 @@ if (!"remotes" %in% packages) {
 }
 ```
 
-The `ghit` package is the lightest-weight package I have seen which has a `install_github` funciton, but may have some limited functionality compared to `remotes` in the functionality of installing package with dependencies in other systems, such as BitBucket.
+The `ghit` package is the lightest-weight package I have seen which has a `install_github` function, but may have some limited functionality compared to `remotes` in the functionality of installing package with dependencies in other systems, such as BitBucket.
 
 In any subsequent tutorial, when you see `devtools::install_github`, just insert `remotes::install_github` and it should work just the same.
 
@@ -99,7 +99,7 @@ devtools::session_info()
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2017-01-27
+##  date     2017-02-16
 ```
 
 ```
@@ -108,10 +108,10 @@ devtools::session_info()
 
 ```
 ##  package   * version     date       source                            
-##  backports   1.0.4       2016-10-24 CRAN (R 3.3.0)                    
+##  backports   1.0.5       2017-01-18 cran (@1.0.5)                     
 ##  colorout  * 1.1-0       2015-04-20 Github (jalvesaq/colorout@1539f1f)
 ##  devtools    1.12.0.9000 2017-01-23 Github (hadley/devtools@1ce84b0)  
-##  digest      0.6.11      2017-01-03 CRAN (R 3.3.2)                    
+##  digest      0.6.12      2017-01-27 cran (@0.6.12)                    
 ##  evaluate    0.10        2016-10-11 CRAN (R 3.3.0)                    
 ##  htmltools   0.3.6       2016-12-08 Github (rstudio/htmltools@4fbf990)
 ##  knitr       1.15.1      2016-11-22 cran (@1.15.1)                    
@@ -121,7 +121,7 @@ devtools::session_info()
 ##  pkgload     0.0.0.9000  2016-12-08 Github (r-pkgs/pkgload@def2b10)   
 ##  Rcpp        0.12.8.2    2016-12-08 Github (RcppCore/Rcpp@8c7246e)    
 ##  rmarkdown   1.3         2017-01-03 Github (rstudio/rmarkdown@3276760)
-##  rprojroot   1.1         2016-10-29 cran (@1.1)                       
+##  rprojroot   1.2         2017-01-16 cran (@1.2)                       
 ##  stringi     1.1.2       2016-10-01 CRAN (R 3.3.0)                    
 ##  stringr     1.1.0       2016-08-19 cran (@1.1.0)                     
 ##  withr       1.0.2       2016-06-20 CRAN (R 3.3.0)                    

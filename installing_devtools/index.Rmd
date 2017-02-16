@@ -34,7 +34,7 @@ You need to install [Command Line Tools](https://developer.apple.com/library/con
 
 # Installing devtools
 
-If you already have `devtools` installed great! (Why are you here?)  You can always reinstall the most up to date version from the steps below.
+If you already have `devtools` installed great! (Why are you in this section?)  You can always reinstall the most up to date version from the steps below.
 
 ```{r, eval = FALSE}
 packages = installed.packages()
@@ -55,7 +55,7 @@ if (!"remotes" %in% packages) {
 }
 ```
 
-The `ghit` package is the lightest-weight package I have seen which has a `install_github` funciton, but may have some limited functionality compared to `remotes` in the functionality of installing package with dependencies in other systems, such as BitBucket.
+The `ghit` package is the lightest-weight package I have seen which has a `install_github` function, but may have some limited functionality compared to `remotes` in the functionality of installing package with dependencies in other systems, such as BitBucket.
 
 In any subsequent tutorial, when you see `devtools::install_github`, just insert `remotes::install_github` and it should work just the same.
 
