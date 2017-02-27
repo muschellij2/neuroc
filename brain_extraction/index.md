@@ -155,7 +155,7 @@ ss_outfile = paste0(outfile, "_SPM_SS.nii.gz")
 outfile = paste0(outfile, "_SPM_Seg.nii.gz")
 outfiles = c(outfile, ss_outfile, spm_prob_files)
 if (!all(file.exists(outfiles))) {
-  spm_seg = spm12_segment(t1_fname)
+  spm_seg = spm12_segment(t1_fname)$outfiles
   spm_hard_seg = spm_probs_to_seg(img = spm_seg)
   writenii(spm_hard_seg, filename = outfile)
   
@@ -257,7 +257,7 @@ ss_outfile = paste0(outfile, "_SPM_SS.nii.gz")
 outfile = paste0(outfile, "_SPM_Seg.nii.gz")
 outfiles = c(outfile, ss_outfile, spm_prob_files)
 if (!all(file.exists(outfiles))) {
-  nn_spm_seg = spm12_segment(noneck_red)
+  nn_spm_seg = spm12_segment(noneck_red)$outfiles
   nn_spm_hard_seg = spm_probs_to_seg(img = nn_spm_seg)
   writenii(nn_spm_hard_seg, filename = outfile)
   
