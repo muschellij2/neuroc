@@ -26,18 +26,27 @@ Please visit the [FAQ](faq/index.html) for information on how to begin.
 
 # Data
 1. [Downloading Human Connectome Project Data](hcp/index.html)
+1. [Downloading Functional Connectomes Projects](hcp/index.html)
 
 # General Tutorials {#tutorials}
+
+## Structural Imaging
 
 1. [Brain Extraction](brain_extraction/index.html)
 2. [Tissue-Class Segmentation](tissue_class_segmentation/index.html)
 3. [Labeling Brain Structures](label_image/index.html)
+6. [Processing Within-Visit Structural MRI](preprocess_mri_within/index.html)
+9. [Cortical Thickness Estimation (NOT DONE)](cortical_thickness/index.html)
+
+## fMRI 
+
 4. [Resting-State fMRI analysis using ANTsR](fmri_analysis_ANTsR/index.html)
 5. [Resting-State fMRI analysis using fslr](fmri_analysis_fslr/index.html)
-6. [Processing Within-Visit Structural MRI](preprocess_mri_within/index.html)
+5. [Resting-State fMRI analysis using spm12r](fmri_analysis_spm12r/index.html)
+
+## DTI
 7. [DTI analysis with fslr](DTI_analysis_fslr/index.html)
 8. [DTI analysis with Camino](DTI_analysis_rcamino/index.html)
-9. [Cortical Thickness Estimation (NOT DONE)](cortical_thickness/index.html)
 
 # Disease-specific Tutorials
 

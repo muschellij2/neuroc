@@ -8,18 +8,18 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## ----eval = FALSE--------------------------------------------------------
 ## source("https://neuroconductor.org/neurocLite.R")
-## neuro_install(c("fslr", "hcp"))
+## neuro_install(c("fslr", "neurohcp"))
 
 ## ----eval = FALSE--------------------------------------------------------
 ## source("https://neuroconductor.org/neurocLite.R")
-## neurocLite(c("fslr", "hcp"))
+## neurocLite(c("fslr", "neurohcp"))
 
 ## ----eval = FALSE--------------------------------------------------------
 ## source("https://neuroconductor.org/neurocLite.R")
 ## neuro_install("neurocInstall")
 
 ## ---- eval = FALSE-------------------------------------------------------
-## neurocLite(c("fslr", "hcp"), upgrade_dependencies = FALSE)
+## neurocLite(c("fslr", "neurohcp"), upgrade_dependencies = FALSE)
 
 ## ---- cache = FALSE------------------------------------------------------
 devtools::session_info()

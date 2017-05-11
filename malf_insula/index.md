@@ -9,14 +9,14 @@ All code for this document is located at [here](https://raw.githubusercontent.co
 
 # Package Version
 
-This tutorial requires the `hcp` package (>= 0.5):
+This tutorial requires the `neurohcp` package (>= 0.5):
 
 
 ```r
-ver = installed.packages()["hcp", "Version"]
+ver = installed.packages()["neurohcp", "Version"]
 if (compareVersion(ver, "0.5") < 0) {
-  stop(paste0("Need to update hcp, ", 
-              "devtools::install_github('muschellij2/hcp')")
+  stop(paste0("Need to update neurohcp, ", 
+              "devtools::install_github('muschellij2/neurohcp')")
   )
 }
 ```
@@ -26,7 +26,7 @@ We will be using the data from the Autism Brain Imaging Data Exchange [ABIDE](ht
 
 
 ```r
-library(hcp)
+library(neurohcp)
 fcp_data = download_hcp_file(
     paste0("data/Projects/ABIDE/RawData/", 
         "KKI/0050784/session_1/anat_1/",
@@ -314,7 +314,7 @@ print(fcp_data)
 ```
 
 ```
-[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpxiSBys/mprage.nii.gz"
+[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpUtp76L/mprage.nii.gz"
 ```
 
 Note, you do not need an API key for this data.  We have an MPRAGE for this child downloaded to the disk.
@@ -331,7 +331,7 @@ Loading required package: oro.nifti
 ```
 
 ```
-oro.nifti 0.7.2
+oro.nifti 0.7.5
 ```
 
 ```r
@@ -351,7 +351,7 @@ getForms(fcp_data)[c("ssor", "sqor")]
 ```
 
 ```
-fslhd "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpxiSBys/mprage.nii.gz" 
+fslhd "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpUtp76L/mprage.nii.gz" 
 ```
 
 ```
@@ -370,15 +370,15 @@ reor = rpi_orient(fcp_data)
 ```
 
 ```
-fslhd "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpxiSBys/mprage.nii.gz" 
+fslhd "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpUtp76L/mprage.nii.gz" 
 ```
 
 ```
-fslorient -getorient "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpxiSBys/mprage.nii.gz"
+fslorient -getorient "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpUtp76L/mprage.nii.gz"
 ```
 
 ```
-fslswapdim "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpxiSBys/mprage.nii.gz"  RL PA IS "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpxiSBys/file5842defc5cf";
+fslswapdim "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpUtp76L/mprage.nii.gz"  RL PA IS "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpUtp76L/file34b71b36c025";
 ```
 
 ```r
@@ -432,10 +432,10 @@ antsImage
 
 
 $fwdtransforms
-[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpxiSBys/file5841d34d5d70GenericAffine.mat"
+[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpUtp76L/file34b74ea66ce20GenericAffine.mat"
 
 $invtransforms
-[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpxiSBys/file5841d34d5d70GenericAffine.mat"
+[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpUtp76L/file34b74ea66ce20GenericAffine.mat"
 ```
 
 ```
@@ -475,7 +475,7 @@ $invtransforms
 ```
 
 ```
-bet2 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpxiSBys/file5845438409a.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpxiSBys/file5842cc181ea" 
+bet2 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpUtp76L/file34b74d35d160.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpUtp76L/file34b76e9c24d3" 
 ```
 
 ```
@@ -483,7 +483,7 @@ bet2 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpxiSBys/file58
 ```
 
 ```
-bet2 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpxiSBys/file5845ccf4524.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpxiSBys/file5843367b1e1"  -c 128 97 132
+bet2 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpUtp76L/file34b7142229d.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpUtp76L/file34b77181cf13"  -c 128 97 132
 ```
 
 ```
@@ -541,10 +541,10 @@ antsImage
 
 
 $fwdtransforms
-[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpxiSBys/file58450284aa20GenericAffine.mat"
+[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpUtp76L/file34b7128bb55d0GenericAffine.mat"
 
 $invtransforms
-[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpxiSBys/file58450284aa20GenericAffine.mat"
+[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpUtp76L/file34b7128bb55d0GenericAffine.mat"
 ```
 
 ```
@@ -584,7 +584,7 @@ $invtransforms
 ```
 
 ```
-bet2 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpxiSBys/file5845aab5924.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpxiSBys/file58424ce281c" 
+bet2 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpUtp76L/file34b729c59ca3.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpUtp76L/file34b7acb4f56" 
 ```
 
 ```
@@ -592,7 +592,7 @@ bet2 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpxiSBys/file58
 ```
 
 ```
-bet2 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpxiSBys/file58478615dc8.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpxiSBys/file5847d863e41"  -c 128 97 131
+bet2 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpUtp76L/file34b765d47093.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpUtp76L/file34b73e4600a5"  -c 128 97 131
 ```
 
 ```

@@ -1,0 +1,108 @@
+---
+title: "Getting Data from the Functional Connectomes Project (FCP)/INDI"
+author: "John Muschelli"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    keep_md: yes
+    number_sections: yes
+    theme: cosmo
+    toc: yes
+    toc_depth: 3
+    toc_float:
+      collapsed: no
+bibliography: ../refs.bib
+---
+
+All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/fcp_indi/index.R).
+
+```{r setup, include=FALSE}
+library(neurohcp)
+library(dplyr)
+knitr::opts_chunk$set(echo = TRUE, cache = FALSE, comment = "")
+```
+
+# Using the neurohcp package
+
+Although the `neurohcp` package was built specifically for the the [Human Connectome Project](https://www.humanconnectome.org/) (HCP) data, it provides the worker functions for accessing an Amazon S3 bucket and downloading data.  We have adapted these functions to work with the Functional Connectomes Project S3 Bucket (`fcp-indi`) from the INDI initiative.  Although the code is the same, but the bucket is changed, we also must specify we do **not** want to sign the request as `fcp-indi` is an open bucket and the authentication we used for signing fails if we add keys to the data when unneccesary.
+
+
+# Getting Access to the Data
+
+The data is freelly available;.
+
+# Installing the neurohcp package
+
+We will install the `neurohcp` package using the Neuroconductor installer:
+```{r, eval = FALSE}
+source("http://neuroconductor.org/neurocLite.R")
+neuro_install("neurohcp", release = "stable")
+```
+Once these are set, the functions of neurohcp are ready to use.  To test that the API keys are set correctly, one can run `bucketlist`:
+
+```{r blist_show, eval = FALSE}
+neurohcp::bucketlist(sign = FALSE)
+```
+
+```{r blist_go, echo = FALSE}
+neurohcp::bucketlist(verbose = FALSE, sign = FALSE)
+```
+
+We see that `fcp-indi` is a bucket that we have access to, and therefore have access to the data.
+
+
+
+
+
+
+
+
+
+
+
+## Getting Data: Downloading a Directory of Data
+
+In the neurohcp package, there is a data set indicating the scans read for each subject, named `hcp_900_scanning_info`.  We can subset those subjects that have diffusion tensor imaging:
+
+```{r, eval = TRUE}
+ids_with_dwi = hcp_900_scanning_info %>% 
+  filter(scan_type %in% "dMRI") %>% 
+  select(id) %>% 
+  unique
+head(ids_with_dwi)
+```
+
+Let us download the complete directory of diffusion data using `download_hcp_dir`:
+```{r, eval = FALSE, echo = TRUE}
+r = download_hcp_dir("HCP/100307/T1w/Diffusion")
+print(basename(r$output_files))
+```
+```{r, eval = TRUE, echo = FALSE}
+r = list(output_files = c("bvals", "bvecs", "data.nii.gz", "grad_dev.nii.gz", "nodif_brain_mask.nii.gz")
+)
+r$output_files
+```
+This diffusion data is the data that can be used to create summaries such as fractional anisotropy and mean diffusivity.  
+
+If we create a new column with all the directories, we can iterate over these to download all the diffusion data for these subjects from the HCP database.
+```{r, eval = FALSE}
+ids_with_dwi = ids_with_dwi %>% 
+  mutate(id_dir = paste0("HCP/", id, "/T1w/Diffusion"))
+```
+
+## Getting Data: Downloading a Single File
+We can also download a single file using `download_hcp_file`.  Here we will simply download the `bvals` file:
+
+```{r dl_file}
+ret = download_hcp_file("HCP/100307/T1w/Diffusion/bvals")
+```
+
+
+
+# Session Info
+
+```{r}
+devtools::session_info()
+```
+
+# References

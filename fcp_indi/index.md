@@ -1,0 +1,200 @@
+# Getting Data from the Functional Connectomes Project (FCP)/INDI
+John Muschelli  
+`r Sys.Date()`  
+
+All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/fcp_indi/index.R).
+
+
+
+# Using the neurohcp package
+
+Although the `neurohcp` package was built specifically for the the [Human Connectome Project](https://www.humanconnectome.org/) (HCP) data, it provides the worker functions for accessing an Amazon S3 bucket and downloading data.  We have adapted these functions to work with the Functional Connectomes Project S3 Bucket (`fcp-indi`) from the INDI initiative.  Although the code is the same, but the bucket is changed, we also must specify we do **not** want to sign the request as `fcp-indi` is an open bucket and the authentication we used for signing fails if we add keys to the data when unneccesary.
+
+
+# Getting Access to the Data
+
+The data is freelly available;.
+
+# Installing the neurohcp package
+
+We will install the `neurohcp` package using the Neuroconductor installer:
+
+```r
+source("http://neuroconductor.org/neurocLite.R")
+neuro_install("neurohcp", release = "stable")
+```
+Once these are set, the functions of neurohcp are ready to use.  To test that the API keys are set correctly, one can run `bucketlist`:
+
+
+```r
+neurohcp::bucketlist(sign = FALSE)
+```
+
+
+```
+Warning in neurohcp::bucketlist(verbose = FALSE, sign = FALSE): Response
+was html from amazon, returning output rather than parsing
+```
+
+```
+Response [https://aws.amazon.com/s3/]
+  Date: 2017-05-11 15:36
+  Status: 200
+  Content-Type: text/html;charset=UTF-8
+  Size: 267 kB
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html class="no-js lt-ie10 lt-ie9 aws-lng-en_US" lang="en-US" xmlns="htt...
+<![endif]-->
+<!--[if IE 9]>
+<html class="no-js lt-ie10 aws-lng-en_US" lang="en-US" xmlns="http://www...
+<!--[if gt IE 9]><!-->
+<html class="no-js aws-lng-en_US" lang="en-US" xmlns="http://www.w3.org/...
+ <!--<![endif]-->
+ <head> 
+...
+```
+
+We see that `fcp-indi` is a bucket that we have access to, and therefore have access to the data.
+
+
+
+
+
+
+
+
+
+
+
+## Getting Data: Downloading a Directory of Data
+
+In the neurohcp package, there is a data set indicating the scans read for each subject, named `hcp_900_scanning_info`.  We can subset those subjects that have diffusion tensor imaging:
+
+
+```r
+ids_with_dwi = hcp_900_scanning_info %>% 
+  filter(scan_type %in% "dMRI") %>% 
+  select(id) %>% 
+  unique
+head(ids_with_dwi)
+```
+
+```
+# A tibble: 6 x 1
+      id
+   <chr>
+1 100307
+2 100408
+3 101006
+4 101107
+5 101309
+6 101410
+```
+
+Let us download the complete directory of diffusion data using `download_hcp_dir`:
+
+```r
+r = download_hcp_dir("HCP/100307/T1w/Diffusion")
+print(basename(r$output_files))
+```
+
+```
+[1] "bvals"                   "bvecs"                  
+[3] "data.nii.gz"             "grad_dev.nii.gz"        
+[5] "nodif_brain_mask.nii.gz"
+```
+This diffusion data is the data that can be used to create summaries such as fractional anisotropy and mean diffusivity.  
+
+If we create a new column with all the directories, we can iterate over these to download all the diffusion data for these subjects from the HCP database.
+
+```r
+ids_with_dwi = ids_with_dwi %>% 
+  mutate(id_dir = paste0("HCP/", id, "/T1w/Diffusion"))
+```
+
+## Getting Data: Downloading a Single File
+We can also download a single file using `download_hcp_file`.  Here we will simply download the `bvals` file:
+
+
+```r
+ret = download_hcp_file("HCP/100307/T1w/Diffusion/bvals")
+```
+
+```
+
+  |                                                                       
+  |                                                                 |   0%
+  |                                                                       
+  |=================================================================| 100%
+```
+
+
+
+# Session Info
+
+
+```r
+devtools::session_info()
+```
+
+```
+Session info -------------------------------------------------------------
+```
+
+```
+ setting  value                       
+ version  R version 3.3.2 (2016-10-31)
+ system   x86_64, darwin13.4.0        
+ ui       X11                         
+ language (EN)                        
+ collate  en_US.UTF-8                 
+ tz       America/New_York            
+ date     2017-05-11                  
+```
+
+```
+Packages -----------------------------------------------------------------
+```
+
+```
+ package    * version    date       source                            
+ assertthat   0.2.0      2017-04-11 cran (@0.2.0)                     
+ backports    1.0.5      2017-01-18 cran (@1.0.5)                     
+ base       * 3.3.2      2016-10-31 local                             
+ base64enc    0.1-3      2015-07-28 CRAN (R 3.2.0)                    
+ colorout   * 1.1-0      2015-04-20 Github (jalvesaq/colorout@1539f1f)
+ curl         2.6        2017-04-27 CRAN (R 3.3.2)                    
+ datasets   * 3.3.2      2016-10-31 local                             
+ DBI          0.6-1      2017-04-01 CRAN (R 3.3.2)                    
+ devtools     1.13.0     2017-05-08 CRAN (R 3.3.2)                    
+ digest       0.6.12     2017-01-27 cran (@0.6.12)                    
+ dplyr      * 0.5.0      2016-06-24 CRAN (R 3.3.0)                    
+ evaluate     0.10       2016-10-11 CRAN (R 3.3.0)                    
+ graphics   * 3.3.2      2016-10-31 local                             
+ grDevices  * 3.3.2      2016-10-31 local                             
+ htmltools    0.3.6      2016-12-08 Github (rstudio/htmltools@4fbf990)
+ httr         1.2.1.9000 2017-03-09 Github (gaborcsardi/httr@30001d4) 
+ knitr        1.15.1     2016-11-22 CRAN (R 3.3.2)                    
+ lazyeval     0.2.0      2016-06-12 CRAN (R 3.3.0)                    
+ magrittr     1.5        2014-11-22 CRAN (R 3.2.0)                    
+ memoise      1.1.0      2017-04-21 cran (@1.1.0)                     
+ methods      3.3.2      2016-10-31 local                             
+ neurohcp   * 0.6        2017-05-11 local                             
+ R6           2.2.0      2016-10-05 cran (@2.2.0)                     
+ Rcpp         0.12.10    2017-03-19 CRAN (R 3.3.2)                    
+ rlang        0.1        2017-05-06 CRAN (R 3.3.2)                    
+ rmarkdown    1.5        2017-04-26 CRAN (R 3.3.2)                    
+ rprojroot    1.2        2017-01-16 cran (@1.2)                       
+ stats      * 3.3.2      2016-10-31 local                             
+ stringi      1.1.5      2017-04-07 cran (@1.1.5)                     
+ stringr      1.2.0      2017-02-18 cran (@1.2.0)                     
+ tibble       1.3.0.9002 2017-05-10 Github (tidyverse/tibble@9103a30) 
+ tools        3.3.2      2016-10-31 local                             
+ utils      * 3.3.2      2016-10-31 local                             
+ withr        1.0.2      2016-06-20 CRAN (R 3.3.0)                    
+ xml2         1.1.1      2017-02-14 Github (hadley/xml2@c84db5e)      
+ yaml         2.1.14     2016-11-12 CRAN (R 3.3.2)                    
+```
+
+# References

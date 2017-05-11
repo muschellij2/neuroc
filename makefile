@@ -6,13 +6,15 @@ LIST += brain_extraction
 LIST += tissue_class_segmentation
 LIST += cortical_thickness
 LIST += preprocess_mri_within
+LIST += fcp_indi
 LIST += fmri_analysis_ANTsR
 LIST += fmri_analysis_fslr
+LIST += fmri_analysis_spm12r
 LIST += DTI_analysis_fslr
 LIST += DTI_analysis_rcamino
 LIST += ms_lesion
 LIST += malf_insula
-LIST += hcp
+LIST += neurohcp
 LIST += install
 
 all:

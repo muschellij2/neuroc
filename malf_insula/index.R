@@ -3,15 +3,15 @@ library(methods)
 knitr::opts_chunk$set(echo = TRUE, cache = FALSE, comment = "")
 
 ## ------------------------------------------------------------------------
-ver = installed.packages()["hcp", "Version"]
+ver = installed.packages()["neurohcp", "Version"]
 if (compareVersion(ver, "0.5") < 0) {
-  stop(paste0("Need to update hcp, ", 
-              "devtools::install_github('muschellij2/hcp')")
+  stop(paste0("Need to update neurohcp, ", 
+              "devtools::install_github('muschellij2/neurohcp')")
   )
 }
 
 ## ----get_data------------------------------------------------------------
-library(hcp)
+library(neurohcp)
 fcp_data = download_hcp_file(
     paste0("data/Projects/ABIDE/RawData/", 
         "KKI/0050784/session_1/anat_1/",
