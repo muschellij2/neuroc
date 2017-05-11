@@ -19,6 +19,7 @@ Please visit the [FAQ](neuroc-help-faq) for information on how to begin.
 
 # Data
 1. [Downloading Human Connectome Project Data](neuroc-help-hcp)
+1. [Downloading Functional Connectomes Projects](neuroc-help-hcp)
 
 # General Tutorials {#tutorials}
 

@@ -27,17 +27,17 @@ Then, you can install a package using the following command:
 source("https://neuroconductor.org/neurocLite.R")
 neuro_install("PACKAGE")
 ```
-where `PACKAGE` is the name of the package you'd like to install, such as `fslr`.  For example, if we want to install `hcp` and `fslr` we can run:
+where `PACKAGE` is the name of the package you'd like to install, such as `fslr`.  For example, if we want to install `neurohcp` and `fslr` we can run:
 ```{r eval = FALSE}
 source("https://neuroconductor.org/neurocLite.R")
-neuro_install(c("fslr", "hcp"))
+neuro_install(c("fslr", "neurohcp"))
 ```
 ### `neurocLite`: an alias for `neuroc_install`
 
 As Bioconductor uses the `biocLite` function to install packages, we have created a duplicate of `neuro_install`, called `neurocLite`, for ease of use for those users accustomed to Bioconductor.  The same command could have been executed as follows:
 ```{r eval = FALSE}
 source("https://neuroconductor.org/neurocLite.R")
-neurocLite(c("fslr", "hcp"))
+neurocLite(c("fslr", "neurohcp"))
 ```
 
 ### Installing the `neurocInstall` package
@@ -56,7 +56,7 @@ After installation, you can use `neurocInstall::neuroc_install()` to install pac
 The `neurocLite`/`neuro_install` functions depend on `devtools::install_github`, which will upgrade dependencies by default, which is recommended.  If you would like to install a package, but not upgrade the dependencies (missing dependencies will still be installed), you can set the `upgrade_dependencies` argument to `FALSE`:
 
 ```{r, eval = FALSE}
-neurocLite(c("fslr", "hcp"), upgrade_dependencies = FALSE)
+neurocLite(c("fslr", "neurohcp"), upgrade_dependencies = FALSE)
 ```
 
 # Installing and starting R 

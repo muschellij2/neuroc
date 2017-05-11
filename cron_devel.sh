@@ -9,6 +9,7 @@ wget https://raw.githubusercontent.com/muschellij2/neuroc/master/preprocess_mri_
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/cortical_thickness/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/cortical_thickness.html
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/fmri_analysis_ANTsR/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/fmri_analysis_ANTsR.html
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/fmri_analysis_fslr/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/fmri_analysis_fslr.html
+wget https://raw.githubusercontent.com/muschellij2/neuroc/master/fmri_analysis_spm12r/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/fmri_analysis_spm12r.html
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/DTI_analysis_fslr/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/DTI_analysis_fslr.html
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/DTI_analysis_rcamino/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/DTI_analysis_rcamino.html
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/ms_lesion/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/ms_lesion.html
