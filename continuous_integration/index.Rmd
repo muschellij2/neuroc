@@ -1,0 +1,120 @@
+---
+title: "Continuous Integration"
+author: "John Muschelli"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    keep_md: true
+    theme: cosmo
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+    number_sections: true      
+bibliography: ../refs.bib      
+---
+
+```{r setup, include=FALSE}
+library(devtools)
+```
+
+All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/continuous_integration/index.R).
+
+For checking R packages, we use [Continuous Integration](https://en.wikipedia.org/wiki/Continuous_integration) services [Travis CI](https://travis-ci.org/), which builds on Linux and OS X operating systems, and [Appveyor](https://www.appveyor.com/), which builds on Windows using MinGW.  
+
+The purpose is to ensure that the package can be built, installed, and checked on the respective systems with the appropriate dependencies.  
+
+# Travis CI
+For Travis CI, we build an initial `.travis.yml` configuration script using `devtools::use_travis()`.   This adds the following to the `.travis.yml`:
+
+```
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+
+language: R
+sudo: false
+cache: packages
+```
+
+We add the following fields to the YAML:
+
+1.  To ensure Bioconductor packages can be installed if necessary:
+
+```
+bioc_required: yes
+use_bioc: yes
+```
+
+2.  So that we ensure that no warnings are present in the installation (similar to CRAN):
+```
+warnings_are_errors: true
+```
+
+3.  That we have a similar threshold for packages similar to CRAN:
+
+```
+r_check_args: --as-cran
+```
+
+## Future work
+In the future, we plan on submitting tagged commits for releases.  We will have built binaries and sources for each version of the package that is submittted.  We also plan to add Neuroconductor badges to the `README.md` file.  
+
+
+# Appveyor 
+
+Currently, we only support packages that work in *nix type of operatings systems.  We will check the package for Windows as a courtesy to Windows users, but do not provide a detailed level of support.  Moreover, we do not currently support or change appveyor builds to pass for developers.  
+
+For checking, similar to Travis, we use `devtools::use_appveyor()` to generate the `appveyor.yml`, which adds the following:
+
+```
+
+# Download script file from GitHub
+init:
+  ps: |
+        $ErrorActionPreference = "Stop"
+        Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
+        Import-Module '..\appveyor-tool.ps1'
+
+install:
+  ps: Bootstrap
+
+cache:
+  - C:\RLibrary
+
+# Adapt as necessary starting from here
+
+build_script:
+  - travis-tool.sh install_deps
+
+test_script:
+  - travis-tool.sh run_tests
+
+on_failure:
+  - 7z a failure.zip *.Rcheck\*
+  - appveyor PushArtifact failure.zip
+
+artifacts:
+  - path: '*.Rcheck\**\*.log'
+    name: Logs
+
+  - path: '*.Rcheck\**\*.out'
+    name: Logs
+
+  - path: '*.Rcheck\**\*.fail'
+    name: Logs
+
+  - path: '*.Rcheck\**\*.Rout'
+    name: Logs
+
+  - path: '\*_*.tar.gz'
+    name: Bits
+
+  - path: '\*_*.zip'
+    name: Bits
+```
+
+
+# Session Info
+
+```{r}
+devtools::session_info()
+```

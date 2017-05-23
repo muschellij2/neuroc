@@ -18,8 +18,8 @@ Please visit the [FAQ](neuroc-help-faq) for information on how to begin.
 1. [NIfTI Basics](neuroc-help-nifti-basics)
 
 # Data
-1. [Downloading Human Connectome Project Data](neuroc-help-hcp)
-1. [Downloading Functional Connectomes Projects](neuroc-help-hcp)
+1. [Downloading Human Connectome Project Data](neuroc-help-neurohcp)
+1. [Downloading Functional Connectomes Projects](neuroc-help-neurohcp)
 
 # General Tutorials {#tutorials}
 

@@ -40,63 +40,121 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 
 
 
-<div id="frequently-asked-questions-faq" class="section level1">
-<h1>Frequently Asked Questions (FAQ)</h1>
-<p>Please visit the <a href="neuroc-help-faq">FAQ</a> for information on how to begin.</p>
-</div>
-<div id="install" class="section level1">
-<h1>Installation Guides</h1>
+<p>All code for this document is located at <a href="https://raw.githubusercontent.com/muschellij2/neuroc/master/continuous_integration/index.R">here</a>.</p>
+<p>For checking R packages, we use <a href="https://en.wikipedia.org/wiki/Continuous_integration">Continuous Integration</a> services <a href="https://travis-ci.org/">Travis CI</a>, which builds on Linux and OS X operating systems, and <a href="https://www.appveyor.com/">Appveyor</a>, which builds on Windows using MinGW.</p>
+<p>The purpose is to ensure that the package can be built, installed, and checked on the respective systems with the appropriate dependencies.</p>
+<div id="travis-ci" class="section level1">
+<h1>Travis CI</h1>
+<p>For Travis CI, we build an initial <code>.travis.yml</code> configuration script using <code>devtools::use_travis()</code>. This adds the following to the <code>.travis.yml</code>:</p>
+<pre><code># R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+
+language: R
+sudo: false
+cache: packages</code></pre>
+<p>We add the following fields to the YAML:</p>
 <ol style="list-style-type: decimal">
-<li><a href="neuroc-help-installing-devtools">Installing devtools</a></li>
-<li><a href="neuroc-help-installing-antsr">Installing ANTsR</a></li>
+<li>To ensure Bioconductor packages can be installed if necessary:</li>
 </ol>
-</div>
-<div id="req" class="section level1">
-<h1>Required Readings</h1>
-<ol style="list-style-type: decimal">
-<li><a href="neuroc-help-nifti-basics">NIfTI Basics</a></li>
+<pre><code>bioc_required: yes
+use_bioc: yes</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li><p>So that we ensure that no warnings are present in the installation (similar to CRAN):</p>
+<pre><code>warnings_are_errors: true</code></pre></li>
+<li><p>That we have a similar threshold for packages similar to CRAN:</p></li>
 </ol>
-</div>
-<div id="data" class="section level1">
-<h1>Data</h1>
-<ol style="list-style-type: decimal">
-<li><a href="neuroc-help-neurohcp">Downloading Human Connectome Project Data</a></li>
-<li><a href="neuroc-help-neurohcp">Downloading Functional Connectomes Projects</a></li>
-</ol>
-</div>
-<div id="tutorials" class="section level1">
-<h1>General Tutorials</h1>
-<div id="structural-imaging" class="section level2">
-<h2>Structural Imaging</h2>
-<ol style="list-style-type: decimal">
-<li><a href="neuroc-help-brain-extraction">Brain Extraction</a></li>
-<li><a href="neuroc-help-tissue-class-segmentation">Tissue-Class Segmentation</a></li>
-<li><a href="neuroc-help-label-image">Labeling Brain Structures</a></li>
-<li><a href="neuroc-help-preprocess-mri-within">Processing Within-Visit Structural MRI</a></li>
-<li><a href="neuroc-help-cortical-thickness">Cortical Thickness Estimation (NOT DONE)</a></li>
-</ol>
-</div>
-<div id="fmri" class="section level2">
-<h2>fMRI</h2>
-<ol start="4" style="list-style-type: decimal">
-<li><a href="neuroc-help-fmri-analysis-antsr">Resting-State fMRI analysis using ANTsR</a></li>
-<li><a href="neuroc-help-fmri-analysis-fslr">Resting-State fMRI analysis using fslr</a></li>
-<li><a href="neuroc-help-fmri-analysis-spm12r">Resting-State fMRI analysis using spm12r</a></li>
-</ol>
-</div>
-<div id="dti" class="section level2">
-<h2>DTI</h2>
-<ol start="7" style="list-style-type: decimal">
-<li><a href="neuroc-help-dti-analysis-fslr">DTI analysis with fslr</a></li>
-<li><a href="neuroc-help-dti-analysis-rcamino">DTI analysis with Camino</a></li>
-</ol>
+<pre><code>r_check_args: --as-cran</code></pre>
+<div id="future-work" class="section level2">
+<h2>Future work</h2>
+<p>In the future, we plan on submitting tagged commits for releases. We will have built binaries and sources for each version of the package that is submittted. We also plan to add Neuroconductor badges to the <code>README.md</code> file.</p>
 </div>
 </div>
-<div id="disease-specific-tutorials" class="section level1">
-<h1>Disease-specific Tutorials</h1>
-<ol style="list-style-type: decimal">
-<li><a href="neuroc-help-ms-lesion">Multiple Sclerosis Lesion Segmentation</a></li>
-</ol>
+<div id="appveyor" class="section level1">
+<h1>Appveyor</h1>
+<p>Currently, we only support packages that work in *nix type of operatings systems. We will check the package for Windows as a courtesy to Windows users, but do not provide a detailed level of support. Moreover, we do not currently support or change appveyor builds to pass for developers.</p>
+<p>For checking, similar to Travis, we use <code>devtools::use_appveyor()</code> to generate the <code>appveyor.yml</code>, which adds the following:</p>
+<pre><code>
+# Download script file from GitHub
+init:
+  ps: |
+        $ErrorActionPreference = &quot;Stop&quot;
+        Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile &quot;..\appveyor-tool.ps1&quot;
+        Import-Module '..\appveyor-tool.ps1'
+
+install:
+  ps: Bootstrap
+
+cache:
+  - C:\RLibrary
+
+# Adapt as necessary starting from here
+
+build_script:
+  - travis-tool.sh install_deps
+
+test_script:
+  - travis-tool.sh run_tests
+
+on_failure:
+  - 7z a failure.zip *.Rcheck\*
+  - appveyor PushArtifact failure.zip
+
+artifacts:
+  - path: '*.Rcheck\**\*.log'
+    name: Logs
+
+  - path: '*.Rcheck\**\*.out'
+    name: Logs
+
+  - path: '*.Rcheck\**\*.fail'
+    name: Logs
+
+  - path: '*.Rcheck\**\*.Rout'
+    name: Logs
+
+  - path: '\*_*.tar.gz'
+    name: Bits
+
+  - path: '\*_*.zip'
+    name: Bits</code></pre>
+</div>
+<div id="session-info" class="section level1">
+<h1>Session Info</h1>
+<pre class="r"><code>devtools::session_info()</code></pre>
+<pre><code>## Session info -------------------------------------------------------------</code></pre>
+<pre><code>##  setting  value                       
+##  version  R version 3.3.2 (2016-10-31)
+##  system   x86_64, darwin13.4.0        
+##  ui       X11                         
+##  language (EN)                        
+##  collate  en_US.UTF-8                 
+##  tz       America/New_York            
+##  date     2017-05-23</code></pre>
+<pre><code>## Packages -----------------------------------------------------------------</code></pre>
+<pre><code>##  package   * version date       source                            
+##  backports   1.0.5   2017-01-18 cran (@1.0.5)                     
+##  base      * 3.3.2   2016-10-31 local                             
+##  colorout  * 1.1-0   2015-04-20 Github (jalvesaq/colorout@1539f1f)
+##  datasets  * 3.3.2   2016-10-31 local                             
+##  devtools  * 1.13.0  2017-05-08 CRAN (R 3.3.2)                    
+##  digest      0.6.12  2017-01-27 cran (@0.6.12)                    
+##  evaluate    0.10    2016-10-11 CRAN (R 3.3.0)                    
+##  graphics  * 3.3.2   2016-10-31 local                             
+##  grDevices * 3.3.2   2016-10-31 local                             
+##  htmltools   0.3.6   2016-12-08 Github (rstudio/htmltools@4fbf990)
+##  knitr       1.15.1  2016-11-22 CRAN (R 3.3.2)                    
+##  magrittr    1.5     2014-11-22 CRAN (R 3.2.0)                    
+##  memoise     1.1.0   2017-04-21 cran (@1.1.0)                     
+##  methods     3.3.2   2016-10-31 local                             
+##  Rcpp        0.12.10 2017-03-19 CRAN (R 3.3.2)                    
+##  rmarkdown   1.5     2017-04-26 CRAN (R 3.3.2)                    
+##  rprojroot   1.2     2017-01-16 cran (@1.2)                       
+##  stats     * 3.3.2   2016-10-31 local                             
+##  stringi     1.1.5   2017-04-07 cran (@1.1.5)                     
+##  stringr     1.2.0   2017-02-18 cran (@1.2.0)                     
+##  tools       3.3.2   2016-10-31 local                             
+##  utils     * 3.3.2   2016-10-31 local                             
+##  withr       1.0.2   2016-06-20 CRAN (R 3.3.0)                    
+##  yaml        2.1.14  2016-11-12 CRAN (R 3.3.2)</code></pre>
 </div>
 
 

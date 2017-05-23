@@ -16,6 +16,7 @@ LIST += ms_lesion
 LIST += malf_insula
 LIST += neurohcp
 LIST += install
+LIST += continuous_integration
 
 all:
 	Rscript -e "source('notoc.R')"

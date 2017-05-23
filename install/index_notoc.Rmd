@@ -20,11 +20,11 @@ Then, you can install a package using the following command:
 source("https://neuroconductor.org/neurocLite.R")
 neuro_install("PACKAGE")
 ```
-where `PACKAGE` is the name of the package you'd like to install, such as `fslr`.  For example, if we want to install `hcp` and `fslr` we can run:
+where `PACKAGE` is the name of the package you'd like to install, such as `fslr`.  For example, if we want to install `neurohcp` and `fslr` we can run:
 
 ```r
 source("https://neuroconductor.org/neurocLite.R")
-neuro_install(c("fslr", "hcp"))
+neuro_install(c("fslr", "neurohcp"))
 ```
 ### `neurocLite`: an alias for `neuroc_install`
 
@@ -32,7 +32,7 @@ As Bioconductor uses the `biocLite` function to install packages, we have create
 
 ```r
 source("https://neuroconductor.org/neurocLite.R")
-neurocLite(c("fslr", "hcp"))
+neurocLite(c("fslr", "neurohcp"))
 ```
 
 ### Installing the `neurocInstall` package
@@ -53,7 +53,7 @@ The `neurocLite`/`neuro_install` functions depend on `devtools::install_github`,
 
 
 ```r
-neurocLite(c("fslr", "hcp"), upgrade_dependencies = FALSE)
+neurocLite(c("fslr", "neurohcp"), upgrade_dependencies = FALSE)
 ```
 
 # Installing and starting R 
@@ -97,7 +97,7 @@ devtools::session_info()
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2017-02-08
+##  date     2017-05-11
 ```
 
 ```
@@ -105,25 +105,31 @@ devtools::session_info()
 ```
 
 ```
-##  package   * version     date       source                            
-##  backports   1.0.4       2016-10-24 CRAN (R 3.3.0)                    
-##  colorout  * 1.1-0       2015-04-20 Github (jalvesaq/colorout@1539f1f)
-##  devtools    1.12.0.9000 2017-01-23 Github (hadley/devtools@1ce84b0)  
-##  digest      0.6.11      2017-01-03 CRAN (R 3.3.2)                    
-##  evaluate    0.10        2016-10-11 CRAN (R 3.3.0)                    
-##  htmltools   0.3.6       2016-12-08 Github (rstudio/htmltools@4fbf990)
-##  knitr       1.15.1      2016-11-22 cran (@1.15.1)                    
-##  magrittr    1.5         2014-11-22 CRAN (R 3.2.0)                    
-##  memoise     1.0.0       2016-01-29 CRAN (R 3.2.3)                    
-##  pkgbuild    0.0.0.9000  2016-12-08 Github (r-pkgs/pkgbuild@65eace0)  
-##  pkgload     0.0.0.9000  2016-12-08 Github (r-pkgs/pkgload@def2b10)   
-##  Rcpp        0.12.8.2    2016-12-08 Github (RcppCore/Rcpp@8c7246e)    
-##  rmarkdown   1.3         2017-01-03 Github (rstudio/rmarkdown@3276760)
-##  rprojroot   1.1         2016-10-29 cran (@1.1)                       
-##  stringi     1.1.2       2016-10-01 CRAN (R 3.3.0)                    
-##  stringr     1.1.0       2016-08-19 cran (@1.1.0)                     
-##  withr       1.0.2       2016-06-20 CRAN (R 3.3.0)                    
-##  yaml        2.1.14      2016-11-12 CRAN (R 3.3.2)
+##  package   * version date       source                            
+##  backports   1.0.5   2017-01-18 cran (@1.0.5)                     
+##  base      * 3.3.2   2016-10-31 local                             
+##  colorout  * 1.1-0   2015-04-20 Github (jalvesaq/colorout@1539f1f)
+##  datasets  * 3.3.2   2016-10-31 local                             
+##  devtools    1.13.0  2017-05-08 CRAN (R 3.3.2)                    
+##  digest      0.6.12  2017-01-27 cran (@0.6.12)                    
+##  evaluate    0.10    2016-10-11 CRAN (R 3.3.0)                    
+##  graphics  * 3.3.2   2016-10-31 local                             
+##  grDevices * 3.3.2   2016-10-31 local                             
+##  htmltools   0.3.6   2016-12-08 Github (rstudio/htmltools@4fbf990)
+##  knitr       1.15.1  2016-11-22 CRAN (R 3.3.2)                    
+##  magrittr    1.5     2014-11-22 CRAN (R 3.2.0)                    
+##  memoise     1.1.0   2017-04-21 cran (@1.1.0)                     
+##  methods     3.3.2   2016-10-31 local                             
+##  Rcpp        0.12.10 2017-03-19 CRAN (R 3.3.2)                    
+##  rmarkdown   1.5     2017-04-26 CRAN (R 3.3.2)                    
+##  rprojroot   1.2     2017-01-16 cran (@1.2)                       
+##  stats     * 3.3.2   2016-10-31 local                             
+##  stringi     1.1.5   2017-04-07 cran (@1.1.5)                     
+##  stringr     1.2.0   2017-02-18 cran (@1.2.0)                     
+##  tools       3.3.2   2016-10-31 local                             
+##  utils     * 3.3.2   2016-10-31 local                             
+##  withr       1.0.2   2016-06-20 CRAN (R 3.3.0)                    
+##  yaml        2.1.14  2016-11-12 CRAN (R 3.3.2)
 ```
 
 # References
