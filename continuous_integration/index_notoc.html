@@ -41,10 +41,20 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 
 
 <p>All code for this document is located at <a href="https://raw.githubusercontent.com/muschellij2/neuroc/master/continuous_integration/index.R">here</a>.</p>
+<div id="changes-to-the-description-file" class="section level1">
+<h1>Changes to the <code>DESCRIPTION</code> file</h1>
+<p>In order to test packages against the relevant Neuroconductor packages, we change the <code>DESCRIPTION</code> file. We do this in the following ways:</p>
+<ol style="list-style-type: decimal">
+<li>Modify, or add if not present, the <code>Remotes</code> field. Packages are installed using the <code>install_github</code> function, which reads this <code>Remotes</code> field to install dependencies if necessary. The Remotes field modifies and overrides the locations of dependencies to be installed. If a dependency for a package is present, then a newer version of the package will not be installed unless indicated by the user or indicated a newer version is necessary in the package (by the package (<code>&gt;= VERSION</code>)) syntax) in the dependencies.</li>
+<li>We add the <code>bioViews</code> field to a package in case there are Bioconductor package in the dependencies, to ensure <code>install_github</code> looks in that repository, as per the issue <a href="https://github.com/hadley/devtools/issues/1254">hadley/devtools#1254</a>.</li>
+</ol>
+</div>
+<div id="continuous-integration-services" class="section level1">
+<h1>Continuous Integration Services</h1>
 <p>For checking R packages, we use <a href="https://en.wikipedia.org/wiki/Continuous_integration">Continuous Integration</a> services <a href="https://travis-ci.org/">Travis CI</a>, which builds on Linux and OS X operating systems, and <a href="https://www.appveyor.com/">Appveyor</a>, which builds on Windows using MinGW.</p>
 <p>The purpose is to ensure that the package can be built, installed, and checked on the respective systems with the appropriate dependencies.</p>
-<div id="travis-ci" class="section level1">
-<h1>Travis CI</h1>
+<div id="travis-ci" class="section level2">
+<h2>Travis CI</h2>
 <p>For Travis CI, we build an initial <code>.travis.yml</code> configuration script using <code>devtools::use_travis()</code>. This adds the following to the <code>.travis.yml</code>:</p>
 <pre><code># R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
@@ -63,13 +73,13 @@ use_bioc: yes</code></pre>
 <li><p>That we have a similar threshold for packages similar to CRAN:</p></li>
 </ol>
 <pre><code>r_check_args: --as-cran</code></pre>
-<div id="future-work" class="section level2">
-<h2>Future work</h2>
+<div id="future-work" class="section level3">
+<h3>Future work</h3>
 <p>In the future, we plan on submitting tagged commits for releases. We will have built binaries and sources for each version of the package that is submittted. We also plan to add Neuroconductor badges to the <code>README.md</code> file.</p>
 </div>
 </div>
-<div id="appveyor" class="section level1">
-<h1>Appveyor</h1>
+<div id="appveyor" class="section level2">
+<h2>Appveyor</h2>
 <p>Currently, we only support packages that work in *nix type of operatings systems. We will check the package for Windows as a courtesy to Windows users, but do not provide a detailed level of support. Moreover, we do not currently support or change appveyor builds to pass for developers.</p>
 <p>For checking, similar to Travis, we use <code>devtools::use_appveyor()</code> to generate the <code>appveyor.yml</code>, which adds the following:</p>
 <pre><code>
@@ -116,6 +126,14 @@ artifacts:
 
   - path: '\*_*.zip'
     name: Bits</code></pre>
+</div>
+</div>
+<div id="code-coverage" class="section level1">
+<h1>Code Coverage</h1>
+<div id="coveralls" class="section level2">
+<h2>Coveralls</h2>
+<p>We plan to use the <a href="https://github.com/jimhester/covr"><code>covr</code></a> package to check for code coverage using the <a href="https://coveralls.io/">Coveralls</a> interface. We currently do not have any requirements for code coverage for our packages.</p>
+</div>
 </div>
 <div id="session-info" class="section level1">
 <h1>Session Info</h1>

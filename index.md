@@ -16,7 +16,7 @@ Please visit the [FAQ](faq/index.html) for information on how to begin.
 
 # Data
 1. [Downloading Human Connectome Project Data](neurohcp/index.html)
-1. [Downloading Functional Connectomes Projects](neurohcp/index.html)
+1. [Downloading Functional Connectomes Projects](fcp_indi/index.html)
 
 # General Tutorials {#tutorials}
 
