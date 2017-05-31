@@ -1,5 +1,7 @@
-## ----setup, include=FALSE------------------------------------------------
+## ----setup, include=FALSE, message=FALSE---------------------------------
 library(knitr)
+library(methods)
+library(neurobase)
 knitr::opts_chunk$set(comment = "")
 
 ## ------------------------------------------------------------------------
@@ -17,6 +19,12 @@ scheme_file = camino_pointset2scheme(infile = b_data_file,
 
 ## ----check_img-----------------------------------------------------------
 img_fname = grep("4Ddwi_b1000", files, value = TRUE)
+img = neurobase::readnii(img_fname)
+ntim(img)
+grads = readLines(b_data_file)
+length(grads)
+# cleanup
+rm(list= "img"); gc()
 
 ## ------------------------------------------------------------------------
 float_fname = camino_image2voxel(infile = img_fname, 

@@ -15,8 +15,10 @@ output:
 
 All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/DTI_analysis_rcamino/index.R).
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, message=FALSE}
 library(knitr)
+library(methods)
+library(neurobase)
 knitr::opts_chunk$set(comment = "")
 ```
 
@@ -57,7 +59,14 @@ Here we ensure that the number of b-values/b-vectors is the same as the number o
 
 ```{r check_img}
 img_fname = grep("4Ddwi_b1000", files, value = TRUE)
+img = neurobase::readnii(img_fname)
+ntim(img)
+grads = readLines(b_data_file)
+length(grads)
+# cleanup
+rm(list= "img"); gc()
 ```
+
 
 
 # Running Image Conversion 

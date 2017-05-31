@@ -19,7 +19,7 @@ Please visit the [FAQ](neuroc-help-faq) for information on how to begin.
 
 # Data
 1. [Downloading Human Connectome Project Data](neuroc-help-neurohcp)
-1. [Downloading Functional Connectomes Projects](neuroc-help-neurohcp)
+1. [Downloading Functional Connectomes Projects](neuroc-help-fcp-indi)
 
 # General Tutorials {#tutorials}
 
