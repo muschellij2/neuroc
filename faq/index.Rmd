@@ -5,7 +5,7 @@ output:
     keep_md: true
     theme: cosmo
     includes:
-      in_header: header.html      
+      in_header: header.html   
 ---
 
 
