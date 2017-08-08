@@ -53,6 +53,7 @@ notoc = function(
 
     if (grepl("^faq", fname)) {
       doc$output$html_document$includes = NULL
+      doc$output$html_document$self_contained = TRUE
     }
 
     doc$date = NULL

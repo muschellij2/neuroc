@@ -2,6 +2,7 @@
 output:
   html_document:
     theme: null
+    self_contained: yes
 ---
 # Frequently Asked Questions (FAQ)
 

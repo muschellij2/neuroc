@@ -20,12 +20,26 @@ library(devtools)
 
 All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/continuous_integration/index.R).
 
+# The `neuroc.deps` package
+
+We have created the [`neuroc.deps` package](https://github.com/muschellij2/neuroc.deps) that perform most of the backend operations on a Neuroconductor package.  It can be installed as follows:
+
+```{r, eval = FALSE}
+devtools::install_github("muschellij2/neuroc.deps")
+```
+
+The most relevant function is `use_neuroc_template`, which is used to make many of the changes to the package.
+
 # Changes to the `DESCRIPTION` file
 In order to test packages against the relevant Neuroconductor packages, we change the `DESCRIPTION` file.  We do this in the following ways:
 
 1. Modify, or add if not present, the `Remotes` field. Packages are installed using the `install_github` function, which reads this `Remotes` field to install dependencies if necessary. The Remotes field modifies and overrides the locations of dependencies to be installed. If a dependency for a package is present, then a newer version of the package will not be installed unless indicated by the user or indicated a newer version is necessary in the package (by the package (`>= VERSION`)) syntax) in the dependencies.
 2. We add the `bioViews` field to a package in case there are Bioconductor package in the dependencies, to ensure `install_github` looks in that repository, as per the issue [hadley/devtools#1254](https://github.com/hadley/devtools/issues/1254).
+3. The `covr` package is added to the `Suggests` field if not already present in the dependencies (`Depends`, `Imports`, or `Suggests`).  This is so that code coverage can be performed.  
 
+## ANTsR Dependencies
+
+If a package depends on the `ANTsR` workflow, a slightly modified set of continuous integration steps are performed as that build is highly technical.  
 
 # Continuous Integration Services
 
@@ -34,92 +48,98 @@ For checking R packages, we use [Continuous Integration](https://en.wikipedia.or
 The purpose is to ensure that the package can be built, installed, and checked on the respective systems with the appropriate dependencies.  
 
 ## Travis CI
-For Travis CI, we build an initial `.travis.yml` configuration script using `devtools::use_travis()`.   This adds the following to the `.travis.yml`:
+For Travis CI, we delete the developer's `.travis.yml` configuration script and replace it with the one located at [https://github.com/muschellij2/neuroc.deps/blob/master/inst/neuroc_travis.yml](https://github.com/muschellij2/neuroc.deps/blob/master/inst/neuroc_travis.yml).
+
+
+
+### Travis Helpers
+```
+before_install:
+  - fname=travis_helpers.sh
+  - wget -O ${fname} http://bit.ly/travis_helpers
+  - cat ${fname}; source ${fname}; rm ${fname}  
+  - remove_neuroc_packages
+```
+which remove any packages located on Neuroconductor from the Travis machine.  As caching is done, these may be present from previous builds.  The `travis_helpers.sh` file is a set of helper `bash` functions that backend the [`ghtravis` package](https://github.com/muschellij2/ghtravis).  Most of these are  changes to `DESCRIPTION` file, but on Travis and not the GitHub.
+
+### Installing Remotes without Dependencies
+
+The command:
+```
+  - install_remotes_no_dep
+```
+
+looks at the `Remotes` field in the DESCRIPTION file and runs `install_github(..., upgrade_dependencies = FALSE)`.  This ensures that the Neuroconductor packages will be those with the specific commit IDs at the time of running.  No old Neuroconductor packages will be present as they were removed using `remove_neuroc_packages`.
+
+### PACKAGE_NAME environmental variable
+
+The environmental variable of `PACKAGE_NAME` is created from the `DESCRIPTION` file.  This may be different from the repository name from the user, but will be the same repository name on Neuroconductor, as all repos are `neuroconductor/PACKAGE_NAME`.
 
 ```
-# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
-
-language: R
-sudo: false
-cache: packages
+  - export PACKAGE_NAME=`package_name`
 ```
+
+### Bioconductor Packages
 
 We add the following fields to the YAML:
-
-1.  To ensure Bioconductor packages can be installed if necessary:
+To ensure Bioconductor packages can be installed if necessary:
 
 ```
 bioc_required: yes
 use_bioc: yes
 ```
 
-2.  So that we ensure that no warnings are present in the installation (similar to CRAN):
+### Warnings are Errors
+So that we ensure that no warnings are present in the installation (similar to CRAN):
 ```
 warnings_are_errors: true
 ```
 
-3.  That we have a similar threshold for packages similar to CRAN:
+### CRAN checks 
+
+That we have a similar threshold for packages similar to CRAN:
 
 ```
 r_check_args: --as-cran
 ```
 
+### Pass or Fail
+
+After running `R CMD check`, the `00install.out` and `00check.log` are printed for diagnostic purposes.
+
+### Deployment 
+
+When packages are being deployed, `R CMD INSTALL --build` is run so that they have the standardized naming conventions.  The `deployment` information for neuroconductor, including GitHub encrypted keys, are added.  After building, the binary distribution is uploaded to the GitHub repository when tagged (from Neuroconductor's backend not the developer).
+
+
+### Coverage
+
+After deployment, we use [Coveralls.io](https://coveralls.io/) and the `covr` package to run code coverage.  We use `type = "all"` so that we provide coverage of tests, vignettes, and examples:
+
+```
+after_deploy:
+  - Rscript -e 'covr::coveralls(type = "all")'
+```
+
+
 ### Future work
-In the future, we plan on submitting tagged commits for releases.  We will have built binaries and sources for each version of the package that is submittted.  We also plan to add Neuroconductor badges to the `README.md` file.  
+We plan to add Neuroconductor badges to the `README.md` file.  
 
 
 ## Appveyor 
 
-Currently, we only support packages that work in *nix type of operatings systems.  We will check the package for Windows as a courtesy to Windows users, but do not provide a detailed level of support.  Moreover, we do not currently support or change appveyor builds to pass for developers.  
+Currently, we only formally support packages that work in *nix type of operatings systems.  We will check the package for Windows as a courtesy to Windows users, but do not provide a detailed level of support. 
 
-For checking, similar to Travis, we use `devtools::use_appveyor()` to generate the `appveyor.yml`, which adds the following:
+We use the [neuroc_appveyor.yml](https://github.com/muschellij2/neuroc.deps/blob/master/inst/neuroc_appveyor.yml), which changes the `PATH` variable to try to replicate a Windows machine using Rtools only and not installing MinGW.
+
+
+Different from the YAML from `devtools::use_appveyor()`, we remove the following part:
 
 ```
-
-# Download script file from GitHub
-init:
-  ps: |
-        $ErrorActionPreference = "Stop"
-        Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
-        Import-Module '..\appveyor-tool.ps1'
-
-install:
-  ps: Bootstrap
-
-cache:
-  - C:\RLibrary
-
-# Adapt as necessary starting from here
-
-build_script:
-  - travis-tool.sh install_deps
-
-test_script:
-  - travis-tool.sh run_tests
-
-on_failure:
-  - 7z a failure.zip *.Rcheck\*
-  - appveyor PushArtifact failure.zip
-
-artifacts:
-  - path: '*.Rcheck\**\*.log'
-    name: Logs
-
-  - path: '*.Rcheck\**\*.out'
-    name: Logs
-
-  - path: '*.Rcheck\**\*.fail'
-    name: Logs
-
-  - path: '*.Rcheck\**\*.Rout'
-    name: Logs
-
   - path: '\*_*.tar.gz'
     name: Bits
-
-  - path: '\*_*.zip'
-    name: Bits
 ```
+as could overwrite Linux builds depeneding on the naming convention on Deployment.
 
 # Code Coverage
 
