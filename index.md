@@ -45,5 +45,5 @@ Please visit the [FAQ](faq/index.html) for information on how to begin.
 
 # Guides for Developers {#devguides}
 
-1. [Getting Ready for Submission](getting_ready_for_submission/index.html)
+1. [Preparing Your Package for for Submission](getting_ready_for_submission/index.html)
 2. [Changes to your Package](continuous_integration/index.html)
