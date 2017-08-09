@@ -250,29 +250,36 @@ div.tocify {
 <h1><span class="header-section-number">2</span> Short Version</h1>
 <p>The condensed version of this worklow is to run (in R):</p>
 <pre class="r"><code>devtools::use_git()
-# set up GITHUB_PAT - personal token
-devtools::use_github()
+devtools::use_github() # must have GITHUB_PAT set up
 devtools::use_readme_md()
-# Edit your README
+devtools::use_vignette(&quot;my-vignette&quot;)
+devtools::use_testthat()
+devtools::use_appveyor()
 devtools::use_travis()</code></pre>
-<p>Activate repository on travis, then add</p>
+<p>And edit the following files:</p>
+<div id="travis.yml" class="section level2">
+<h2><span class="header-section-number">2.1</span> <code>.travis.yml</code></h2>
+<p>Add the following lines:</p>
 <pre><code>warnings_are_errors: true 
 after_success:
   - Rscript -e 'covr::coveralls(type = &quot;all&quot;)'</code></pre>
 <p>to <code>.travis.yml</code>.</p>
-<p>Run (R):</p>
-<pre class="r"><code>devtools::use_appveyor()</code></pre>
-<p>and add</p>
+</div>
+<div id="appveyor.yml" class="section level2">
+<h2><span class="header-section-number">2.2</span> <code>appveyor.yml</code></h2>
+<p>Add the following lines:</p>
 <pre><code>environment:
   global:
     WARNINGS_ARE_ERORRS: 1</code></pre>
 <p>to <code>appveyor.yml</code>.</p>
-<p>Add</p>
+</div>
+<div id="readme.md" class="section level2">
+<h2><span class="header-section-number">2.3</span> <code>README.md</code></h2>
+<p>Add the following lines, changing <code>GITHUB_USERNAME/REPO</code> to the correct version</p>
 <pre><code> [![Travis-CI Build Status] (https://travis-ci.org/GITHUB_USERNAME/REPO.svg?branch=master)] (https://travis-ci.org/GITHUB_USERNAME/REPO)
  [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/GITHUB_USERNAME/REPO?branch=master&amp;svg=true)](https://ci.appveyor.com/project/GITHUB_USERNAME/REPO)</code></pre>
-<p>to the <code>README.md</code>. Run (R)</p>
-<pre class="r"><code>devtools::use_testthat()
-devtools::use_vignette(&quot;my-vignette&quot;)</code></pre>
+<p>to the <code>README.md</code>.</p>
+</div>
 </div>
 <div id="version-control-using-git" class="section level1">
 <h1><span class="header-section-number">3</span> Version Control using Git</h1>

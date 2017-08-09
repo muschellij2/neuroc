@@ -34,14 +34,19 @@ After `devtools` is installed, you should go through the following process:
 The condensed version of this worklow is to run (in R):
 ```r
 devtools::use_git()
-# set up GITHUB_PAT - personal token
-devtools::use_github()
+devtools::use_github() # must have GITHUB_PAT set up
 devtools::use_readme_md()
-# Edit your README
+devtools::use_vignette("my-vignette")
+devtools::use_testthat()
+devtools::use_appveyor()
 devtools::use_travis()
 ```
 
-Activate repository on travis, then add 
+And edit the following files:
+
+## `.travis.yml`
+
+Add the following lines:
 ```
 warnings_are_errors: true 
 after_success:
@@ -49,11 +54,10 @@ after_success:
 ```
 to `.travis.yml`.
 
-Run (R):
-```r
-devtools::use_appveyor()
-```
-and add
+
+## `appveyor.yml`
+
+Add the following lines:
 ```
 environment:
   global:
@@ -61,17 +65,14 @@ environment:
 ```
 to `appveyor.yml`.
 
-Add 
-
+## `README.md`
+ 
+Add the following lines, changing `GITHUB_USERNAME/REPO` to the correct version
 ```
  [![Travis-CI Build Status] (https://travis-ci.org/GITHUB_USERNAME/REPO.svg?branch=master)] (https://travis-ci.org/GITHUB_USERNAME/REPO)
  [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/GITHUB_USERNAME/REPO?branch=master&svg=true)](https://ci.appveyor.com/project/GITHUB_USERNAME/REPO)
 ```
-to the `README.md`. Run (R)
-```r
-devtools::use_testthat()
-devtools::use_vignette("my-vignette")
-```
+to the `README.md`. 
 
 # Version Control using Git 
 

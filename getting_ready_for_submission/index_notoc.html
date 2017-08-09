@@ -58,6 +58,32 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <li><a href="#submitting-your-package">Submitting your Package</a></li>
 </ol>
 </div>
+<div id="short-version" class="section level1">
+<h1>Short Version</h1>
+<p>The condensed version of this worklow is to run (in R):</p>
+<pre class="r"><code>devtools::use_git()
+devtools::use_github() # must have GITHUB_PAT set up
+devtools::use_readme_md()
+devtools::use_travis()</code></pre>
+<p>Activate repository on travis, then add</p>
+<pre><code>warnings_are_errors: true 
+after_success:
+  - Rscript -e 'covr::coveralls(type = &quot;all&quot;)'</code></pre>
+<p>to <code>.travis.yml</code>.</p>
+<p>Run (R):</p>
+<pre class="r"><code>devtools::use_appveyor()</code></pre>
+<p>and add</p>
+<pre><code>environment:
+  global:
+    WARNINGS_ARE_ERORRS: 1</code></pre>
+<p>to <code>appveyor.yml</code>.</p>
+<p>Add</p>
+<pre><code> [![Travis-CI Build Status] (https://travis-ci.org/GITHUB_USERNAME/REPO.svg?branch=master)] (https://travis-ci.org/GITHUB_USERNAME/REPO)
+ [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/GITHUB_USERNAME/REPO?branch=master&amp;svg=true)](https://ci.appveyor.com/project/GITHUB_USERNAME/REPO)</code></pre>
+<p>to the <code>README.md</code>. Run (R)</p>
+<pre class="r"><code>devtools::use_testthat()
+devtools::use_vignette(&quot;my-vignette&quot;)</code></pre>
+</div>
 <div id="version-control-using-git" class="section level1">
 <h1>Version Control using Git</h1>
 <p>We will use the <a href="https://git-scm.com/"><code>git</code> version control system</a> for our repositories. Other version control systems exist, such as Subversion and Mercurial, but we require <code>git</code> for our packages as this is the most popular modern version control system.</p>
@@ -143,7 +169,7 @@ devtools::use_readme_md()</code></pre>
 <p>To enable Appveyor for this repository, the easiest way is to use the <code>use_appveyor</code> command:</p>
 <pre class="r"><code>devtools::use_appveyor()</code></pre>
 <p>This will add a <code>appveyor.yml</code> YAML file to your folder and added this to your <code>.Rbuildignore</code> file. We recommend adding the following options to your <code>.travis.yml</code> file:</p>
-<pre class="r"><code>environment:
+<pre><code>environment:
   global:
     WARNINGS_ARE_ERORRS: 1</code></pre>
 <p>so that warnings are treated as errors, which we require in our platform.</p>
