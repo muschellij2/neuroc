@@ -47,15 +47,15 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <pre class="r"><code>install.packages(&quot;devtools&quot;)</code></pre>
 <p>After <code>devtools</code> is installed, you should go through the following process:</p>
 <ol style="list-style-type: decimal">
-<li>Setting up Git</li>
-<li>Using GitHub</li>
-<li>Creating a <code>README.md</code> file</li>
-<li>Setting up continuous integration: Travis CI and Appveyor</li>
-<li>Creating a Vignette</li>
-<li>Creating Unit Tests using <code>testthat</code></li>
-<li>Using Code Coverage</li>
-<li>Checking your package</li>
-<li>Submitting your package to our platform</li>
+<li><a href="#version-control-using-git">Setting up Git</a></li>
+<li><a href="#hosting-git-repositories-on-github">Using GitHub</a></li>
+<li><a href="#setting-up-a-readme-file">Creating a <code>README.md</code> file</a></li>
+<li><a href="#using-continuous-integration">Setting up continuous integration: Travis CI and Appveyor</a></li>
+<li><a href="#checking-your-package">Checking your Package</a></li>
+<li><a href="#creating-a-vignette">Creating a Vignette</a></li>
+<li><a href="#creating-unit-tests-using-testthat">Creating Unit Tests using <code>testthat</code></a></li>
+<li><a href="#using-code-coverage">Using Code Coverage</a></li>
+<li><a href="#submitting-your-package">Submitting your Package</a></li>
 </ol>
 </div>
 <div id="version-control-using-git" class="section level1">
@@ -77,8 +77,8 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 </div>
 </div>
 </div>
-<div id="hosting-git-repositories-github" class="section level1">
-<h1>Hosting Git Repositories GitHub</h1>
+<div id="hosting-git-repositories-on-github" class="section level1">
+<h1>Hosting Git Repositories on GitHub</h1>
 <p>Our platform is based on <a href="https://github.com/">GitHub</a>, which is an online server of the to host <code>git</code> repositories. There are other online repositories for <code>git</code>, such as <a href="https://bitbucket.org/">BitBucket</a> and <a href="https://about.gitlab.com">GitLab</a>. Although hosting on these repositories should be valid, we currently require all developers to currently host on GitHub. GitHub is the most popular platform in our experience and all hooks/backend development we use is based on that. Note, <code>git</code> is a system/software, usually installed on your machine, and GitHub is the online server hosting it. In order to host your repository on GitHub, you must sign up for an account at <a href="https://github.com/" class="uri">https://github.com/</a>.</p>
 <div id="setting-up-github" class="section level2">
 <h2>Setting up GitHub</h2>
@@ -109,17 +109,121 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <p>Once you have your package set up, you should make a <code>README.md</code> file. You can either use a <code>REAMDE.md</code> file straight out, without <code>R</code> code or a <code>README.Rmd</code> file that you knit/render to a <code>README.md</code> file.</p>
 <pre class="r"><code>devtools::use_readme_rmd()
 devtools::use_readme_md()</code></pre>
-<p>The <code>README.md</code> file is written in Markdown and you can use the GitHub Markdown flavor. A <code>REAMDE</code> file is important because it generates the content at the bottom of a GitHub repository. You can also put your badges for number of downloads, version on CRAN (if applicable), <a href="#using-continuous-integration">continuous integration</a> status, and <a href="#using-code-coverage">code coverage</a>.</p>
+<p>The <code>README.md</code> file is written in Markdown and you can use the GitHub Markdown flavor. A <code>REAMDE</code> file is important because it generates the content at the bottom of a GitHub repository, such as how to install or use the package. You can also put your badges for number of downloads, version on CRAN (if applicable), <a href="#using-continuous-integration">continuous integration</a> status, and <a href="#using-code-coverage">code coverage</a>.</p>
 </div>
 <div id="using-continuous-integration" class="section level1">
 <h1>Using Continuous Integration</h1>
 <div id="travis" class="section level2">
 <h2>Travis</h2>
+<p>The Travis CI is a <a href="https://en.wikipedia.org/wiki/Continuous_integration">continuous integration</a> service that we will use to build and check R packages on Linux and Mac OS X operating systems. In order to use Travis, you must have an account. We recommend to use <a href="https://travis-ci.org/auth">sign in to Travis CI</a> with your GitHub account. You need to authorize Travis CI to have access to your GitHub repositories. If you have private repositories, those are hosted on <a href="https://travis-ci.com" class="uri">https://travis-ci.com</a>, whereas public ones are hosted on <a href="https://travis-ci.org" class="uri">https://travis-ci.org</a>. After authorizing, you should be able to “Sync Accounts” to see your repositories and turn on integration.</p>
+<div id="configuring-travis" class="section level3">
+<h3>Configuring Travis</h3>
+<p>To create the configuration necessary for Travis CI to build and check the package, the easiest way is to use the <code>use_travis</code> command:</p>
 <pre class="r"><code>devtools::use_travis()</code></pre>
+<p>This will add a <code>.travis.yml</code> (a <a href="http://www.yaml.org/start.html">YAML</a> file) file to your folder and added this to your <code>.Rbuildignore</code> file. We recommend adding the following options to your <code>.travis.yml</code> file:</p>
+<pre><code>warnings_are_errors: true</code></pre>
+<p>so that warnings are treated as errors, which we require in our platform.</p>
+<p>If you would like to test on Mac OSX and Linux (the default is Linux only), addt he following lines.</p>
+<pre><code>os:
+  - linux
+  - osx</code></pre>
+<p>If you would like to use our platform’s customized Travis configuration file, you can use the <a href="https://github.com/muschellij2/neuroc_travis/blob/master/neuroc_travis.yml">Neuroconductor YAML file</a>, but make sure you rename it to <code>.travis.yml</code> in your folder.</p>
+</div>
+<div id="enabling-travis" class="section level3">
+<h3>Enabling Travis</h3>
+<p>Using <code>use_travis</code> will open a URL (<a href="https://travis-ci.org/GITHUB_USERNAME/REPO" class="uri">https://travis-ci.org/GITHUB_USERNAME/REPO</a>) so you can enable Travis to run on this package. If you use our custom Travis URL, you will have to go that URL yourself.</p>
+<p>In your <code>README.md</code>, add the following lines for a travis shield:</p>
+<pre><code> [![Travis-CI Build Status] (https://travis-ci.org/GITHUB_USERNAME/REPO.svg?branch=master)] (https://travis-ci.org/GITHUB_USERNAME/REPO)</code></pre>
+<p>where you change <code>GITHUB_USERNAME/REPO</code> to your information. Once you add/commit the changes to <code>README.md</code>, you should have a badge after your package builds to let you know if it passes or fails.</p>
+</div>
+</div>
+<div id="appveyor" class="section level2">
+<h2>Appveyor</h2>
+<p><a href="https://www.appveyor.com/">Appveyor</a> is a continuous integration service that builds projects on Windows machines. Although some packages may not be able to compile on Windows machines, we strive to compile all packages on all 3 main operating systems.</p>
+<p>To enable Appveyor for this repository, the easiest way is to use the <code>use_appveyor</code> command:</p>
+<pre class="r"><code>devtools::use_appveyor()</code></pre>
+<p>This will add a <code>appveyor.yml</code> YAML file to your folder and added this to your <code>.Rbuildignore</code> file. We recommend adding the following options to your <code>.travis.yml</code> file:</p>
+<pre class="r"><code>environment:
+  global:
+    WARNINGS_ARE_ERORRS: 1</code></pre>
+<p>so that warnings are treated as errors, which we require in our platform.</p>
+<p>If you would like to use our platform’s customized Appveyor configuration file, you can use the <a href="https://github.com/muschellij2/neuroc_travis/blob/master/neuroc_appveyor.yml">Neuroconductor YAML file</a>, but make sure you rename it to <code>appveyor.yml</code> in your folder.</p>
+<div id="enabling-appveyor" class="section level3">
+<h3>Enabling Appveyor</h3>
+<p>You must go to <a href="https://ci.appveyor.com/projects/new" class="uri">https://ci.appveyor.com/projects/new</a>, go to the repository and then click “Add”. Once you commit and push to the GitHub repository, then Appveyor should build and check your package.</p>
+<p>In your <code>README.md</code>, add the following lines for a travis shield:</p>
+<pre><code>[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/GITHUB_USERNAME/REPO?branch=master&amp;svg=true)](https://ci.appveyor.com/project/GITHUB_USERNAME/REPO)</code></pre>
+<p>where you change <code>GITHUB_USERNAME/REPO</code> to your information. Once you add/commit the changes to <code>README.md</code>, you should have a badge after your package builds to let you know if it passes or fails.</p>
+</div>
+</div>
+</div>
+<div id="checking-your-package" class="section level1">
+<h1>Checking your Package</h1>
+<p>Before you push to GitHub, you can check your package so that all things are in order. We recommend using <code>devtools::check(args = &quot;--as-cran&quot;)</code>. This will check your package and documentation for consistency and inform you of any warnings or errors. We use the <code>--as-cran</code> as it performs checks additional checks similar to CRAN.</p>
+<p>If checking in RStudio, you can add this argument in <code>Build → Configure Build Tools</code>, and add <code>--as-cran</code> under the “Check options”.</p>
+<p>You also can do this at the command line using <code>R CMD check --as-cran</code>, but you should build a source tarball of your package first.</p>
+</div>
+<div id="creating-unit-tests-using-testthat" class="section level1">
+<h1>Creating Unit Tests using <code>testthat</code></h1>
+<p>Unit tests make it easier to identify problems when you make changes to your package. For example, a new function may work but may not handle a previous case or bug that you had fixed. Creating a unit test for this bug can ensure that if the output changes to something unexpectedly, you are notified.</p>
+<p>We recommend checking out <a href="http://r-pkgs.had.co.nz/tests.html">Hadley Wickham’s tutorial</a> on testing for unit tests. We recommend using the <a href="https://cran.r-project.org/web/packages/testthat/index.html"><code>testthat</code> package</a>. In order to use the <code>testthat</code> package, the easiest way is to use</p>
+<pre class="r"><code>devtools::use_testthat()</code></pre>
+<p>which should make a <code>tests</code> folder. Add as many tests as necessary to try to get your <a href="#using-code-coverage">code coverage</a> as close to 100% as possible.</p>
+</div>
+<div id="creating-a-vignette" class="section level1">
+<h1>Creating a Vignette</h1>
+<p>To make your package more user-friendly (and therefore more likely to be used), we strongly suggest you provide a <a href="http://r-pkgs.had.co.nz/vignettes.html">vignette</a> with your package. To create a vignette, run the following command:</p>
+<pre class="r"><code>devtools::use_vignette(&quot;my-vignette&quot;)</code></pre>
+<p>where you’d change <code>my-vignette</code> to the <strong>filename</strong> of hte vignette (which means <strong>no spaces!</strong>). This will create an <a href="http://rmarkdown.rstudio.com/">R Markdown</a> vignette with the following metadata:</p>
+<pre><code>---
+title: &quot;Vignette Title&quot;
+author: &quot;Vignette Author&quot;
+date: &quot;2017-08-09&quot;
+output: rmarkdown::html_vignette
+vignette: &gt;
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---</code></pre>
+<p>Change the <code>title: &quot;Vignette Title&quot;</code> area to have the title you’d like <strong>inside</strong> the document. You can change the <code>%\VignetteIndexEntry{Vignette Title}</code> to the same title; this will be the title of the vignette <strong>in the documentation of the pacakge</strong>. When you run <code>browseVignettes(&quot;YOUR_PACKAGE&quot;)</code>, the entry there will be pulled from <code>VignetteIndexEntry</code>.</p>
+<p>You can make multiple vignettes for the different types of analyses or use cases for your package.</p>
+<div id="building-vignettes" class="section level2">
+<h2>Building Vignettes</h2>
+<p>In order to build your vignettes, you can use the following command:</p>
+<pre class="r"><code>devtools::build_vignettes()</code></pre>
 </div>
 </div>
 <div id="using-code-coverage" class="section level1">
 <h1>Using Code Coverage</h1>
+<p><a href="https://en.wikipedia.org/wiki/Code_coverage">Code Coverage</a> measures the percentage of code is run when testing occurs. The <code>covr</code> package by Jim Hester provides a great interface for code coverage in R packages. You can check the code coverage of your package using:</p>
+<pre class="r"><code>covr::package_coverage()</code></pre>
+<p>which will provide you with a report. We suggest adding the argument <code>type = &quot;all&quot;</code> so that the code coverage is calculated after going through the unit tests, vignettes, and examples. The default is to only use the coverage of the unit tests. Thus, you would run:</p>
+<pre class="r"><code>covr::package_coverage(type = &quot;all&quot;)</code></pre>
+<div id="code-coverage-and-continuous-integration" class="section level2">
+<h2>Code Coverage and Continuous Integration</h2>
+<p>The <code>covr</code> package also provides an interface for 2 online code coverage tools: <a href="https://coveralls.io/">Coveralls</a> and <a href="https://codecov.io/">Codecov</a>. We use Coveralls as we have had better success setting up the API for our backend, but both are very good.</p>
+<p>To check the code coverage of the package after each build, the easist way is to use <code>use_coverage</code>:</p>
+<pre class="r"><code>devtools::use_coverage(type = &quot;coveralls&quot;)
+devtools::use_coverage(type = &quot;codecov&quot;)</code></pre>
+<p>where you would use the one whichever service you prefer (they should be the same). This will add the <code>covr</code> package to the “Suggests” field of the <code>DESCRIPTION</code> (if not in another dependency). The message states to add:</p>
+<pre><code>after_success:
+  - Rscript -e 'covr::coveralls()'</code></pre>
+<p>or</p>
+<pre><code>after_success:
+  - Rscript -e 'covr::codecov()'</code></pre>
+<p>to the <code>.travis.yml</code> file (respective to the service you use).</p>
+<p>We suggest adding the argument <code>type = &quot;all&quot;</code> so that the code coverage is calculated after going through the unit tests, vignettes, and examples. The default is to only use the coverage of the unit tests. Thus, you would add:</p>
+<pre><code>after_success:
+  - Rscript -e 'covr::coveralls(type = &quot;all&quot;)'</code></pre>
+<p>or</p>
+<pre><code>after_success:
+  - Rscript -e 'covr::codecov(type = &quot;all&quot;)'</code></pre>
+<p>to the <code>.travis.yml</code> file, respectively.</p>
+</div>
+</div>
+<div id="submitting-your-package" class="section level1">
+<h1>Submitting your Package</h1>
+<p>Now that you’ve performed all the checks and ensured that the package is thoroughly tested, you can submit your package. Please provide your name, email, and link to the GitHub repository on the <a href="https://neuroconductor.org/submit-package">Neuroconductor</a> or <a href="http://oslerinhealth.org/submit-package">OSLER</a> submission pages. The maintainer of the package will receive and email to verify this is a valid submission and the package will begin checking and integration.</p>
 </div>
 <div id="session-info" class="section level1">
 <h1>Session Info</h1>

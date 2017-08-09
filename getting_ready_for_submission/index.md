@@ -1,4 +1,4 @@
-# Getting Ready for Submission
+# Preparing Your Package for for Submission
 John Muschelli  
 `r Sys.Date()`  
 
@@ -19,15 +19,15 @@ install.packages("devtools")
 
 After `devtools` is installed, you should go through the following process:
 
-1.  Setting up Git
-2.  Using GitHub
-3.  Creating a `README.md` file
-4.  Setting up continuous integration: Travis CI and Appveyor
-5.  Creating a Vignette
-6.  Creating Unit Tests using `testthat`
-7.  Using Code Coverage
-8.  Checking your package
-9.  Submitting your package to our platform
+1.  [Setting up Git](#version-control-using-git)
+2.  [Using GitHub](#hosting-git-repositories-on-github)
+3.  [Creating a `README.md` file](#setting-up-a-readme-file)
+4.  [Setting up continuous integration: Travis CI and Appveyor](#using-continuous-integration)
+5.  [Checking your Package](#checking-your-package)
+6.  [Creating a Vignette](#creating-a-vignette)
+7.  [Creating Unit Tests using `testthat`](#creating-unit-tests-using-testthat)
+8.  [Using Code Coverage](#using-code-coverage)
+9.  [Submitting your Package](#submitting-your-package)
 
 # Version Control using Git 
 
@@ -54,7 +54,7 @@ devtools::use_git(pkg = "/path/to/repository")
 
 Now you should have a folder on your machine (it may be hidden) that stores your commits and changes.
 
-# Hosting Git Repositories GitHub 
+# Hosting Git Repositories on GitHub 
 
 Our platform is based on [GitHub](https://github.com/), which is an online server of the to host `git` repositories.  There are other online repositories for `git`, such as [BitBucket](https://bitbucket.org/) and [GitLab](https://about.gitlab.com).  Although hosting on these repositories should be valid, we currently require all developers to currently host on GitHub.  GitHub is the most popular platform in our experience and all hooks/backend development we use is based on that.  Note, `git` is a system/software, usually installed on your machine, and GitHub is the online server hosting it.  In order to host your repository on GitHub, you must sign up for an account at [https://github.com/](https://github.com/). 
 
@@ -188,10 +188,122 @@ In your `README.md`, add the following lines for a travis shield:
 where you change `GITHUB_USERNAME/REPO` to your information.  Once you add/commit the changes to `README.md`, you should have a badge after your package builds to let you know if it passes or fails.
 
 
+# Checking your Package
+
+Before you push to GitHub, you can check your package so that all things are in order.  We recommend using `devtools::check(args = "--as-cran")`.  This will check your package and documentation for consistency and inform you of any warnings or errors.  We use the `--as-cran` as it performs checks additional checks similar to CRAN.
+
+If checking in RStudio, you can add this argument in `Build → Configure Build Tools`,  and add `--as-cran` under the "Check options".
+
+You also can do this at the command line using `R CMD check --as-cran`, but you should build a source tarball of your package first.   
+
+# Creating Unit Tests using `testthat`
+
+Unit tests make it easier to identify problems when you make changes to your package.  For example, a new function may work but may not handle a previous case or bug that you had fixed.  Creating a unit test for this bug can ensure that if the output changes to something unexpectedly, you are notified.
+
+We recommend checking out [Hadley Wickham's tutorial](http://r-pkgs.had.co.nz/tests.html) on testing for unit tests.  We recommend using the [`testthat` package](https://cran.r-project.org/web/packages/testthat/index.html).  In order to use the `testthat` package, the easiest way is to use 
+
+```r
+devtools::use_testthat()
+```
+
+which should make a `tests` folder.  Add as many tests as necessary to try to get your [code coverage](#using-code-coverage) as close to 100\% as possible.
+
+# Creating a Vignette
+
+To make your package more user-friendly (and therefore more likely to be used), we strongly suggest you provide a [vignette](http://r-pkgs.had.co.nz/vignettes.html) with your package.  To create a vignette, run the following command:
+
+```r
+devtools::use_vignette("my-vignette")
+```
+
+where you'd change `my-vignette` to the **filename** of hte vignette (which means **no spaces!**).  This will create an [R Markdown](http://rmarkdown.rstudio.com/) vignette with the following metadata:
+
+```
+---
+title: "Vignette Title"
+author: "Vignette Author"
+date: "2017-08-09"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+```
+
+Change the `title: "Vignette Title"` area to have the title you'd like **inside** the document.  You can change the `%\VignetteIndexEntry{Vignette Title}` to the same title; this will be the title of the vignette **in the documentation of the pacakge**.  When you run `browseVignettes("YOUR_PACKAGE")`, the entry there will be pulled from `VignetteIndexEntry`.  
+
+You can make multiple vignettes for the different types of analyses or use cases for your package.
+
+## Building Vignettes
+
+In order to build your vignettes, you can use the following command:
+
+
+```r
+devtools::build_vignettes()
+```
 
 # Using Code Coverage
 
+[Code Coverage](https://en.wikipedia.org/wiki/Code_coverage) measures the percentage of code is run when testing occurs.  The `covr` package by Jim Hester provides a great interface for code coverage in R packages.  You can check the code coverage of your package using:
 
+```r
+covr::package_coverage()
+```
+
+which will provide you with a report.  We suggest adding the argument `type = "all"` so that the code coverage is calculated after going through the unit tests, vignettes, and examples.  The default is to only use the coverage of the unit tests.  Thus, you would run:
+
+```r
+covr::package_coverage(type = "all")
+```
+
+
+## Code Coverage and Continuous Integration
+The `covr` package also provides an interface for 2 online code coverage tools: [Coveralls](https://coveralls.io/) and  [Codecov](https://codecov.io/).  We use Coveralls as we have had better success setting up the API for our backend, but both are very good.  
+
+To check the code coverage of the package after each build, the easist way is to use `use_coverage`:
+
+```r
+devtools::use_coverage(type = "coveralls")
+devtools::use_coverage(type = "codecov")
+```
+
+where you would use the one whichever service you prefer (they should be the same). This will add the `covr` package to the "Suggests" field of the `DESCRIPTION` (if not in another dependency).  The message states to add:
+
+```
+after_success:
+  - Rscript -e 'covr::coveralls()'
+```
+
+or 
+```
+after_success:
+  - Rscript -e 'covr::codecov()'
+```
+
+to the `.travis.yml` file (respective to the service you use).  
+
+
+We suggest adding the argument `type = "all"` so that the code coverage is calculated after going through the unit tests, vignettes, and examples.  The default is to only use the coverage of the unit tests.  Thus, you would add:
+
+```
+after_success:
+  - Rscript -e 'covr::coveralls(type = "all")'
+```
+
+or 
+```
+after_success:
+  - Rscript -e 'covr::codecov(type = "all")'
+```
+
+to the `.travis.yml` file, respectively.
+
+
+# Submitting your Package
+
+Now that you've performed all the checks and ensured that the package is thoroughly tested, you can submit your package.  Please provide your name, email, and link to the GitHub repository on the [Neuroconductor](https://neuroconductor.org/submit-package) or [OSLER](http://oslerinhealth.org/submit-package) submission pages.  The maintainer of the package will receive and email to verify this is a valid submission and the package will begin checking and integration.  
 
 
 # Session Info
