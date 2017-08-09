@@ -294,17 +294,62 @@ div.tocify {
 </div>
 <div id="setting-up-a-readme-file" class="section level1">
 <h1><span class="header-section-number">4</span> Setting Up a README file</h1>
-<p>Once you have your package set up, you</p>
+<p>Once you have your package set up, you should make a <code>README.md</code> file. You can either use a <code>REAMDE.md</code> file straight out, without <code>R</code> code or a <code>README.Rmd</code> file that you knit/render to a <code>README.md</code> file.</p>
+<pre class="r"><code>devtools::use_readme_rmd()
+devtools::use_readme_md()</code></pre>
+<p>The <code>README.md</code> file is written in Markdown and you can use the GitHub Markdown flavor. A <code>REAMDE</code> file is important because it generates the content at the bottom of a GitHub repository, such as how to install or use the package. You can also put your badges for number of downloads, version on CRAN (if applicable), <a href="#using-continuous-integration">continuous integration</a> status, and <a href="#using-code-coverage">code coverage</a>.</p>
 </div>
 <div id="using-continuous-integration" class="section level1">
 <h1><span class="header-section-number">5</span> Using Continuous Integration</h1>
 <div id="travis" class="section level2">
 <h2><span class="header-section-number">5.1</span> Travis</h2>
+<p>The Travis CI is a <a href="https://en.wikipedia.org/wiki/Continuous_integration">continuous integration</a> service that we will use to build and check R packages on Linux and Mac OS X operating systems. In order to use Travis, you must have an account. We recommend to use <a href="https://travis-ci.org/auth">sign in to Travis CI</a> with your GitHub account. You need to authorize Travis CI to have access to your GitHub repositories. If you have private repositories, those are hosted on <a href="https://travis-ci.com" class="uri">https://travis-ci.com</a>, whereas public ones are hosted on <a href="https://travis-ci.org" class="uri">https://travis-ci.org</a>. After authorizing, you should be able to “Sync Accounts” to see your repositories and turn on integration.</p>
+<div id="configuring-travis" class="section level3">
+<h3><span class="header-section-number">5.1.1</span> Configuring Travis</h3>
+<p>To create the configuration necessary for Travis CI to build and check the package, the easiest way is to use the <code>use_travis</code> command:</p>
 <pre class="r"><code>devtools::use_travis()</code></pre>
+<p>This will add a <code>.travis.yml</code> (a <a href="http://www.yaml.org/start.html">YAML</a> file) file to your folder and added this to your <code>.Rbuildignore</code> file. We recommend adding the following options to your <code>.travis.yml</code> file:</p>
+<pre><code>warnings_are_errors: true</code></pre>
+<p>so that warnings are treated as errors, which we require in our platform.</p>
+<p>If you would like to test on Mac OSX and Linux (the default is Linux only), addt he following lines.</p>
+<pre><code>os:
+  - linux
+  - osx</code></pre>
+<p>If you would like to use our platform’s customized Travis configuration file, you can use the <a href="https://github.com/muschellij2/neuroc_travis/blob/master/neuroc_travis.yml">Neuroconductor YAML file</a>, but make sure you rename it to <code>.travis.yml</code> in your folder.</p>
 </div>
+<div id="enabling-travis" class="section level3">
+<h3><span class="header-section-number">5.1.2</span> Enabling Travis</h3>
+<p>Using <code>use_travis</code> will open a URL (<a href="https://travis-ci.org/GITHUB_USERNAME/REPO" class="uri">https://travis-ci.org/GITHUB_USERNAME/REPO</a>) so you can enable Travis to run on this package. If you use our custom Travis URL, you will have to go that URL yourself.</p>
+<p>In your <code>README.md</code>, add the following lines for a travis shield:</p>
+<pre><code> [![Travis-CI Build Status] (https://travis-ci.org/GITHUB_USERNAME/REPO.svg?branch=master)] (https://travis-ci.org/GITHUB_USERNAME/REPO)</code></pre>
+<p>where you change <code>GITHUB_USERNAME/REPO</code> to your information. Once you add/commit the changes to <code>README.md</code>, you should have a badge after your package builds to let you know if it passes or fails.</p>
+</div>
+</div>
+<div id="appveyor" class="section level2">
+<h2><span class="header-section-number">5.2</span> Appveyor</h2>
+<p><a href="https://www.appveyor.com/">Appveyor</a> is a continuous integration service that builds projects on Windows machines. Although some packages may not be able to compile on Windows machines, we strive to compile all packages on all 3 main operating systems.</p>
+<p>To enable Appveyor for this repository, the easiest way is to use the <code>use_appveyor</code> command:</p>
+<pre class="r"><code>devtools::use_appveyor()</code></pre>
+<p>This will add a <code>appveyor.yml</code> YAML file to your folder and added this to your <code>.Rbuildignore</code> file. We recommend adding the following options to your <code>.travis.yml</code> file:</p>
+<pre class="r"><code>environment:
+  global:
+    WARNINGS_ARE_ERORRS: 1</code></pre>
+<p>so that warnings are treated as errors, which we require in our platform.</p>
+<p>If you would like to use our platform’s customized Appveyor configuration file, you can use the <a href="https://github.com/muschellij2/neuroc_travis/blob/master/neuroc_appveyor.yml">Neuroconductor YAML file</a>, but make sure you rename it to <code>appveyor.yml</code> in your folder.</p>
+<div id="enabling-appveyor" class="section level3">
+<h3><span class="header-section-number">5.2.1</span> Enabling Appveyor</h3>
+<p>You must go to <a href="https://ci.appveyor.com/projects/new" class="uri">https://ci.appveyor.com/projects/new</a>, go to the repository and then click “Add”. Once you commit and push to the GitHub repository, then Appveyor should build and check your package.</p>
+<p>In your <code>README.md</code>, add the following lines for a travis shield:</p>
+<pre><code>[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/GITHUB_USERNAME/REPO?branch=master&amp;svg=true)](https://ci.appveyor.com/project/GITHUB_USERNAME/REPO)</code></pre>
+<p>where you change <code>GITHUB_USERNAME/REPO</code> to your information. Once you add/commit the changes to <code>README.md</code>, you should have a badge after your package builds to let you know if it passes or fails.</p>
+</div>
+</div>
+</div>
+<div id="using-code-coverage" class="section level1">
+<h1><span class="header-section-number">6</span> Using Code Coverage</h1>
 </div>
 <div id="session-info" class="section level1">
-<h1><span class="header-section-number">6</span> Session Info</h1>
+<h1><span class="header-section-number">7</span> Session Info</h1>
 <pre class="r"><code>devtools::session_info()</code></pre>
 </div>
 

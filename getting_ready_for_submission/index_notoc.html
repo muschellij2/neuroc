@@ -106,7 +106,10 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 </div>
 <div id="setting-up-a-readme-file" class="section level1">
 <h1>Setting Up a README file</h1>
-<p>Once you have your package set up, you</p>
+<p>Once you have your package set up, you should make a <code>README.md</code> file. You can either use a <code>REAMDE.md</code> file straight out, without <code>R</code> code or a <code>README.Rmd</code> file that you knit/render to a <code>README.md</code> file.</p>
+<pre class="r"><code>devtools::use_readme_rmd()
+devtools::use_readme_md()</code></pre>
+<p>The <code>README.md</code> file is written in Markdown and you can use the GitHub Markdown flavor. A <code>REAMDE</code> file is important because it generates the content at the bottom of a GitHub repository. You can also put your badges for number of downloads, version on CRAN (if applicable), <a href="#using-continuous-integration">continuous integration</a> status, and <a href="#using-code-coverage">code coverage</a>.</p>
 </div>
 <div id="using-continuous-integration" class="section level1">
 <h1>Using Continuous Integration</h1>
@@ -114,6 +117,9 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <h2>Travis</h2>
 <pre class="r"><code>devtools::use_travis()</code></pre>
 </div>
+</div>
+<div id="using-code-coverage" class="section level1">
+<h1>Using Code Coverage</h1>
 </div>
 <div id="session-info" class="section level1">
 <h1>Session Info</h1>

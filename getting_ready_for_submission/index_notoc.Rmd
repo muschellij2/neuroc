@@ -100,8 +100,14 @@ so that your "Issues" and "URL" fields are set in `DESCRIPTION` to the GitHub li
 
 # Setting Up a README file
 
-Once you have your package set up, you 
+Once you have your package set up, you should make a `README.md` file.  You can either use a `REAMDE.md` file straight out, without `R` code or a `README.Rmd` file that you knit/render to a `README.md` file.
 
+```r
+devtools::use_readme_rmd()
+devtools::use_readme_md()
+```
+
+The `README.md` file is written in Markdown and you can use the GitHub Markdown flavor. A `REAMDE` file is important because it generates the content at the bottom of a GitHub repository.  You can also put your badges for number of downloads, version on CRAN (if applicable), [continuous integration](#using-continuous-integration) status, and [code coverage](#using-code-coverage).
 
 # Using Continuous Integration
 
@@ -110,6 +116,8 @@ Once you have your package set up, you
 ```r
 devtools::use_travis()
 ```
+
+# Using Code Coverage
 
 
 

@@ -114,16 +114,99 @@ so that your "Issues" and "URL" fields are set in `DESCRIPTION` to the GitHub li
 
 # Setting Up a README file
 
-Once you have your package set up, you 
+Once you have your package set up, you should make a `README.md` file.  You can either use a `REAMDE.md` file straight out, without `R` code or a `README.Rmd` file that you knit/render to a `README.md` file.
 
+```r
+`r pkg_name`::use_readme_rmd()
+`r pkg_name`::use_readme_md()
+```
+
+The `README.md` file is written in Markdown and you can use the GitHub Markdown flavor. A `REAMDE` file is important because it generates the content at the bottom of a GitHub repository, such as how to install or use the package.  You can also put your badges for number of downloads, version on CRAN (if applicable), [continuous integration](#using-continuous-integration) status, and [code coverage](#using-code-coverage).
 
 # Using Continuous Integration
 
 ## Travis
 
+The Travis CI is a [continuous integration](https://en.wikipedia.org/wiki/Continuous_integration) service that we will use to build and check R packages on Linux and Mac OS X operating systems.  In order to use Travis, you must have an account.  We recommend to use [sign in to Travis CI](https://travis-ci.org/auth) with your GitHub account.  You need to authorize Travis CI to have access to your GitHub repositories.  If you have private repositories, those are hosted on https://travis-ci.com, whereas public ones are hosted on https://travis-ci.org.  After authorizing, you should be able to "Sync Accounts" to see your repositories and turn on integration.  
+
+### Configuring Travis 
+
+To create the configuration necessary for Travis CI to build and check the package, the easiest way is to use the `use_travis` command: 
+
 ```r
 `r pkg_name`::use_travis()
 ```
+
+This will add a `.travis.yml` (a [YAML](http://www.yaml.org/start.html) file) file to your folder and added this to your `.Rbuildignore` file.  We recommend adding the following options to your `.travis.yml` file:
+
+```
+warnings_are_errors: true
+```
+
+so that warnings are treated as errors, which we require in our platform.  
+
+If you would like to test on Mac OSX and Linux (the default is Linux only), addt he following lines.  
+
+```
+os:
+  - linux
+  - osx
+```
+
+If you would like to use our platform's customized Travis configuration file, you can use the [Neuroconductor YAML file](https://github.com/muschellij2/neuroc_travis/blob/master/neuroc_travis.yml), but make sure you rename it to `.travis.yml` in your folder.  
+
+### Enabling Travis 
+
+Using `use_travis` will open a URL (https://travis-ci.org/GITHUB_USERNAME/REPO) so you can enable Travis to run on this package.  If you use our custom Travis URL, you will have to go that URL yourself.  
+
+In your `README.md`, add the following lines for a travis shield:
+
+```
+ [![Travis-CI Build Status] (https://travis-ci.org/GITHUB_USERNAME/REPO.svg?branch=master)] (https://travis-ci.org/GITHUB_USERNAME/REPO)
+```
+
+where you change `GITHUB_USERNAME/REPO` to your information.  Once you add/commit the changes to `README.md`, you should have a badge after your package builds to let you know if it passes or fails.
+
+## Appveyor
+
+[Appveyor](https://www.appveyor.com/) is a continuous integration service that builds projects on Windows machines.  Although some packages may not be able to compile on Windows machines, we strive to compile all packages on all 3 main operating systems.  
+
+To enable Appveyor for this repository, the easiest way is to use the `use_appveyor` command: 
+
+```r
+`r pkg_name`::use_appveyor()
+```
+
+This will add a `appveyor.yml` YAML file to your folder and added this to your `.Rbuildignore` file.  We recommend adding the following options to your `.travis.yml` file:
+
+
+```r
+environment:
+  global:
+    WARNINGS_ARE_ERORRS: 1
+```
+
+so that warnings are treated as errors, which we require in our platform.  
+
+If you would like to use our platform's customized Appveyor configuration file, you can use the [Neuroconductor YAML file](https://github.com/muschellij2/neuroc_travis/blob/master/neuroc_appveyor.yml), but make sure you rename it to `appveyor.yml` in your folder.  
+
+### Enabling Appveyor 
+
+You must go to https://ci.appveyor.com/projects/new, go to the repository and then click "Add".  Once you commit and push to the GitHub repository, then Appveyor should build and check your package.
+
+
+In your `README.md`, add the following lines for a travis shield:
+
+```
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/GITHUB_USERNAME/REPO?branch=master&svg=true)](https://ci.appveyor.com/project/GITHUB_USERNAME/REPO)
+```
+
+
+where you change `GITHUB_USERNAME/REPO` to your information.  Once you add/commit the changes to `README.md`, you should have a badge after your package builds to let you know if it passes or fails.
+
+
+
+# Using Code Coverage
 
 
 
