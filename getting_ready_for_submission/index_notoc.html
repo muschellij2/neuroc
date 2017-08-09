@@ -40,147 +40,84 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 
 
 
-<p>All code for this document is located at <a href="https://raw.githubusercontent.com/muschellij2/neuroc/master/continuous_integration/index.R">here</a>.</p>
-<div id="the-neuroc.deps-package" class="section level1">
-<h1>The <code>neuroc.deps</code> package</h1>
-<p>We have created the <a href="https://github.com/muschellij2/neuroc.deps"><code>neuroc.deps</code> package</a> that perform most of the backend operations on a Neuroconductor package. It can be installed as follows:</p>
-<pre class="r"><code>devtools::install_github(&quot;muschellij2/neuroc.deps&quot;)</code></pre>
-<p>The most relevant function is <code>use_neuroc_template</code>, which is used to make many of the changes to the package.</p>
-</div>
-<div id="changes-to-the-description-file" class="section level1">
-<h1>Changes to the <code>DESCRIPTION</code> file</h1>
-<p>In order to test packages against the relevant Neuroconductor packages, we change the <code>DESCRIPTION</code> file. We do this in the following ways:</p>
+<p>All code for this document is located at <a href="https://raw.githubusercontent.com/muschellij2/neuroc/master/getting_ready_for_submission/index.R">here</a>.</p>
+<div id="startup-process" class="section level1">
+<h1>Startup Process</h1>
+<p>Most of the work we will cover here will get you up and running for submission to our GitHub-based platform. We will use the devtools package to help us with the process of package development. If you do not have the package installed, please run:</p>
+<pre class="r"><code>install.packages(&quot;devtools&quot;)</code></pre>
+<p>After <code>devtools</code> is installed, you should go through the following process:</p>
 <ol style="list-style-type: decimal">
-<li>Modify, or add if not present, the <code>Remotes</code> field. Packages are installed using the <code>install_github</code> function, which reads this <code>Remotes</code> field to install dependencies if necessary. The Remotes field modifies and overrides the locations of dependencies to be installed. If a dependency for a package is present, then a newer version of the package will not be installed unless indicated by the user or indicated a newer version is necessary in the package (by the package (<code>&gt;= VERSION</code>)) syntax) in the dependencies.</li>
-<li>We add the <code>bioViews</code> field to a package in case there are Bioconductor package in the dependencies, to ensure <code>install_github</code> looks in that repository, as per the issue <a href="https://github.com/hadley/devtools/issues/1254">hadley/devtools#1254</a>.</li>
-<li>The <code>covr</code> package is added to the <code>Suggests</code> field if not already present in the dependencies (<code>Depends</code>, <code>Imports</code>, or <code>Suggests</code>). This is so that code coverage can be performed.</li>
+<li>Setting up Git</li>
+<li>Using GitHub</li>
+<li>Creating a <code>README.md</code> file</li>
+<li>Setting up continuous integration: Travis CI and Appveyor</li>
+<li>Creating a Vignette</li>
+<li>Creating Unit Tests using <code>testthat</code></li>
+<li>Using Code Coverage</li>
+<li>Checking your package</li>
+<li>Submitting your package to our platform</li>
 </ol>
-<div id="antsr-dependencies" class="section level2">
-<h2>ANTsR Dependencies</h2>
-<p>If a package depends on the <code>ANTsR</code> workflow, a slightly modified set of continuous integration steps are performed as that build is highly technical.</p>
+</div>
+<div id="version-control-using-git" class="section level1">
+<h1>Version Control using Git</h1>
+<p>We will use the <a href="https://git-scm.com/"><code>git</code> version control system</a> for our repositories. Other version control systems exist, such as Subversion and Mercurial, but we require <code>git</code> for our packages as this is the most popular modern version control system.</p>
+<div id="setting-up-git" class="section level2">
+<h2>Setting up Git</h2>
+<div id="rstudio" class="section level3">
+<h3>RStudio</h3>
+<p>If you use <code>RStudio</code> to set up your packages, please check “Create a git repository” when setting up your package. Once a repository is set up, you can use the <code>Tools → Version Control</code> menu in RStudio for committing and pushing if you do not want to use the command line.</p>
+</div>
+<div id="using-devtools" class="section level3">
+<h3>Using <code>devtools</code></h3>
+<p>In <code>R</code>, you can use <code>devtools</code> to set up the <code>git</code> repository. If you are in the root directory of the package (the place with <code>DESCRIPTION</code>, <code>NAMESPACE</code>, etc. files), you can run:</p>
+<pre class="r"><code>devtools::use_git()</code></pre>
+<p>If you would like to pass in the path of the directory instead, use:</p>
+<pre class="r"><code>devtools::use_git(pkg = &quot;/path/to/repository&quot;)</code></pre>
+<p>Now you should have a folder on your machine (it may be hidden) that stores your commits and changes.</p>
 </div>
 </div>
-<div id="continuous-integration-services" class="section level1">
-<h1>Continuous Integration Services</h1>
-<p>For checking R packages, we use <a href="https://en.wikipedia.org/wiki/Continuous_integration">Continuous Integration</a> services <a href="https://travis-ci.org/">Travis CI</a>, which builds on Linux and OS X operating systems, and <a href="https://www.appveyor.com/">Appveyor</a>, which builds on Windows using MinGW.</p>
-<p>The purpose is to ensure that the package can be built, installed, and checked on the respective systems with the appropriate dependencies.</p>
-<div id="travis-ci" class="section level2">
-<h2>Travis CI</h2>
-<p>For Travis CI, we delete the developer’s <code>.travis.yml</code> configuration script and replace it with the one located at <a href="https://github.com/muschellij2/neuroc.deps/blob/master/inst/neuroc_travis.yml" class="uri">https://github.com/muschellij2/neuroc.deps/blob/master/inst/neuroc_travis.yml</a>.</p>
-<div id="travis-helpers" class="section level3">
-<h3>Travis Helpers</h3>
-<pre><code>before_install:
-  - fname=travis_helpers.sh
-  - wget -O ${fname} http://bit.ly/travis_helpers
-  - cat ${fname}; source ${fname}; rm ${fname}  
-  - remove_neuroc_packages</code></pre>
-<p>which remove any packages located on Neuroconductor from the Travis machine. As caching is done, these may be present from previous builds. The <code>travis_helpers.sh</code> file is a set of helper <code>bash</code> functions that backend the <a href="https://github.com/muschellij2/ghtravis"><code>ghtravis</code> package</a>. Most of these are changes to <code>DESCRIPTION</code> file, but on Travis and not the GitHub.</p>
 </div>
-<div id="installing-remotes-without-dependencies" class="section level3">
-<h3>Installing Remotes without Dependencies</h3>
-<p>The command:</p>
-<pre><code>  - install_remotes_no_dep</code></pre>
-<p>looks at the <code>Remotes</code> field in the DESCRIPTION file and runs <code>install_github(..., upgrade_dependencies = FALSE)</code>. This ensures that the Neuroconductor packages will be those with the specific commit IDs at the time of running. No old Neuroconductor packages will be present as they were removed using <code>remove_neuroc_packages</code>.</p>
+<div id="hosting-git-repositories-github" class="section level1">
+<h1>Hosting Git Repositories GitHub</h1>
+<p>Our platform is based on <a href="https://github.com/">GitHub</a>, which is an online server of the to host <code>git</code> repositories. There are other online repositories for <code>git</code>, such as <a href="https://bitbucket.org/">BitBucket</a> and <a href="https://about.gitlab.com">GitLab</a>. Although hosting on these repositories should be valid, we currently require all developers to currently host on GitHub. GitHub is the most popular platform in our experience and all hooks/backend development we use is based on that. Note, <code>git</code> is a system/software, usually installed on your machine, and GitHub is the online server hosting it. In order to host your repository on GitHub, you must sign up for an account at <a href="https://github.com/" class="uri">https://github.com/</a>.</p>
+<div id="setting-up-github" class="section level2">
+<h2>Setting up GitHub</h2>
+<div id="using-the-github-website" class="section level3">
+<h3>Using the GitHub Website</h3>
+<p>In order to set up your repository for GitHub, you can either use the website. When you are logged into Github, click the plus sign in the top right hand corner <img src="data:image/png;base64,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" style="display: inline; width: 5%">, and then click “New Repository” In the top right hand corner. We <strong>highly</strong> recommend naming the GitHub repository the same name as the package.</p>
 </div>
-<div id="package_name-environmental-variable" class="section level3">
-<h3>PACKAGE_NAME environmental variable</h3>
-<p>The environmental variable of <code>PACKAGE_NAME</code> is created from the <code>DESCRIPTION</code> file. This may be different from the repository name from the user, but will be the same repository name on Neuroconductor, as all repos are <code>neuroconductor/PACKAGE_NAME</code>.</p>
-<pre><code>  - export PACKAGE_NAME=`package_name`</code></pre>
+<div id="using-devtools-1" class="section level3">
+<h3>Using <code>devtools</code></h3>
+<p>Using <code>devtools</code>, you can use the <code>use_github</code>. In order to use this command, you must have a personal access token (PAT) from <a href="https://github.com/settings/tokens" class="uri">https://github.com/settings/tokens</a>. Make sure at least the <code>public_repo</code> option is checked. If you have a token set in the <code>GITHUB_PAT</code> environment variable, <code>devtools</code> will use that.</p>
+<p>If you do not have the <code>GITHUB_PAT</code> environment variable set, you must specify <code>auth_token = &quot;YOUR_TOKEN_HERE&quot;</code> in the following commands.</p>
+<p>If you are in the root directory of the package (the place with <code>DESCRIPTION</code>, <code>NAMESPACE</code>, etc. files), you can run:</p>
+<pre class="r"><code>devtools::use_github()</code></pre>
+<p>If you would like to pass in the path of the directory instead, use:</p>
+<pre class="r"><code>devtools::use_git(pkg = &quot;/path/to/repository&quot;)</code></pre>
+<p>Check the GitHub website to ensure you have set up your GitHub repository. You should be able to see the “Push” button enabled when you go to <code>Tools → Version Control → Commit</code> in RStudio.</p>
 </div>
-<div id="bioconductor-packages" class="section level3">
-<h3>Bioconductor Packages</h3>
-<p>We add the following fields to the YAML: To ensure Bioconductor packages can be installed if necessary:</p>
-<pre><code>bioc_required: yes
-use_bioc: yes</code></pre>
-</div>
-<div id="warnings-are-errors" class="section level3">
-<h3>Warnings are Errors</h3>
-<p>So that we ensure that no warnings are present in the installation (similar to CRAN):</p>
-<pre><code>warnings_are_errors: true</code></pre>
-</div>
-<div id="cran-checks" class="section level3">
-<h3>CRAN checks</h3>
-<p>That we have a similar threshold for packages similar to CRAN:</p>
-<pre><code>r_check_args: --as-cran</code></pre>
-</div>
-<div id="pass-or-fail" class="section level3">
-<h3>Pass or Fail</h3>
-<p>After running <code>R CMD check</code>, the <code>00install.out</code> and <code>00check.log</code> are printed for diagnostic purposes.</p>
-</div>
-<div id="deployment" class="section level3">
-<h3>Deployment</h3>
-<p>When packages are being deployed, <code>R CMD INSTALL --build</code> is run so that they have the standardized naming conventions. The <code>deployment</code> information for neuroconductor, including GitHub encrypted keys, are added. After building, the binary distribution is uploaded to the GitHub repository when tagged (from Neuroconductor’s backend not the developer).</p>
-</div>
-<div id="coverage" class="section level3">
-<h3>Coverage</h3>
-<p>After deployment, we use <a href="https://coveralls.io/">Coveralls.io</a> and the <code>covr</code> package to run code coverage. We use <code>type = &quot;all&quot;</code> so that we provide coverage of tests, vignettes, and examples:</p>
-<pre><code>after_deploy:
-  - Rscript -e 'covr::coveralls(type = &quot;all&quot;)'</code></pre>
-</div>
-<div id="future-work" class="section level3">
-<h3>Future work</h3>
-<p>We plan to add Neuroconductor badges to the <code>README.md</code> file.</p>
+<div id="github-links-in-your-description-file" class="section level3">
+<h3>GitHub Links in your <code>DESCRIPTION</code> file</h3>
+<p>Now that you have GitHub enabled, run:</p>
+<pre class="r"><code>devtools::use_github_links()</code></pre>
+<p>so that your “Issues” and “URL” fields are set in <code>DESCRIPTION</code> to the GitHub link.</p>
 </div>
 </div>
-<div id="appveyor" class="section level2">
-<h2>Appveyor</h2>
-<p>Currently, we only formally support packages that work in *nix type of operatings systems. We will check the package for Windows as a courtesy to Windows users, but do not provide a detailed level of support.</p>
-<p>We use the <a href="https://github.com/muschellij2/neuroc.deps/blob/master/inst/neuroc_appveyor.yml">neuroc_appveyor.yml</a>, which changes the <code>PATH</code> variable to try to replicate a Windows machine using Rtools only and not installing MinGW.</p>
-<p>Different from the YAML from <code>devtools::use_appveyor()</code>, we remove the following part:</p>
-<pre><code>  - path: '\*_*.tar.gz'
-    name: Bits</code></pre>
-<p>as could overwrite Linux builds depeneding on the naming convention on Deployment.</p>
 </div>
+<div id="setting-up-a-readme-file" class="section level1">
+<h1>Setting Up a README file</h1>
+<p>Once you have your package set up, you</p>
 </div>
-<div id="code-coverage" class="section level1">
-<h1>Code Coverage</h1>
-<div id="coveralls" class="section level2">
-<h2>Coveralls</h2>
-<p>We plan to use the <a href="https://github.com/jimhester/covr"><code>covr</code></a> package to check for code coverage using the <a href="https://coveralls.io/">Coveralls</a> interface. We currently do not have any requirements for code coverage for our packages.</p>
+<div id="using-continuous-integration" class="section level1">
+<h1>Using Continuous Integration</h1>
+<div id="travis" class="section level2">
+<h2>Travis</h2>
+<pre class="r"><code>devtools::use_travis()</code></pre>
 </div>
 </div>
 <div id="session-info" class="section level1">
 <h1>Session Info</h1>
 <pre class="r"><code>devtools::session_info()</code></pre>
-<pre><code>## Session info -------------------------------------------------------------</code></pre>
-<pre><code>##  setting  value                       
-##  version  R version 3.4.1 (2017-06-30)
-##  system   x86_64, darwin15.6.0        
-##  ui       X11                         
-##  language (EN)                        
-##  collate  en_US.UTF-8                 
-##  tz       America/New_York            
-##  date     2017-08-08</code></pre>
-<pre><code>## Packages -----------------------------------------------------------------</code></pre>
-<pre><code>##  package   * version     date       source                            
-##  backports   1.1.0       2017-05-22 CRAN (R 3.4.0)                    
-##  base      * 3.4.1       2017-07-07 local                             
-##  colorout  * 1.1-0       2015-04-20 Github (jalvesaq/colorout@1539f1f)
-##  compiler    3.4.1       2017-07-07 local                             
-##  datasets  * 3.4.1       2017-07-07 local                             
-##  devtools  * 1.13.2.9000 2017-07-12 Github (hadley/devtools@d3482c5)  
-##  digest      0.6.12      2017-01-27 CRAN (R 3.4.0)                    
-##  evaluate    0.10.1      2017-06-24 cran (@0.10.1)                    
-##  graphics  * 3.4.1       2017-07-07 local                             
-##  grDevices * 3.4.1       2017-07-07 local                             
-##  htmltools   0.3.6       2017-04-28 CRAN (R 3.4.0)                    
-##  knitr       1.16        2017-05-18 CRAN (R 3.4.0)                    
-##  magrittr    1.5         2014-11-22 CRAN (R 3.4.0)                    
-##  memoise     1.1.0       2017-04-21 CRAN (R 3.4.0)                    
-##  methods     3.4.1       2017-07-07 local                             
-##  pkgbuild    0.0.0.9000  2017-07-12 Github (r-pkgs/pkgbuild@8aab60b)  
-##  pkgload     0.0.0.9000  2017-07-06 Github (r-pkgs/pkgload@119cf9a)   
-##  Rcpp        0.12.12     2017-07-15 cran (@0.12.12)                   
-##  rlang       0.1.1.9000  2017-07-24 Github (hadley/rlang@342c473)     
-##  rmarkdown   1.6         2017-06-15 cran (@1.6)                       
-##  rprojroot   1.2         2017-01-16 CRAN (R 3.4.0)                    
-##  stats     * 3.4.1       2017-07-07 local                             
-##  stringi     1.1.5       2017-04-07 CRAN (R 3.4.0)                    
-##  stringr     1.2.0       2017-02-18 CRAN (R 3.4.0)                    
-##  tools       3.4.1       2017-07-07 local                             
-##  utils     * 3.4.1       2017-07-07 local                             
-##  withr       1.0.2       2016-06-20 CRAN (R 3.4.0)                    
-##  yaml        2.1.14      2016-11-12 CRAN (R 3.4.0)</code></pre>
 </div>
 
 

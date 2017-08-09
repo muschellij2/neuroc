@@ -1,0 +1,122 @@
+---
+output:
+  html_document:
+    theme: null
+bibliography: ../refs.bib
+---
+
+
+
+All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/getting_ready_for_submission/index.R).
+
+
+
+
+# Startup Process
+
+Most of the work we will cover here will get you up and running for submission to our GitHub-based platform.  We will use the devtools package to help us with the process of package development.  If you do not have the package installed, please run:
+
+```r
+install.packages("devtools")
+```
+
+After `devtools` is installed, you should go through the following process:
+
+1.  Setting up Git
+2.  Using GitHub
+3.  Creating a `README.md` file
+4.  Setting up continuous integration: Travis CI and Appveyor
+5.  Creating a Vignette
+6.  Creating Unit Tests using `testthat`
+7.  Using Code Coverage
+8.  Checking your package
+9.  Submitting your package to our platform
+
+# Version Control using Git 
+
+We will use the [`git` version control system](https://git-scm.com/) for our repositories.  Other version control systems exist, such as Subversion and Mercurial, but we require `git` for our packages as this is the most popular modern version control system.
+
+## Setting up Git
+
+### RStudio 
+If you use `RStudio` to set up your packages, please check "Create a git repository" when setting up your package.  Once a repository is set up, you can use the `Tools → Version Control` menu in RStudio for committing and pushing if you do not want to use the command line.
+
+### Using `devtools`
+
+In `R`, you can use `devtools` to set up the `git` repository.  If you are in the root directory of the package (the place with `DESCRIPTION`, `NAMESPACE`, etc. files), you can run:
+
+```r
+devtools::use_git()
+```
+
+If you would like to pass in the path of the directory instead, use:
+
+```r
+devtools::use_git(pkg = "/path/to/repository")
+```
+
+Now you should have a folder on your machine (it may be hidden) that stores your commits and changes.
+
+# Hosting Git Repositories GitHub 
+
+Our platform is based on [GitHub](https://github.com/), which is an online server of the to host `git` repositories.  There are other online repositories for `git`, such as [BitBucket](https://bitbucket.org/) and [GitLab](https://about.gitlab.com).  Although hosting on these repositories should be valid, we currently require all developers to currently host on GitHub.  GitHub is the most popular platform in our experience and all hooks/backend development we use is based on that.  Note, `git` is a system/software, usually installed on your machine, and GitHub is the online server hosting it.  In order to host your repository on GitHub, you must sign up for an account at [https://github.com/](https://github.com/). 
+
+## Setting up GitHub 
+
+### Using the GitHub Website 
+In order to set up your repository for GitHub, you can either use the website.  When you are logged into Github, click the plus sign in the top right hand corner <img src="plus.png" style="display: inline; width: 5%">, and then click "New Repository" In the top right hand corner.  We **highly** recommend naming the GitHub repository the same name as the package.
+
+### Using `devtools`
+
+Using `devtools`, you can use the `use_github`.  In order to use this command, you must have a personal access token (PAT) from https://github.com/settings/tokens. Make sure at least the `public_repo` option is checked.  If you have a token set in the `GITHUB_PAT` environment variable, `devtools` will use that.  
+
+If you do not have the `GITHUB_PAT` environment variable set, you must specify `auth_token = "YOUR_TOKEN_HERE"` in the following commands.
+
+
+If you are in the root directory of the package (the place with `DESCRIPTION`, `NAMESPACE`, etc. files), you can run:
+
+```r
+devtools::use_github()
+```
+
+If you would like to pass in the path of the directory instead, use:
+
+```r
+devtools::use_git(pkg = "/path/to/repository")
+```
+
+Check the GitHub website to ensure you have set up your GitHub repository.  You should be able to see the "Push" button enabled when you go to `Tools → Version Control → Commit` in RStudio.
+
+
+### GitHub Links in your `DESCRIPTION` file
+
+Now that you have GitHub enabled, run:
+
+```r
+devtools::use_github_links()
+```
+
+so that your "Issues" and "URL" fields are set in `DESCRIPTION` to the GitHub link.
+
+# Setting Up a README file
+
+Once you have your package set up, you 
+
+
+# Using Continuous Integration
+
+## Travis
+
+```r
+devtools::use_travis()
+```
+
+
+
+
+# Session Info
+
+
+```r
+devtools::session_info()
+```

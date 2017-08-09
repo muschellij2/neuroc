@@ -17,6 +17,7 @@ LIST += malf_insula
 LIST += neurohcp
 LIST += install
 LIST += continuous_integration
+LIST += getting_ready_for_submission
 
 all:
 	Rscript -e "source('notoc.R')"
