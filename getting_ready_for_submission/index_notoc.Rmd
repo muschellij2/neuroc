@@ -139,7 +139,7 @@ os:
   - osx
 ```
 
-If you would like to use our platform's customized Travis configuration file, you can use the [Neuroconductor YAML file](https://github.com/muschellij2/neuroc_travis/blob/master/neuroc_travis.yml), but make sure you rename it to `.travis.yml` in your folder.  
+If you would like to use our platform's customized Travis configuration file, you can use the [YAML file](https://github.com/muschellij2/neuroc_travis/blob/master/neuroc_travis.yml), but make sure you rename it to `.travis.yml` in your folder.  
 
 ### Enabling Travis 
 
@@ -174,7 +174,7 @@ environment:
 
 so that warnings are treated as errors, which we require in our platform.  
 
-If you would like to use our platform's customized Appveyor configuration file, you can use the [Neuroconductor YAML file](https://github.com/muschellij2/neuroc_travis/blob/master/neuroc_appveyor.yml), but make sure you rename it to `appveyor.yml` in your folder.  
+If you would like to use our platform's customized Appveyor configuration file, you can use the [YAML file](https://github.com/muschellij2/neuroc_travis/blob/master/neuroc_appveyor.yml), but make sure you rename it to `appveyor.yml` in your folder.  
 
 ### Enabling Appveyor 
 

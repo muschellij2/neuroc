@@ -29,6 +29,50 @@ After `devtools` is installed, you should go through the following process:
 8.  [Using Code Coverage](#using-code-coverage)
 9.  [Submitting your Package](#submitting-your-package)
 
+# Short Version 
+
+The condensed version of this worklow is to run (in R):
+```r
+devtools::use_git()
+# set up GITHUB_PAT - personal token
+devtools::use_github()
+devtools::use_readme_md()
+# Edit your README
+devtools::use_travis()
+```
+
+Activate repository on travis, then add 
+```
+warnings_are_errors: true 
+after_success:
+  - Rscript -e 'covr::coveralls(type = "all")'
+```
+to `.travis.yml`.
+
+Run (R):
+```r
+devtools::use_appveyor()
+```
+and add
+```
+environment:
+  global:
+    WARNINGS_ARE_ERORRS: 1
+```
+to `appveyor.yml`.
+
+Add 
+
+```
+ [![Travis-CI Build Status] (https://travis-ci.org/GITHUB_USERNAME/REPO.svg?branch=master)] (https://travis-ci.org/GITHUB_USERNAME/REPO)
+ [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/GITHUB_USERNAME/REPO?branch=master&svg=true)](https://ci.appveyor.com/project/GITHUB_USERNAME/REPO)
+```
+to the `README.md`. Run (R)
+```r
+devtools::use_testthat()
+devtools::use_vignette("my-vignette")
+```
+
 # Version Control using Git 
 
 We will use the [`git` version control system](https://git-scm.com/) for our repositories.  Other version control systems exist, such as Subversion and Mercurial, but we require `git` for our packages as this is the most popular modern version control system.
@@ -136,7 +180,7 @@ os:
   - osx
 ```
 
-If you would like to use our platform's customized Travis configuration file, you can use the [Neuroconductor YAML file](https://github.com/muschellij2/neuroc_travis/blob/master/neuroc_travis.yml), but make sure you rename it to `.travis.yml` in your folder.  
+If you would like to use our platform's customized Travis configuration file, you can use the [YAML file](https://github.com/muschellij2/neuroc_travis/blob/master/neuroc_travis.yml), but make sure you rename it to `.travis.yml` in your folder.  
 
 ### Enabling Travis 
 
@@ -163,7 +207,7 @@ devtools::use_appveyor()
 This will add a `appveyor.yml` YAML file to your folder and added this to your `.Rbuildignore` file.  We recommend adding the following options to your `.travis.yml` file:
 
 
-```r
+```
 environment:
   global:
     WARNINGS_ARE_ERORRS: 1
@@ -171,7 +215,7 @@ environment:
 
 so that warnings are treated as errors, which we require in our platform.  
 
-If you would like to use our platform's customized Appveyor configuration file, you can use the [Neuroconductor YAML file](https://github.com/muschellij2/neuroc_travis/blob/master/neuroc_appveyor.yml), but make sure you rename it to `appveyor.yml` in your folder.  
+If you would like to use our platform's customized Appveyor configuration file, you can use the [YAML file](https://github.com/muschellij2/neuroc_travis/blob/master/neuroc_appveyor.yml), but make sure you rename it to `appveyor.yml` in your folder.  
 
 ### Enabling Appveyor 
 

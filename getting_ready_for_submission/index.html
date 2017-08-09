@@ -246,17 +246,45 @@ div.tocify {
 <li><a href="#submitting-your-package">Submitting your Package</a></li>
 </ol>
 </div>
+<div id="short-version" class="section level1">
+<h1><span class="header-section-number">2</span> Short Version</h1>
+<p>The condensed version of this worklow is to run (in R):</p>
+<pre class="r"><code>devtools::use_git()
+# set up GITHUB_PAT - personal token
+devtools::use_github()
+devtools::use_readme_md()
+# Edit your README
+devtools::use_travis()</code></pre>
+<p>Activate repository on travis, then add</p>
+<pre><code>warnings_are_errors: true 
+after_success:
+  - Rscript -e 'covr::coveralls(type = &quot;all&quot;)'</code></pre>
+<p>to <code>.travis.yml</code>.</p>
+<p>Run (R):</p>
+<pre class="r"><code>devtools::use_appveyor()</code></pre>
+<p>and add</p>
+<pre><code>environment:
+  global:
+    WARNINGS_ARE_ERORRS: 1</code></pre>
+<p>to <code>appveyor.yml</code>.</p>
+<p>Add</p>
+<pre><code> [![Travis-CI Build Status] (https://travis-ci.org/GITHUB_USERNAME/REPO.svg?branch=master)] (https://travis-ci.org/GITHUB_USERNAME/REPO)
+ [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/GITHUB_USERNAME/REPO?branch=master&amp;svg=true)](https://ci.appveyor.com/project/GITHUB_USERNAME/REPO)</code></pre>
+<p>to the <code>README.md</code>. Run (R)</p>
+<pre class="r"><code>devtools::use_testthat()
+devtools::use_vignette(&quot;my-vignette&quot;)</code></pre>
+</div>
 <div id="version-control-using-git" class="section level1">
-<h1><span class="header-section-number">2</span> Version Control using Git</h1>
+<h1><span class="header-section-number">3</span> Version Control using Git</h1>
 <p>We will use the <a href="https://git-scm.com/"><code>git</code> version control system</a> for our repositories. Other version control systems exist, such as Subversion and Mercurial, but we require <code>git</code> for our packages as this is the most popular modern version control system.</p>
 <div id="setting-up-git" class="section level2">
-<h2><span class="header-section-number">2.1</span> Setting up Git</h2>
+<h2><span class="header-section-number">3.1</span> Setting up Git</h2>
 <div id="rstudio" class="section level3">
-<h3><span class="header-section-number">2.1.1</span> RStudio</h3>
+<h3><span class="header-section-number">3.1.1</span> RStudio</h3>
 <p>If you use <code>RStudio</code> to set up your packages, please check “Create a git repository” when setting up your package. Once a repository is set up, you can use the <code>Tools → Version Control</code> menu in RStudio for committing and pushing if you do not want to use the command line.</p>
 </div>
 <div id="using-devtools" class="section level3">
-<h3><span class="header-section-number">2.1.2</span> Using <code>devtools</code></h3>
+<h3><span class="header-section-number">3.1.2</span> Using <code>devtools</code></h3>
 <p>In <code>R</code>, you can use <code>devtools</code> to set up the <code>git</code> repository. If you are in the root directory of the package (the place with <code>DESCRIPTION</code>, <code>NAMESPACE</code>, etc. files), you can run:</p>
 <pre class="r"><code>devtools::use_git()</code></pre>
 <p>If you would like to pass in the path of the directory instead, use:</p>
@@ -266,16 +294,16 @@ div.tocify {
 </div>
 </div>
 <div id="hosting-git-repositories-on-github" class="section level1">
-<h1><span class="header-section-number">3</span> Hosting Git Repositories on GitHub</h1>
+<h1><span class="header-section-number">4</span> Hosting Git Repositories on GitHub</h1>
 <p>Our platform is based on <a href="https://github.com/">GitHub</a>, which is an online server of the to host <code>git</code> repositories. There are other online repositories for <code>git</code>, such as <a href="https://bitbucket.org/">BitBucket</a> and <a href="https://about.gitlab.com">GitLab</a>. Although hosting on these repositories should be valid, we currently require all developers to currently host on GitHub. GitHub is the most popular platform in our experience and all hooks/backend development we use is based on that. Note, <code>git</code> is a system/software, usually installed on your machine, and GitHub is the online server hosting it. In order to host your repository on GitHub, you must sign up for an account at <a href="https://github.com/" class="uri">https://github.com/</a>.</p>
 <div id="setting-up-github" class="section level2">
-<h2><span class="header-section-number">3.1</span> Setting up GitHub</h2>
+<h2><span class="header-section-number">4.1</span> Setting up GitHub</h2>
 <div id="using-the-github-website" class="section level3">
-<h3><span class="header-section-number">3.1.1</span> Using the GitHub Website</h3>
+<h3><span class="header-section-number">4.1.1</span> Using the GitHub Website</h3>
 <p>In order to set up your repository for GitHub, you can either use the website. When you are logged into Github, click the plus sign in the top right hand corner <img src="data:image/png;base64,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" style="display: inline; width: 5%">, and then click “New Repository” In the top right hand corner. We <strong>highly</strong> recommend naming the GitHub repository the same name as the package.</p>
 </div>
 <div id="using-devtools-1" class="section level3">
-<h3><span class="header-section-number">3.1.2</span> Using <code>devtools</code></h3>
+<h3><span class="header-section-number">4.1.2</span> Using <code>devtools</code></h3>
 <p>Using <code>devtools</code>, you can use the <code>use_github</code>. In order to use this command, you must have a personal access token (PAT) from <a href="https://github.com/settings/tokens" class="uri">https://github.com/settings/tokens</a>. Make sure at least the <code>public_repo</code> option is checked. If you have a token set in the <code>GITHUB_PAT</code> environment variable, <code>devtools</code> will use that.</p>
 <p>If you do not have the <code>GITHUB_PAT</code> environment variable set, you must specify <code>auth_token = &quot;YOUR_TOKEN_HERE&quot;</code> in the following commands.</p>
 <p>If you are in the root directory of the package (the place with <code>DESCRIPTION</code>, <code>NAMESPACE</code>, etc. files), you can run:</p>
@@ -285,7 +313,7 @@ div.tocify {
 <p>Check the GitHub website to ensure you have set up your GitHub repository. You should be able to see the “Push” button enabled when you go to <code>Tools → Version Control → Commit</code> in RStudio.</p>
 </div>
 <div id="github-links-in-your-description-file" class="section level3">
-<h3><span class="header-section-number">3.1.3</span> GitHub Links in your <code>DESCRIPTION</code> file</h3>
+<h3><span class="header-section-number">4.1.3</span> GitHub Links in your <code>DESCRIPTION</code> file</h3>
 <p>Now that you have GitHub enabled, run:</p>
 <pre class="r"><code>devtools::use_github_links()</code></pre>
 <p>so that your “Issues” and “URL” fields are set in <code>DESCRIPTION</code> to the GitHub link.</p>
@@ -293,19 +321,19 @@ div.tocify {
 </div>
 </div>
 <div id="setting-up-a-readme-file" class="section level1">
-<h1><span class="header-section-number">4</span> Setting Up a README file</h1>
+<h1><span class="header-section-number">5</span> Setting Up a README file</h1>
 <p>Once you have your package set up, you should make a <code>README.md</code> file. You can either use a <code>REAMDE.md</code> file straight out, without <code>R</code> code or a <code>README.Rmd</code> file that you knit/render to a <code>README.md</code> file.</p>
 <pre class="r"><code>devtools::use_readme_rmd()
 devtools::use_readme_md()</code></pre>
 <p>The <code>README.md</code> file is written in Markdown and you can use the GitHub Markdown flavor. A <code>REAMDE</code> file is important because it generates the content at the bottom of a GitHub repository, such as how to install or use the package. You can also put your badges for number of downloads, version on CRAN (if applicable), <a href="#using-continuous-integration">continuous integration</a> status, and <a href="#using-code-coverage">code coverage</a>.</p>
 </div>
 <div id="using-continuous-integration" class="section level1">
-<h1><span class="header-section-number">5</span> Using Continuous Integration</h1>
+<h1><span class="header-section-number">6</span> Using Continuous Integration</h1>
 <div id="travis" class="section level2">
-<h2><span class="header-section-number">5.1</span> Travis</h2>
+<h2><span class="header-section-number">6.1</span> Travis</h2>
 <p>The Travis CI is a <a href="https://en.wikipedia.org/wiki/Continuous_integration">continuous integration</a> service that we will use to build and check R packages on Linux and Mac OS X operating systems. In order to use Travis, you must have an account. We recommend to use <a href="https://travis-ci.org/auth">sign in to Travis CI</a> with your GitHub account. You need to authorize Travis CI to have access to your GitHub repositories. If you have private repositories, those are hosted on <a href="https://travis-ci.com" class="uri">https://travis-ci.com</a>, whereas public ones are hosted on <a href="https://travis-ci.org" class="uri">https://travis-ci.org</a>. After authorizing, you should be able to “Sync Accounts” to see your repositories and turn on integration.</p>
 <div id="configuring-travis" class="section level3">
-<h3><span class="header-section-number">5.1.1</span> Configuring Travis</h3>
+<h3><span class="header-section-number">6.1.1</span> Configuring Travis</h3>
 <p>To create the configuration necessary for Travis CI to build and check the package, the easiest way is to use the <code>use_travis</code> command:</p>
 <pre class="r"><code>devtools::use_travis()</code></pre>
 <p>This will add a <code>.travis.yml</code> (a <a href="http://www.yaml.org/start.html">YAML</a> file) file to your folder and added this to your <code>.Rbuildignore</code> file. We recommend adding the following options to your <code>.travis.yml</code> file:</p>
@@ -315,10 +343,10 @@ devtools::use_readme_md()</code></pre>
 <pre><code>os:
   - linux
   - osx</code></pre>
-<p>If you would like to use our platform’s customized Travis configuration file, you can use the <a href="https://github.com/muschellij2/neuroc_travis/blob/master/neuroc_travis.yml">Neuroconductor YAML file</a>, but make sure you rename it to <code>.travis.yml</code> in your folder.</p>
+<p>If you would like to use our platform’s customized Travis configuration file, you can use the <a href="https://github.com/muschellij2/neuroc_travis/blob/master/neuroc_travis.yml">YAML file</a>, but make sure you rename it to <code>.travis.yml</code> in your folder.</p>
 </div>
 <div id="enabling-travis" class="section level3">
-<h3><span class="header-section-number">5.1.2</span> Enabling Travis</h3>
+<h3><span class="header-section-number">6.1.2</span> Enabling Travis</h3>
 <p>Using <code>use_travis</code> will open a URL (<a href="https://travis-ci.org/GITHUB_USERNAME/REPO" class="uri">https://travis-ci.org/GITHUB_USERNAME/REPO</a>) so you can enable Travis to run on this package. If you use our custom Travis URL, you will have to go that URL yourself.</p>
 <p>In your <code>README.md</code>, add the following lines for a travis shield:</p>
 <pre><code> [![Travis-CI Build Status] (https://travis-ci.org/GITHUB_USERNAME/REPO.svg?branch=master)] (https://travis-ci.org/GITHUB_USERNAME/REPO)</code></pre>
@@ -326,18 +354,18 @@ devtools::use_readme_md()</code></pre>
 </div>
 </div>
 <div id="appveyor" class="section level2">
-<h2><span class="header-section-number">5.2</span> Appveyor</h2>
+<h2><span class="header-section-number">6.2</span> Appveyor</h2>
 <p><a href="https://www.appveyor.com/">Appveyor</a> is a continuous integration service that builds projects on Windows machines. Although some packages may not be able to compile on Windows machines, we strive to compile all packages on all 3 main operating systems.</p>
 <p>To enable Appveyor for this repository, the easiest way is to use the <code>use_appveyor</code> command:</p>
 <pre class="r"><code>devtools::use_appveyor()</code></pre>
 <p>This will add a <code>appveyor.yml</code> YAML file to your folder and added this to your <code>.Rbuildignore</code> file. We recommend adding the following options to your <code>.travis.yml</code> file:</p>
-<pre class="r"><code>environment:
+<pre><code>environment:
   global:
     WARNINGS_ARE_ERORRS: 1</code></pre>
 <p>so that warnings are treated as errors, which we require in our platform.</p>
-<p>If you would like to use our platform’s customized Appveyor configuration file, you can use the <a href="https://github.com/muschellij2/neuroc_travis/blob/master/neuroc_appveyor.yml">Neuroconductor YAML file</a>, but make sure you rename it to <code>appveyor.yml</code> in your folder.</p>
+<p>If you would like to use our platform’s customized Appveyor configuration file, you can use the <a href="https://github.com/muschellij2/neuroc_travis/blob/master/neuroc_appveyor.yml">YAML file</a>, but make sure you rename it to <code>appveyor.yml</code> in your folder.</p>
 <div id="enabling-appveyor" class="section level3">
-<h3><span class="header-section-number">5.2.1</span> Enabling Appveyor</h3>
+<h3><span class="header-section-number">6.2.1</span> Enabling Appveyor</h3>
 <p>You must go to <a href="https://ci.appveyor.com/projects/new" class="uri">https://ci.appveyor.com/projects/new</a>, go to the repository and then click “Add”. Once you commit and push to the GitHub repository, then Appveyor should build and check your package.</p>
 <p>In your <code>README.md</code>, add the following lines for a travis shield:</p>
 <pre><code>[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/GITHUB_USERNAME/REPO?branch=master&amp;svg=true)](https://ci.appveyor.com/project/GITHUB_USERNAME/REPO)</code></pre>
@@ -346,20 +374,20 @@ devtools::use_readme_md()</code></pre>
 </div>
 </div>
 <div id="checking-your-package" class="section level1">
-<h1><span class="header-section-number">6</span> Checking your Package</h1>
+<h1><span class="header-section-number">7</span> Checking your Package</h1>
 <p>Before you push to GitHub, you can check your package so that all things are in order. We recommend using <code>devtools::check(args = &quot;--as-cran&quot;)</code>. This will check your package and documentation for consistency and inform you of any warnings or errors. We use the <code>--as-cran</code> as it performs checks additional checks similar to CRAN.</p>
 <p>If checking in RStudio, you can add this argument in <code>Build → Configure Build Tools</code>, and add <code>--as-cran</code> under the “Check options”.</p>
 <p>You also can do this at the command line using <code>R CMD check --as-cran</code>, but you should build a source tarball of your package first.</p>
 </div>
 <div id="creating-unit-tests-using-testthat" class="section level1">
-<h1><span class="header-section-number">7</span> Creating Unit Tests using <code>testthat</code></h1>
+<h1><span class="header-section-number">8</span> Creating Unit Tests using <code>testthat</code></h1>
 <p>Unit tests make it easier to identify problems when you make changes to your package. For example, a new function may work but may not handle a previous case or bug that you had fixed. Creating a unit test for this bug can ensure that if the output changes to something unexpectedly, you are notified.</p>
 <p>We recommend checking out <a href="http://r-pkgs.had.co.nz/tests.html">Hadley Wickham’s tutorial</a> on testing for unit tests. We recommend using the <a href="https://cran.r-project.org/web/packages/testthat/index.html"><code>testthat</code> package</a>. In order to use the <code>testthat</code> package, the easiest way is to use</p>
 <pre class="r"><code>devtools::use_testthat()</code></pre>
 <p>which should make a <code>tests</code> folder. Add as many tests as necessary to try to get your <a href="#using-code-coverage">code coverage</a> as close to 100% as possible.</p>
 </div>
 <div id="creating-a-vignette" class="section level1">
-<h1><span class="header-section-number">8</span> Creating a Vignette</h1>
+<h1><span class="header-section-number">9</span> Creating a Vignette</h1>
 <p>To make your package more user-friendly (and therefore more likely to be used), we strongly suggest you provide a <a href="http://r-pkgs.had.co.nz/vignettes.html">vignette</a> with your package. To create a vignette, run the following command:</p>
 <pre class="r"><code>devtools::use_vignette(&quot;my-vignette&quot;)</code></pre>
 <p>where you’d change <code>my-vignette</code> to the <strong>filename</strong> of hte vignette (which means <strong>no spaces!</strong>). This will create an <a href="http://rmarkdown.rstudio.com/">R Markdown</a> vignette with the following metadata:</p>
@@ -376,19 +404,19 @@ vignette: &gt;
 <p>Change the <code>title: &quot;Vignette Title&quot;</code> area to have the title you’d like <strong>inside</strong> the document. You can change the <code>%\VignetteIndexEntry{Vignette Title}</code> to the same title; this will be the title of the vignette <strong>in the documentation of the pacakge</strong>. When you run <code>browseVignettes(&quot;YOUR_PACKAGE&quot;)</code>, the entry there will be pulled from <code>VignetteIndexEntry</code>.</p>
 <p>You can make multiple vignettes for the different types of analyses or use cases for your package.</p>
 <div id="building-vignettes" class="section level2">
-<h2><span class="header-section-number">8.1</span> Building Vignettes</h2>
+<h2><span class="header-section-number">9.1</span> Building Vignettes</h2>
 <p>In order to build your vignettes, you can use the following command:</p>
 <pre class="r"><code>devtools::build_vignettes()</code></pre>
 </div>
 </div>
 <div id="using-code-coverage" class="section level1">
-<h1><span class="header-section-number">9</span> Using Code Coverage</h1>
+<h1><span class="header-section-number">10</span> Using Code Coverage</h1>
 <p><a href="https://en.wikipedia.org/wiki/Code_coverage">Code Coverage</a> measures the percentage of code is run when testing occurs. The <code>covr</code> package by Jim Hester provides a great interface for code coverage in R packages. You can check the code coverage of your package using:</p>
 <pre class="r"><code>covr::package_coverage()</code></pre>
 <p>which will provide you with a report. We suggest adding the argument <code>type = &quot;all&quot;</code> so that the code coverage is calculated after going through the unit tests, vignettes, and examples. The default is to only use the coverage of the unit tests. Thus, you would run:</p>
 <pre class="r"><code>covr::package_coverage(type = &quot;all&quot;)</code></pre>
 <div id="code-coverage-and-continuous-integration" class="section level2">
-<h2><span class="header-section-number">9.1</span> Code Coverage and Continuous Integration</h2>
+<h2><span class="header-section-number">10.1</span> Code Coverage and Continuous Integration</h2>
 <p>The <code>covr</code> package also provides an interface for 2 online code coverage tools: <a href="https://coveralls.io/">Coveralls</a> and <a href="https://codecov.io/">Codecov</a>. We use Coveralls as we have had better success setting up the API for our backend, but both are very good.</p>
 <p>To check the code coverage of the package after each build, the easist way is to use <code>use_coverage</code>:</p>
 <pre class="r"><code>devtools::use_coverage(type = &quot;coveralls&quot;)
@@ -410,11 +438,11 @@ devtools::use_coverage(type = &quot;codecov&quot;)</code></pre>
 </div>
 </div>
 <div id="submitting-your-package" class="section level1">
-<h1><span class="header-section-number">10</span> Submitting your Package</h1>
+<h1><span class="header-section-number">11</span> Submitting your Package</h1>
 <p>Now that you’ve performed all the checks and ensured that the package is thoroughly tested, you can submit your package. Please provide your name, email, and link to the GitHub repository on the <a href="https://neuroconductor.org/submit-package">Neuroconductor</a> or <a href="http://oslerinhealth.org/submit-package">OSLER</a> submission pages. The maintainer of the package will receive and email to verify this is a valid submission and the package will begin checking and integration.</p>
 </div>
 <div id="session-info" class="section level1">
-<h1><span class="header-section-number">11</span> Session Info</h1>
+<h1><span class="header-section-number">12</span> Session Info</h1>
 <pre class="r"><code>devtools::session_info()</code></pre>
 </div>
 
