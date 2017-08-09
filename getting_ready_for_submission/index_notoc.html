@@ -64,25 +64,34 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <pre class="r"><code>devtools::use_git()
 devtools::use_github() # must have GITHUB_PAT set up
 devtools::use_readme_md()
+devtools::use_vignette(&quot;my-vignette&quot;)
+devtools::use_testthat()
+devtools::use_appveyor()
 devtools::use_travis()</code></pre>
-<p>Activate repository on travis, then add</p>
+<p>And edit the following files:</p>
+<div id="travis.yml" class="section level2">
+<h2><code>.travis.yml</code></h2>
+<p>Add the following lines:</p>
 <pre><code>warnings_are_errors: true 
 after_success:
   - Rscript -e 'covr::coveralls(type = &quot;all&quot;)'</code></pre>
 <p>to <code>.travis.yml</code>.</p>
-<p>Run (R):</p>
-<pre class="r"><code>devtools::use_appveyor()</code></pre>
-<p>and add</p>
+</div>
+<div id="appveyor.yml" class="section level2">
+<h2><code>appveyor.yml</code></h2>
+<p>Add the following lines:</p>
 <pre><code>environment:
   global:
     WARNINGS_ARE_ERORRS: 1</code></pre>
 <p>to <code>appveyor.yml</code>.</p>
-<p>Add</p>
+</div>
+<div id="readme.md" class="section level2">
+<h2><code>README.md</code></h2>
+<p>Add the following lines, changing <code>GITHUB_USERNAME/REPO</code> to the correct version</p>
 <pre><code> [![Travis-CI Build Status] (https://travis-ci.org/GITHUB_USERNAME/REPO.svg?branch=master)] (https://travis-ci.org/GITHUB_USERNAME/REPO)
  [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/GITHUB_USERNAME/REPO?branch=master&amp;svg=true)](https://ci.appveyor.com/project/GITHUB_USERNAME/REPO)</code></pre>
-<p>to the <code>README.md</code>. Run (R)</p>
-<pre class="r"><code>devtools::use_testthat()
-devtools::use_vignette(&quot;my-vignette&quot;)</code></pre>
+<p>to the <code>README.md</code>.</p>
+</div>
 </div>
 <div id="version-control-using-git" class="section level1">
 <h1>Version Control using Git</h1>
@@ -249,7 +258,7 @@ devtools::use_coverage(type = &quot;codecov&quot;)</code></pre>
 </div>
 <div id="submitting-your-package" class="section level1">
 <h1>Submitting your Package</h1>
-<p>Now that you’ve performed all the checks and ensured that the package is thoroughly tested, you can submit your package. Please provide your name, email, and link to the GitHub repository on the <a href="https://neuroconductor.org/submit-package">Neuroconductor</a> or <a href="http://oslerinhealth.org/submit-package">OSLER</a> submission pages. The maintainer of the package will receive and email to verify this is a valid submission and the package will begin checking and integration.</p>
+<p>Now that you’ve performed all the checks and ensured that the package is thoroughly tested, you can submit your package. Please provide your name, email, and link to the GitHub repository on the <a href="https://neuroconductor.org/submit-package">Neuroconductor</a> or <a href="http://oslerinhealth.org/submit-package">OSLER</a> submission pages. The maintainer of the package will receive and email to verify this is a valid submission and the package will begin <a href="neuroc-help-continuous-integration">the changes to your package and integration</a>.</p>
 </div>
 <div id="session-info" class="section level1">
 <h1>Session Info</h1>
