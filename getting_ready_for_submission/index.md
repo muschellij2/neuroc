@@ -4,7 +4,7 @@ John Muschelli
 
 
 
-All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/getting_ready_for_submission/index.R).
+All code for this document is located [here](https://github.com/muschellij2/neuroc/blob/master/getting_ready_for_submission/index.Rmd).
 
 
 
@@ -267,7 +267,7 @@ where you'd change `my-vignette` to the **filename** of hte vignette (which mean
 ---
 title: "Vignette Title"
 author: "Vignette Author"
-date: "2017-08-09"
+date: "2017-08-16"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}

@@ -1,6 +1,12 @@
 # Neuroconductor
 `r Sys.Date()`  
 
+# Guides for Developers {#devguides}
+
+1. [Preparing Your Package for for Submission](getting_ready_for_submission/index.html)
+2. [Changes to your Package](continuous_integration/index.html)
+
+
 # Frequently Asked Questions (FAQ)
 
 Please visit the [FAQ](faq/index.html) for information on how to begin.
@@ -43,7 +49,3 @@ Please visit the [FAQ](faq/index.html) for information on how to begin.
 1. [Multiple Sclerosis Lesion Segmentation](ms_lesion/index.html)
 
 
-# Guides for Developers {#devguides}
-
-1. [Preparing Your Package for for Submission](getting_ready_for_submission/index.html)
-2. [Changes to your Package](continuous_integration/index.html)
