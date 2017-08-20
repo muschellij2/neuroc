@@ -1,3 +1,5 @@
+wget https://raw.githubusercontent.com/muschellij2/neuroc/master/getting_ready_for_submission/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/getting_ready_for_submission.html
+wget https://raw.githubusercontent.com/muschellij2/neuroc/master/continuous_integration/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/continuous_integration.html
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/faq/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/faq.html
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/installing_devtools/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/installing_devtools.html
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/installing_ANTsR/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/installing_ANTsR.html
@@ -15,7 +17,5 @@ wget https://raw.githubusercontent.com/muschellij2/neuroc/master/fmri_analysis_s
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/DTI_analysis_fslr/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/DTI_analysis_fslr.html
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/DTI_analysis_rcamino/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/DTI_analysis_rcamino.html
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/ms_lesion/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/ms_lesion.html
-wget https://raw.githubusercontent.com/muschellij2/neuroc/master/getting_ready_for_submission/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/getting_ready_for_submission.html
-wget https://raw.githubusercontent.com/muschellij2/neuroc/master/continuous_integration/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/continuous_integration.html
 
 wget https://raw.githubusercontent.com/muschellij2/neurocInstall/master/neurocLite.R -O /var/www/neuroc_development/html/sites/default/files/neurocLite.R

@@ -4,6 +4,12 @@ output:
     theme: null
 ---
 
+# Guides for Developers {#devguides}
+
+1. [Preparing Your Package for for Submission](neuroc-help-getting-ready-for-submission)
+2. [Changes to your Package](neuroc-help-continuous-integration)
+
+
 # Frequently Asked Questions (FAQ)
 
 Please visit the [FAQ](neuroc-help-faq) for information on how to begin.
@@ -46,7 +52,3 @@ Please visit the [FAQ](neuroc-help-faq) for information on how to begin.
 1. [Multiple Sclerosis Lesion Segmentation](neuroc-help-ms-lesion)
 
 
-# Guides for Developers {#devguides}
-
-1. [Preparing Your Package for for Submission](neuroc-help-getting-ready-for-submission)
-2. [Changes to your Package](neuroc-help-continuous-integration)
