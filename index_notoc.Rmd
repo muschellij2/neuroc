@@ -6,9 +6,8 @@ output:
 
 # Guides for Developers {#devguides}
 
-1. [Preparing Your Package for for Submission](neuroc-help-getting-ready-for-submission)
+1. [Preparing Your Package for Submission](neuroc-help-getting-ready-for-submission)
 2. [Changes to your Package](neuroc-help-continuous-integration)
-
 
 # Frequently Asked Questions (FAQ)
 

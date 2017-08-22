@@ -133,6 +133,28 @@ as could overwrite Linux builds depeneding on the naming convention on Deploymen
 ## Coveralls 
 We plan to use the [`covr`](https://github.com/jimhester/covr) package to check for code coverage using the [Coveralls](https://coveralls.io/) interface.  We currently do not have any requirements for code coverage for our packages.
 
+# Advanced
+
+## CI and Authentication Tokens
+
+If you need access to a secure key, such as a [GitHub Personal Acccess Token (PAT)](https://github.com/settings/tokens), you **do not to set them in your YAML files**.  Specifically with GitHub, if you push a secure key to a repository, GitHub will automatically deactivate that token (this may only apply to public repositories).  In order to set an environment variable, such as `GITHUB_PAT` for GitHub authentication, you have to change the settings on the repository on the respective CI website.
+
+### Travis CI
+
+In Travis CI you have to go to: https://travis-ci.org/USERNAME/REPO/settings, then the section labeled "Environment Variables".  Put `GITHUB_PAT` as the name and paste your unencrypted GitHub PAT in the Value field.  When you build on Travis CI, you should see:
+
+```
+Setting environment variables from repository settings
+$ export GITHUB_PAT=[secure]
+```
+
+in the build logs.  Now you can use the environment variable `GITHUB_PAT` in your code.  
+
+### Appveyor
+
+In Appveyor you have to go to: https://ci.appveyor.com/project/USERNAME/REPO/settings, then the section labeled "Environment" and click "Add Variable".    Put `GITHUB_PAT` as the name and paste your unencrypted GitHub PAT in the Value field.  I believe you should click the lock to encrypt it. 
+
+
 # Session Info
 
 
@@ -152,7 +174,7 @@ devtools::session_info()
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2017-08-08
+##  date     2017-08-21
 ```
 
 ```
@@ -172,7 +194,7 @@ devtools::session_info()
 ##  graphics  * 3.4.1       2017-07-07 local                             
 ##  grDevices * 3.4.1       2017-07-07 local                             
 ##  htmltools   0.3.6       2017-04-28 CRAN (R 3.4.0)                    
-##  knitr       1.16        2017-05-18 CRAN (R 3.4.0)                    
+##  knitr       1.17        2017-08-10 cran (@1.17)                      
 ##  magrittr    1.5         2014-11-22 CRAN (R 3.4.0)                    
 ##  memoise     1.1.0       2017-04-21 CRAN (R 3.4.0)                    
 ##  methods     3.4.1       2017-07-07 local                             

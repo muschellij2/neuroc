@@ -11,7 +11,7 @@
 
 <meta name="author" content="John Muschelli" />
 
-<meta name="date" content="2017-08-08" />
+<meta name="date" content="2017-08-21" />
 
 <title>Continuous Integration and Testing</title>
 
@@ -223,7 +223,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Continuous Integration and Testing</h1>
 <h4 class="author"><em>John Muschelli</em></h4>
-<h4 class="date"><em>2017-08-08</em></h4>
+<h4 class="date"><em>2017-08-21</em></h4>
 
 </div>
 
@@ -327,8 +327,26 @@ use_bioc: yes</code></pre>
 <p>We plan to use the <a href="https://github.com/jimhester/covr"><code>covr</code></a> package to check for code coverage using the <a href="https://coveralls.io/">Coveralls</a> interface. We currently do not have any requirements for code coverage for our packages.</p>
 </div>
 </div>
+<div id="advanced" class="section level1">
+<h1><span class="header-section-number">5</span> Advanced</h1>
+<div id="ci-and-authentication-tokens" class="section level2">
+<h2><span class="header-section-number">5.1</span> CI and Authentication Tokens</h2>
+<p>If you need access to a secure key, such as a <a href="https://github.com/settings/tokens">GitHub Personal Acccess Token (PAT)</a>, you <strong>do not to set them in your YAML files</strong>. Specifically with GitHub, if you push a secure key to a repository, GitHub will automatically deactivate that token (this may only apply to public repositories). In order to set an environment variable, such as <code>GITHUB_PAT</code> for GitHub authentication, you have to change the settings on the repository on the respective CI website.</p>
+<div id="travis-ci-1" class="section level3">
+<h3><span class="header-section-number">5.1.1</span> Travis CI</h3>
+<p>In Travis CI you have to go to: <a href="https://travis-ci.org/USERNAME/REPO/settings" class="uri">https://travis-ci.org/USERNAME/REPO/settings</a>, then the section labeled “Environment Variables”. Put <code>GITHUB_PAT</code> as the name and paste your unencrypted GitHub PAT in the Value field. When you build on Travis CI, you should see:</p>
+<pre><code>Setting environment variables from repository settings
+$ export GITHUB_PAT=[secure]</code></pre>
+<p>in the build logs. Now you can use the environment variable <code>GITHUB_PAT</code> in your code.</p>
+</div>
+<div id="appveyor-1" class="section level3">
+<h3><span class="header-section-number">5.1.2</span> Appveyor</h3>
+<p>In Appveyor you have to go to: <a href="https://ci.appveyor.com/project/USERNAME/REPO/settings" class="uri">https://ci.appveyor.com/project/USERNAME/REPO/settings</a>, then the section labeled “Environment” and click “Add Variable”. Put <code>GITHUB_PAT</code> as the name and paste your unencrypted GitHub PAT in the Value field. I believe you should click the lock to encrypt it.</p>
+</div>
+</div>
+</div>
 <div id="session-info" class="section level1">
-<h1><span class="header-section-number">5</span> Session Info</h1>
+<h1><span class="header-section-number">6</span> Session Info</h1>
 <pre class="r"><code>devtools::session_info()</code></pre>
 <pre><code>## Session info -------------------------------------------------------------</code></pre>
 <pre><code>##  setting  value                       
@@ -338,7 +356,7 @@ use_bioc: yes</code></pre>
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2017-08-08</code></pre>
+##  date     2017-08-21</code></pre>
 <pre><code>## Packages -----------------------------------------------------------------</code></pre>
 <pre><code>##  package   * version     date       source                            
 ##  backports   1.1.0       2017-05-22 CRAN (R 3.4.0)                    
@@ -352,7 +370,7 @@ use_bioc: yes</code></pre>
 ##  graphics  * 3.4.1       2017-07-07 local                             
 ##  grDevices * 3.4.1       2017-07-07 local                             
 ##  htmltools   0.3.6       2017-04-28 CRAN (R 3.4.0)                    
-##  knitr       1.16        2017-05-18 CRAN (R 3.4.0)                    
+##  knitr       1.17        2017-08-10 cran (@1.17)                      
 ##  magrittr    1.5         2014-11-22 CRAN (R 3.4.0)                    
 ##  memoise     1.1.0       2017-04-21 CRAN (R 3.4.0)                    
 ##  methods     3.4.1       2017-07-07 local                             
