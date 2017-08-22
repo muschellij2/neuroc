@@ -56,6 +56,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <li><a href="#creating-unit-tests-using-testthat">Creating Unit Tests using <code>testthat</code></a></li>
 <li><a href="#using-code-coverage">Using Code Coverage</a></li>
 <li><a href="#submitting-your-package">Submitting your Package</a></li>
+<li><a href="#advanced">Advanced</a></li>
 </ol>
 </div>
 <div id="short-version" class="section level1">
@@ -213,7 +214,7 @@ devtools::use_readme_md()</code></pre>
 <pre><code>---
 title: &quot;Vignette Title&quot;
 author: &quot;Vignette Author&quot;
-date: &quot;2017-08-16&quot;
+date: &quot;2017-08-21&quot;
 output: rmarkdown::html_vignette
 vignette: &gt;
   %\VignetteIndexEntry{Vignette Title}
@@ -259,6 +260,24 @@ devtools::use_coverage(type = &quot;codecov&quot;)</code></pre>
 <div id="submitting-your-package" class="section level1">
 <h1>Submitting your Package</h1>
 <p>Now that you’ve performed all the checks and ensured that the package is thoroughly tested, you can submit your package. Please provide your name, email, and link to the GitHub repository on the <a href="https://neuroconductor.org/submit-package">Neuroconductor</a> or <a href="http://oslerinhealth.org/submit-package">OSLER</a> submission pages. The maintainer of the package will receive and email to verify this is a valid submission and the package will begin <a href="neuroc-help-continuous-integration">the changes to your package and integration</a>.</p>
+</div>
+<div id="advanced" class="section level1">
+<h1>Advanced</h1>
+<div id="ci-and-authentication-tokens" class="section level2">
+<h2>CI and Authentication Tokens</h2>
+<p>If you need access to a secure key, such as a <a href="https://github.com/settings/tokens">GitHub Personal Acccess Token (PAT)</a>, you <strong>do not to set them in your YAML files</strong>. Specifically with GitHub, if you push a secure key to a repository, GitHub will automatically deactivate that token (this may only apply to public repositories). In order to set an environment variable, such as <code>GITHUB_PAT</code> for GitHub authentication, you have to change the settings on the repository on the respective CI website.</p>
+<div id="travis-ci" class="section level3">
+<h3>Travis CI</h3>
+<p>In Travis CI you have to go to: <a href="https://travis-ci.org/USERNAME/REPO/settings" class="uri">https://travis-ci.org/USERNAME/REPO/settings</a>, then the section labeled “Environment Variables”. Put <code>GITHUB_PAT</code> as the name and paste your unencrypted GitHub PAT in the Value field. When you build on Travis CI, you should see:</p>
+<pre><code>Setting environment variables from repository settings
+$ export GITHUB_PAT=[secure]</code></pre>
+<p>in the build logs. Now you can use the environment variable <code>GITHUB_PAT</code> in your code.</p>
+</div>
+<div id="appveyor-1" class="section level3">
+<h3>Appveyor</h3>
+<p>In Appveyor you have to go to: <a href="https://ci.appveyor.com/project/USERNAME/REPO/settings" class="uri">https://ci.appveyor.com/project/USERNAME/REPO/settings</a>, then the section labeled “Environment” and click “Add Variable”. Put <code>GITHUB_PAT</code> as the name and paste your unencrypted GitHub PAT in the Value field. I believe you should click the lock to encrypt it.</p>
+</div>
+</div>
 </div>
 <div id="session-info" class="section level1">
 <h1>Session Info</h1>
