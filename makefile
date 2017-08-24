@@ -21,6 +21,7 @@ LIST += getting_ready_for_submission
 
 all:
 	Rscript -e "source('notoc.R')"
+	Rscript -e "source('link_table.R')"
 	Rscript -e "source('make_links.R')"
 	for fol in $(LIST) ; do \
 		pwd && echo $$fol && cp makefile.copy $$fol/makefile && cd $$fol && make all && cd ../; \
