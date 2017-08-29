@@ -30,52 +30,6 @@ After `devtools` is installed, you should go through the following process:
 9.  [Submitting your Package](#submitting-your-package)
 10. [Advanced](#advanced)
 
-# Short Version 
-
-The condensed version of this worklow is to run (in R):
-```r
-devtools::use_git()
-devtools::use_github() # must have GITHUB_PAT set up
-devtools::use_readme_md()
-devtools::use_vignette("my-vignette")
-devtools::use_testthat()
-devtools::use_coverage(type = "coveralls")
-devtools::use_appveyor()
-devtools::use_travis()
-```
-
-And edit the following files:
-
-## `.travis.yml`
-
-Add (or change in terms of code coverage) the following lines:
-```
-warnings_are_errors: true 
-after_success:
-  - Rscript -e 'covr::coveralls(type = "all")'
-```
-to `.travis.yml`.
-
-
-## `appveyor.yml`
-
-Add the following lines:
-```
-environment:
-  global:
-    WARNINGS_ARE_ERORRS: 1
-```
-to `appveyor.yml`.
-
-## `README.md`
- 
-Add the following lines, changing `GITHUB_USERNAME/REPO` to the correct version
-```
- [![Travis-CI Build Status] (https://travis-ci.org/GITHUB_USERNAME/REPO.svg?branch=master)] (https://travis-ci.org/GITHUB_USERNAME/REPO)
- [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/GITHUB_USERNAME/REPO?branch=master&svg=true)](https://ci.appveyor.com/project/GITHUB_USERNAME/REPO)
-```
-to the `README.md`. 
-
 # Version Control using Git 
 
 We will use the [`git` version control system](https://git-scm.com/) for our repositories.  Other version control systems exist, such as Subversion and Mercurial, but we require `git` for our packages as this is the most popular modern version control system.
@@ -351,6 +305,52 @@ to the `.travis.yml` file, respectively.
 # Submitting your Package
 
 Now that you've performed all the checks and ensured that the package is thoroughly tested, you can submit your package.  Please provide your name, email, and link to the GitHub repository on the [Neuroconductor](https://neuroconductor.org/submit-package) or [OSLER](http://oslerinhealth.org/submit-package) submission pages.  The maintainer of the package will receive and email to verify this is a valid submission and the package will begin [the changes to your package and integration](../continuous_integration/index.html).  
+
+# Short Version 
+
+The condensed version of this worklow is to run (in R):
+```r
+devtools::use_git()
+devtools::use_github() # must have GITHUB_PAT set up
+devtools::use_readme_md()
+devtools::use_vignette("my-vignette")
+devtools::use_testthat()
+devtools::use_coverage(type = "coveralls")
+devtools::use_appveyor()
+devtools::use_travis()
+```
+
+And edit the following files:
+
+## `.travis.yml`
+
+Add (or change in terms of code coverage) the following lines:
+```
+warnings_are_errors: true 
+after_success:
+  - Rscript -e 'covr::coveralls(type = "all")'
+```
+to `.travis.yml`.
+
+
+## `appveyor.yml`
+
+Add the following lines:
+```
+environment:
+  global:
+    WARNINGS_ARE_ERORRS: 1
+```
+to `appveyor.yml`.
+
+## `README.md`
+ 
+Add the following lines, changing `GITHUB_USERNAME/REPO` to the correct version
+```
+ [![Travis-CI Build Status] (https://travis-ci.org/GITHUB_USERNAME/REPO.svg?branch=master)] (https://travis-ci.org/GITHUB_USERNAME/REPO)
+ [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/GITHUB_USERNAME/REPO?branch=master&svg=true)](https://ci.appveyor.com/project/GITHUB_USERNAME/REPO)
+```
+to the `README.md`. 
 
 # Advanced
 
