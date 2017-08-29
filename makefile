@@ -18,11 +18,13 @@ LIST += neurohcp
 LIST += install
 LIST += continuous_integration
 LIST += getting_ready_for_submission
+LIST += install_oslerinhealth
 
 all:
 	Rscript -e "source('notoc.R')"
 	Rscript -e "source('link_table.R')"
 	Rscript -e "source('make_links.R')"
+	cp install/index.Rmd install_oslerinhealth/
 	for fol in $(LIST) ; do \
 		pwd && echo $$fol && cp makefile.copy $$fol/makefile && cd $$fol && make all && cd ../; \
 	done

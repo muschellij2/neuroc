@@ -8,9 +8,9 @@ output:
 
 
 
-All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/install/index.R).
+All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/install_oslerinhealth/index.R).
 
-# Installing Neuroconductor Packages 
+# Installing OSLERinHealth Packages 
 
 [Install and start the latest release version of R](#installing-and-starting-r).  Although the installer will try to download and install `devtools`, there may be some system requirements for `devtools` that you may need before going forward.  Please visit [installing devtools](neuroc-help-installing-devtools) before going forward if you do not have `devtools` currently installed. 
 
@@ -18,39 +18,39 @@ Then, you can install a package using the following command:
 
 ```r
 ## try http:// if https:// URLs are supported
-source("https://neuroconductor.org/neurocLite.R")
-neuro_install("PACKAGE")
+source("http://oslerinhealth.org/oslerLite.R")
+osler_install("PACKAGE")
 ```
 where `PACKAGE` is the name of the package you'd like to install, such as `fslr`.  For example, if we want to install `neurohcp` and `fslr` we can run:
 ```r
-source("https://neuroconductor.org/neurocLite.R")
-neuro_install(c("fslr", "neurohcp"))
+source("http://oslerinhealth.org/oslerLite.R")
+osler_install(c("fslr", "neurohcp"))
 ```
-### `neurocLite`: an alias for `neuro_install`
+### `oslerLite`: an alias for `osler_install`
 
-As Bioconductor uses the `biocLite` function to install packages, we have created a duplicate of `neuro_install`, called `neurocLite`, for ease of use for those users accustomed to Bioconductor.  The same command could have been executed as follows:
+As Bioconductor uses the `biocLite` function to install packages, we have created a duplicate of `osler_install`, called `oslerLite`, for ease of use for those users accustomed to Bioconductor.  The same command could have been executed as follows:
 ```r
-source("https://neuroconductor.org/neurocLite.R")
-neurocLite(c("fslr", "neurohcp"))
+source("http://oslerinhealth.org/oslerLite.R")
+oslerLite(c("fslr", "neurohcp"))
 ```
 
-### Installing the `neurocInstall` package
+### Installing the `oslerInstall` package
 
-The `neurocInstall` package contains the `neurocLite`/`neuro_install` functions, as well as others relevant for Neuroconductor.  You can install the package as follows:
+The `oslerInstall` package contains the `oslerLite`/`osler_install` functions, as well as others relevant for OSLERinHealth.  You can install the package as follows:
 
 ```r
-source("https://neuroconductor.org/neurocLite.R")
-neuro_install("neurocInstall")
+source("http://oslerinhealth.org/oslerLite.R")
+osler_install("oslerInstall")
 ```
 
-After installation, you can use `` neurocInstall::neurocLite() `` to install packages without source-ing the URL above.
+After installation, you can use `` oslerInstall::oslerLite() `` to install packages without source-ing the URL above.
 
 ## Installing Neuroconductor Packages without upgrading dependencies
 
-The `neurocLite`/`neuro_install` functions depend on `devtools::install_github`, which will upgrade dependencies by default, which is recommended.  If you would like to install a package, but not upgrade the dependencies (missing dependencies will still be installed), you can set the `upgrade_dependencies` argument to `FALSE`:
+The `oslerLite`/`osler_install` functions depend on `devtools::install_github`, which will upgrade dependencies by default, which is recommended.  If you would like to install a package, but not upgrade the dependencies (missing dependencies will still be installed), you can set the `upgrade_dependencies` argument to `FALSE`:
 
 ```r
-neurocLite(c("fslr", "neurohcp"), upgrade_dependencies = FALSE)
+oslerLite(c("fslr", "neurohcp"), upgrade_dependencies = FALSE)
 ```
 
 # Installing and starting R 
@@ -62,13 +62,13 @@ neurocLite(c("fslr", "neurohcp"), upgrade_dependencies = FALSE)
 3.  For learning R, there are many resources such as [Try-R at codeschool](http://tryr.codeschool.com/) and [DataCamp](https://www.datacamp.com/getting-started?step=2&track=r).
 
 
-# Packages not available on Neuroconductor
+# Packages not available on OSLERinHealth
 
-If a package is not in the Neuroconductor [list of packages ](https://neuroconductor.org/list-current-packages), then it is not located on the [Neuroconductor Github](https://github.com/neuroconductor?tab=repositories).  Therefore, when installing, you'll get the following error:
+If a package is not in the OSLERinHealth [list of packages ](http://oslerinhealth.org/list-current-packages), then it is not located on the [OSLERinHealth Github](https://github.com/oslerinhealth?tab=repositories).  Therefore, when installing, you'll get the following error:
 
 ```r
 Error in neuro_install(...) : 
-  Package(s) PACKAGE_TRIED_TO_INSTALL are not in neuroconductor
+  Package(s) PACKAGE_TRIED_TO_INSTALL are not in oslerinhealth
 ```
 
 Once a package is located on the list of packages, then it will be available to install. 
@@ -116,7 +116,7 @@ devtools::session_info()
 ##  knitr       1.17    2017-08-10 cran (@1.17)                      
 ##  magrittr    1.5     2014-11-22 CRAN (R 3.4.0)                    
 ##  memoise     1.1.0   2017-04-21 CRAN (R 3.4.0)                    
-##  methods   * 3.4.1   2017-07-07 local                             
+##  methods     3.4.1   2017-07-07 local                             
 ##  Rcpp        0.12.12 2017-07-15 cran (@0.12.12)                   
 ##  rmarkdown   1.6     2017-06-15 cran (@1.6)                       
 ##  rprojroot   1.2     2017-01-16 CRAN (R 3.4.0)                    

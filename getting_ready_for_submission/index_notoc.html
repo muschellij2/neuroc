@@ -67,12 +67,13 @@ devtools::use_github() # must have GITHUB_PAT set up
 devtools::use_readme_md()
 devtools::use_vignette(&quot;my-vignette&quot;)
 devtools::use_testthat()
+devtools::use_coverage(type = &quot;coveralls&quot;)
 devtools::use_appveyor()
 devtools::use_travis()</code></pre>
 <p>And edit the following files:</p>
 <div id="travis.yml" class="section level2">
 <h2><code>.travis.yml</code></h2>
-<p>Add the following lines:</p>
+<p>Add (or change in terms of code coverage) the following lines:</p>
 <pre><code>warnings_are_errors: true 
 after_success:
   - Rscript -e 'covr::coveralls(type = &quot;all&quot;)'</code></pre>
@@ -214,7 +215,7 @@ devtools::use_readme_md()</code></pre>
 <pre><code>---
 title: &quot;Vignette Title&quot;
 author: &quot;Vignette Author&quot;
-date: &quot;2017-08-21&quot;
+date: &quot;2017-08-29&quot;
 output: rmarkdown::html_vignette
 vignette: &gt;
   %\VignetteIndexEntry{Vignette Title}

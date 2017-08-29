@@ -2,6 +2,7 @@
 
 
 
+
 All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/install/index.R).
 
 # Installing Neuroconductor Packages 
@@ -10,22 +11,19 @@ All code for this document is located at [here](https://raw.githubusercontent.co
 
 Then, you can install a package using the following command:
 
-
 ```r
 ## try http:// if https:// URLs are supported
 source("https://neuroconductor.org/neurocLite.R")
 neuro_install("PACKAGE")
 ```
 where `PACKAGE` is the name of the package you'd like to install, such as `fslr`.  For example, if we want to install `neurohcp` and `fslr` we can run:
-
 ```r
 source("https://neuroconductor.org/neurocLite.R")
 neuro_install(c("fslr", "neurohcp"))
 ```
-### `neurocLite`: an alias for `neuroc_install`
+### `neurocLite`: an alias for `neuro_install`
 
 As Bioconductor uses the `biocLite` function to install packages, we have created a duplicate of `neuro_install`, called `neurocLite`, for ease of use for those users accustomed to Bioconductor.  The same command could have been executed as follows:
-
 ```r
 source("https://neuroconductor.org/neurocLite.R")
 neurocLite(c("fslr", "neurohcp"))
@@ -35,18 +33,16 @@ neurocLite(c("fslr", "neurohcp"))
 
 The `neurocInstall` package contains the `neurocLite`/`neuro_install` functions, as well as others relevant for Neuroconductor.  You can install the package as follows:
 
-
 ```r
 source("https://neuroconductor.org/neurocLite.R")
 neuro_install("neurocInstall")
 ```
 
-After installation, you can use `neurocInstall::neuroc_install()` to install packages without source-ing the URL above.
+After installation, you can use `` neurocInstall::neurocLite() `` to install packages without source-ing the URL above.
 
 ## Installing Neuroconductor Packages without upgrading dependencies
 
 The `neurocLite`/`neuro_install` functions depend on `devtools::install_github`, which will upgrade dependencies by default, which is recommended.  If you would like to install a package, but not upgrade the dependencies (missing dependencies will still be installed), you can set the `upgrade_dependencies` argument to `FALSE`:
-
 
 ```r
 neurocLite(c("fslr", "neurohcp"), upgrade_dependencies = FALSE)
@@ -65,13 +61,12 @@ neurocLite(c("fslr", "neurohcp"), upgrade_dependencies = FALSE)
 
 If a package is not in the Neuroconductor [list of packages ](https://neuroconductor.org/list-current-packages), then it is not located on the [Neuroconductor Github](https://github.com/neuroconductor?tab=repositories).  Therefore, when installing, you'll get the following error:
 
-```
+```r
 Error in neuro_install(...) : 
   Package(s) PACKAGE_TRIED_TO_INSTALL are not in neuroconductor
 ```
 
 Once a package is located on the list of packages, then it will be available to install. 
-
 
 
 # Session Info
@@ -87,13 +82,13 @@ devtools::session_info()
 
 ```
 ##  setting  value                       
-##  version  R version 3.3.3 (2017-03-06)
-##  system   x86_64, darwin13.4.0        
+##  version  R version 3.4.1 (2017-06-30)
+##  system   x86_64, darwin15.6.0        
 ##  ui       X11                         
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2017-06-01
+##  date     2017-08-29
 ```
 
 ```
@@ -102,30 +97,31 @@ devtools::session_info()
 
 ```
 ##  package   * version date       source                            
-##  backports   1.1.0   2017-05-22 CRAN (R 3.3.2)                    
-##  base      * 3.3.3   2017-03-07 local                             
+##  backports   1.1.0   2017-05-22 CRAN (R 3.4.0)                    
+##  base      * 3.4.1   2017-07-07 local                             
 ##  colorout  * 1.1-0   2015-04-20 Github (jalvesaq/colorout@1539f1f)
-##  datasets  * 3.3.3   2017-03-07 local                             
-##  devtools    1.13.1  2017-05-13 CRAN (R 3.3.2)                    
-##  digest      0.6.12  2017-01-27 cran (@0.6.12)                    
-##  evaluate    0.10    2016-10-11 CRAN (R 3.3.0)                    
-##  graphics  * 3.3.3   2017-03-07 local                             
-##  grDevices * 3.3.3   2017-03-07 local                             
-##  htmltools   0.3.6   2016-12-08 Github (rstudio/htmltools@4fbf990)
-##  knitr       1.16    2017-05-18 CRAN (R 3.3.2)                    
-##  magrittr    1.5     2014-11-22 CRAN (R 3.2.0)                    
-##  memoise     1.1.0   2017-04-21 cran (@1.1.0)                     
-##  methods     3.3.3   2017-03-07 local                             
-##  Rcpp        0.12.11 2017-05-22 cran (@0.12.11)                   
-##  rmarkdown   1.5     2017-04-26 CRAN (R 3.3.2)                    
-##  rprojroot   1.2     2017-01-16 cran (@1.2)                       
-##  stats     * 3.3.3   2017-03-07 local                             
-##  stringi     1.1.5   2017-04-07 cran (@1.1.5)                     
-##  stringr     1.2.0   2017-02-18 cran (@1.2.0)                     
-##  tools       3.3.3   2017-03-07 local                             
-##  utils     * 3.3.3   2017-03-07 local                             
-##  withr       1.0.2   2016-06-20 CRAN (R 3.3.0)                    
-##  yaml        2.1.14  2016-11-12 CRAN (R 3.3.2)
+##  compiler    3.4.1   2017-07-07 local                             
+##  datasets  * 3.4.1   2017-07-07 local                             
+##  devtools    1.13.3  2017-08-02 CRAN (R 3.4.1)                    
+##  digest      0.6.12  2017-01-27 CRAN (R 3.4.0)                    
+##  evaluate    0.10.1  2017-06-24 cran (@0.10.1)                    
+##  graphics  * 3.4.1   2017-07-07 local                             
+##  grDevices * 3.4.1   2017-07-07 local                             
+##  htmltools   0.3.6   2017-04-28 CRAN (R 3.4.0)                    
+##  knitr       1.17    2017-08-10 cran (@1.17)                      
+##  magrittr    1.5     2014-11-22 CRAN (R 3.4.0)                    
+##  memoise     1.1.0   2017-04-21 CRAN (R 3.4.0)                    
+##  methods   * 3.4.1   2017-07-07 local                             
+##  Rcpp        0.12.12 2017-07-15 cran (@0.12.12)                   
+##  rmarkdown   1.6     2017-06-15 cran (@1.6)                       
+##  rprojroot   1.2     2017-01-16 CRAN (R 3.4.0)                    
+##  stats     * 3.4.1   2017-07-07 local                             
+##  stringi     1.1.5   2017-04-07 CRAN (R 3.4.0)                    
+##  stringr     1.2.0   2017-02-18 CRAN (R 3.4.0)                    
+##  tools       3.4.1   2017-07-07 local                             
+##  utils     * 3.4.1   2017-07-07 local                             
+##  withr       2.0.0   2017-07-28 cran (@2.0.0)                     
+##  yaml        2.1.14  2016-11-12 CRAN (R 3.4.0)
 ```
 
 # References
