@@ -64,7 +64,7 @@ oslerLite(c("fslr", "neurohcp"), upgrade_dependencies = FALSE)
 
 # Packages not available on OSLERinHealth
 
-If a package is not in the OSLERinHealth [list of packages ](http://oslerinhealth.org/list-current-packages), then it is not located on the [OSLERinHealth Github](https://github.com/oslerinhealth?tab=repositories).  Therefore, when installing, you'll get the following error:
+If a package is not in the OSLERinHealth [list of packages ](http://oslerinhealth.org/list-packages/all), then it is not located on the [OSLERinHealth Github](https://github.com/oslerinhealth?tab=repositories).  Therefore, when installing, you'll get the following error:
 
 ```r
 Error in neuro_install(...) : 

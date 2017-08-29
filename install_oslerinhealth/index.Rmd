@@ -104,7 +104,7 @@ The ``r lite_installer``/``r installer`` functions depend on `devtools::install_
 
 # Packages not available on `r master_name`
 
-If a package is not in the `r master_name` [list of packages ](`r website`/list-current-packages), then it is not located on the [`r master_name` Github](https://github.com/`r project_name`?tab=repositories).  Therefore, when installing, you'll get the following error:
+If a package is not in the `r master_name` [list of packages ](`r website`/list-packages/all), then it is not located on the [`r master_name` Github](https://github.com/`r project_name`?tab=repositories).  Therefore, when installing, you'll get the following error:
 
 ```r
 Error in neuro_install(...) : 
