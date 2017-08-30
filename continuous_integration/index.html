@@ -11,7 +11,7 @@
 
 <meta name="author" content="John Muschelli" />
 
-<meta name="date" content="2017-08-21" />
+<meta name="date" content="2017-08-30" />
 
 <title>Continuous Integration and Testing</title>
 
@@ -223,20 +223,30 @@ div.tocify {
 
 <h1 class="title toc-ignore">Continuous Integration and Testing</h1>
 <h4 class="author"><em>John Muschelli</em></h4>
-<h4 class="date"><em>2017-08-21</em></h4>
+<h4 class="date"><em>2017-08-30</em></h4>
 
 </div>
 
 
 <p>All code for this document is located at <a href="https://raw.githubusercontent.com/muschellij2/neuroc/master/continuous_integration/index.R">here</a>.</p>
+<div id="submitting-a-package" class="section level1">
+<h1><span class="header-section-number">1</span> Submitting a Package</h1>
+<p>To submit a package to Neuroconductor, the author/maintainer of the package provides the GitHub URL for the package. Once the package is submitted several initial checks are conducted. These checks ensure that the package has been created correctly. After initial checks are complete, the package must be verified by email. This verification is designed to prevent spam and allow the developer to stop a package if they would like to revise the package before re-submitting.</p>
+<p>Once the verification is complete, the package is processed. Overall, the package is copied/cloned to a remote server. Standardized Travis CI and Appveyor configuration files, specific to Neuroconductor, are added. These are to ensure that the checks performed on these services are consistent for each package. Some parameters of the package DESCRIPTION file are changed. These parameters ensure that when a package is downloaded from Neuroconductor, the correct versions of the dependent packages are used.</p>
+<p>Next, the package is pushed to the central Neuroconductor GitHub (<a href="https://github.com/neuroconductor" class="uri">https://github.com/neuroconductor</a>) and submitted to Travis CI and AppVeyor to be built and checked on multiple systems. Parameters are set to ensure that Travis CI and AppVeyor use the correct versions of Neuroconductor packages for checking and external dependencies are installed. The author of the package receives an automatic email indicating whether the package was built successfully and is integrated with Neuroconductor together with a description file containing pertinent information about the process.</p>
+<div id="stable-vs.current-versions" class="section level2">
+<h2><span class="header-section-number">1.1</span> Stable vs. Current Versions</h2>
+<p>We use the terminology “Stable” and “Current” to differentiate a different status of development for a Neuroconductor package. On the initial submission, after all checks are passed, the package is incorporated into Neuroconductor and deemed the Stable version. The Current version of the package is the result of nightly pulls and mirror the latest package version from the developer’s GitHub repository. This provides Neuroconductor users with a way to use the latest versions of a package and at the same time it provides the Neuroconductor platform with a safe way of checking new versions of a package against the existing set of Current Neuroconductor packages. If a Current version of a package passes all the required Neuroconductor tests, we contact the developer of the package and suggest an official re-submission to Neuroconductor. If the newly re-submitted version of the package passes the checks against the Stable Neuroconductor packages, this version is incorporated to the Stable version of Neuroconductor.</p>
+</div>
+</div>
 <div id="the-neuroc.deps-package" class="section level1">
-<h1><span class="header-section-number">1</span> The <code>neuroc.deps</code> package</h1>
+<h1><span class="header-section-number">2</span> The <code>neuroc.deps</code> package</h1>
 <p>We have created the <a href="https://github.com/muschellij2/neuroc.deps"><code>neuroc.deps</code> package</a> that perform most of the backend operations on a Neuroconductor package. It can be installed as follows:</p>
 <pre class="r"><code>devtools::install_github(&quot;muschellij2/neuroc.deps&quot;)</code></pre>
 <p>The most relevant function is <code>use_neuroc_template</code>, which is used to make many of the changes to the package.</p>
 </div>
 <div id="changes-to-the-description-file" class="section level1">
-<h1><span class="header-section-number">2</span> Changes to the <code>DESCRIPTION</code> file</h1>
+<h1><span class="header-section-number">3</span> Changes to the <code>DESCRIPTION</code> file</h1>
 <p>In order to test packages against the relevant Neuroconductor packages, we change the <code>DESCRIPTION</code> file. We do this in the following ways:</p>
 <ol style="list-style-type: decimal">
 <li>Modify, or add if not present, the <code>Remotes</code> field. Packages are installed using the <code>install_github</code> function, which reads this <code>Remotes</code> field to install dependencies if necessary. The Remotes field modifies and overrides the locations of dependencies to be installed. If a dependency for a package is present, then a newer version of the package will not be installed unless indicated by the user or indicated a newer version is necessary in the package (by the package (<code>&gt;= VERSION</code>)) syntax) in the dependencies.</li>
@@ -244,19 +254,19 @@ div.tocify {
 <li>The <code>covr</code> package is added to the <code>Suggests</code> field if not already present in the dependencies (<code>Depends</code>, <code>Imports</code>, or <code>Suggests</code>). This is so that code coverage can be performed.</li>
 </ol>
 <div id="antsr-dependencies" class="section level2">
-<h2><span class="header-section-number">2.1</span> ANTsR Dependencies</h2>
+<h2><span class="header-section-number">3.1</span> ANTsR Dependencies</h2>
 <p>If a package depends on the <code>ANTsR</code> workflow, a slightly modified set of continuous integration steps are performed as that build is highly technical.</p>
 </div>
 </div>
 <div id="continuous-integration-services" class="section level1">
-<h1><span class="header-section-number">3</span> Continuous Integration Services</h1>
+<h1><span class="header-section-number">4</span> Continuous Integration Services</h1>
 <p>For checking R packages, we use <a href="https://en.wikipedia.org/wiki/Continuous_integration">Continuous Integration</a> services <a href="https://travis-ci.org/">Travis CI</a>, which builds on Linux and OS X operating systems, and <a href="https://www.appveyor.com/">Appveyor</a>, which builds on Windows using MinGW.</p>
 <p>The purpose is to ensure that the package can be built, installed, and checked on the respective systems with the appropriate dependencies.</p>
 <div id="travis-ci" class="section level2">
-<h2><span class="header-section-number">3.1</span> Travis CI</h2>
+<h2><span class="header-section-number">4.1</span> Travis CI</h2>
 <p>For Travis CI, we delete the developer’s <code>.travis.yml</code> configuration script and replace it with the one located at <a href="https://github.com/muschellij2/neuroc.deps/blob/master/inst/neuroc_travis.yml" class="uri">https://github.com/muschellij2/neuroc.deps/blob/master/inst/neuroc_travis.yml</a>.</p>
 <div id="travis-helpers" class="section level3">
-<h3><span class="header-section-number">3.1.1</span> Travis Helpers</h3>
+<h3><span class="header-section-number">4.1.1</span> Travis Helpers</h3>
 <pre><code>before_install:
   - fname=travis_helpers.sh
   - wget -O ${fname} http://bit.ly/travis_helpers
@@ -265,53 +275,53 @@ div.tocify {
 <p>which remove any packages located on Neuroconductor from the Travis machine. As caching is done, these may be present from previous builds. The <code>travis_helpers.sh</code> file is a set of helper <code>bash</code> functions that backend the <a href="https://github.com/muschellij2/ghtravis"><code>ghtravis</code> package</a>. Most of these are changes to <code>DESCRIPTION</code> file, but on Travis and not the GitHub.</p>
 </div>
 <div id="installing-remotes-without-dependencies" class="section level3">
-<h3><span class="header-section-number">3.1.2</span> Installing Remotes without Dependencies</h3>
+<h3><span class="header-section-number">4.1.2</span> Installing Remotes without Dependencies</h3>
 <p>The command:</p>
 <pre><code>  - install_remotes_no_dep</code></pre>
 <p>looks at the <code>Remotes</code> field in the DESCRIPTION file and runs <code>install_github(..., upgrade_dependencies = FALSE)</code>. This ensures that the Neuroconductor packages will be those with the specific commit IDs at the time of running. No old Neuroconductor packages will be present as they were removed using <code>remove_neuroc_packages</code>.</p>
 </div>
 <div id="package_name-environmental-variable" class="section level3">
-<h3><span class="header-section-number">3.1.3</span> PACKAGE_NAME environmental variable</h3>
+<h3><span class="header-section-number">4.1.3</span> PACKAGE_NAME environmental variable</h3>
 <p>The environmental variable of <code>PACKAGE_NAME</code> is created from the <code>DESCRIPTION</code> file. This may be different from the repository name from the user, but will be the same repository name on Neuroconductor, as all repos are <code>neuroconductor/PACKAGE_NAME</code>.</p>
 <pre><code>  - export PACKAGE_NAME=`package_name`</code></pre>
 </div>
 <div id="bioconductor-packages" class="section level3">
-<h3><span class="header-section-number">3.1.4</span> Bioconductor Packages</h3>
+<h3><span class="header-section-number">4.1.4</span> Bioconductor Packages</h3>
 <p>We add the following fields to the YAML: To ensure Bioconductor packages can be installed if necessary:</p>
 <pre><code>bioc_required: yes
 use_bioc: yes</code></pre>
 </div>
 <div id="warnings-are-errors" class="section level3">
-<h3><span class="header-section-number">3.1.5</span> Warnings are Errors</h3>
+<h3><span class="header-section-number">4.1.5</span> Warnings are Errors</h3>
 <p>So that we ensure that no warnings are present in the installation (similar to CRAN):</p>
 <pre><code>warnings_are_errors: true</code></pre>
 </div>
 <div id="cran-checks" class="section level3">
-<h3><span class="header-section-number">3.1.6</span> CRAN checks</h3>
+<h3><span class="header-section-number">4.1.6</span> CRAN checks</h3>
 <p>That we have a similar threshold for packages similar to CRAN:</p>
 <pre><code>r_check_args: --as-cran</code></pre>
 </div>
 <div id="pass-or-fail" class="section level3">
-<h3><span class="header-section-number">3.1.7</span> Pass or Fail</h3>
+<h3><span class="header-section-number">4.1.7</span> Pass or Fail</h3>
 <p>After running <code>R CMD check</code>, the <code>00install.out</code> and <code>00check.log</code> are printed for diagnostic purposes.</p>
 </div>
 <div id="deployment" class="section level3">
-<h3><span class="header-section-number">3.1.8</span> Deployment</h3>
+<h3><span class="header-section-number">4.1.8</span> Deployment</h3>
 <p>When packages are being deployed, <code>R CMD INSTALL --build</code> is run so that they have the standardized naming conventions. The <code>deployment</code> information for neuroconductor, including GitHub encrypted keys, are added. After building, the binary distribution is uploaded to the GitHub repository when tagged (from Neuroconductor’s backend not the developer).</p>
 </div>
 <div id="coverage" class="section level3">
-<h3><span class="header-section-number">3.1.9</span> Coverage</h3>
+<h3><span class="header-section-number">4.1.9</span> Coverage</h3>
 <p>After deployment, we use <a href="https://coveralls.io/">Coveralls.io</a> and the <code>covr</code> package to run code coverage. We use <code>type = &quot;all&quot;</code> so that we provide coverage of tests, vignettes, and examples:</p>
 <pre><code>after_deploy:
   - Rscript -e 'covr::coveralls(type = &quot;all&quot;)'</code></pre>
 </div>
 <div id="future-work" class="section level3">
-<h3><span class="header-section-number">3.1.10</span> Future work</h3>
+<h3><span class="header-section-number">4.1.10</span> Future work</h3>
 <p>We plan to add Neuroconductor badges to the <code>README.md</code> file.</p>
 </div>
 </div>
 <div id="appveyor" class="section level2">
-<h2><span class="header-section-number">3.2</span> Appveyor</h2>
+<h2><span class="header-section-number">4.2</span> Appveyor</h2>
 <p>Currently, we only formally support packages that work in *nix type of operatings systems. We will check the package for Windows as a courtesy to Windows users, but do not provide a detailed level of support.</p>
 <p>We use the <a href="https://github.com/muschellij2/neuroc.deps/blob/master/inst/neuroc_appveyor.yml">neuroc_appveyor.yml</a>, which changes the <code>PATH</code> variable to try to replicate a Windows machine using Rtools only and not installing MinGW.</p>
 <p>Different from the YAML from <code>devtools::use_appveyor()</code>, we remove the following part:</p>
@@ -321,32 +331,32 @@ use_bioc: yes</code></pre>
 </div>
 </div>
 <div id="code-coverage" class="section level1">
-<h1><span class="header-section-number">4</span> Code Coverage</h1>
+<h1><span class="header-section-number">5</span> Code Coverage</h1>
 <div id="coveralls" class="section level2">
-<h2><span class="header-section-number">4.1</span> Coveralls</h2>
+<h2><span class="header-section-number">5.1</span> Coveralls</h2>
 <p>We plan to use the <a href="https://github.com/jimhester/covr"><code>covr</code></a> package to check for code coverage using the <a href="https://coveralls.io/">Coveralls</a> interface. We currently do not have any requirements for code coverage for our packages.</p>
 </div>
 </div>
 <div id="advanced" class="section level1">
-<h1><span class="header-section-number">5</span> Advanced</h1>
+<h1><span class="header-section-number">6</span> Advanced</h1>
 <div id="ci-and-authentication-tokens" class="section level2">
-<h2><span class="header-section-number">5.1</span> CI and Authentication Tokens</h2>
+<h2><span class="header-section-number">6.1</span> CI and Authentication Tokens</h2>
 <p>If you need access to a secure key, such as a <a href="https://github.com/settings/tokens">GitHub Personal Acccess Token (PAT)</a>, you <strong>do not to set them in your YAML files</strong>. Specifically with GitHub, if you push a secure key to a repository, GitHub will automatically deactivate that token (this may only apply to public repositories). In order to set an environment variable, such as <code>GITHUB_PAT</code> for GitHub authentication, you have to change the settings on the repository on the respective CI website.</p>
 <div id="travis-ci-1" class="section level3">
-<h3><span class="header-section-number">5.1.1</span> Travis CI</h3>
+<h3><span class="header-section-number">6.1.1</span> Travis CI</h3>
 <p>In Travis CI you have to go to: <a href="https://travis-ci.org/USERNAME/REPO/settings" class="uri">https://travis-ci.org/USERNAME/REPO/settings</a>, then the section labeled “Environment Variables”. Put <code>GITHUB_PAT</code> as the name and paste your unencrypted GitHub PAT in the Value field. When you build on Travis CI, you should see:</p>
 <pre><code>Setting environment variables from repository settings
 $ export GITHUB_PAT=[secure]</code></pre>
 <p>in the build logs. Now you can use the environment variable <code>GITHUB_PAT</code> in your code.</p>
 </div>
 <div id="appveyor-1" class="section level3">
-<h3><span class="header-section-number">5.1.2</span> Appveyor</h3>
+<h3><span class="header-section-number">6.1.2</span> Appveyor</h3>
 <p>In Appveyor you have to go to: <a href="https://ci.appveyor.com/project/USERNAME/REPO/settings" class="uri">https://ci.appveyor.com/project/USERNAME/REPO/settings</a>, then the section labeled “Environment” and click “Add Variable”. Put <code>GITHUB_PAT</code> as the name and paste your unencrypted GitHub PAT in the Value field. I believe you should click the lock to encrypt it.</p>
 </div>
 </div>
 </div>
 <div id="session-info" class="section level1">
-<h1><span class="header-section-number">6</span> Session Info</h1>
+<h1><span class="header-section-number">7</span> Session Info</h1>
 <pre class="r"><code>devtools::session_info()</code></pre>
 <pre><code>## Session info -------------------------------------------------------------</code></pre>
 <pre><code>##  setting  value                       
@@ -356,37 +366,34 @@ $ export GITHUB_PAT=[secure]</code></pre>
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2017-08-21</code></pre>
+##  date     2017-08-30</code></pre>
 <pre><code>## Packages -----------------------------------------------------------------</code></pre>
-<pre><code>##  package   * version     date       source                            
-##  backports   1.1.0       2017-05-22 CRAN (R 3.4.0)                    
-##  base      * 3.4.1       2017-07-07 local                             
-##  colorout  * 1.1-0       2015-04-20 Github (jalvesaq/colorout@1539f1f)
-##  compiler    3.4.1       2017-07-07 local                             
-##  datasets  * 3.4.1       2017-07-07 local                             
-##  devtools  * 1.13.2.9000 2017-07-12 Github (hadley/devtools@d3482c5)  
-##  digest      0.6.12      2017-01-27 CRAN (R 3.4.0)                    
-##  evaluate    0.10.1      2017-06-24 cran (@0.10.1)                    
-##  graphics  * 3.4.1       2017-07-07 local                             
-##  grDevices * 3.4.1       2017-07-07 local                             
-##  htmltools   0.3.6       2017-04-28 CRAN (R 3.4.0)                    
-##  knitr       1.17        2017-08-10 cran (@1.17)                      
-##  magrittr    1.5         2014-11-22 CRAN (R 3.4.0)                    
-##  memoise     1.1.0       2017-04-21 CRAN (R 3.4.0)                    
-##  methods     3.4.1       2017-07-07 local                             
-##  pkgbuild    0.0.0.9000  2017-07-12 Github (r-pkgs/pkgbuild@8aab60b)  
-##  pkgload     0.0.0.9000  2017-07-06 Github (r-pkgs/pkgload@119cf9a)   
-##  Rcpp        0.12.12     2017-07-15 cran (@0.12.12)                   
-##  rlang       0.1.1.9000  2017-07-24 Github (hadley/rlang@342c473)     
-##  rmarkdown   1.6         2017-06-15 cran (@1.6)                       
-##  rprojroot   1.2         2017-01-16 CRAN (R 3.4.0)                    
-##  stats     * 3.4.1       2017-07-07 local                             
-##  stringi     1.1.5       2017-04-07 CRAN (R 3.4.0)                    
-##  stringr     1.2.0       2017-02-18 CRAN (R 3.4.0)                    
-##  tools       3.4.1       2017-07-07 local                             
-##  utils     * 3.4.1       2017-07-07 local                             
-##  withr       1.0.2       2016-06-20 CRAN (R 3.4.0)                    
-##  yaml        2.1.14      2016-11-12 CRAN (R 3.4.0)</code></pre>
+<pre><code>##  package   * version date       source                            
+##  backports   1.1.0   2017-05-22 CRAN (R 3.4.0)                    
+##  base      * 3.4.1   2017-07-07 local                             
+##  colorout  * 1.1-0   2015-04-20 Github (jalvesaq/colorout@1539f1f)
+##  compiler    3.4.1   2017-07-07 local                             
+##  datasets  * 3.4.1   2017-07-07 local                             
+##  devtools  * 1.13.3  2017-08-02 CRAN (R 3.4.1)                    
+##  digest      0.6.12  2017-01-27 CRAN (R 3.4.0)                    
+##  evaluate    0.10.1  2017-06-24 cran (@0.10.1)                    
+##  graphics  * 3.4.1   2017-07-07 local                             
+##  grDevices * 3.4.1   2017-07-07 local                             
+##  htmltools   0.3.6   2017-04-28 CRAN (R 3.4.0)                    
+##  knitr       1.17    2017-08-10 cran (@1.17)                      
+##  magrittr    1.5     2014-11-22 CRAN (R 3.4.0)                    
+##  memoise     1.1.0   2017-04-21 CRAN (R 3.4.0)                    
+##  methods     3.4.1   2017-07-07 local                             
+##  Rcpp        0.12.12 2017-07-15 cran (@0.12.12)                   
+##  rmarkdown   1.6     2017-06-15 cran (@1.6)                       
+##  rprojroot   1.2     2017-01-16 CRAN (R 3.4.0)                    
+##  stats     * 3.4.1   2017-07-07 local                             
+##  stringi     1.1.5   2017-04-07 CRAN (R 3.4.0)                    
+##  stringr     1.2.0   2017-02-18 CRAN (R 3.4.0)                    
+##  tools       3.4.1   2017-07-07 local                             
+##  utils     * 3.4.1   2017-07-07 local                             
+##  withr       2.0.0   2017-07-28 cran (@2.0.0)                     
+##  yaml        2.1.14  2016-11-12 CRAN (R 3.4.0)</code></pre>
 </div>
 
 

@@ -6,6 +6,18 @@ John Muschelli
 
 All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/continuous_integration/index.R).
 
+# Submitting a Package
+
+To submit a package to Neuroconductor, the author/maintainer of the package provides the GitHub URL for the package.  Once the package is submitted several initial checks are conducted.  These checks ensure that the package has been created correctly.  After  initial checks are complete, the package must be verified by email.  This verification is designed to prevent spam and allow the developer to stop a package if they would like to revise the package before re-submitting.
+
+Once the verification is complete, the package is processed.  Overall, the package is copied/cloned to a remote server.  Standardized Travis CI and Appveyor configuration files, specific to Neuroconductor, are added.  These are to ensure that the checks performed on these services are consistent for each package.  Some parameters of the package DESCRIPTION file are changed.  These parameters ensure that when a package is downloaded from Neuroconductor, the correct versions of the dependent packages are used.  
+
+Next, the package is pushed to the central Neuroconductor GitHub (https://github.com/neuroconductor) and submitted to Travis CI and AppVeyor to be built and checked on multiple systems.  Parameters are set to ensure that Travis CI and AppVeyor use the correct versions of Neuroconductor packages for checking and external dependencies are installed. The author of the package receives an automatic email indicating whether the package was built successfully and is integrated with Neuroconductor together with a description file containing pertinent information about the process. 
+
+## Stable vs. Current Versions
+
+We use the terminology "Stable" and "Current" to differentiate a different status of development for a Neuroconductor package.  On the initial submission, after all checks are passed, the package is incorporated into Neuroconductor and deemed the Stable version.  The Current version of the package is the result of nightly pulls and mirror the latest package version from the developer's GitHub repository. This provides Neuroconductor users with a way to use the latest versions of a package and at the same time it provides the Neuroconductor platform with a safe way of checking new versions of a package against the existing set of Current Neuroconductor packages. If a Current version of a package passes all the required Neuroconductor tests, we contact the developer of the package and suggest an official re-submission to Neuroconductor. If the newly re-submitted version of the package passes the checks against the Stable Neuroconductor packages, this version is incorporated to the Stable version of Neuroconductor.
+
 # The `neuroc.deps` package
 
 We have created the [`neuroc.deps` package](https://github.com/muschellij2/neuroc.deps) that perform most of the backend operations on a Neuroconductor package.  It can be installed as follows:
@@ -155,6 +167,7 @@ in the build logs.  Now you can use the environment variable `GITHUB_PAT` in you
 In Appveyor you have to go to: https://ci.appveyor.com/project/USERNAME/REPO/settings, then the section labeled "Environment" and click "Add Variable".    Put `GITHUB_PAT` as the name and paste your unencrypted GitHub PAT in the Value field.  I believe you should click the lock to encrypt it. 
 
 
+
 # Session Info
 
 
@@ -174,7 +187,7 @@ devtools::session_info()
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2017-08-21
+##  date     2017-08-30
 ```
 
 ```
@@ -182,33 +195,30 @@ devtools::session_info()
 ```
 
 ```
-##  package   * version     date       source                            
-##  backports   1.1.0       2017-05-22 CRAN (R 3.4.0)                    
-##  base      * 3.4.1       2017-07-07 local                             
-##  colorout  * 1.1-0       2015-04-20 Github (jalvesaq/colorout@1539f1f)
-##  compiler    3.4.1       2017-07-07 local                             
-##  datasets  * 3.4.1       2017-07-07 local                             
-##  devtools  * 1.13.2.9000 2017-07-12 Github (hadley/devtools@d3482c5)  
-##  digest      0.6.12      2017-01-27 CRAN (R 3.4.0)                    
-##  evaluate    0.10.1      2017-06-24 cran (@0.10.1)                    
-##  graphics  * 3.4.1       2017-07-07 local                             
-##  grDevices * 3.4.1       2017-07-07 local                             
-##  htmltools   0.3.6       2017-04-28 CRAN (R 3.4.0)                    
-##  knitr       1.17        2017-08-10 cran (@1.17)                      
-##  magrittr    1.5         2014-11-22 CRAN (R 3.4.0)                    
-##  memoise     1.1.0       2017-04-21 CRAN (R 3.4.0)                    
-##  methods     3.4.1       2017-07-07 local                             
-##  pkgbuild    0.0.0.9000  2017-07-12 Github (r-pkgs/pkgbuild@8aab60b)  
-##  pkgload     0.0.0.9000  2017-07-06 Github (r-pkgs/pkgload@119cf9a)   
-##  Rcpp        0.12.12     2017-07-15 cran (@0.12.12)                   
-##  rlang       0.1.1.9000  2017-07-24 Github (hadley/rlang@342c473)     
-##  rmarkdown   1.6         2017-06-15 cran (@1.6)                       
-##  rprojroot   1.2         2017-01-16 CRAN (R 3.4.0)                    
-##  stats     * 3.4.1       2017-07-07 local                             
-##  stringi     1.1.5       2017-04-07 CRAN (R 3.4.0)                    
-##  stringr     1.2.0       2017-02-18 CRAN (R 3.4.0)                    
-##  tools       3.4.1       2017-07-07 local                             
-##  utils     * 3.4.1       2017-07-07 local                             
-##  withr       1.0.2       2016-06-20 CRAN (R 3.4.0)                    
-##  yaml        2.1.14      2016-11-12 CRAN (R 3.4.0)
+##  package   * version date       source                            
+##  backports   1.1.0   2017-05-22 CRAN (R 3.4.0)                    
+##  base      * 3.4.1   2017-07-07 local                             
+##  colorout  * 1.1-0   2015-04-20 Github (jalvesaq/colorout@1539f1f)
+##  compiler    3.4.1   2017-07-07 local                             
+##  datasets  * 3.4.1   2017-07-07 local                             
+##  devtools  * 1.13.3  2017-08-02 CRAN (R 3.4.1)                    
+##  digest      0.6.12  2017-01-27 CRAN (R 3.4.0)                    
+##  evaluate    0.10.1  2017-06-24 cran (@0.10.1)                    
+##  graphics  * 3.4.1   2017-07-07 local                             
+##  grDevices * 3.4.1   2017-07-07 local                             
+##  htmltools   0.3.6   2017-04-28 CRAN (R 3.4.0)                    
+##  knitr       1.17    2017-08-10 cran (@1.17)                      
+##  magrittr    1.5     2014-11-22 CRAN (R 3.4.0)                    
+##  memoise     1.1.0   2017-04-21 CRAN (R 3.4.0)                    
+##  methods     3.4.1   2017-07-07 local                             
+##  Rcpp        0.12.12 2017-07-15 cran (@0.12.12)                   
+##  rmarkdown   1.6     2017-06-15 cran (@1.6)                       
+##  rprojroot   1.2     2017-01-16 CRAN (R 3.4.0)                    
+##  stats     * 3.4.1   2017-07-07 local                             
+##  stringi     1.1.5   2017-04-07 CRAN (R 3.4.0)                    
+##  stringr     1.2.0   2017-02-18 CRAN (R 3.4.0)                    
+##  tools       3.4.1   2017-07-07 local                             
+##  utils     * 3.4.1   2017-07-07 local                             
+##  withr       2.0.0   2017-07-28 cran (@2.0.0)                     
+##  yaml        2.1.14  2016-11-12 CRAN (R 3.4.0)
 ```

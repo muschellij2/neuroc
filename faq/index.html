@@ -164,8 +164,11 @@ $(document).ready(function () {
             <div id="faq_what_is" name="faq_what_is" class="panel-collapse collapse in">
                 <div class="panel-body">
                     
-<p>The tutorials have been tested for Unix-based systems, specifically Linux and Mac OSX. Although we do not currently support it, <a href="https://msdn.microsoft.com/en-us/commandline/wsl/install_guide">Windows 10 has a Linux subsystem</a>, which may allow for a working installation of all the dependencies of Neuroconductor.</p>
-<p>Although still untested there is a good <a href="http://www.nemotos.net/?p=1481">tutorial on running FSL on Windows</a> as well as <a href="https://github.com/stnava/ANTsR/wiki/Installing-ANTsR-in-Windows-10-(along-with-FSL,-Rstudio,-Freesurfer,-etc)">ANTsR on Windows</a>.</p>
+<p>Packages are tested for Unix-based systems, specifically Linux and Mac OSX.</p>
+<p>Although we do not currently support it, [Windows 10 has a Linux subsystem</p>
+<p>Appveyor will check packages on Windows platforms; a small percentage of packages will not be applicable for Windows machine due to intrinsic nature of the non-<code>R</code> components of the software. Therefore, a package submitted to Neuroconductor does not need to pass checks for Windows to be incorporated into the platform.</p>
+<p>However, <a href="https://msdn.microsoft.com/en-us/commandline/wsl/install_guide">Windows 10 currently has a Linux subsystem</a>, which may allow for a working installation of all the dependencies of Neuroconductor. Although still untested there is a good <a href="http://www.nemotos.net/?p=1481">tutorial on running FSL on Windows</a> as well as <a href="https://github.com/stnava/ANTsR/wiki/Installing-ANTsR-in-Windows-10-(along-with-FSL,-Rstudio,-Freesurfer,-etc)">ANTsR on Windows</a>.</p>
+<p>As some software in neuroimaging has only implemented versions for *nix-based systems, we will allow users to submit Unix-only R packages, but will encourage them to refactor their code if possible to enable all of Neuroconductor to be cross-platform.</p>
 </div> </div> </div>
 <div class="panel panel-default">
             <div class="panel-heading">

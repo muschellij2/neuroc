@@ -51,9 +51,17 @@ The goals for the package developers are:
                 <div class="panel-body">
                     <!--/html_preserve-->
 
-The tutorials have been tested for Unix-based systems, specifically Linux and Mac OSX.  Although we do not currently support it, [Windows 10 has a Linux subsystem ](https://msdn.microsoft.com/en-us/commandline/wsl/install_guide), which may allow for a working installation of all the dependencies of Neuroconductor. 
+The tutorials have been tested for Unix-based systems, specifically Linux and Mac OSX. 
 
-Although still untested there is a good [tutorial on running FSL on Windows](http://www.nemotos.net/?p=1481) as well as [ANTsR on Windows](https://github.com/stnava/ANTsR/wiki/Installing-ANTsR-in-Windows-10-(along-with-FSL,-Rstudio,-Freesurfer,-etc)).  
+Although we do not currently support it, [Windows 10 has a Linux subsystem 
+
+Appveyor will check packages on Windows platforms; a small percentage of packages will not be applicable for Windows machine due to intrinsic nature of the non-`R` components of the software.  Therefore, a package submitted to Neuroconductor does not need to pass checks for Windows to be incorporated into the platform.  
+
+However, [Windows 10 currently has a Linux subsystem](https://msdn.microsoft.com/en-us/commandline/wsl/install_guide), which may allow for a working installation of all the dependencies of Neuroconductor.   Although still untested there is a good [tutorial on running FSL on Windows](http://www.nemotos.net/?p=1481) as well as [ANTsR on Windows](https://github.com/stnava/ANTsR/wiki/Installing-ANTsR-in-Windows-10-(along-with-FSL,-Rstudio,-Freesurfer,-etc)).  
+
+
+As some software in neuroimaging has only implemented versions for *nix-based systems, we will allow users to submit Unix-only R packages, but will encourage them to refactor their code if possible to enable all of Neuroconductor to be cross-platform.
+
 
 <!--html_preserve--></div> </div> </div><!--/html_preserve-->
 
