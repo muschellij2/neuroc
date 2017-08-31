@@ -55,7 +55,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <h1>The <code>neuroc.deps</code> package</h1>
 <p>We have created the <a href="https://github.com/muschellij2/neuroc.deps"><code>neuroc.deps</code> package</a> that perform most of the backend operations on a OSLERinHealth package. It can be installed as follows:</p>
 <pre class="r"><code>devtools::install_github(&quot;muschellij2/neuroc.deps&quot;)</code></pre>
-<p>The most relevant function is <code>use_neuroc_template</code>, which is used to make many of the changes to the package.</p>
+<p>The most relevant function is <code>use_neuroc_template</code>, which is used to make many of the changes to the package. For a specific platform, you should specify the <code>user = &quot;oslerinhealth&quot;</code>.</p>
 </div>
 <div id="changes-to-the-description-file" class="section level1">
 <h1>Changes to the <code>DESCRIPTION</code> file</h1>
@@ -76,13 +76,14 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <p>The purpose is to ensure that the package can be built, installed, and checked on the respective systems with the appropriate dependencies.</p>
 <div id="travis-ci" class="section level2">
 <h2>Travis CI</h2>
-<p>For Travis CI, we delete the developer’s <code>.travis.yml</code> configuration script and replace it with the one located at <a href="https://github.com/muschellij2/neuroc.deps/blob/master/inst/neuroc_travis.yml" class="uri">https://github.com/muschellij2/neuroc.deps/blob/master/inst/neuroc_travis.yml</a>.</p>
+<p>For Travis CI, we delete the developer’s <code>.travis.yml</code> configuration script and replace it with the one located at <a href="https://github.com/muschellij2/neuroc.deps/blob/master/inst/oslerinhealth_travis.yml" class="uri">https://github.com/muschellij2/neuroc.deps/blob/master/inst/oslerinhealth_travis.yml</a>.</p>
 <div id="travis-helpers" class="section level3">
 <h3>Travis Helpers</h3>
 <pre><code>before_install:
   - fname=travis_helpers.sh
   - wget -O ${fname} http://bit.ly/travis_helpers
   - cat ${fname}; source ${fname}; rm ${fname}  
+  - PROJECT_NAME=oslerinhealth
   - remove_neuroc_packages</code></pre>
 <p>which remove any packages located on OSLERinHealth from the Travis machine. As caching is done, these may be present from previous builds. The <code>travis_helpers.sh</code> file is a set of helper <code>bash</code> functions that backend the <a href="https://github.com/muschellij2/ghtravis"><code>ghtravis</code> package</a>. Most of these are changes to <code>DESCRIPTION</code> file, but on Travis and not the GitHub.</p>
 </div>
@@ -135,7 +136,7 @@ use_bioc: yes</code></pre>
 <div id="appveyor" class="section level2">
 <h2>Appveyor</h2>
 <p>Currently, we only formally support packages that work in *nix type of operatings systems. We will check the package for Windows as a courtesy to Windows users, but do not provide a detailed level of support.</p>
-<p>We use the <a href="https://github.com/muschellij2/neuroc.deps/blob/master/inst/neuroc_appveyor.yml">neuroc_appveyor.yml</a>, which changes the <code>PATH</code> variable to try to replicate a Windows machine using Rtools only and not installing MinGW.</p>
+<p>We use the <a href="https://github.com/muschellij2/neuroc.deps/blob/master/inst/oslerinhealth_appveyor.yml">oslerinhealth_appveyor.yml</a>, which changes the <code>PATH</code> variable to try to replicate a Windows machine using Rtools only and not installing MinGW.</p>
 <p>Different from the YAML from <code>devtools::use_appveyor()</code>, we remove the following part:</p>
 <pre><code>  - path: '\*_*.tar.gz'
     name: Bits</code></pre>

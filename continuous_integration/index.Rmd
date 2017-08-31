@@ -60,7 +60,7 @@ We have created the [`neuroc.deps` package](https://github.com/muschellij2/neuro
 devtools::install_github("muschellij2/neuroc.deps")
 ```
 
-The most relevant function is `use_neuroc_template`, which is used to make many of the changes to the package.
+The most relevant function is `use_neuroc_template`, which is used to make many of the changes to the package.  For a specific project, you should specify the `user = "`r project_name`"`.
 
 # Changes to the `DESCRIPTION` file
 In order to test packages against the relevant `r master_name` packages, we change the `DESCRIPTION` file.  We do this in the following ways:
@@ -80,7 +80,7 @@ For checking R packages, we use [Continuous Integration](https://en.wikipedia.or
 The purpose is to ensure that the package can be built, installed, and checked on the respective systems with the appropriate dependencies.  
 
 ## Travis CI
-For Travis CI, we delete the developer's `.travis.yml` configuration script and replace it with the one located at [https://github.com/muschellij2/neuroc.deps/blob/master/inst/neuroc_travis.yml](https://github.com/muschellij2/neuroc.deps/blob/master/inst/neuroc_travis.yml).
+For Travis CI, we delete the developer's `.travis.yml` configuration script and replace it with the one located at [https://github.com/muschellij2/neuroc.deps/blob/master/inst/`r project_name`_travis.yml](https://github.com/muschellij2/neuroc.deps/blob/master/inst/`r project_name`_travis.yml).
 
 
 
@@ -90,6 +90,7 @@ before_install:
   - fname=travis_helpers.sh
   - wget -O ${fname} http://bit.ly/travis_helpers
   - cat ${fname}; source ${fname}; rm ${fname}  
+  - PROJECT_NAME=`r project_name`
   - remove_neuroc_packages
 ```
 which remove any packages located on `r master_name` from the Travis machine.  As caching is done, these may be present from previous builds.  The `travis_helpers.sh` file is a set of helper `bash` functions that backend the [`ghtravis` package](https://github.com/muschellij2/ghtravis).  Most of these are  changes to `DESCRIPTION` file, but on Travis and not the GitHub.
@@ -162,7 +163,7 @@ We plan to add `r master_name` badges to the `README.md` file.
 
 Currently, we only formally support packages that work in *nix type of operatings systems.  We will check the package for Windows as a courtesy to Windows users, but do not provide a detailed level of support. 
 
-We use the [neuroc_appveyor.yml](https://github.com/muschellij2/neuroc.deps/blob/master/inst/neuroc_appveyor.yml), which changes the `PATH` variable to try to replicate a Windows machine using Rtools only and not installing MinGW.
+We use the [`r project_name`_appveyor.yml](https://github.com/muschellij2/neuroc.deps/blob/master/inst/`r project_name`_appveyor.yml), which changes the `PATH` variable to try to replicate a Windows machine using Rtools only and not installing MinGW.
 
 
 Different from the YAML from `devtools::use_appveyor()`, we remove the following part:
