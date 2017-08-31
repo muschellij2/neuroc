@@ -33,7 +33,7 @@ We have created the [`neuroc.deps` package](https://github.com/muschellij2/neuro
 devtools::install_github("muschellij2/neuroc.deps")
 ```
 
-The most relevant function is `use_neuroc_template`, which is used to make many of the changes to the package.  For a specific platform, you should specify the `user = "oslerinhealth"`.
+The most relevant function is `use_neuroc_template`, which is used to make many of the changes to the package.  For a specific project, you should specify the `user = "oslerinhealth"`.
 
 # Changes to the `DESCRIPTION` file
 In order to test packages against the relevant OSLERinHealth packages, we change the `DESCRIPTION` file.  We do this in the following ways:
