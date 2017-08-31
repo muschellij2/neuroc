@@ -48,14 +48,14 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <pre class="r"><code>## try http:// if https:// URLs are supported
 source(&quot;http://oslerinhealth.org/oslerLite.R&quot;)
 osler_install(&quot;PACKAGE&quot;)</code></pre>
-<p>where <code>PACKAGE</code> is the name of the package you’d like to install, such as <code>fslr</code>. For example, if we want to install <code>neurohcp</code> and <code>fslr</code> we can run:</p>
+<p>where <code>PACKAGE</code> is the name of the package you’d like to install, such as <code>baker</code>. For example, if we want to install <code>spotgear</code> and <code>baker</code> we can run:</p>
 <pre class="r"><code>source(&quot;http://oslerinhealth.org/oslerLite.R&quot;)
-osler_install(c(&quot;fslr&quot;, &quot;neurohcp&quot;))</code></pre>
+osler_install(c(&quot;baker&quot;, &quot;spotgear&quot;))</code></pre>
 <div id="oslerlite-an-alias-for-osler_install" class="section level3">
 <h3><code>oslerLite</code>: an alias for <code>osler_install</code></h3>
 <p>As Bioconductor uses the <code>biocLite</code> function to install packages, we have created a duplicate of <code>osler_install</code>, called <code>oslerLite</code>, for ease of use for those users accustomed to Bioconductor. The same command could have been executed as follows:</p>
 <pre class="r"><code>source(&quot;http://oslerinhealth.org/oslerLite.R&quot;)
-oslerLite(c(&quot;fslr&quot;, &quot;neurohcp&quot;))</code></pre>
+oslerLite(c(&quot;baker&quot;, &quot;spotgear&quot;))</code></pre>
 </div>
 <div id="installing-the-oslerinstall-package" class="section level3">
 <h3>Installing the <code>oslerInstall</code> package</h3>
@@ -67,7 +67,7 @@ osler_install(&quot;oslerInstall&quot;)</code></pre>
 <div id="installing-oslerinhealth-packages-without-upgrading-dependencies" class="section level2">
 <h2>Installing OSLERinHealth Packages without upgrading dependencies</h2>
 <p>The <code>oslerLite</code>/<code>osler_install</code> functions depend on <code>devtools::install_github</code>, which will upgrade dependencies by default, which is recommended. If you would like to install a package, but not upgrade the dependencies (missing dependencies will still be installed), you can set the <code>upgrade_dependencies</code> argument to <code>FALSE</code>:</p>
-<pre class="r"><code>oslerLite(c(&quot;fslr&quot;, &quot;neurohcp&quot;), upgrade_dependencies = FALSE)</code></pre>
+<pre class="r"><code>oslerLite(c(&quot;baker&quot;, &quot;spotgear&quot;), upgrade_dependencies = FALSE)</code></pre>
 </div>
 </div>
 <div id="installing-and-starting-r" class="section level1">
@@ -81,7 +81,7 @@ osler_install(&quot;oslerInstall&quot;)</code></pre>
 <div id="packages-not-available-on-oslerinhealth" class="section level1">
 <h1>Packages not available on OSLERinHealth</h1>
 <p>If a package is not in the OSLERinHealth <a href="http://oslerinhealth.org/list-packages/all">list of packages</a>, then it is not located on the <a href="https://github.com/oslerinhealth?tab=repositories">OSLERinHealth Github</a>. Therefore, when installing, you’ll get the following error:</p>
-<pre class="r"><code>Error in neuro_install(...) : 
+<pre class="r"><code>Error in osler_install(...) : 
   Package(s) PACKAGE_TRIED_TO_INSTALL are not in oslerinhealth</code></pre>
 <p>Once a package is located on the list of packages, then it will be available to install.</p>
 </div>

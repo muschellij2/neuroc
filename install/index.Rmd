@@ -46,6 +46,12 @@ install_pack = switch(
   project_name,
   neuroconductor = "neurocInstall",
   oslerinhealth = "oslerInstall")
+packs = switch(
+  project_name,
+  neuroconductor = c("fslr", "neurohcp"),
+  oslerinhealth = c("baker", "spotgear")
+)
+dpacks = paste0('c("', packs[1], '", "', packs[2], '")')
 ```
 
 All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/`r fname`/index.R).
@@ -61,17 +67,17 @@ Then, you can install a package using the following command:
 source("`r lite_file`")
 `r installer`("PACKAGE")
 ```
-where `PACKAGE` is the name of the package you'd like to install, such as `fslr`.  For example, if we want to install `neurohcp` and `fslr` we can run:
+where `PACKAGE` is the name of the package you'd like to install, such as ``r packs[1]``.  For example, if we want to install ``r packs[2]`` and ``r packs[1]`` we can run:
 ```r
 source("`r lite_file`")
-`r installer`(c("fslr", "neurohcp"))
+`r installer`(`r dpacks`)
 ```
 ### ``r lite_installer``: an alias for ``r installer``
 
 As Bioconductor uses the `biocLite` function to install packages, we have created a duplicate of ``r installer``, called ``r lite_installer``, for ease of use for those users accustomed to Bioconductor.  The same command could have been executed as follows:
 ```r
 source("`r lite_file`")
-`r lite_installer`(c("fslr", "neurohcp"))
+`r lite_installer`(`r dpacks`)
 ```
 
 ### Installing the ``r install_pack`` package
@@ -90,7 +96,7 @@ After installation, you can use `` `r install_pack`::`r lite_installer`() `` to 
 The ``r lite_installer``/``r installer`` functions depend on `devtools::install_github`, which will upgrade dependencies by default, which is recommended.  If you would like to install a package, but not upgrade the dependencies (missing dependencies will still be installed), you can set the `upgrade_dependencies` argument to `FALSE`:
 
 ```r
-`r lite_installer`(c("fslr", "neurohcp"), upgrade_dependencies = FALSE)
+`r lite_installer`(`r dpacks`, upgrade_dependencies = FALSE)
 ```
 
 # Installing and starting R 
@@ -107,7 +113,7 @@ The ``r lite_installer``/``r installer`` functions depend on `devtools::install_
 If a package is not in the `r master_name` [list of packages ](`r website`/list-packages/all), then it is not located on the [`r master_name` Github](https://github.com/`r project_name`?tab=repositories).  Therefore, when installing, you'll get the following error:
 
 ```r
-Error in neuro_install(...) : 
+Error in `r installer`(...) : 
   Package(s) PACKAGE_TRIED_TO_INSTALL are not in `r project_name`
 ```
 

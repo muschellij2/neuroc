@@ -32,6 +32,12 @@ install_pack = switch(
   project_name,
   neuroconductor = "neurocInstall",
   oslerinhealth = "oslerInstall")
+packs = switch(
+  project_name,
+  neuroconductor = c("fslr", "neurohcp"),
+  oslerinhealth = c("baker", "spotgear")
+)
+dpacks = paste0('c("', packs[1], '", "', packs[2], '")')
 
 ## ---- cache = FALSE------------------------------------------------------
 devtools::session_info()

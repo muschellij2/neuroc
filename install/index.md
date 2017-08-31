@@ -111,7 +111,7 @@ devtools::session_info()
 ##  knitr       1.17    2017-08-10 cran (@1.17)                      
 ##  magrittr    1.5     2014-11-22 CRAN (R 3.4.0)                    
 ##  memoise     1.1.0   2017-04-21 CRAN (R 3.4.0)                    
-##  methods     3.4.1   2017-07-07 local                             
+##  methods   * 3.4.1   2017-07-07 local                             
 ##  Rcpp        0.12.12 2017-07-15 cran (@0.12.12)                   
 ##  rmarkdown   1.6     2017-06-15 cran (@1.6)                       
 ##  rprojroot   1.2     2017-01-16 CRAN (R 3.4.0)                    

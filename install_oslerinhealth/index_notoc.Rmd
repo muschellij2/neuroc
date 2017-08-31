@@ -21,17 +21,17 @@ Then, you can install a package using the following command:
 source("http://oslerinhealth.org/oslerLite.R")
 osler_install("PACKAGE")
 ```
-where `PACKAGE` is the name of the package you'd like to install, such as `fslr`.  For example, if we want to install `neurohcp` and `fslr` we can run:
+where `PACKAGE` is the name of the package you'd like to install, such as `baker`.  For example, if we want to install `spotgear` and `baker` we can run:
 ```r
 source("http://oslerinhealth.org/oslerLite.R")
-osler_install(c("fslr", "neurohcp"))
+osler_install(c("baker", "spotgear"))
 ```
 ### `oslerLite`: an alias for `osler_install`
 
 As Bioconductor uses the `biocLite` function to install packages, we have created a duplicate of `osler_install`, called `oslerLite`, for ease of use for those users accustomed to Bioconductor.  The same command could have been executed as follows:
 ```r
 source("http://oslerinhealth.org/oslerLite.R")
-oslerLite(c("fslr", "neurohcp"))
+oslerLite(c("baker", "spotgear"))
 ```
 
 ### Installing the `oslerInstall` package
@@ -50,7 +50,7 @@ After installation, you can use `` oslerInstall::oslerLite() `` to install packa
 The `oslerLite`/`osler_install` functions depend on `devtools::install_github`, which will upgrade dependencies by default, which is recommended.  If you would like to install a package, but not upgrade the dependencies (missing dependencies will still be installed), you can set the `upgrade_dependencies` argument to `FALSE`:
 
 ```r
-oslerLite(c("fslr", "neurohcp"), upgrade_dependencies = FALSE)
+oslerLite(c("baker", "spotgear"), upgrade_dependencies = FALSE)
 ```
 
 # Installing and starting R 
@@ -67,7 +67,7 @@ oslerLite(c("fslr", "neurohcp"), upgrade_dependencies = FALSE)
 If a package is not in the OSLERinHealth [list of packages ](http://oslerinhealth.org/list-packages/all), then it is not located on the [OSLERinHealth Github](https://github.com/oslerinhealth?tab=repositories).  Therefore, when installing, you'll get the following error:
 
 ```r
-Error in neuro_install(...) : 
+Error in osler_install(...) : 
   Package(s) PACKAGE_TRIED_TO_INSTALL are not in oslerinhealth
 ```
 
