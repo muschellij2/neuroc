@@ -25,6 +25,7 @@ all:
 	Rscript -e "source('link_table.R')"
 	Rscript -e "source('make_links.R')"
 	cp install/index.Rmd install_oslerinhealth/
+	cp continuous_integration/index.Rmd continuous_integration_oslerinhealth/
 	for fol in $(LIST) ; do \
 		pwd && echo $$fol && cp makefile.copy $$fol/makefile && cd $$fol && make all && cd ../; \
 	done

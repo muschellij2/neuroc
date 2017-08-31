@@ -4,10 +4,7 @@ John Muschelli
 
 
 
-
-
 All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/continuous_integration/index.R).
-
 
 # Submitting a Package
 
@@ -111,7 +108,7 @@ After running `R CMD check`, the `00install.out` and `00check.log` are printed f
 
 ### Deployment 
 
-When packages are being deployed, `R CMD INSTALL --build` is run so that they have the standardized naming conventions.  The `deployment` information for Neuroconductor, including GitHub encrypted keys, are added.  After building, the binary distribution is uploaded to the GitHub repository when tagged (from Neuroconductor's backend not the developer).
+When packages are being deployed, `R CMD INSTALL --build` is run so that they have the standardized naming conventions.  The `deployment` information for neuroconductor, including GitHub encrypted keys, are added.  After building, the binary distribution is uploaded to the GitHub repository when tagged (from Neuroconductor's backend not the developer).
 
 
 ### Coverage
@@ -190,7 +187,7 @@ devtools::session_info()
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2017-08-31
+##  date     2017-08-30
 ```
 
 ```
