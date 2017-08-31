@@ -45,7 +45,7 @@ osler_install("oslerInstall")
 
 After installation, you can use `` oslerInstall::oslerLite() `` to install packages without source-ing the URL above.
 
-## Installing Neuroconductor Packages without upgrading dependencies
+## Installing OSLERinHealth Packages without upgrading dependencies
 
 The `oslerLite`/`osler_install` functions depend on `devtools::install_github`, which will upgrade dependencies by default, which is recommended.  If you would like to install a package, but not upgrade the dependencies (missing dependencies will still be installed), you can set the `upgrade_dependencies` argument to `FALSE`:
 
@@ -93,7 +93,7 @@ devtools::session_info()
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2017-08-30
+##  date     2017-08-31
 ```
 
 ```

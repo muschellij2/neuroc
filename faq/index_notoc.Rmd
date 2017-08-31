@@ -51,7 +51,7 @@ The goals for the package developers are:
                 <div class="panel-body">
                     <!--/html_preserve-->
 
-The tutorials have been tested for Unix-based systems, specifically Linux and Mac OSX. 
+Packages are tested for Unix-based systems, specifically Linux and Mac OSX. 
 
 Although we do not currently support it, [Windows 10 has a Linux subsystem 
 

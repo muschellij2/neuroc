@@ -85,7 +85,7 @@ source("`r lite_file`")
 
 After installation, you can use `` `r install_pack`::`r lite_installer`() `` to install packages without source-ing the URL above.
 
-## Installing Neuroconductor Packages without upgrading dependencies
+## Installing `r master_name` Packages without upgrading dependencies
 
 The ``r lite_installer``/``r installer`` functions depend on `devtools::install_github`, which will upgrade dependencies by default, which is recommended.  If you would like to install a package, but not upgrade the dependencies (missing dependencies will still be installed), you can set the `upgrade_dependencies` argument to `FALSE`:
 
