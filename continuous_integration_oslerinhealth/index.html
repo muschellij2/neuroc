@@ -11,7 +11,7 @@
 
 <meta name="author" content="John Muschelli" />
 
-<meta name="date" content="2017-08-30" />
+<meta name="date" content="2017-08-31" />
 
 <title>Continuous Integration and Testing</title>
 
@@ -223,31 +223,31 @@ div.tocify {
 
 <h1 class="title toc-ignore">Continuous Integration and Testing</h1>
 <h4 class="author"><em>John Muschelli</em></h4>
-<h4 class="date"><em>2017-08-30</em></h4>
+<h4 class="date"><em>2017-08-31</em></h4>
 
 </div>
 
 
-<p>All code for this document is located at <a href="https://raw.githubusercontent.com/muschellij2/neuroc/master/continuous_integration/index.R">here</a>.</p>
+<p>All code for this document is located at <a href="https://raw.githubusercontent.com/muschellij2/neuroc/master/continuous_integration_oslerinhealth/index.R">here</a>.</p>
 <div id="submitting-a-package" class="section level1">
 <h1><span class="header-section-number">1</span> Submitting a Package</h1>
-<p>To submit a package to Neuroconductor, the author/maintainer of the package provides the GitHub URL for the package. Once the package is submitted several initial checks are conducted. These checks ensure that the package has been created correctly. After initial checks are complete, the package must be verified by email. This verification is designed to prevent spam and allow the developer to stop a package if they would like to revise the package before re-submitting.</p>
-<p>Once the verification is complete, the package is processed. Overall, the package is copied/cloned to a remote server. Standardized Travis CI and Appveyor configuration files, specific to Neuroconductor, are added. These are to ensure that the checks performed on these services are consistent for each package. Some parameters of the package DESCRIPTION file are changed. These parameters ensure that when a package is downloaded from Neuroconductor, the correct versions of the dependent packages are used.</p>
-<p>Next, the package is pushed to the central Neuroconductor GitHub (<a href="https://github.com/neuroconductor" class="uri">https://github.com/neuroconductor</a>) and submitted to Travis CI and AppVeyor to be built and checked on multiple systems. Parameters are set to ensure that Travis CI and AppVeyor use the correct versions of Neuroconductor packages for checking and external dependencies are installed. The author of the package receives an automatic email indicating whether the package was built successfully and is integrated with Neuroconductor together with a description file containing pertinent information about the process.</p>
+<p>To submit a package to OSLERinHealth, the author/maintainer of the package provides the GitHub URL for the package. Once the package is submitted several initial checks are conducted. These checks ensure that the package has been created correctly. After initial checks are complete, the package must be verified by email. This verification is designed to prevent spam and allow the developer to stop a package if they would like to revise the package before re-submitting.</p>
+<p>Once the verification is complete, the package is processed. Overall, the package is copied/cloned to a remote server. Standardized Travis CI and Appveyor configuration files, specific to OSLERinHealth, are added. These are to ensure that the checks performed on these services are consistent for each package. Some parameters of the package DESCRIPTION file are changed. These parameters ensure that when a package is downloaded from OSLERinHealth, the correct versions of the dependent packages are used.</p>
+<p>Next, the package is pushed to the central OSLERinHealth GitHub (<a href="https://github.com/oslerinhealth" class="uri">https://github.com/oslerinhealth</a>) and submitted to Travis CI and AppVeyor to be built and checked on multiple systems. Parameters are set to ensure that Travis CI and AppVeyor use the correct versions of OSLERinHealth packages for checking and external dependencies are installed. The author of the package receives an automatic email indicating whether the package was built successfully and is integrated with OSLERinHealth together with a description file containing pertinent information about the process.</p>
 <div id="stable-vs.current-versions" class="section level2">
 <h2><span class="header-section-number">1.1</span> Stable vs. Current Versions</h2>
-<p>We use the terminology “Stable” and “Current” to differentiate a different status of development for a Neuroconductor package. On the initial submission, after all checks are passed, the package is incorporated into Neuroconductor and deemed the Stable version. The Current version of the package is the result of nightly pulls and mirror the latest package version from the developer’s GitHub repository. This provides Neuroconductor users with a way to use the latest versions of a package and at the same time it provides the Neuroconductor platform with a safe way of checking new versions of a package against the existing set of Current Neuroconductor packages. If a Current version of a package passes all the required Neuroconductor tests, we contact the developer of the package and suggest an official re-submission to Neuroconductor. If the newly re-submitted version of the package passes the checks against the Stable Neuroconductor packages, this version is incorporated to the Stable version of Neuroconductor.</p>
+<p>We use the terminology “Stable” and “Current” to differentiate a different status of development for a OSLERinHealth package. On the initial submission, after all checks are passed, the package is incorporated into OSLERinHealth and deemed the Stable version. The Current version of the package is the result of nightly pulls and mirror the latest package version from the developer’s GitHub repository. This provides OSLERinHealth users with a way to use the latest versions of a package and at the same time it provides the OSLERinHealth platform with a safe way of checking new versions of a package against the existing set of Current OSLERinHealth packages. If a Current version of a package passes all the required OSLERinHealth tests, we contact the developer of the package and suggest an official re-submission to OSLERinHealth. If the newly re-submitted version of the package passes the checks against the Stable OSLERinHealth packages, this version is incorporated to the Stable version of OSLERinHealth.</p>
 </div>
 </div>
 <div id="the-neuroc.deps-package" class="section level1">
 <h1><span class="header-section-number">2</span> The <code>neuroc.deps</code> package</h1>
-<p>We have created the <a href="https://github.com/muschellij2/neuroc.deps"><code>neuroc.deps</code> package</a> that perform most of the backend operations on a Neuroconductor package. It can be installed as follows:</p>
+<p>We have created the <a href="https://github.com/muschellij2/neuroc.deps"><code>neuroc.deps</code> package</a> that perform most of the backend operations on a OSLERinHealth package. It can be installed as follows:</p>
 <pre class="r"><code>devtools::install_github(&quot;muschellij2/neuroc.deps&quot;)</code></pre>
 <p>The most relevant function is <code>use_neuroc_template</code>, which is used to make many of the changes to the package.</p>
 </div>
 <div id="changes-to-the-description-file" class="section level1">
 <h1><span class="header-section-number">3</span> Changes to the <code>DESCRIPTION</code> file</h1>
-<p>In order to test packages against the relevant Neuroconductor packages, we change the <code>DESCRIPTION</code> file. We do this in the following ways:</p>
+<p>In order to test packages against the relevant OSLERinHealth packages, we change the <code>DESCRIPTION</code> file. We do this in the following ways:</p>
 <ol style="list-style-type: decimal">
 <li>Modify, or add if not present, the <code>Remotes</code> field. Packages are installed using the <code>install_github</code> function, which reads this <code>Remotes</code> field to install dependencies if necessary. The Remotes field modifies and overrides the locations of dependencies to be installed. If a dependency for a package is present, then a newer version of the package will not be installed unless indicated by the user or indicated a newer version is necessary in the package (by the package (<code>&gt;= VERSION</code>)) syntax) in the dependencies.</li>
 <li>We add the <code>bioViews</code> field to a package in case there are Bioconductor package in the dependencies, to ensure <code>install_github</code> looks in that repository, as per the issue <a href="https://github.com/hadley/devtools/issues/1254">hadley/devtools#1254</a>.</li>
@@ -272,17 +272,17 @@ div.tocify {
   - wget -O ${fname} http://bit.ly/travis_helpers
   - cat ${fname}; source ${fname}; rm ${fname}  
   - remove_neuroc_packages</code></pre>
-<p>which remove any packages located on Neuroconductor from the Travis machine. As caching is done, these may be present from previous builds. The <code>travis_helpers.sh</code> file is a set of helper <code>bash</code> functions that backend the <a href="https://github.com/muschellij2/ghtravis"><code>ghtravis</code> package</a>. Most of these are changes to <code>DESCRIPTION</code> file, but on Travis and not the GitHub.</p>
+<p>which remove any packages located on OSLERinHealth from the Travis machine. As caching is done, these may be present from previous builds. The <code>travis_helpers.sh</code> file is a set of helper <code>bash</code> functions that backend the <a href="https://github.com/muschellij2/ghtravis"><code>ghtravis</code> package</a>. Most of these are changes to <code>DESCRIPTION</code> file, but on Travis and not the GitHub.</p>
 </div>
 <div id="installing-remotes-without-dependencies" class="section level3">
 <h3><span class="header-section-number">4.1.2</span> Installing Remotes without Dependencies</h3>
 <p>The command:</p>
 <pre><code>  - install_remotes_no_dep</code></pre>
-<p>looks at the <code>Remotes</code> field in the DESCRIPTION file and runs <code>install_github(..., upgrade_dependencies = FALSE)</code>. This ensures that the Neuroconductor packages will be those with the specific commit IDs at the time of running. No old Neuroconductor packages will be present as they were removed using <code>remove_neuroc_packages</code>.</p>
+<p>looks at the <code>Remotes</code> field in the DESCRIPTION file and runs <code>install_github(..., upgrade_dependencies = FALSE)</code>. This ensures that the OSLERinHealth packages will be those with the specific commit IDs at the time of running. No old OSLERinHealth packages will be present as they were removed using <code>remove_neuroc_packages</code>.</p>
 </div>
 <div id="package_name-environmental-variable" class="section level3">
 <h3><span class="header-section-number">4.1.3</span> PACKAGE_NAME environmental variable</h3>
-<p>The environmental variable of <code>PACKAGE_NAME</code> is created from the <code>DESCRIPTION</code> file. This may be different from the repository name from the user, but will be the same repository name on Neuroconductor, as all repos are <code>neuroconductor/PACKAGE_NAME</code>.</p>
+<p>The environmental variable of <code>PACKAGE_NAME</code> is created from the <code>DESCRIPTION</code> file. This may be different from the repository name from the user, but will be the same repository name on OSLERinHealth, as all repos are <code>oslerinhealth/PACKAGE_NAME</code>.</p>
 <pre><code>  - export PACKAGE_NAME=`package_name`</code></pre>
 </div>
 <div id="bioconductor-packages" class="section level3">
@@ -307,7 +307,7 @@ use_bioc: yes</code></pre>
 </div>
 <div id="deployment" class="section level3">
 <h3><span class="header-section-number">4.1.8</span> Deployment</h3>
-<p>When packages are being deployed, <code>R CMD INSTALL --build</code> is run so that they have the standardized naming conventions. The <code>deployment</code> information for neuroconductor, including GitHub encrypted keys, are added. After building, the binary distribution is uploaded to the GitHub repository when tagged (from Neuroconductor’s backend not the developer).</p>
+<p>When packages are being deployed, <code>R CMD INSTALL --build</code> is run so that they have the standardized naming conventions. The <code>deployment</code> information for OSLERinHealth, including GitHub encrypted keys, are added. After building, the binary distribution is uploaded to the GitHub repository when tagged (from OSLERinHealth’s backend not the developer).</p>
 </div>
 <div id="coverage" class="section level3">
 <h3><span class="header-section-number">4.1.9</span> Coverage</h3>
@@ -317,7 +317,7 @@ use_bioc: yes</code></pre>
 </div>
 <div id="future-work" class="section level3">
 <h3><span class="header-section-number">4.1.10</span> Future work</h3>
-<p>We plan to add Neuroconductor badges to the <code>README.md</code> file.</p>
+<p>We plan to add OSLERinHealth badges to the <code>README.md</code> file.</p>
 </div>
 </div>
 <div id="appveyor" class="section level2">
@@ -366,7 +366,7 @@ $ export GITHUB_PAT=[secure]</code></pre>
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2017-08-30</code></pre>
+##  date     2017-08-31</code></pre>
 <pre><code>## Packages -----------------------------------------------------------------</code></pre>
 <pre><code>##  package   * version date       source                            
 ##  backports   1.1.0   2017-05-22 CRAN (R 3.4.0)                    
