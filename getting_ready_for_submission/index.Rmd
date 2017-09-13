@@ -21,8 +21,8 @@ knitr::opts_chunk$set(eval = FALSE)
 All code for this document is located [here](https://github.com/muschellij2/neuroc/blob/master/getting_ready_for_submission/index.Rmd).
 
 ```{r, eval = TRUE, echo = FALSE}
-# pkg_name = "usethis"
-pkg_name = "devtools"
+pkg_name = "usethis"
+# pkg_name = "devtools"
 ```
 
 

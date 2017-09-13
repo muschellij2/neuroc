@@ -14,13 +14,13 @@ All code for this document is located [here](https://github.com/muschellij2/neur
 
 # Startup Process
 
-Most of the work we will cover here will get you up and running for submission to our GitHub-based platform.  We will use the devtools package to help us with the process of package development.  If you do not have the package installed, please run:
+Most of the work we will cover here will get you up and running for submission to our GitHub-based platform.  We will use the usethis package to help us with the process of package development.  If you do not have the package installed, please run:
 
 ```r
-install.packages("devtools")
+install.packages("usethis")
 ```
 
-After `devtools` is installed, you should go through the following process:
+After `usethis` is installed, you should go through the following process:
 
 1.  [Setting up Git](#version-control-using-git)
 2.  [Using GitHub](#hosting-git-repositories-on-github)
@@ -42,18 +42,18 @@ We will use the [`git` version control system](https://git-scm.com/) for our rep
 ### RStudio 
 If you use `RStudio` to set up your packages, please check "Create a git repository" when setting up your package.  Once a repository is set up, you can use the `Tools → Version Control` menu in RStudio for committing and pushing if you do not want to use the command line.
 
-### Using `devtools`
+### Using `usethis`
 
-In `R`, you can use `devtools` to set up the `git` repository.  If you are in the root directory of the package (the place with `DESCRIPTION`, `NAMESPACE`, etc. files), you can run:
+In `R`, you can use `usethis` to set up the `git` repository.  If you are in the root directory of the package (the place with `DESCRIPTION`, `NAMESPACE`, etc. files), you can run:
 
 ```r
-devtools::use_git()
+usethis::use_git()
 ```
 
 If you would like to pass in the path of the directory instead, use:
 
 ```r
-devtools::use_git(pkg = "/path/to/repository")
+usethis::use_git(pkg = "/path/to/repository")
 ```
 
 Now you should have a folder on your machine (it may be hidden) that stores your commits and changes.
@@ -67,9 +67,9 @@ Our platform is based on [GitHub](https://github.com/), which is an online serve
 ### Using the GitHub Website 
 In order to set up your repository for GitHub, you can either use the website.  When you are logged into Github, click the plus sign in the top right hand corner <img src="plus.png" style="display: inline; width: 5%">, and then click "New Repository" In the top right hand corner.  We **highly** recommend naming the GitHub repository the same name as the package.
 
-### Using `devtools`
+### Using `usethis`
 
-Using `devtools`, you can use the `use_github`.  In order to use this command, you must have a personal access token (PAT) from https://github.com/settings/tokens. Make sure at least the `public_repo` option is checked.  If you have a token set in the `GITHUB_PAT` environment variable, `devtools` will use that.  
+Using `usethis`, you can use the `use_github`.  In order to use this command, you must have a personal access token (PAT) from https://github.com/settings/tokens. Make sure at least the `public_repo` option is checked.  If you have a token set in the `GITHUB_PAT` environment variable, `usethis` will use that.  
 
 If you do not have the `GITHUB_PAT` environment variable set, you must specify `auth_token = "YOUR_TOKEN_HERE"` in the following commands.
 
@@ -77,13 +77,13 @@ If you do not have the `GITHUB_PAT` environment variable set, you must specify `
 If you are in the root directory of the package (the place with `DESCRIPTION`, `NAMESPACE`, etc. files), you can run:
 
 ```r
-devtools::use_github()
+usethis::use_github()
 ```
 
 If you would like to pass in the path of the directory instead, use:
 
 ```r
-devtools::use_git(pkg = "/path/to/repository")
+usethis::use_git(pkg = "/path/to/repository")
 ```
 
 Check the GitHub website to ensure you have set up your GitHub repository.  You should be able to see the "Push" button enabled when you go to `Tools → Version Control → Commit` in RStudio.
@@ -94,7 +94,7 @@ Check the GitHub website to ensure you have set up your GitHub repository.  You 
 Now that you have GitHub enabled, run:
 
 ```r
-devtools::use_github_links()
+usethis::use_github_links()
 ```
 
 so that your "Issues" and "URL" fields are set in `DESCRIPTION` to the GitHub link.
@@ -104,8 +104,8 @@ so that your "Issues" and "URL" fields are set in `DESCRIPTION` to the GitHub li
 Once you have your package set up, you should make a `README.md` file.  You can either use a `REAMDE.md` file straight out, without `R` code or a `README.Rmd` file that you knit/render to a `README.md` file.
 
 ```r
-devtools::use_readme_rmd()
-devtools::use_readme_md()
+usethis::use_readme_rmd()
+usethis::use_readme_md()
 ```
 
 The `README.md` file is written in Markdown and you can use the GitHub Markdown flavor. A `REAMDE` file is important because it generates the content at the bottom of a GitHub repository, such as how to install or use the package.  You can also put your badges for number of downloads, version on CRAN (if applicable), [continuous integration](#using-continuous-integration) status, and [code coverage](#using-code-coverage).
@@ -121,7 +121,7 @@ The Travis CI is a [continuous integration](https://en.wikipedia.org/wiki/Contin
 To create the configuration necessary for Travis CI to build and check the package, the easiest way is to use the `use_travis` command: 
 
 ```r
-devtools::use_travis()
+usethis::use_travis()
 ```
 
 This will add a `.travis.yml` (a [YAML](http://www.yaml.org/start.html) file) file to your folder and added this to your `.Rbuildignore` file.  We recommend adding the following options to your `.travis.yml` file:
@@ -161,7 +161,7 @@ where you change `GITHUB_USERNAME/REPO` to your information.  Once you add/commi
 To enable Appveyor for this repository, the easiest way is to use the `use_appveyor` command: 
 
 ```r
-devtools::use_appveyor()
+usethis::use_appveyor()
 ```
 
 This will add a `appveyor.yml` YAML file to your folder and added this to your `.Rbuildignore` file.  We recommend adding the following options to your `.travis.yml` file:
@@ -207,7 +207,7 @@ Unit tests make it easier to identify problems when you make changes to your pac
 We recommend checking out [Hadley Wickham's tutorial](http://r-pkgs.had.co.nz/tests.html) on testing for unit tests.  We recommend using the [`testthat` package](https://cran.r-project.org/web/packages/testthat/index.html).  In order to use the `testthat` package, the easiest way is to use 
 
 ```r
-devtools::use_testthat()
+usethis::use_testthat()
 ```
 
 which should make a `tests` folder.  Add as many tests as necessary to try to get your [code coverage](#using-code-coverage) as close to 100\% as possible.
@@ -217,7 +217,7 @@ which should make a `tests` folder.  Add as many tests as necessary to try to ge
 To make your package more user-friendly (and therefore more likely to be used), we strongly suggest you provide a [vignette](http://r-pkgs.had.co.nz/vignettes.html) with your package.  To create a vignette, run the following command:
 
 ```r
-devtools::use_vignette("my-vignette")
+usethis::use_vignette("my-vignette")
 ```
 
 where you'd change `my-vignette` to the **filename** of hte vignette (which means **no spaces!**).  This will create an [R Markdown](http://rmarkdown.rstudio.com/) vignette with the following metadata:
@@ -269,8 +269,8 @@ The `covr` package also provides an interface for 2 online code coverage tools: 
 To check the code coverage of the package after each build, the easist way is to use `use_coverage`:
 
 ```r
-devtools::use_coverage(type = "coveralls")
-devtools::use_coverage(type = "codecov")
+usethis::use_coverage(type = "coveralls")
+usethis::use_coverage(type = "codecov")
 ```
 
 where you would use the one whichever service you prefer (they should be the same). This will add the `covr` package to the "Suggests" field of the `DESCRIPTION` (if not in another dependency).  The message states to add:
@@ -313,14 +313,14 @@ Now that you've performed all the checks and ensured that the package is thoroug
 
 The condensed version of this worklow is to run (in R):
 ```r
-devtools::use_git()
-devtools::use_github() # must have GITHUB_PAT set up
-devtools::use_readme_md()
-devtools::use_vignette("my-vignette")
-devtools::use_testthat()
-devtools::use_appveyor()
-devtools::use_travis()
-devtools::use_coverage(type = "coveralls")
+usethis::use_git()
+usethis::use_github() # must have GITHUB_PAT set up
+usethis::use_readme_md()
+usethis::use_vignette("my-vignette")
+usethis::use_testthat()
+usethis::use_appveyor()
+usethis::use_travis()
+usethis::use_coverage(type = "coveralls")
 ```
 
 And edit the following files:
