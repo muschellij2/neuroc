@@ -244,6 +244,7 @@ div.tocify {
 <li><a href="#creating-unit-tests-using-testthat">Creating Unit Tests using <code>testthat</code></a></li>
 <li><a href="#using-code-coverage">Using Code Coverage</a></li>
 <li><a href="#submitting-your-package">Submitting your Package</a></li>
+<li><a href="#deploying-binary-packages-on-github">Deploying Binary Packages on GitHub</a></li>
 <li><a href="#advanced">Advanced</a></li>
 </ol>
 </div>
@@ -345,82 +346,6 @@ usethis::use_readme_md()</code></pre>
 <p>where you change <code>GITHUB_USERNAME/REPO</code> to your information. Once you add/commit the changes to <code>README.md</code>, you should have a badge after your package builds to let you know if it passes or fails.</p>
 </div>
 </div>
-<div id="deploying-binary-packages-on-github-releases" class="section level2">
-<h2><span class="header-section-number">5.3</span> Deploying Binary Packages on GitHub Releases</h2>
-<p>In order to push objects back to GitHub, you must add a <code>deploy</code> statements to your CI configuration files. In general, this workflow is designed if you tag a commit and push that tag to GitHub.</p>
-<div id="creating-the-binary-package" class="section level3">
-<h3><span class="header-section-number">5.3.1</span> Creating the Binary Package</h3>
-<p>In your configuration files, you need to add the following to tell R to build a binary package when running <code>R CMD check</code>:</p>
-<pre><code>r_check_args: &quot;--as-cran --install-args=--build&quot;</code></pre>
-<p>Alternatively, you can add:</p>
-<pre><code>before_deploy:
-  - if [[ ${#TRAVIS_TAG} -gt 0 ]]; then R CMD INSTALL --build .; fi; </code></pre>
-<p>to the configuration file so that a binary is built, but only when the commit is tagged. <strong>NB</strong>: these outputs may have different filenames than the workflow using <code>--install-args=--build</code>.</p>
-</div>
-<div id="travis-ci" class="section level3">
-<h3><span class="header-section-number">5.3.2</span> Travis CI</h3>
-<p>Travis supported <a href="https://docs.travis-ci.com/user/deployment/releases/">documentation is here</a>.</p>
-<p>For Travis, you should download the <a href="https://github.com/travis-ci/travis.rb#installation">travis command line interface (cli)</a> on your machine. I suggest Mac users use <a href="https://github.com/travis-ci/travis.rb#mac-os-x-via-homebrew">the HomeBrew workflow</a>.</p>
-<p>You should have your <a href="https://github.com/blog/1509-personal-api-tokens">GitHub Personal Authentication Token (PAT)</a> set to the <code>GITHUB_PAT</code> environment variable (<code>export GITHUB_PAT=...</code> in <code>~/.bash_profile</code> or <code>~/.profile</code>).</p>
-<p>Once this is installed, in the Terminal, you must change directories to the package directory and run:</p>
-<pre class="bash"><code>travis setup releases</code></pre>
-<p>You will have to provide your login credentials for GitHub. This will add a <code>deploy</code> field to your confiration file.</p>
-<p>You should change some things around so that Travis knows that you are deploying. My recommended <code>deploy</code> is:</p>
-<pre class="yaml"><code>deploy:
-  provider: releases
-  skip_cleanup: true
-  api_key:
-    secure: ...
-  file_glob: true
-  file: PACKAGE_NAME*.t*gz
-  on:
-    tags: true    
-    repo: GITHUB_USERNAME/PACKAGE_NAME</code></pre>
-<p>where <code>PACKAGE_NAME</code> is the package name, and <code>GITHUB_USERNAME</code> is your GitHub username.</p>
-<p>Breaking this down:</p>
-<ol style="list-style-type: decimal">
-<li><code>provider: releases</code> - this will push to the releases page of GitHub</li>
-<li><code>skip_cleanup: true</code> - don’t delete things made in the build process</li>
-<li><code>api_key: secure</code> - your Encrypted GitHub PAT</li>
-<li><code>file_glob: true</code> - allow some regular expression matching</li>
-<li><code>file: PACKAGE_NAME*.t*gz</code> - this will match anything with your package name and extensions such as <code>tar.gz</code> (for binary Linux builds or the source build of the package) and <code>.tgz</code> (binary builds of MacOS).</li>
-<li><code>tags: true</code> - only build a release if the commit is tagged</li>
-<li><code>repo:</code> - this key is only valid for this repo.</li>
-</ol>
-<div id="building-on-multiple-os" class="section level4">
-<h4><span class="header-section-number">5.3.2.1</span> Building on Multiple OS</h4>
-<p><strong>NB</strong>: if you are building for both Linux <strong>and</strong> MacOSX, for example if you have:</p>
-<pre class="yaml"><code>os:
-  - linux
-  - osx</code></pre>
-<p>in your Traivs configuration, you should add:</p>
-<pre class="yaml"><code>before_deploy:
-  # so no overwrite of linux build
-  - if [[ &quot;${TRAVIS_OS_NAME}&quot; = &quot;osx&quot; ]]; then rm -f *.tar.gz; fi</code></pre>
-<p>to you Travis so that the source build (with extension <code>.tar.gz</code>) doesn’t overwrite the Linux binary on GitHub (they will have the same name if you use <code>--install-args=--build</code>.</p>
-</div>
-</div>
-<div id="appveyor-1" class="section level3">
-<h3><span class="header-section-number">5.3.3</span> Appveyor</h3>
-<p>Appveyor supported <a href="https://www.appveyor.com/docs/deployment/github/">documentation is here</a>.</p>
-<p>For Appveyor, you must add the following to your <code>appveyor.yml</code>:</p>
-<pre class="yaml"><code>deploy:
-  provider: GitHub
-  description: 'Windows Binary'
-  auth_token:
-    secure: ENCRYPTED_GITHUB_PAT_FROM_APPVEYOR_WEBSITE
-  draft: false
-  prerelease: false
-  on:
-    appveyor_repo_tag: true</code></pre>
-<p>which is a similar flavor to the Travis configuration. In order to deploy, you need to <a href="https://ci.appveyor.com/tools/encrypt">Encrypt your GITHUB_PAT</a> at <a href="https://ci.appveyor.com/tools/encrypt" class="uri">https://ci.appveyor.com/tools/encrypt</a> and replace <code>ENCRYPTED_GITHUB_PAT_FROM_APPVEYOR_WEBSITE</code> with the result. This will push a binary <code>.zip</code> file to GitHub.</p>
-<p><strong>NB</strong>: If you change the <code>PATH</code> around in Appveyor, you may set the default system from MinGW to MSYS, which <a href="https://github.com/krlmlr/r-appveyor/blob/ab7d1ae00ec293f1f7433cfbea25fb49846bda90/r-travis/scripts/travis-tool.sh#L291">may not cause a binary to be built</a>. As long as you have</p>
-<pre><code>environment:
-  global:
-    R_CHECK_INSTALL_ARGS: &quot;--install-args=--build --no-multiarch&quot;</code></pre>
-<p>in your <code>appveyor.yml</code>, that should run regardless (though may not be the universal workflow for the standard Windows user with Rtools).</p>
-</div>
-</div>
 </div>
 <div id="checking-your-package" class="section level1">
 <h1><span class="header-section-number">6</span> Checking your Package</h1>
@@ -490,8 +415,84 @@ usethis::use_coverage(type = &quot;codecov&quot;)</code></pre>
 <h1><span class="header-section-number">10</span> Submitting your Package</h1>
 <p>Now that you’ve performed all the checks and ensured that the package is thoroughly tested, you can submit your package. Please provide your name, email, and link to the GitHub repository on the <a href="https://neuroconductor.org/submit-package">Neuroconductor</a> or <a href="http://oslerinhealth.org/submit-package">OSLER</a> submission pages. The maintainer of the package will receive and email to verify this is a valid submission and the package will begin <a href="../continuous_integration/index.html">the changes to your package and integration</a>.</p>
 </div>
+<div id="deploying-binary-packages-on-github" class="section level1">
+<h1><span class="header-section-number">11</span> Deploying Binary Packages on GitHub</h1>
+<p>In order to push objects back to GitHub, you must add a <code>deploy</code> statements to your CI configuration files. In general, this workflow is designed if you tag a commit and push that tag to GitHub.</p>
+<div id="creating-the-binary-package" class="section level2">
+<h2><span class="header-section-number">11.1</span> Creating the Binary Package</h2>
+<p>In your configuration files, you need to add the following to tell R to build a binary package when running <code>R CMD check</code>:</p>
+<pre><code>r_check_args: &quot;--as-cran --install-args=--build&quot;</code></pre>
+<p>Alternatively, you can add:</p>
+<pre><code>before_deploy:
+  - if [[ ${#TRAVIS_TAG} -gt 0 ]]; then R CMD INSTALL --build .; fi; </code></pre>
+<p>to the configuration file so that a binary is built, but only when the commit is tagged. <strong>NB</strong>: these outputs may have different filenames than the workflow using <code>--install-args=--build</code>.</p>
+</div>
+<div id="travis-ci" class="section level2">
+<h2><span class="header-section-number">11.2</span> Travis CI</h2>
+<p>Travis supported <a href="https://docs.travis-ci.com/user/deployment/releases/">documentation is here</a>.</p>
+<p>For Travis, you should download the <a href="https://github.com/travis-ci/travis.rb#installation">travis command line interface (cli)</a> on your machine. I suggest Mac users use <a href="https://github.com/travis-ci/travis.rb#mac-os-x-via-homebrew">the HomeBrew workflow</a>.</p>
+<p>You should have your <a href="https://github.com/blog/1509-personal-api-tokens">GitHub Personal Authentication Token (PAT)</a> set to the <code>GITHUB_PAT</code> environment variable (<code>export GITHUB_PAT=...</code> in <code>~/.bash_profile</code> or <code>~/.profile</code>).</p>
+<p>Once this is installed, in the Terminal, you must change directories to the package directory and run:</p>
+<pre class="bash"><code>travis setup releases</code></pre>
+<p>You will have to provide your login credentials for GitHub. This will add a <code>deploy</code> field to your confiration file.</p>
+<p>You should change some things around so that Travis knows that you are deploying. My recommended <code>deploy</code> is:</p>
+<pre class="yaml"><code>deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: ...
+  file_glob: true
+  file: PACKAGE_NAME*.t*gz
+  on:
+    tags: true    
+    repo: GITHUB_USERNAME/PACKAGE_NAME</code></pre>
+<p>where <code>PACKAGE_NAME</code> is the package name, and <code>GITHUB_USERNAME</code> is your GitHub username.</p>
+<p>Breaking this down:</p>
+<ol style="list-style-type: decimal">
+<li><code>provider: releases</code> - this will push to the releases page of GitHub</li>
+<li><code>skip_cleanup: true</code> - don’t delete things made in the build process</li>
+<li><code>api_key: secure</code> - your Encrypted GitHub PAT</li>
+<li><code>file_glob: true</code> - allow some regular expression matching</li>
+<li><code>file: PACKAGE_NAME*.t*gz</code> - this will match anything with your package name and extensions such as <code>tar.gz</code> (for binary Linux builds or the source build of the package) and <code>.tgz</code> (binary builds of MacOS).</li>
+<li><code>tags: true</code> - only build a release if the commit is tagged</li>
+<li><code>repo:</code> - this key is only valid for this repo.</li>
+</ol>
+<div id="building-on-multiple-os" class="section level3">
+<h3><span class="header-section-number">11.2.1</span> Building on Multiple OS</h3>
+<p><strong>NB</strong>: if you are building for both Linux <strong>and</strong> MacOSX, for example if you have:</p>
+<pre class="yaml"><code>os:
+  - linux
+  - osx</code></pre>
+<p>in your Traivs configuration, you should add:</p>
+<pre class="yaml"><code>before_deploy:
+  # so no overwrite of linux build
+  - if [[ &quot;${TRAVIS_OS_NAME}&quot; = &quot;osx&quot; ]]; then rm -f *.tar.gz; fi</code></pre>
+<p>to you Travis so that the source build (with extension <code>.tar.gz</code>) doesn’t overwrite the Linux binary on GitHub (they will have the same name if you use <code>--install-args=--build</code>.</p>
+</div>
+</div>
+<div id="appveyor-1" class="section level2">
+<h2><span class="header-section-number">11.3</span> Appveyor</h2>
+<p>Appveyor supported <a href="https://www.appveyor.com/docs/deployment/github/">documentation is here</a>.</p>
+<p>For Appveyor, you must add the following to your <code>appveyor.yml</code>:</p>
+<pre class="yaml"><code>deploy:
+  provider: GitHub
+  description: 'Windows Binary'
+  auth_token:
+    secure: ENCRYPTED_GITHUB_PAT_FROM_APPVEYOR_WEBSITE
+  draft: false
+  prerelease: false
+  on:
+    appveyor_repo_tag: true</code></pre>
+<p>which is a similar flavor to the Travis configuration. In order to deploy, you need to <a href="https://ci.appveyor.com/tools/encrypt">Encrypt your GITHUB_PAT</a> at <a href="https://ci.appveyor.com/tools/encrypt" class="uri">https://ci.appveyor.com/tools/encrypt</a> and replace <code>ENCRYPTED_GITHUB_PAT_FROM_APPVEYOR_WEBSITE</code> with the result. This will push a binary <code>.zip</code> file to GitHub.</p>
+<p><strong>NB</strong>: If you change the <code>PATH</code> around in Appveyor, you may set the default system from MinGW to MSYS, which <a href="https://github.com/krlmlr/r-appveyor/blob/ab7d1ae00ec293f1f7433cfbea25fb49846bda90/r-travis/scripts/travis-tool.sh#L291">may not cause a binary to be built</a>. As long as you have</p>
+<pre><code>environment:
+  global:
+    R_CHECK_INSTALL_ARGS: &quot;--install-args=--build --no-multiarch&quot;</code></pre>
+<p>in your <code>appveyor.yml</code>, that should run regardless (though may not be the universal workflow for the standard Windows user with Rtools).</p>
+</div>
+</div>
 <div id="short-version" class="section level1">
-<h1><span class="header-section-number">11</span> Short Version</h1>
+<h1><span class="header-section-number">12</span> Short Version</h1>
 <p>The condensed version of this worklow is to run (in R):</p>
 <pre class="r"><code>usethis::use_git()
 usethis::use_github() # must have GITHUB_PAT set up
@@ -503,7 +504,7 @@ usethis::use_travis()
 usethis::use_coverage(type = &quot;coveralls&quot;)</code></pre>
 <p>And edit the following files:</p>
 <div id="travis.yml" class="section level2">
-<h2><span class="header-section-number">11.1</span> <code>.travis.yml</code></h2>
+<h2><span class="header-section-number">12.1</span> <code>.travis.yml</code></h2>
 <p>Add (or change in terms of code coverage) the following lines:</p>
 <pre><code>warnings_are_errors: true 
 after_success:
@@ -511,7 +512,7 @@ after_success:
 <p>to <code>.travis.yml</code>.</p>
 </div>
 <div id="appveyor.yml" class="section level2">
-<h2><span class="header-section-number">11.2</span> <code>appveyor.yml</code></h2>
+<h2><span class="header-section-number">12.2</span> <code>appveyor.yml</code></h2>
 <p>Add the following lines:</p>
 <pre><code>environment:
   global:
@@ -519,7 +520,7 @@ after_success:
 <p>to <code>appveyor.yml</code>.</p>
 </div>
 <div id="readme.md" class="section level2">
-<h2><span class="header-section-number">11.3</span> <code>README.md</code></h2>
+<h2><span class="header-section-number">12.3</span> <code>README.md</code></h2>
 <p>Add the following lines, changing <code>GITHUB_USERNAME/REPO</code> to the correct version</p>
 <pre><code> [![Travis-CI Build Status] (https://travis-ci.org/GITHUB_USERNAME/REPO.svg?branch=master)] (https://travis-ci.org/GITHUB_USERNAME/REPO)
  [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/GITHUB_USERNAME/REPO?branch=master&amp;svg=true)](https://ci.appveyor.com/project/GITHUB_USERNAME/REPO)</code></pre>
@@ -527,25 +528,25 @@ after_success:
 </div>
 </div>
 <div id="advanced" class="section level1">
-<h1><span class="header-section-number">12</span> Advanced</h1>
+<h1><span class="header-section-number">13</span> Advanced</h1>
 <div id="ci-and-authentication-tokens" class="section level2">
-<h2><span class="header-section-number">12.1</span> CI and Authentication Tokens</h2>
+<h2><span class="header-section-number">13.1</span> CI and Authentication Tokens</h2>
 <p>If you need access to a secure key, such as a <a href="https://github.com/settings/tokens">GitHub Personal Acccess Token (PAT)</a>, you <strong>do not to set them in your YAML files</strong>. Specifically with GitHub, if you push a secure key to a repository, GitHub will automatically deactivate that token (this may only apply to public repositories). In order to set an environment variable, such as <code>GITHUB_PAT</code> for GitHub authentication, you have to change the settings on the repository on the respective CI website.</p>
 <div id="travis-ci-1" class="section level3">
-<h3><span class="header-section-number">12.1.1</span> Travis CI</h3>
+<h3><span class="header-section-number">13.1.1</span> Travis CI</h3>
 <p>In Travis CI you have to go to: <a href="https://travis-ci.org/USERNAME/REPO/settings" class="uri">https://travis-ci.org/USERNAME/REPO/settings</a>, then the section labeled “Environment Variables”. Put <code>GITHUB_PAT</code> as the name and paste your unencrypted GitHub PAT in the Value field. When you build on Travis CI, you should see:</p>
 <pre><code>Setting environment variables from repository settings
 $ export GITHUB_PAT=[secure]</code></pre>
 <p>in the build logs. Now you can use the environment variable <code>GITHUB_PAT</code> in your code.</p>
 </div>
 <div id="appveyor-2" class="section level3">
-<h3><span class="header-section-number">12.1.2</span> Appveyor</h3>
+<h3><span class="header-section-number">13.1.2</span> Appveyor</h3>
 <p>In Appveyor you have to go to: <a href="https://ci.appveyor.com/project/USERNAME/REPO/settings" class="uri">https://ci.appveyor.com/project/USERNAME/REPO/settings</a>, then the section labeled “Environment” and click “Add Variable”. Put <code>GITHUB_PAT</code> as the name and paste your unencrypted GitHub PAT in the Value field. I believe you should click the lock to encrypt it.</p>
 </div>
 </div>
 </div>
 <div id="session-info" class="section level1">
-<h1><span class="header-section-number">13</span> Session Info</h1>
+<h1><span class="header-section-number">14</span> Session Info</h1>
 <pre class="r"><code>devtools::session_info()</code></pre>
 </div>
 

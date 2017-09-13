@@ -31,6 +31,7 @@ After `usethis` is installed, you should go through the following process:
 7.  [Creating Unit Tests using `testthat`](#creating-unit-tests-using-testthat)
 8.  [Using Code Coverage](#using-code-coverage)
 9.  [Submitting your Package](#submitting-your-package)
+10. [Deploying Binary Packages on GitHub](#deploying-binary-packages-on-github)
 10. [Advanced](#advanced)
 
 # Version Control using Git 
@@ -191,7 +192,6 @@ In your `README.md`, add the following lines for a travis shield:
 
 where you change `GITHUB_USERNAME/REPO` to your information.  Once you add/commit the changes to `README.md`, you should have a badge after your package builds to let you know if it passes or fails.
 
-
 # Checking your Package
 
 Before you push to GitHub, you can check your package so that all things are in order.  We recommend using `devtools::check(args = "--as-cran")`.  This will check your package and documentation for consistency and inform you of any warnings or errors.  We use the `--as-cran` as it performs checks additional checks similar to CRAN.
@@ -226,7 +226,7 @@ where you'd change `my-vignette` to the **filename** of hte vignette (which mean
 ---
 title: "Vignette Title"
 author: "Vignette Author"
-date: "2017-09-12"
+date: "2017-09-13"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -308,6 +308,123 @@ to the `.travis.yml` file, respectively.
 # Submitting your Package
 
 Now that you've performed all the checks and ensured that the package is thoroughly tested, you can submit your package.  Please provide your name, email, and link to the GitHub repository on the [Neuroconductor](https://neuroconductor.org/submit-package) or [OSLER](http://oslerinhealth.org/submit-package) submission pages.  The maintainer of the package will receive and email to verify this is a valid submission and the package will begin [the changes to your package and integration](neuroc-help-continuous-integration).  
+
+
+
+# Deploying Binary Packages on GitHub
+
+In order to push objects back to GitHub, you must add a `deploy` statements to your CI configuration files.  In general, this workflow is designed if you tag a commit and push that tag to GitHub.
+
+## Creating the Binary Package
+
+In your configuration files, you need to add the following to tell R to build a binary package when running `R CMD check`:
+
+```
+r_check_args: "--as-cran --install-args=--build"
+```
+
+Alternatively, you can add:
+
+```
+before_deploy:
+  - if [[ ${#TRAVIS_TAG} -gt 0 ]]; then R CMD INSTALL --build .; fi; 
+```
+
+to the configuration file so that a binary is built, but only when the commit is tagged.  **NB**: these outputs may have different filenames than the workflow using `--install-args=--build`.
+
+## Travis CI 
+
+Travis supported [documentation is here](https://docs.travis-ci.com/user/deployment/releases/). 
+
+
+For Travis, you should download the [travis command line interface (cli)](https://github.com/travis-ci/travis.rb#installation) on your machine.  I suggest Mac users use [the HomeBrew workflow ](https://github.com/travis-ci/travis.rb#mac-os-x-via-homebrew).  
+
+You should have your [GitHub Personal Authentication Token (PAT)](https://github.com/blog/1509-personal-api-tokens) set to the `GITHUB_PAT` environment variable (`export GITHUB_PAT=...` in `~/.bash_profile` or `~/.profile`).  
+
+Once this is installed, in the Terminal, you must change directories to the package directory and run:
+
+```bash
+travis setup releases
+```
+
+You will have to provide your login credentials for GitHub.  This will add a `deploy` field to your confiration file.  
+
+You should change some things around so that Travis knows that you are deploying.  My recommended `deploy` is:
+
+```yaml
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: ...
+  file_glob: true
+  file: PACKAGE_NAME*.t*gz
+  on:
+    tags: true    
+    repo: GITHUB_USERNAME/PACKAGE_NAME
+```
+
+where `PACKAGE_NAME` is the package name, and `GITHUB_USERNAME` is your GitHub username.  
+
+Breaking this down:
+
+1. `provider: releases` - this will push to the releases page of GitHub
+2. `skip_cleanup: true` - don't delete things made in the build process
+3. `api_key: secure` - your Encrypted GitHub PAT
+4. `file_glob: true` - allow some regular expression matching
+5. `file: PACKAGE_NAME*.t*gz` - this will match anything with your package name and extensions such as `tar.gz` (for binary Linux builds or the source build of the package) and `.tgz` (binary builds of MacOS).
+6. `tags: true` - only build a release if the commit is tagged
+7. `repo:` - this key is only valid for this repo.
+
+### Building on Multiple OS
+
+**NB**: if you are building for both Linux **and** MacOSX, for example if you have:
+
+```yaml
+os:
+  - linux
+  - osx
+```
+in your Traivs configuration, you should add:
+
+```yaml
+before_deploy:
+  # so no overwrite of linux build
+  - if [[ "${TRAVIS_OS_NAME}" = "osx" ]]; then rm -f *.tar.gz; fi
+```
+
+to you Travis so that the source build (with extension `.tar.gz`) doesn't overwrite the Linux binary on GitHub (they will have the same name if you use `--install-args=--build`.
+
+
+## Appveyor
+
+Appveyor supported [documentation is here](https://www.appveyor.com/docs/deployment/github/).
+
+For Appveyor, you must add the following to your `appveyor.yml`:
+
+```yaml
+deploy:
+  provider: GitHub
+  description: 'Windows Binary'
+  auth_token:
+    secure: ENCRYPTED_GITHUB_PAT_FROM_APPVEYOR_WEBSITE
+  draft: false
+  prerelease: false
+  on:
+    appveyor_repo_tag: true
+```
+which is a similar flavor to the Travis configuration.  In order to deploy, you need to [Encrypt your GITHUB_PAT](https://ci.appveyor.com/tools/encrypt) at https://ci.appveyor.com/tools/encrypt and replace `ENCRYPTED_GITHUB_PAT_FROM_APPVEYOR_WEBSITE` with the result.  This will push a binary `.zip` file to GitHub.  
+
+**NB**: If you change the `PATH` around in Appveyor, you may set the default system from MinGW to MSYS, which [may not cause a binary to be built](https://github.com/krlmlr/r-appveyor/blob/ab7d1ae00ec293f1f7433cfbea25fb49846bda90/r-travis/scripts/travis-tool.sh#L291).  As long as you have 
+
+```
+environment:
+  global:
+    R_CHECK_INSTALL_ARGS: "--install-args=--build --no-multiarch"
+```
+
+in your `appveyor.yml`, that should run regardless (though may not be the universal workflow for the standard Windows user with Rtools).
+
 
 # Short Version 
 
