@@ -331,9 +331,9 @@ The condensed version of this worklow is to run (in R):
 `r pkg_name`::use_readme_md()
 `r pkg_name`::use_vignette("my-vignette")
 `r pkg_name`::use_testthat()
-`r pkg_name`::use_coverage(type = "coveralls")
 `r pkg_name`::use_appveyor()
 `r pkg_name`::use_travis()
+`r pkg_name`::use_coverage(type = "coveralls")
 ```
 
 And edit the following files:

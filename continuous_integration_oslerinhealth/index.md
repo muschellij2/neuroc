@@ -191,7 +191,7 @@ devtools::session_info()
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2017-08-31
+##  date     2017-09-12
 ```
 
 ```

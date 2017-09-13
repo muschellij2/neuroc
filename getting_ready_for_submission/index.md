@@ -223,7 +223,7 @@ where you'd change `my-vignette` to the **filename** of hte vignette (which mean
 ---
 title: "Vignette Title"
 author: "Vignette Author"
-date: "2017-08-29"
+date: "2017-09-12"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -315,9 +315,9 @@ devtools::use_github() # must have GITHUB_PAT set up
 devtools::use_readme_md()
 devtools::use_vignette("my-vignette")
 devtools::use_testthat()
-devtools::use_coverage(type = "coveralls")
 devtools::use_appveyor()
 devtools::use_travis()
+devtools::use_coverage(type = "coveralls")
 ```
 
 And edit the following files:
