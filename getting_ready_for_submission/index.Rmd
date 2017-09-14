@@ -1,5 +1,5 @@
 ---
-title: "Preparing Your Package for for Submission"
+title: "Preparing Your R Package for Submission"
 author: "John Muschelli"
 date: "`r Sys.Date()`"
 output: 
