@@ -1,4 +1,4 @@
-# Preparing Your Package for for Submission
+# Preparing Your R Package for Submission
 John Muschelli  
 `r Sys.Date()`  
 
@@ -223,7 +223,7 @@ where you'd change `my-vignette` to the **filename** of hte vignette (which mean
 ---
 title: "Vignette Title"
 author: "Vignette Author"
-date: "2017-09-13"
+date: "2017-09-14"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
