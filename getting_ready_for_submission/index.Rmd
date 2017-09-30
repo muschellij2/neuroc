@@ -1,5 +1,5 @@
 ---
-title: "Preparing Your R Package for Submission"
+title: "Preparing Your Package for for Submission"
 author: "John Muschelli"
 date: "`r Sys.Date()`"
 output: 
@@ -185,7 +185,7 @@ This will add a `appveyor.yml` YAML file to your folder and added this to your `
 ```
 environment:
   global:
-    WARNINGS_ARE_ERRORS: 1
+    WARNINGS_ARE_ERORRS: 1
 ```
 
 so that warnings are treated as errors, which we require in our platform.  
@@ -472,7 +472,7 @@ Add the following lines:
 ```
 environment:
   global:
-    WARNINGS_ARE_ERRORS: 1
+    WARNINGS_ARE_ERORRS: 1
 ```
 to `appveyor.yml`.
 
