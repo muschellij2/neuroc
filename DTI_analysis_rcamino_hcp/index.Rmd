@@ -1,0 +1,150 @@
+---
+title: "DTI Analysis using rcamino for HCP data"
+author: "John Muschelli"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    keep_md: true
+    theme: cosmo
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+    number_sections: true      
+---
+
+All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/DTI_analysis_rcamino_hcp/index.R).
+
+```{r setup, include=FALSE, message=FALSE}
+library(knitr)
+library(methods)
+library(neurobase)
+knitr::opts_chunk$set(comment = "")
+```
+
+# Resources and Goals
+Much of this work has been adapted by the Tutorial for DTI analysis from ISMRM 2015: [http://camino.cs.ucl.ac.uk/index.php?n=Tutorials.ISMRM2015](http://camino.cs.ucl.ac.uk/index.php?n=Tutorials.ISMRM2015).  We will show you a few steps that have been implemented in `rcamino`: `camino_pointset2scheme`, `camino_modelfit`, `camino_fa`, `camino_md`, and `camino_dteig`.  
+
+# Data Location
+
+
+# Reading in the Data
+First, we download the data from HCP.  You must have your access keys set (see [Getting Data from the Human Connectome Project (HCP)](../neurohcp/index.html)).  
+
+We will use the `neurohcp` package to download one subject data.
+
+```{r, echo = TRUE}
+library(neurohcp)
+hcp_id = "100307"
+r = download_hcp_dir(paste0("HCP/", hcp_id, "/T1w/Diffusion"))
+print(basename(r$output_files))
+```
+
+It contains 4 files:
+
+1.  `data.nii.gz` - a 4D image of the DWI data.
+2.  `nodif_brain_mask.nii.gz` - A brain mask of the DTI data
+3.  `bvals` - a text file with the b-values
+4.  `bvecs` - a text file with the b-vectors as the first 3 columns. 
+
+
+## Creating 
+
+
+As `dtifit` requires the b-values and b-vectors to be separated, and this data has b-values of $1000$ when the b-vectors is not zero.  **This is very important and you must know where your b-values and b-vectors are when doing your analyses and what units they are in.**  
+
+
+```{r bvecs}
+library(rcamino)
+camino_set_heap(heap_size = 10000)
+outfiles = r$output_files
+names(outfiles) = nii.stub(outfiles, bn = TRUE)
+scheme_file = camino_fsl2scheme(
+  bvecs = outfiles["bvecs"], bvals = outfiles["bvals"],
+  bscale = 1)
+```
+
+The imaging scheme contains measurements at b=5, b=1000, b=2000, and b=3000 s / mm^2.
+
+## Subsetting data
+By selecting a subset of the measurements, we can reduce processing time and memory requirements. Also, the high b-value shells aren't optimal for estimating the diffusion tensor. So we'll select data from the b=5 and b=1000 shells, which is still higher angular resolution than most DTI (90 directions).
+
+If you have sufficient RAM, you can load the whole data set and extract a subset:
+```{r}
+camino_ver = packageVersion("rcamino")
+if (camino_ver < "0.5.2") {
+  devtools::install_github("muschellij2/rcamino")
+}
+sub_data_list = camino_subset_max_bval(
+  infile = outfiles["data"],
+  schemefile = scheme_file,
+  max_bval = 1500,
+  verbose = TRUE) 
+sub_data = sub_data_list$image
+sub_scheme = sub_data_list$scheme
+```
+
+
+# Fit the diffusion tensor
+
+```{r}
+# wdtfit caminoProc/hcp_b5_b1000.Bfloat caminoProc/hcp_b5_b1000.scheme \
+# -brainmask 100307/T1w/Diffusion/nodif_brain_mask.nii.gz -outputfile caminoProc/wdt.Bdouble
+# 
+mod_file = camino_modelfit(
+  infile = sub_data, scheme = sub_scheme, 
+  mask = outfiles["nodif_brain_mask"], 
+  model = "ldt_wtd")
+```
+
+
+## Getting FA vlaues
+
+```{r}
+# fa -inputfile caminoProc/wdt_dt.nii.gz -outputfile caminoProc/wdt_fa.nii.gz
+fa_img = camino_fa_img(
+  infile = mod_file,
+  header = outfiles["nodif_brain_mask"],
+  retimg = FALSE)
+```
+
+
+### Visualizing FA images
+
+Using `ortho2`, we can visualize these FA maps:
+```{r}
+ortho2(fa_img)
+```
+
+## Getting MD vlaues
+
+```{r}
+# md -inputfile caminoProc/wdt_dt.nii.gz -outputfile caminoProc/wdt_md.nii.gz
+md_img = camino_md_img(
+  infile = mod_file,
+  header = outfiles["nodif_brain_mask"],
+  retimg = FALSE)
+```
+
+# Export DTs to NIfTI
+
+Using `camino_dt2nii`, we can export the diffusion tensors into NIfTI files.  We see the result is the filenames of the NIfTI files, and that they all exist (otherwise there'd be an errors.) 
+```{r}
+# dt2nii -inputfile caminoProc/wdt.Bdouble -header 100307/T1w/Diffusion/nodif_brain_mask.nii.gz \
+# -outputroot caminoProc/wdt_
+mod_nii = camino_dt2nii(
+  infile = mod_file,
+  header = outfiles["nodif_brain_mask"])
+```
+
+```{r}
+# dteig -inputfile caminoProc/wdt.Bdouble -outputfile caminoProc/wdt_eig.Bdouble
+eigen_image = camino_dteig(infile = mod_file)
+```
+
+
+We can read these DT images into `R` again using `readnii`, but we must set `drop_dim = FALSE` for diffusion tensor images because the pixel dimensions are zero and `readnii` assumes you want to drop "empty" dimensions
+
+```{r}
+dt_imgs = lapply(mod_nii, readnii, drop_dim = FALSE)
+```
