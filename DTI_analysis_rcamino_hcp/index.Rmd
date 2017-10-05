@@ -170,7 +170,7 @@ ortho2(rb)
 ```
 
 ```{r md_hist2}
-hist(mask_vals(md2, mask = mask), breaks = 1000)
+hist(mask_vals(rb, mask = mask), breaks = 1000)
 ```
 
 # Export DTs to NIfTI

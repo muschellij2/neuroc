@@ -28,7 +28,7 @@ r = download_hcp_dir(paste0("HCP/", hcp_id, "/T1w/Diffusion"))
 
 ```
 URL sent to GET
-https://s3.amazonaws.com/hcp-openaccess/?AWSAccessKeyId=AKIAJ5LF4LXDVDZD7GTA&Expires=1507231473&Signature=BaM4JYme8xzVSjoxeR7YtSGRGKI%3D&prefix=HCP/100307/T1w/Diffusion&delimiter=
+https://s3.amazonaws.com/hcp-openaccess/?AWSAccessKeyId=AKIAJ5LF4LXDVDZD7GTA&Expires=1507233143&Signature=R%2BzcJKVuR46YFco4jmZNUxrlFuk%3D&prefix=HCP/100307/T1w/Diffusion&delimiter=
 ```
 
 ```
@@ -450,8 +450,6 @@ grad_dev.nii.gz
   |                                                                       
   |=====                                                            |   8%
   |                                                                       
-  |======                                                           |   8%
-  |                                                                       
   |======                                                           |   9%
   |                                                                       
   |======                                                           |  10%
@@ -459,8 +457,6 @@ grad_dev.nii.gz
   |=======                                                          |  10%
   |                                                                       
   |=======                                                          |  11%
-  |                                                                       
-  |=======                                                          |  12%
   |                                                                       
   |========                                                         |  12%
   |                                                                       
@@ -658,8 +654,6 @@ grad_dev.nii.gz
   |                                                                       
   |==============================================                   |  71%
   |                                                                       
-  |==============================================                   |  72%
-  |                                                                       
   |===============================================                  |  72%
   |                                                                       
   |===============================================                  |  73%
@@ -773,13 +767,13 @@ nodif_brain_mask.nii.gz
   |                                                                       
   |==================                                               |  28%
   |                                                                       
-  |====================================                             |  55%
+  |===================                                              |  29%
   |                                                                       
-  |=====================================                            |  57%
+  |=============================                                    |  44%
   |                                                                       
-  |=======================================================          |  84%
+  |==============================================                   |  71%
   |                                                                       
-  |========================================================         |  86%
+  |================================================                 |  73%
   |                                                                       
   |==========================================================       |  89%
   |                                                                       
@@ -822,7 +816,7 @@ scheme_file = camino_fsl2scheme(
 ```
 
 ```
-/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/fsl2scheme -bvecfile /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpnc6oYi/file12efd364af513//bvecs -bvalfile /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpnc6oYi/file12efd364af513//bvals -bscale 1   >  /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpnc6oYi/file12efd2d1d41d7.scheme
+/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/fsl2scheme -bvecfile /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpvV05TN/file138e635f8307e//bvecs -bvalfile /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpvV05TN/file138e635f8307e//bvals -bscale 1   >  /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpvV05TN/file138e67a0f8c78.scheme
 ```
 
 The imaging scheme contains measurements at b=5, b=1000, b=2000, and b=3000 s / mm^2.
@@ -845,11 +839,11 @@ sub_data_list = camino_subset_max_bval(
 ```
 
 ```
-/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/split4dnii -inputfile /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpnc6oYi/file12efd364af513/data.nii.gz -outputroot /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpnc6oYi/file12efd1d96f2c4_
+/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/split4dnii -inputfile /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpvV05TN/file138e635f8307e/data.nii.gz -outputroot /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpvV05TN/file138e679f65cec_
 ```
 
 ```
-/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/image2voxel -imagelist '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpnc6oYi/file12efd211c3109.txt' -outputfile '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpnc6oYi/file12efd41d756da.Bfloat' -outputdatatype float
+/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/image2voxel -imagelist '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpvV05TN/file138e61d4ec882.txt' -outputfile '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpvV05TN/file138e61f4dddd6.Bfloat' -outputdatatype float
 ```
 
 ```r
@@ -872,7 +866,7 @@ mod_file = camino_modelfit(
 ```
 
 ```
-/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/modelfit -inputfile '/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpnc6oYi/file12efd41d756da.Bfloat' -outputfile '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpnc6oYi/file12efd84b446c.Bdouble' -inputdatatype float -schemefile /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpnc6oYi/file12efd38d0f160.scheme -bgmask /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpnc6oYi/file12efd364af513/nodif_brain_mask.nii.gz -maskdatatype float -model ldt_wtd
+/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/modelfit -inputfile '/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpvV05TN/file138e61f4dddd6.Bfloat' -outputfile '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpvV05TN/file138e6719272c9.Bdouble' -inputdatatype float -schemefile /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpvV05TN/file138e62f918221.scheme -bgmask /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpvV05TN/file138e635f8307e/nodif_brain_mask.nii.gz -maskdatatype float -model ldt_wtd
 ```
 
 
@@ -888,11 +882,11 @@ fa_img = camino_fa_img(
 ```
 
 ```
-cat '/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpnc6oYi/file12efd84b446c.Bdouble' |  /Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/fa -inputmodel dt -outputdatatype double > '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpnc6oYi/file12efd4fbb2be1.Bdouble'
+cat '/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpvV05TN/file138e6719272c9.Bdouble' |  /Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/fa -inputmodel dt -outputdatatype double > '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpvV05TN/file138e62bd5fcb6.Bdouble'
 ```
 
 ```
-/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/voxel2image -inputfile /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpnc6oYi/file12efd4fbb2be1.Bdouble -header /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpnc6oYi/file12efd364af513/nodif_brain_mask.nii.gz -outputroot /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpnc6oYi/file12efd93de9ac_ -components 1 -gzip 
+/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/voxel2image -inputfile /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpvV05TN/file138e62bd5fcb6.Bdouble -header /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpvV05TN/file138e635f8307e/nodif_brain_mask.nii.gz -outputroot /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpvV05TN/file138e66dc22735_ -components 1 -gzip 
 ```
 
 
@@ -942,11 +936,11 @@ md_img = camino_md_img(
 ```
 
 ```
-cat '/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpnc6oYi/file12efd84b446c.Bdouble' |  /Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/md -inputmodel dt -outputdatatype double > '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpnc6oYi/file12efd3d691030.Bdouble'
+cat '/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpvV05TN/file138e6719272c9.Bdouble' |  /Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/md -inputmodel dt -outputdatatype double > '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpvV05TN/file138e664581caf.Bdouble'
 ```
 
 ```
-/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/voxel2image -inputfile /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpnc6oYi/file12efd3d691030.Bdouble -header /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpnc6oYi/file12efd364af513/nodif_brain_mask.nii.gz -outputroot /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpnc6oYi/file12efd3ca5decf_ -components 1 -gzip 
+/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/voxel2image -inputfile /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpvV05TN/file138e664581caf.Bdouble -header /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpvV05TN/file138e635f8307e/nodif_brain_mask.nii.gz -outputroot /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpvV05TN/file138e654c358a0_ -components 1 -gzip 
 ```
 
 
@@ -997,7 +991,7 @@ ortho2(rb)
 
 
 ```r
-hist(mask_vals(md2, mask = mask), breaks = 1000)
+hist(mask_vals(rb, mask = mask), breaks = 1000)
 ```
 
 ![](index_files/figure-html/md_hist2-1.png)<!-- -->

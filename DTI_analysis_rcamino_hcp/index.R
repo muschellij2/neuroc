@@ -83,7 +83,7 @@ rb = robust_window(md2, probs = c(0, 0.9999))
 ortho2(rb)
 
 ## ----md_hist2------------------------------------------------------------
-hist(mask_vals(md2, mask = mask), breaks = 1000)
+hist(mask_vals(rb, mask = mask), breaks = 1000)
 
 ## ----nifti_mod, eval = FALSE---------------------------------------------
 ## # dt2nii -inputfile caminoProc/wdt.Bdouble -header 100307/T1w/Diffusion/nodif_brain_mask.nii.gz \
