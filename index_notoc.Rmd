@@ -45,6 +45,7 @@ Please visit the [FAQ](neuroc-help-faq) for information on how to begin.
 ## DTI
 7. [DTI analysis with fslr](neuroc-help-dti-analysis-fslr)
 8. [DTI analysis with Camino](neuroc-help-dti-analysis-rcamino)
+8. [DTI analysis with Camino with HCP data](neuroc-help-dti-analysis-rcamino-hcp)
 
 # Disease-specific Tutorials
 

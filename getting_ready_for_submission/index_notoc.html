@@ -147,7 +147,7 @@ usethis::use_readme_md()</code></pre>
 <p>This will add a <code>appveyor.yml</code> YAML file to your folder and added this to your <code>.Rbuildignore</code> file. We recommend adding the following options to your <code>.travis.yml</code> file:</p>
 <pre><code>environment:
   global:
-    WARNINGS_ARE_ERRORS: 1</code></pre>
+    WARNINGS_ARE_ERORRS: 1</code></pre>
 <p>so that warnings are treated as errors, which we require in our platform.</p>
 <p>If you would like to use our platform’s customized Appveyor configuration file, you can use the <a href="https://github.com/muschellij2/neuroc_travis/blob/master/neuroc_appveyor.yml">YAML file</a>, but make sure you rename it to <code>appveyor.yml</code> in your folder.</p>
 <div id="enabling-appveyor" class="section level3">
@@ -180,7 +180,7 @@ usethis::use_readme_md()</code></pre>
 <pre><code>---
 title: &quot;Vignette Title&quot;
 author: &quot;Vignette Author&quot;
-date: &quot;2017-09-15&quot;
+date: &quot;2017-10-05&quot;
 output: rmarkdown::html_vignette
 vignette: &gt;
   %\VignetteIndexEntry{Vignette Title}
@@ -328,7 +328,7 @@ after_success:
 <p>Add the following lines:</p>
 <pre><code>environment:
   global:
-    WARNINGS_ARE_ERRORS: 1</code></pre>
+    WARNINGS_ARE_ERORRS: 1</code></pre>
 <p>to <code>appveyor.yml</code>.</p>
 </div>
 <div id="readme.md" class="section level2">

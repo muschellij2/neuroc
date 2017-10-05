@@ -12,6 +12,7 @@ LIST += fmri_analysis_fslr
 LIST += fmri_analysis_spm12r
 LIST += DTI_analysis_fslr
 LIST += DTI_analysis_rcamino
+LIST += DTI_analysis_rcamino_hcp
 LIST += ms_lesion
 LIST += malf_insula
 LIST += neurohcp

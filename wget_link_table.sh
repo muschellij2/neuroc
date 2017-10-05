@@ -16,4 +16,5 @@ wget -O fmri_analysis_fslr.html https://raw.githubusercontent.com/muschellij2/ne
 wget -O fmri_analysis_spm12r.html https://raw.githubusercontent.com/muschellij2/neuroc/master/fmri_analysis_spm12r/index_notoc.html
 wget -O DTI_analysis_fslr.html https://raw.githubusercontent.com/muschellij2/neuroc/master/DTI_analysis_fslr/index_notoc.html
 wget -O DTI_analysis_rcamino.html https://raw.githubusercontent.com/muschellij2/neuroc/master/DTI_analysis_rcamino/index_notoc.html
+wget -O DTI_analysis_rcamino_hcp.html https://raw.githubusercontent.com/muschellij2/neuroc/master/DTI_analysis_rcamino_hcp/index_notoc.html
 wget -O ms_lesion.html https://raw.githubusercontent.com/muschellij2/neuroc/master/ms_lesion/index_notoc.html

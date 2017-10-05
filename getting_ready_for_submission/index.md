@@ -1,4 +1,4 @@
-# Preparing Your R Package for Submission
+# Preparing Your Package for for Submission
 John Muschelli  
 `r Sys.Date()`  
 
@@ -168,7 +168,7 @@ This will add a `appveyor.yml` YAML file to your folder and added this to your `
 ```
 environment:
   global:
-    WARNINGS_ARE_ERRORS: 1
+    WARNINGS_ARE_ERORRS: 1
 ```
 
 so that warnings are treated as errors, which we require in our platform.  
@@ -223,7 +223,7 @@ where you'd change `my-vignette` to the **filename** of hte vignette (which mean
 ---
 title: "Vignette Title"
 author: "Vignette Author"
-date: "2017-09-15"
+date: "2017-10-05"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -456,7 +456,7 @@ Add the following lines:
 ```
 environment:
   global:
-    WARNINGS_ARE_ERRORS: 1
+    WARNINGS_ARE_ERORRS: 1
 ```
 to `appveyor.yml`.
 

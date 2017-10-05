@@ -42,6 +42,7 @@ Please visit the [FAQ](faq/index.html) for information on how to begin.
 ## DTI
 7. [DTI analysis with fslr](DTI_analysis_fslr/index.html)
 8. [DTI analysis with Camino](DTI_analysis_rcamino/index.html)
+8. [DTI analysis with Camino with HCP data](DTI_analysis_rcamino_hcp/index.html)
 
 # Disease-specific Tutorials
 

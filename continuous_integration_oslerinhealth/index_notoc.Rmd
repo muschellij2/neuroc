@@ -194,7 +194,7 @@ devtools::session_info()
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2017-09-15
+##  date     2017-10-05
 ```
 
 ```
@@ -203,7 +203,7 @@ devtools::session_info()
 
 ```
 ##  package   * version date       source                            
-##  backports   1.1.0   2017-05-22 CRAN (R 3.4.0)                    
+##  backports   1.1.1   2017-09-25 CRAN (R 3.4.2)                    
 ##  base      * 3.4.1   2017-07-07 local                             
 ##  colorout  * 1.1-0   2015-04-20 Github (jalvesaq/colorout@1539f1f)
 ##  compiler    3.4.1   2017-07-07 local                             
@@ -218,7 +218,7 @@ devtools::session_info()
 ##  magrittr    1.5     2014-11-22 CRAN (R 3.4.0)                    
 ##  memoise     1.1.0   2017-04-21 CRAN (R 3.4.0)                    
 ##  methods     3.4.1   2017-07-07 local                             
-##  Rcpp        0.12.12 2017-07-15 cran (@0.12.12)                   
+##  Rcpp        0.12.13 2017-09-28 cran (@0.12.13)                   
 ##  rmarkdown   1.6     2017-06-15 cran (@1.6)                       
 ##  rprojroot   1.2     2017-01-16 CRAN (R 3.4.0)                    
 ##  stats     * 3.4.1   2017-07-07 local                             
@@ -226,6 +226,6 @@ devtools::session_info()
 ##  stringr     1.2.0   2017-02-18 CRAN (R 3.4.0)                    
 ##  tools       3.4.1   2017-07-07 local                             
 ##  utils     * 3.4.1   2017-07-07 local                             
-##  withr       2.0.0   2017-07-28 cran (@2.0.0)                     
+##  withr       2.0.0   2017-10-05 Github (jimhester/withr@d1f0957)  
 ##  yaml        2.1.14  2016-11-12 CRAN (R 3.4.0)
 ```

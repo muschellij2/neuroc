@@ -33,7 +33,7 @@ First, we download the data from HCP.  You must have your access keys set (see [
 
 We will use the `neurohcp` package to download one subject data.
 
-```{r, echo = TRUE}
+```{r downloading_data, echo = TRUE}
 library(neurohcp)
 hcp_id = "100307"
 r = download_hcp_dir(paste0("HCP/", hcp_id, "/T1w/Diffusion"))
@@ -70,7 +70,7 @@ The imaging scheme contains measurements at b=5, b=1000, b=2000, and b=3000 s / 
 By selecting a subset of the measurements, we can reduce processing time and memory requirements. Also, the high b-value shells aren't optimal for estimating the diffusion tensor. So we'll select data from the b=5 and b=1000 shells, which is still higher angular resolution than most DTI (90 directions).
 
 If you have sufficient RAM, you can load the whole data set and extract a subset:
-```{r}
+```{r subsetting}
 camino_ver = packageVersion("rcamino")
 if (camino_ver < "0.5.2") {
   devtools::install_github("muschellij2/rcamino")
@@ -87,7 +87,7 @@ sub_scheme = sub_data_list$scheme
 
 # Fit the diffusion tensor
 
-```{r}
+```{r model_fit}
 # wdtfit caminoProc/hcp_b5_b1000.Bfloat caminoProc/hcp_b5_b1000.scheme \
 # -brainmask 100307/T1w/Diffusion/nodif_brain_mask.nii.gz -outputfile caminoProc/wdt.Bdouble
 # 
@@ -100,7 +100,7 @@ mod_file = camino_modelfit(
 
 ## Getting FA vlaues
 
-```{r}
+```{r making_fa}
 # fa -inputfile caminoProc/wdt_dt.nii.gz -outputfile caminoProc/wdt_fa.nii.gz
 fa_img = camino_fa_img(
   infile = mod_file,
@@ -109,16 +109,35 @@ fa_img = camino_fa_img(
 ```
 
 
+
+
+
 ### Visualizing FA images
 
-Using `ortho2`, we can visualize these FA maps:
-```{r}
-ortho2(fa_img)
+We want to read the FA image into `R`:
+```{r fa_read}
+fa_nii = readnii(fa_img)
 ```
+
+In order to visualize the values, we are going to read in the mask so that we don't visualize non-brain values:
+```{r mask}
+mask = readnii(outfiles["nodif_brain_mask"])
+```
+
+```{r fa_hist}
+hist(mask_vals(fa_nii, mask = mask), breaks = 1000)
+```
+
+Using `ortho2`, we can visualize these FA maps:
+```{r ortho_fa}
+ortho2(fa_nii)
+```
+
+
 
 ## Getting MD vlaues
 
-```{r}
+```{r making_md}
 # md -inputfile caminoProc/wdt_dt.nii.gz -outputfile caminoProc/wdt_md.nii.gz
 md_img = camino_md_img(
   infile = mod_file,
@@ -126,10 +145,38 @@ md_img = camino_md_img(
   retimg = FALSE)
 ```
 
+
+
+### Visualizing MD images
+
+We want to read the MD image into `R`:
+```{r md_read}
+md_nii = readnii(md_img)
+```
+
+```{r md_hist}
+hist(mask_vals(md_nii, mask = mask), breaks = 1000)
+md2 = md_nii
+md2[ md2 < 0] = 0
+hist(mask_vals(md2, mask = mask), breaks = 1000)
+```
+
+Using `ortho2`, we can visualize these MD maps:
+```{r ortho_md}
+ortho2(md_nii)
+ortho2(md2)
+rb = robust_window(md2, probs = c(0, 0.9999))
+ortho2(rb)
+```
+
+```{r md_hist2}
+hist(mask_vals(md2, mask = mask), breaks = 1000)
+```
+
 # Export DTs to NIfTI
 
 Using `camino_dt2nii`, we can export the diffusion tensors into NIfTI files.  We see the result is the filenames of the NIfTI files, and that they all exist (otherwise there'd be an errors.) 
-```{r}
+```{r nifti_mod, eval = FALSE}
 # dt2nii -inputfile caminoProc/wdt.Bdouble -header 100307/T1w/Diffusion/nodif_brain_mask.nii.gz \
 # -outputroot caminoProc/wdt_
 mod_nii = camino_dt2nii(
@@ -137,7 +184,7 @@ mod_nii = camino_dt2nii(
   header = outfiles["nodif_brain_mask"])
 ```
 
-```{r}
+```{r eigen_image, eval = FALSE}
 # dteig -inputfile caminoProc/wdt.Bdouble -outputfile caminoProc/wdt_eig.Bdouble
 eigen_image = camino_dteig(infile = mod_file)
 ```
@@ -145,6 +192,6 @@ eigen_image = camino_dteig(infile = mod_file)
 
 We can read these DT images into `R` again using `readnii`, but we must set `drop_dim = FALSE` for diffusion tensor images because the pixel dimensions are zero and `readnii` assumes you want to drop "empty" dimensions
 
-```{r}
+```{r, eval = FALSE}
 dt_imgs = lapply(mod_nii, readnii, drop_dim = FALSE)
 ```
