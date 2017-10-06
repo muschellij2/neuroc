@@ -23,7 +23,11 @@ knitr::opts_chunk$set(comment = "")
 ```
 
 # Resources and Goals
-Much of this work has been adapted by the Tutorial for DTI analysis from ISMRM 2015: [http://camino.cs.ucl.ac.uk/index.php?n=Tutorials.ISMRM2015](http://camino.cs.ucl.ac.uk/index.php?n=Tutorials.ISMRM2015).  We will show you a few steps that have been implemented in `rcamino`: `camino_pointset2scheme`, `camino_modelfit`, `camino_fa`, `camino_md`, and `camino_dteig`.  
+
+
+Much of this work has been adapted by the Tutorial for DTI analysis from ISMRM 2015: [http://camino.cs.ucl.ac.uk/index.php?n=Tutorials.ISMRM2015](http://camino.cs.ucl.ac.uk/index.php?n=Tutorials.ISMRM2015).  Also, some of the model fitting (such as using gradient information) has been taken from http://camino.cs.ucl.ac.uk/index.php?n=Tutorials.HCP.
+
+We will show you a few steps that have been implemented in `rcamino`: `camino_pointset2scheme`, `camino_modelfit`, `camino_fa`, `camino_md`, and `camino_dteig`.  
 
 # Data Location
 
@@ -84,6 +88,21 @@ sub_data = sub_data_list$image
 sub_scheme = sub_data_list$scheme
 ```
 
+This process may take a while, and using the `RNifti` package may be quicker.
+
+```{r subsetting_rnifti, eval = FALSE}
+nim = RNifti::readNifti(outfiles["data"])
+sub_data = tempfile(fileext = ".nii.gz")
+sub_scheme_res = camino_subset_max_bval_scheme(
+  schemefile = scheme_file, max_bval = 1500,
+  verbose = TRUE)
+nim = nim[,,, sub_scheme$keep_files]
+RNifti::writeNifti(image = nim, file = sub_data)
+sub_scheme = sub_scheme_res$scheme
+rm(list = "nim");
+for (i in 1:10) gc(); 
+```
+
 
 # Fit the diffusion tensor
 
@@ -94,6 +113,7 @@ sub_scheme = sub_data_list$scheme
 mod_file = camino_modelfit(
   infile = sub_data, scheme = sub_scheme, 
   mask = outfiles["nodif_brain_mask"], 
+    gradadj = outfiles["grad_dev"],
   model = "ldt_wtd")
 ```
 
@@ -165,12 +185,12 @@ Using `ortho2`, we can visualize these MD maps:
 ```{r ortho_md}
 ortho2(md_nii)
 ortho2(md2)
-rb = robust_window(md2, probs = c(0, 0.9999))
-ortho2(rb)
+rb_md = robust_window(md2, probs = c(0, 0.9999))
+ortho2(rb_md)
 ```
 
 ```{r md_hist2}
-hist(mask_vals(rb, mask = mask), breaks = 1000)
+hist(mask_vals(rb_md, mask = mask), breaks = 1000)
 ```
 
 # Export DTs to NIfTI
@@ -195,3 +215,111 @@ We can read these DT images into `R` again using `readnii`, but we must set `dro
 ```{r, eval = FALSE}
 dt_imgs = lapply(mod_nii, readnii, drop_dim = FALSE)
 ```
+
+## Downloading T1 image
+
+For image registration to a template, we will use the subject-level 
+```{r}
+r_t1_mask = download_hcp_file(
+  file.path(
+    "HCP", hcp_id, "T1w", 
+    "brainmask_fs.nii.gz")
+)
+print(r_t1_mask)
+t1_mask = readnii(r_t1_mask)
+r_t1 = download_hcp_file(
+  file.path(
+    "HCP", hcp_id, "T1w", 
+    "T1w_acpc_dc_restore.nii.gz")
+)
+print(r_t1)
+t1 = readnii(r_t1)
+brain = mask_img(t1, t1_mask)
+hist(mask_vals(brain, t1_mask), breaks = 2000)
+rob = robust_window(brain, probs = c(0, 0.9999), mask = t1_mask)
+hist(mask_vals(rob, t1_mask), breaks = 2000)
+```
+
+
+## Rigid-body Registration of DTI to T1
+
+Here we can register the FA image to the T1-weighted image using a rigid-body transformation.   We could have also used the MD image or the diffusion data directly, such as the mean over the tensors.
+```{r}
+library(extrantsr)
+rigid = registration(
+  filename = fa_img,
+  template.file = rob,
+  correct = FALSE,
+  verbose = FALSE,
+  typeofTransform = "Rigid")
+rigid_trans = rigid$fwdtransforms
+aff = R.matlab::readMat(rigid$fwdtransforms)
+aff = aff$AffineTransform.float.3.3
+
+double_ortho(rob, rigid$outfile)
+```
+
+Alternatively, we can also do a brain mask to brain mask transformation, which we can estimate using a last squares metric.  This should be sufficient for what we need and more robust to artifacts in the T1 or the FA map, so we'll use this transformation.
+
+```{r mask_rig}
+rigid_mask = registration(
+  filename = outfiles["nodif_brain_mask"],
+  template.file = r_t1_mask,
+  correct = FALSE,
+  typeofTransform = "Rigid",
+  affMetric = "meansquares")
+rigid_mask_trans = rigid_mask$fwdtransforms
+
+aff_mask = R.matlab::readMat(rigid_mask$fwdtransforms)
+aff_mask = aff_mask$AffineTransform.float.3.3
+
+double_ortho(t1_mask, rigid_mask$outfile, NA.x = FALSE)
+```
+
+## Non-linear Registration of T1 to template
+
+Here we will use symmetric normalization (SyN) to register the skull-stripped brain image of the HCP subject to the Eve template.  
+
+```{r}
+library(EveTemplate)
+eve_brain_fname = EveTemplate::getEvePath(what = "Brain")
+eve_brain = readnii(eve_brain_fname)
+nonlin = registration(
+  filename = brain,
+  template.file = eve_brain_fname,
+  correct = FALSE,
+  typeofTransform = "SyN")
+double_ortho(eve_brain, nonlin$outfile)
+nonlin_trans = nonlin$fwdtransforms
+```
+
+
+### Registering DTI to Eve
+
+Now, we can use the transformed images from the rigid-body transformations above and apply this non-linear transformation to those FA and MD registered images.  The one problem is that the rigid-body registration interpolates the data and the non-linear registration interpolates the data.  
+
+We can compose the transforms so that the data is only interpolated once. 
+
+In `ants_apply_transforms`, which calls `antsApplyTransforms`, the transform list must be specified in reverse order to which they are done.  We want to perform the rigid body transformation then the non-linear registration, but need the composed list of transforms to first have the non-linear transformation then the rigid-body transformation.
+
+Here we apply this composed transformation to the FA and MD values.
+
+```{r composed}
+composed = c(nonlin_trans, rigid_mask_trans)
+fa_eve = ants_apply_transforms(
+  fixed = eve_brain_fname,
+  moving = fa_img,
+  transformlist = composed)
+double_ortho(eve_brain, fa_eve)
+
+md_eve = ants_apply_transforms(
+  fixed = eve_brain_fname,
+  moving = rb_md,
+  transformlist = composed)
+double_ortho(eve_brain, md_eve)
+```
+
+Now we can perform this in a number of subjects and then do a population-level analysis in the template space. 
+
+
+
