@@ -51,7 +51,7 @@ sub_scheme = sub_data_list$scheme
 mod_file = camino_modelfit(
   infile = sub_data, scheme = sub_scheme, 
   mask = outfiles["nodif_brain_mask"], 
-    gradadj = outfiles["grad_dev"],
+  gradadj = outfiles["grad_dev"],
   model = "ldt_wtd")
 
 ## ----making_fa-----------------------------------------------------------

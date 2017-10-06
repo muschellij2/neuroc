@@ -28,7 +28,7 @@ r = download_hcp_dir(paste0("HCP/", hcp_id, "/T1w/Diffusion"))
 
 ```
 URL sent to GET
-https://s3.amazonaws.com/hcp-openaccess/?AWSAccessKeyId=AKIAJ5LF4LXDVDZD7GTA&Expires=1507233143&Signature=R%2BzcJKVuR46YFco4jmZNUxrlFuk%3D&prefix=HCP/100307/T1w/Diffusion&delimiter=
+https://s3.amazonaws.com/hcp-openaccess/?AWSAccessKeyId=AKIAJ5LF4LXDVDZD7GTA&Expires=1507324690&Signature=QEzJNIRDFWr8oNK%2BXvO8L5oEZnU%3D&prefix=HCP/100307/T1w/Diffusion&delimiter=
 ```
 
 ```
@@ -450,6 +450,8 @@ grad_dev.nii.gz
   |                                                                       
   |=====                                                            |   8%
   |                                                                       
+  |======                                                           |   8%
+  |                                                                       
   |======                                                           |   9%
   |                                                                       
   |======                                                           |  10%
@@ -457,6 +459,8 @@ grad_dev.nii.gz
   |=======                                                          |  10%
   |                                                                       
   |=======                                                          |  11%
+  |                                                                       
+  |=======                                                          |  12%
   |                                                                       
   |========                                                         |  12%
   |                                                                       
@@ -654,6 +658,8 @@ grad_dev.nii.gz
   |                                                                       
   |==============================================                   |  71%
   |                                                                       
+  |==============================================                   |  72%
+  |                                                                       
   |===============================================                  |  72%
   |                                                                       
   |===============================================                  |  73%
@@ -767,13 +773,13 @@ nodif_brain_mask.nii.gz
   |                                                                       
   |==================                                               |  28%
   |                                                                       
-  |===================                                              |  29%
+  |====================================                             |  55%
   |                                                                       
-  |=============================                                    |  44%
+  |=====================================                            |  57%
   |                                                                       
-  |==============================================                   |  71%
+  |=======================================================          |  84%
   |                                                                       
-  |================================================                 |  73%
+  |========================================================         |  86%
   |                                                                       
   |==========================================================       |  89%
   |                                                                       
@@ -816,7 +822,7 @@ scheme_file = camino_fsl2scheme(
 ```
 
 ```
-/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/fsl2scheme -bvecfile /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpvV05TN/file138e635f8307e//bvecs -bvalfile /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpvV05TN/file138e635f8307e//bvals -bscale 1   >  /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpvV05TN/file138e67a0f8c78.scheme
+/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/fsl2scheme -bvecfile /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmptH1ZlX/file17dda37fb0296//bvecs -bvalfile /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmptH1ZlX/file17dda37fb0296//bvals -bscale 1   >  /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmptH1ZlX/file17dda22a47cf8.scheme
 ```
 
 The imaging scheme contains measurements at b=5, b=1000, b=2000, and b=3000 s / mm^2.
@@ -839,16 +845,32 @@ sub_data_list = camino_subset_max_bval(
 ```
 
 ```
-/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/split4dnii -inputfile /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpvV05TN/file138e635f8307e/data.nii.gz -outputroot /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpvV05TN/file138e679f65cec_
+/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/split4dnii -inputfile /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmptH1ZlX/file17dda37fb0296/data.nii.gz -outputroot /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmptH1ZlX/file17dda13a934_
 ```
 
 ```
-/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/image2voxel -imagelist '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpvV05TN/file138e61d4ec882.txt' -outputfile '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpvV05TN/file138e61f4dddd6.Bfloat' -outputdatatype float
+/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/image2voxel -imagelist '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmptH1ZlX/file17ddaac994f6.txt' -outputfile '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmptH1ZlX/file17dda3852a802.Bfloat' -outputdatatype float
 ```
 
 ```r
 sub_data = sub_data_list$image
 sub_scheme = sub_data_list$scheme
+```
+
+This process may take a while, and using the `RNifti` package may be quicker.
+
+
+```r
+nim = RNifti::readNifti(outfiles["data"])
+sub_data = tempfile(fileext = ".nii.gz")
+sub_scheme_res = camino_subset_max_bval_scheme(
+  schemefile = scheme_file, max_bval = 1500,
+  verbose = TRUE)
+nim = nim[,,, sub_scheme$keep_files]
+RNifti::writeNifti(image = nim, file = sub_data)
+sub_scheme = sub_scheme_res$scheme
+rm(list = "nim");
+for (i in 1:10) gc(); 
 ```
 
 
@@ -866,7 +888,7 @@ mod_file = camino_modelfit(
 ```
 
 ```
-/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/modelfit -inputfile '/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpvV05TN/file138e61f4dddd6.Bfloat' -outputfile '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpvV05TN/file138e6719272c9.Bdouble' -inputdatatype float -schemefile /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpvV05TN/file138e62f918221.scheme -bgmask /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpvV05TN/file138e635f8307e/nodif_brain_mask.nii.gz -maskdatatype float -model ldt_wtd
+/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/modelfit -inputfile '/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmptH1ZlX/file17dda3852a802.Bfloat' -outputfile '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmptH1ZlX/file17dda4aee91ee.Bdouble' -inputdatatype float -schemefile /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmptH1ZlX/file17dda50d9a1e4.scheme -bgmask /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmptH1ZlX/file17dda37fb0296/nodif_brain_mask.nii.gz -maskdatatype float -model ldt_wtd
 ```
 
 
@@ -882,11 +904,11 @@ fa_img = camino_fa_img(
 ```
 
 ```
-cat '/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpvV05TN/file138e6719272c9.Bdouble' |  /Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/fa -inputmodel dt -outputdatatype double > '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpvV05TN/file138e62bd5fcb6.Bdouble'
+cat '/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmptH1ZlX/file17dda4aee91ee.Bdouble' |  /Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/fa -inputmodel dt -outputdatatype double > '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmptH1ZlX/file17dda7e7688a8.Bdouble'
 ```
 
 ```
-/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/voxel2image -inputfile /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpvV05TN/file138e62bd5fcb6.Bdouble -header /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpvV05TN/file138e635f8307e/nodif_brain_mask.nii.gz -outputroot /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpvV05TN/file138e66dc22735_ -components 1 -gzip 
+/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/voxel2image -inputfile /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmptH1ZlX/file17dda7e7688a8.Bdouble -header /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmptH1ZlX/file17dda37fb0296/nodif_brain_mask.nii.gz -outputroot /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmptH1ZlX/file17dda18060e75_ -components 1 -gzip 
 ```
 
 
@@ -936,11 +958,11 @@ md_img = camino_md_img(
 ```
 
 ```
-cat '/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpvV05TN/file138e6719272c9.Bdouble' |  /Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/md -inputmodel dt -outputdatatype double > '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpvV05TN/file138e664581caf.Bdouble'
+cat '/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmptH1ZlX/file17dda4aee91ee.Bdouble' |  /Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/md -inputmodel dt -outputdatatype double > '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmptH1ZlX/file17dda150b89ea.Bdouble'
 ```
 
 ```
-/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/voxel2image -inputfile /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpvV05TN/file138e664581caf.Bdouble -header /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpvV05TN/file138e635f8307e/nodif_brain_mask.nii.gz -outputroot /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpvV05TN/file138e654c358a0_ -components 1 -gzip 
+/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/voxel2image -inputfile /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmptH1ZlX/file17dda150b89ea.Bdouble -header /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmptH1ZlX/file17dda37fb0296/nodif_brain_mask.nii.gz -outputroot /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmptH1ZlX/file17dda288b6c71_ -components 1 -gzip 
 ```
 
 
@@ -983,15 +1005,15 @@ ortho2(md2)
 ![](index_files/figure-html/ortho_md-2.png)<!-- -->
 
 ```r
-rb = robust_window(md2, probs = c(0, 0.9999))
-ortho2(rb)
+rb_md = robust_window(md2, probs = c(0, 0.9999))
+ortho2(rb_md)
 ```
 
 ![](index_files/figure-html/ortho_md-3.png)<!-- -->
 
 
 ```r
-hist(mask_vals(rb, mask = mask), breaks = 1000)
+hist(mask_vals(rb_md, mask = mask), breaks = 1000)
 ```
 
 ![](index_files/figure-html/md_hist2-1.png)<!-- -->
@@ -1021,3 +1043,632 @@ We can read these DT images into `R` again using `readnii`, but we must set `dro
 ```r
 dt_imgs = lapply(mod_nii, readnii, drop_dim = FALSE)
 ```
+
+## Downloading T1 image
+
+For image registration to a template, we will use the subject-level 
+
+```r
+r_t1_mask = download_hcp_file(
+  file.path(
+    "HCP", hcp_id, "T1w", 
+    "brainmask_fs.nii.gz")
+)
+```
+
+```
+
+  |                                                                       
+  |                                                                 |   0%
+  |                                                                       
+  |====                                                             |   7%
+  |                                                                       
+  |=========                                                        |  14%
+  |                                                                       
+  |=============                                                    |  21%
+  |                                                                       
+  |==============                                                   |  21%
+  |                                                                       
+  |==================                                               |  28%
+  |                                                                       
+  |=======================                                          |  35%
+  |                                                                       
+  |===========================                                      |  42%
+  |                                                                       
+  |============================                                     |  42%
+  |                                                                       
+  |================================                                 |  49%
+  |                                                                       
+  |================================                                 |  50%
+  |                                                                       
+  |=====================================                            |  56%
+  |                                                                       
+  |=====================================                            |  57%
+  |                                                                       
+  |=========================================                        |  63%
+  |                                                                       
+  |=========================================                        |  64%
+  |                                                                       
+  |==============================================                   |  70%
+  |                                                                       
+  |==============================================                   |  71%
+  |                                                                       
+  |==================================================               |  78%
+  |                                                                       
+  |===================================================              |  78%
+  |                                                                       
+  |=======================================================          |  85%
+  |                                                                       
+  |============================================================     |  92%
+  |                                                                       
+  |================================================================ |  99%
+  |                                                                       
+  |=================================================================|  99%
+  |                                                                       
+  |=================================================================| 100%
+```
+
+```r
+print(r_t1_mask)
+```
+
+```
+[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmptH1ZlX/brainmask_fs.nii.gz"
+```
+
+```r
+t1_mask = readnii(r_t1_mask)
+r_t1 = download_hcp_file(
+  file.path(
+    "HCP", hcp_id, "T1w", 
+    "T1w_acpc_dc_restore.nii.gz")
+)
+```
+
+```
+
+  |                                                                       
+  |                                                                 |   0%
+  |                                                                       
+  |                                                                 |   1%
+  |                                                                       
+  |=                                                                |   1%
+  |                                                                       
+  |=                                                                |   2%
+  |                                                                       
+  |==                                                               |   2%
+  |                                                                       
+  |==                                                               |   3%
+  |                                                                       
+  |==                                                               |   4%
+  |                                                                       
+  |===                                                              |   4%
+  |                                                                       
+  |===                                                              |   5%
+  |                                                                       
+  |====                                                             |   5%
+  |                                                                       
+  |====                                                             |   6%
+  |                                                                       
+  |====                                                             |   7%
+  |                                                                       
+  |=====                                                            |   7%
+  |                                                                       
+  |=====                                                            |   8%
+  |                                                                       
+  |======                                                           |   8%
+  |                                                                       
+  |======                                                           |   9%
+  |                                                                       
+  |======                                                           |  10%
+  |                                                                       
+  |=======                                                          |  10%
+  |                                                                       
+  |=======                                                          |  11%
+  |                                                                       
+  |=======                                                          |  12%
+  |                                                                       
+  |========                                                         |  12%
+  |                                                                       
+  |========                                                         |  13%
+  |                                                                       
+  |=========                                                        |  13%
+  |                                                                       
+  |=========                                                        |  14%
+  |                                                                       
+  |=========                                                        |  15%
+  |                                                                       
+  |==========                                                       |  15%
+  |                                                                       
+  |==========                                                       |  16%
+  |                                                                       
+  |===========                                                      |  16%
+  |                                                                       
+  |===========                                                      |  17%
+  |                                                                       
+  |===========                                                      |  18%
+  |                                                                       
+  |============                                                     |  18%
+  |                                                                       
+  |============                                                     |  19%
+  |                                                                       
+  |=============                                                    |  19%
+  |                                                                       
+  |=============                                                    |  20%
+  |                                                                       
+  |=============                                                    |  21%
+  |                                                                       
+  |==============                                                   |  21%
+  |                                                                       
+  |==============                                                   |  22%
+  |                                                                       
+  |===============                                                  |  22%
+  |                                                                       
+  |===============                                                  |  23%
+  |                                                                       
+  |===============                                                  |  24%
+  |                                                                       
+  |================                                                 |  24%
+  |                                                                       
+  |================                                                 |  25%
+  |                                                                       
+  |=================                                                |  25%
+  |                                                                       
+  |=================                                                |  26%
+  |                                                                       
+  |=================                                                |  27%
+  |                                                                       
+  |==================                                               |  27%
+  |                                                                       
+  |==================                                               |  28%
+  |                                                                       
+  |===================                                              |  28%
+  |                                                                       
+  |===================                                              |  29%
+  |                                                                       
+  |===================                                              |  30%
+  |                                                                       
+  |====================                                             |  30%
+  |                                                                       
+  |====================                                             |  31%
+  |                                                                       
+  |====================                                             |  32%
+  |                                                                       
+  |=====================                                            |  32%
+  |                                                                       
+  |=====================                                            |  33%
+  |                                                                       
+  |======================                                           |  33%
+  |                                                                       
+  |======================                                           |  34%
+  |                                                                       
+  |======================                                           |  35%
+  |                                                                       
+  |=======================                                          |  35%
+  |                                                                       
+  |=======================                                          |  36%
+  |                                                                       
+  |========================                                         |  36%
+  |                                                                       
+  |========================                                         |  37%
+  |                                                                       
+  |========================                                         |  38%
+  |                                                                       
+  |=========================                                        |  38%
+  |                                                                       
+  |=========================                                        |  39%
+  |                                                                       
+  |==========================                                       |  39%
+  |                                                                       
+  |==========================                                       |  40%
+  |                                                                       
+  |==========================                                       |  41%
+  |                                                                       
+  |===========================                                      |  41%
+  |                                                                       
+  |===========================                                      |  42%
+  |                                                                       
+  |============================                                     |  42%
+  |                                                                       
+  |============================                                     |  43%
+  |                                                                       
+  |============================                                     |  44%
+  |                                                                       
+  |=============================                                    |  44%
+  |                                                                       
+  |=============================                                    |  45%
+  |                                                                       
+  |==============================                                   |  45%
+  |                                                                       
+  |==============================                                   |  46%
+  |                                                                       
+  |==============================                                   |  47%
+  |                                                                       
+  |===============================                                  |  47%
+  |                                                                       
+  |===============================                                  |  48%
+  |                                                                       
+  |================================                                 |  48%
+  |                                                                       
+  |================================                                 |  49%
+  |                                                                       
+  |================================                                 |  50%
+  |                                                                       
+  |=================================                                |  50%
+  |                                                                       
+  |=================================                                |  51%
+  |                                                                       
+  |=================================                                |  52%
+  |                                                                       
+  |==================================                               |  52%
+  |                                                                       
+  |==================================                               |  53%
+  |                                                                       
+  |===================================                              |  53%
+  |                                                                       
+  |===================================                              |  54%
+  |                                                                       
+  |===================================                              |  55%
+  |                                                                       
+  |====================================                             |  55%
+  |                                                                       
+  |====================================                             |  56%
+  |                                                                       
+  |=====================================                            |  56%
+  |                                                                       
+  |=====================================                            |  57%
+  |                                                                       
+  |=====================================                            |  58%
+  |                                                                       
+  |======================================                           |  58%
+  |                                                                       
+  |======================================                           |  59%
+  |                                                                       
+  |=======================================                          |  59%
+  |                                                                       
+  |=======================================                          |  60%
+  |                                                                       
+  |=======================================                          |  61%
+  |                                                                       
+  |========================================                         |  61%
+  |                                                                       
+  |========================================                         |  62%
+  |                                                                       
+  |=========================================                        |  62%
+  |                                                                       
+  |=========================================                        |  63%
+  |                                                                       
+  |=========================================                        |  64%
+  |                                                                       
+  |==========================================                       |  64%
+  |                                                                       
+  |==========================================                       |  65%
+  |                                                                       
+  |===========================================                      |  65%
+  |                                                                       
+  |===========================================                      |  66%
+  |                                                                       
+  |===========================================                      |  67%
+  |                                                                       
+  |============================================                     |  67%
+  |                                                                       
+  |============================================                     |  68%
+  |                                                                       
+  |=============================================                    |  68%
+  |                                                                       
+  |=============================================                    |  69%
+  |                                                                       
+  |=============================================                    |  70%
+  |                                                                       
+  |==============================================                   |  70%
+  |                                                                       
+  |==============================================                   |  71%
+  |                                                                       
+  |==============================================                   |  72%
+  |                                                                       
+  |===============================================                  |  72%
+  |                                                                       
+  |===============================================                  |  73%
+  |                                                                       
+  |================================================                 |  73%
+  |                                                                       
+  |================================================                 |  74%
+  |                                                                       
+  |================================================                 |  75%
+  |                                                                       
+  |=================================================                |  75%
+  |                                                                       
+  |=================================================                |  76%
+  |                                                                       
+  |==================================================               |  76%
+  |                                                                       
+  |==================================================               |  77%
+  |                                                                       
+  |==================================================               |  78%
+  |                                                                       
+  |===================================================              |  78%
+  |                                                                       
+  |===================================================              |  79%
+  |                                                                       
+  |====================================================             |  79%
+  |                                                                       
+  |====================================================             |  80%
+  |                                                                       
+  |====================================================             |  81%
+  |                                                                       
+  |=====================================================            |  81%
+  |                                                                       
+  |=====================================================            |  82%
+  |                                                                       
+  |======================================================           |  82%
+  |                                                                       
+  |======================================================           |  83%
+  |                                                                       
+  |======================================================           |  84%
+  |                                                                       
+  |=======================================================          |  84%
+  |                                                                       
+  |=======================================================          |  85%
+  |                                                                       
+  |========================================================         |  85%
+  |                                                                       
+  |========================================================         |  86%
+  |                                                                       
+  |========================================================         |  87%
+  |                                                                       
+  |=========================================================        |  87%
+  |                                                                       
+  |=========================================================        |  88%
+  |                                                                       
+  |==========================================================       |  88%
+  |                                                                       
+  |==========================================================       |  89%
+  |                                                                       
+  |==========================================================       |  90%
+  |                                                                       
+  |===========================================================      |  90%
+  |                                                                       
+  |===========================================================      |  91%
+  |                                                                       
+  |===========================================================      |  92%
+  |                                                                       
+  |============================================================     |  92%
+  |                                                                       
+  |============================================================     |  93%
+  |                                                                       
+  |=============================================================    |  93%
+  |                                                                       
+  |=============================================================    |  94%
+  |                                                                       
+  |=============================================================    |  95%
+  |                                                                       
+  |==============================================================   |  95%
+  |                                                                       
+  |==============================================================   |  96%
+  |                                                                       
+  |===============================================================  |  96%
+  |                                                                       
+  |===============================================================  |  97%
+  |                                                                       
+  |===============================================================  |  98%
+  |                                                                       
+  |================================================================ |  98%
+  |                                                                       
+  |================================================================ |  99%
+  |                                                                       
+  |=================================================================|  99%
+  |                                                                       
+  |=================================================================| 100%
+```
+
+```r
+print(r_t1)
+```
+
+```
+[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmptH1ZlX/T1w_acpc_dc_restore.nii.gz"
+```
+
+```r
+t1 = readnii(r_t1)
+brain = mask_img(t1, t1_mask)
+hist(mask_vals(brain, t1_mask), breaks = 2000)
+```
+
+![](index_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+
+```r
+rob = robust_window(brain, probs = c(0, 0.9999), mask = t1_mask)
+hist(mask_vals(rob, t1_mask), breaks = 2000)
+```
+
+![](index_files/figure-html/unnamed-chunk-2-2.png)<!-- -->
+
+
+## Rigid-body Registration of DTI to T1
+
+Here we can register the FA image to the T1-weighted image using a rigid-body transformation.   We could have also used the MD image or the diffusion data directly, such as the mean over the tensors.
+
+```r
+library(extrantsr)
+```
+
+```
+
+Attaching package: 'extrantsr'
+```
+
+```
+The following objects are masked from 'package:oro.nifti':
+
+    origin, origin<-
+```
+
+```r
+rigid = registration(
+  filename = fa_img,
+  template.file = rob,
+  correct = FALSE,
+  verbose = FALSE,
+  typeofTransform = "Rigid")
+rigid_trans = rigid$fwdtransforms
+aff = R.matlab::readMat(rigid$fwdtransforms)
+aff = aff$AffineTransform.float.3.3
+
+double_ortho(rob, rigid$outfile)
+```
+
+![](index_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+
+Alternatively, we can also do a brain mask to brain mask transformation, which we can estimate using a last squares metric.  This should be sufficient for what we need and more robust to artifacts in the T1 or the FA map, so we'll use this transformation.
+
+
+```r
+rigid_mask = registration(
+  filename = outfiles["nodif_brain_mask"],
+  template.file = r_t1_mask,
+  correct = FALSE,
+  typeofTransform = "Rigid",
+  affMetric = "meansquares")
+```
+
+```
+# Running Registration of file to template
+```
+
+```
+# Applying Registration output is
+```
+
+```
+$fwdtransforms
+[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmptH1ZlX/file17dda31ee55e80GenericAffine.mat"
+
+$invtransforms
+[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmptH1ZlX/file17dda31ee55e80GenericAffine.mat"
+```
+
+```
+# Applying Transformations to file
+```
+
+```
+# Writing out file
+```
+
+```
+[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmptH1ZlX/file17ddaa5c4da8.nii.gz"
+```
+
+```
+# Reading data back into R
+```
+
+```r
+rigid_mask_trans = rigid_mask$fwdtransforms
+
+aff_mask = R.matlab::readMat(rigid_mask$fwdtransforms)
+aff_mask = aff_mask$AffineTransform.float.3.3
+
+double_ortho(t1_mask, rigid_mask$outfile, NA.x = FALSE)
+```
+
+![](index_files/figure-html/mask_rig-1.png)<!-- -->
+
+## Non-linear Registration of T1 to template
+
+Here we will use symmetric normalization (SyN) to register the skull-stripped brain image of the HCP subject to the Eve template.  
+
+
+```r
+library(EveTemplate)
+eve_brain_fname = EveTemplate::getEvePath(what = "Brain")
+eve_brain = readnii(eve_brain_fname)
+nonlin = registration(
+  filename = brain,
+  template.file = eve_brain_fname,
+  correct = FALSE,
+  typeofTransform = "SyN")
+```
+
+```
+# Running Registration of file to template
+```
+
+```
+# Applying Registration output is
+```
+
+```
+$fwdtransforms
+[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmptH1ZlX/file17dda410f96c11Warp.nii.gz"      
+[2] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmptH1ZlX/file17dda410f96c10GenericAffine.mat"
+
+$invtransforms
+[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmptH1ZlX/file17dda410f96c10GenericAffine.mat" 
+[2] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmptH1ZlX/file17dda410f96c11InverseWarp.nii.gz"
+```
+
+```
+# Applying Transformations to file
+```
+
+```
+# Writing out file
+```
+
+```
+[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmptH1ZlX/file17dda3511842.nii.gz"
+```
+
+```
+# Reading data back into R
+```
+
+```r
+double_ortho(eve_brain, nonlin$outfile)
+```
+
+![](index_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+
+```r
+nonlin_trans = nonlin$fwdtransforms
+```
+
+
+### Registering DTI to Eve
+
+Now, we can use the transformed images from the rigid-body transformations above and apply this non-linear transformation to those FA and MD registered images.  The one problem is that the rigid-body registration interpolates the data and the non-linear registration interpolates the data.  
+
+We can compose the transforms so that the data is only interpolated once. 
+
+In `ants_apply_transforms`, which calls `antsApplyTransforms`, the transform list must be specified in reverse order to which they are done.  We want to perform the rigid body transformation then the non-linear registration, but need the composed list of transforms to first have the non-linear transformation then the rigid-body transformation.
+
+Here we apply this composed transformation to the FA and MD values.
+
+
+```r
+composed = c(nonlin_trans, rigid_mask_trans)
+fa_eve = ants_apply_transforms(
+  fixed = eve_brain_fname,
+  moving = fa_img,
+  transformlist = composed)
+double_ortho(eve_brain, fa_eve)
+```
+
+![](index_files/figure-html/composed-1.png)<!-- -->
+
+```r
+md_eve = ants_apply_transforms(
+  fixed = eve_brain_fname,
+  moving = rb_md,
+  transformlist = composed)
+double_ortho(eve_brain, md_eve)
+```
+
+![](index_files/figure-html/composed-2.png)<!-- -->
+
+Now we can perform this in a number of subjects and then do a population-level analysis in the template space. 
+
+
+
