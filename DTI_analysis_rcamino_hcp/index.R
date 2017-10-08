@@ -165,7 +165,7 @@ library(EveTemplate)
 eve_brain_fname = EveTemplate::getEvePath(what = "Brain")
 eve_brain = readnii(eve_brain_fname)
 nonlin = registration(
-  filename = brain,
+  filename = rob,
   template.file = eve_brain_fname,
   correct = FALSE,
   typeofTransform = "SyN")

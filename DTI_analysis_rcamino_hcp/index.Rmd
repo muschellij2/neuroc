@@ -278,14 +278,14 @@ double_ortho(t1_mask, rigid_mask$outfile, NA.x = FALSE)
 
 ## Non-linear Registration of T1 to template
 
-Here we will use symmetric normalization (SyN) to register the skull-stripped brain image of the HCP subject to the Eve template.  
+Here we will use symmetric normalization (SyN) to register the Winsorized skull-stripped brain image of the HCP subject to the Eve template.  
 
 ```{r}
 library(EveTemplate)
 eve_brain_fname = EveTemplate::getEvePath(what = "Brain")
 eve_brain = readnii(eve_brain_fname)
 nonlin = registration(
-  filename = brain,
+  filename = rob,
   template.file = eve_brain_fname,
   correct = FALSE,
   typeofTransform = "SyN")
