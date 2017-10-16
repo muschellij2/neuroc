@@ -24,7 +24,7 @@ ids_with_dwi = hcp_900_scanning_info %>%
 head(ids_with_dwi)
 
 ## ---- eval = FALSE, echo = TRUE------------------------------------------
-## r = download_hcp_dir("HCP/100307/T1w/Diffusion")
+## r = download_hcp_dir("HCP/100307/T1w/Diffusion", verbose = FALSE)
 ## print(basename(r$output_files))
 
 ## ---- eval = TRUE, echo = FALSE------------------------------------------
@@ -37,7 +37,7 @@ r$output_files
 ##   mutate(id_dir = paste0("HCP/", id, "/T1w/Diffusion"))
 
 ## ----dl_file-------------------------------------------------------------
-ret = download_hcp_file("HCP/100307/T1w/Diffusion/bvals")
+ret = download_hcp_file("HCP/100307/T1w/Diffusion/bvals", verbose = FALSE)
 
 ## ------------------------------------------------------------------------
 devtools::session_info()

@@ -7,7 +7,8 @@ knitr::opts_chunk$set(comment = "")
 ## ----downloading_data, echo = TRUE---------------------------------------
 library(neurohcp)
 hcp_id = "100307"
-r = download_hcp_dir(paste0("HCP/", hcp_id, "/T1w/Diffusion"))
+r = download_hcp_dir(paste0("HCP/", hcp_id, "/T1w/Diffusion"), 
+                     verbose = FALSE)
 print(basename(r$output_files))
 
 ## ----bvecs---------------------------------------------------------------
@@ -116,14 +117,16 @@ hist(mask_vals(rb_md, mask = mask), breaks = 1000)
 r_t1_mask = download_hcp_file(
   file.path(
     "HCP", hcp_id, "T1w", 
-    "brainmask_fs.nii.gz")
+    "brainmask_fs.nii.gz"), 
+  verbose = FALSE
 )
 print(r_t1_mask)
 t1_mask = readnii(r_t1_mask)
 r_t1 = download_hcp_file(
   file.path(
     "HCP", hcp_id, "T1w", 
-    "T1w_acpc_dc_restore.nii.gz")
+    "T1w_acpc_dc_restore.nii.gz"), 
+  verbose = FALSE
 )
 print(r_t1)
 t1 = readnii(r_t1)

@@ -87,13 +87,13 @@ devtools::session_info()
 
 ```
 ##  setting  value                       
-##  version  R version 3.4.1 (2017-06-30)
+##  version  R version 3.4.2 (2017-09-28)
 ##  system   x86_64, darwin15.6.0        
 ##  ui       X11                         
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2017-10-08
+##  date     2017-10-16
 ```
 
 ```
@@ -103,28 +103,28 @@ devtools::session_info()
 ```
 ##  package   * version date       source                            
 ##  backports   1.1.1   2017-09-25 CRAN (R 3.4.2)                    
-##  base      * 3.4.1   2017-07-07 local                             
+##  base      * 3.4.2   2017-10-04 local                             
 ##  colorout  * 1.1-0   2015-04-20 Github (jalvesaq/colorout@1539f1f)
-##  compiler    3.4.1   2017-07-07 local                             
-##  datasets  * 3.4.1   2017-07-07 local                             
+##  compiler    3.4.2   2017-10-04 local                             
+##  datasets  * 3.4.2   2017-10-04 local                             
 ##  devtools    1.13.3  2017-08-02 CRAN (R 3.4.1)                    
 ##  digest      0.6.12  2017-01-27 CRAN (R 3.4.0)                    
 ##  evaluate    0.10.1  2017-06-24 cran (@0.10.1)                    
-##  graphics  * 3.4.1   2017-07-07 local                             
-##  grDevices * 3.4.1   2017-07-07 local                             
+##  graphics  * 3.4.2   2017-10-04 local                             
+##  grDevices * 3.4.2   2017-10-04 local                             
 ##  htmltools   0.3.6   2017-04-28 CRAN (R 3.4.0)                    
 ##  knitr       1.17    2017-08-10 cran (@1.17)                      
 ##  magrittr    1.5     2014-11-22 CRAN (R 3.4.0)                    
 ##  memoise     1.1.0   2017-04-21 CRAN (R 3.4.0)                    
-##  methods     3.4.1   2017-07-07 local                             
+##  methods     3.4.2   2017-10-04 local                             
 ##  Rcpp        0.12.13 2017-09-28 cran (@0.12.13)                   
 ##  rmarkdown   1.6     2017-06-15 cran (@1.6)                       
 ##  rprojroot   1.2     2017-01-16 CRAN (R 3.4.0)                    
-##  stats     * 3.4.1   2017-07-07 local                             
+##  stats     * 3.4.2   2017-10-04 local                             
 ##  stringi     1.1.5   2017-04-07 CRAN (R 3.4.0)                    
 ##  stringr     1.2.0   2017-02-18 CRAN (R 3.4.0)                    
-##  tools       3.4.1   2017-07-07 local                             
-##  utils     * 3.4.1   2017-07-07 local                             
+##  tools       3.4.2   2017-10-04 local                             
+##  utils     * 3.4.2   2017-10-04 local                             
 ##  withr       2.0.0   2017-10-05 Github (jimhester/withr@d1f0957)  
 ##  yaml        2.1.14  2016-11-12 CRAN (R 3.4.0)
 ```
