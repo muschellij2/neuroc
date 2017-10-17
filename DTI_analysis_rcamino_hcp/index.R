@@ -7,8 +7,9 @@ knitr::opts_chunk$set(comment = "")
 ## ----downloading_data, echo = TRUE---------------------------------------
 library(neurohcp)
 hcp_id = "100307"
-r = download_hcp_dir(paste0("HCP/", hcp_id, "/T1w/Diffusion"), 
-                     verbose = FALSE)
+r = download_hcp_dir(
+  paste0("HCP/", hcp_id, "/T1w/Diffusion"), 
+  verbose = FALSE)
 print(basename(r$output_files))
 
 ## ----bvecs---------------------------------------------------------------

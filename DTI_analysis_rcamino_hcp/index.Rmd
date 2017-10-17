@@ -24,7 +24,6 @@ knitr::opts_chunk$set(comment = "")
 
 # Resources and Goals
 
-
 Much of this work has been adapted by the Tutorial for DTI analysis from ISMRM 2015: [http://camino.cs.ucl.ac.uk/index.php?n=Tutorials.ISMRM2015](http://camino.cs.ucl.ac.uk/index.php?n=Tutorials.ISMRM2015).  Also, some of the model fitting (such as using gradient information) has been taken from http://camino.cs.ucl.ac.uk/index.php?n=Tutorials.HCP.
 
 We will show you a few steps that have been implemented in `rcamino`: `camino_pointset2scheme`, `camino_modelfit`, `camino_fa`, `camino_md`, and `camino_dteig`.  
@@ -40,8 +39,9 @@ We will use the `neurohcp` package to download one subject data.
 ```{r downloading_data, echo = TRUE}
 library(neurohcp)
 hcp_id = "100307"
-r = download_hcp_dir(paste0("HCP/", hcp_id, "/T1w/Diffusion"), 
-                     verbose = FALSE)
+r = download_hcp_dir(
+  paste0("HCP/", hcp_id, "/T1w/Diffusion"), 
+  verbose = FALSE)
 print(basename(r$output_files))
 ```
 
