@@ -45,20 +45,21 @@ loaded_package_version = function(pkg) {
   packs = devtools::session_info()$packages
   ver = packs %>% 
     filter(package %in% pkg) %>% 
-    select(package, version)
+    select(package, loadedversion)
   return(ver)
 }
 check_package_version = function(pkg, min_version){
   stopifnot(length(pkg) == 1)
   ver = loaded_package_version(pkg = pkg)
-  ver = as.character(ver$version)
+  ver = as.character(ver$loadedversion)
   min_version = as.character(min_version)
   # check to see if version is at least the min_version
   utils::compareVersion(a = ver, b = min_version) >= 0
 }
 check = check_package_version("oasis", min_version = "2.2")
 if (!check) {
-  devtools::install_github("emsweene/oasis")
+  source("https://neuroconductor.org/neurocLite.R")
+  neuroc_install("oasis")  
 }
 ```
 
@@ -294,7 +295,8 @@ Although the original OASIS model was done using FSL, we can perform preprocessi
 ```{r extrantsr_ver_check}
 check = check_package_version("extrantsr", min_version = "2.2.1")
 if (!check) {
-  devtools::install_github("muschellij2/extrantsr")
+  source("https://neuroconductor.org/neurocLite.R")
+  neuroc_install("extrantsr") 
 }
 ```
 
@@ -364,3 +366,5 @@ cl_img = niftiarr(ants_brain_mask, 0)
 cl_img[ants_top_voxels == 1] = res$clustering
 ortho2(n4_flair, cl_img > 3, col.y = scales::alpha("red", 0.5))
 ```
+
+# References

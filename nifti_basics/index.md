@@ -1,6 +1,18 @@
-# NIfTI Basics
-John Muschelli  
-`r Sys.Date()`  
+---
+title: "NIfTI Basics"
+author: "John Muschelli"
+date: "2017-12-06"
+output: 
+  html_document:
+    keep_md: true
+    theme: cosmo
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+    number_sections: true      
+bibliography: ../refs.bib      
+---
 
 All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/nifti_basics/index.R).
 
@@ -20,9 +32,10 @@ To run this code, you must have `oro.nifti` installed.  You can either use the s
 packages = installed.packages()
 packages = packages[, "Package"]
 if (!"oro.nifti" %in% packages) {
-  install.packages("oro.nifti")
+  source("https://neuroconductor.org/neurocLite.R")
+  neuroc_install("oro.nifti")  
   ### development version
-  # devtools::install_github("bjw34032/oro.nifti")
+  #   neuroc_install("oro.nifti", release = "stable")  
 }
 ```
 
@@ -814,26 +827,6 @@ We can then perform standard operations on the `data.frame` as we would any othe
 
 ```r
 library(dplyr)
-```
-
-```
-
-Attaching package: 'dplyr'
-```
-
-```
-The following objects are masked from 'package:stats':
-
-    filter, lag
-```
-
-```
-The following objects are masked from 'package:base':
-
-    intersect, setdiff, setequal, union
-```
-
-```r
 df = df %>% 
   filter(mask) %>% 
   select(-mask)
@@ -878,74 +871,8 @@ ggplot(long, aes(x = value)) +
 
 
 
-# Session Info
+<!-- # Session Info -->
 
-
-```r
-devtools::session_info()
-```
-
-```
-Session info --------------------------------------------------------------
-```
-
-```
- setting  value                       
- version  R version 3.3.1 (2016-06-21)
- system   x86_64, darwin13.4.0        
- ui       X11                         
- language (EN)                        
- collate  en_US.UTF-8                 
- tz       America/New_York            
- date     2016-11-09                  
-```
-
-```
-Packages ------------------------------------------------------------------
-```
-
-```
- package     * version date       source                             
- abind         1.4-5   2016-07-21 cran (@1.4-5)                      
- assertthat    0.1     2013-12-06 CRAN (R 3.2.0)                     
- bitops        1.0-6   2013-08-17 CRAN (R 3.2.0)                     
- codetools     0.2-14  2015-07-15 CRAN (R 3.3.1)                     
- colorout    * 1.1-0   2015-04-20 Github (jalvesaq/colorout@1539f1f) 
- colorspace    1.2-6   2015-03-11 CRAN (R 3.2.0)                     
- DBI           0.5-1   2016-09-10 CRAN (R 3.3.0)                     
- devtools      1.12.0  2016-06-24 CRAN (R 3.3.0)                     
- digest        0.6.10  2016-08-02 cran (@0.6.10)                     
- dplyr       * 0.5.0   2016-06-24 CRAN (R 3.3.0)                     
- evaluate      0.9     2016-04-29 CRAN (R 3.2.5)                     
- EveTemplate * 0.99.14 2016-09-15 local                              
- formatR       1.4     2016-05-09 CRAN (R 3.2.5)                     
- ggplot2     * 2.1.0   2016-03-01 CRAN (R 3.3.0)                     
- gtable        0.2.0   2016-02-26 CRAN (R 3.2.3)                     
- hexbin      * 1.27.1  2015-08-19 CRAN (R 3.2.0)                     
- htmltools     0.3.6   2016-09-26 Github (rstudio/htmltools@6996430) 
- knitr         1.14    2016-08-13 CRAN (R 3.3.0)                     
- labeling      0.3     2014-08-23 CRAN (R 3.2.0)                     
- lattice       0.20-34 2016-09-06 CRAN (R 3.3.0)                     
- lazyeval      0.2.0   2016-06-12 CRAN (R 3.3.0)                     
- magrittr      1.5     2014-11-22 CRAN (R 3.2.0)                     
- matrixStats   0.51.0  2016-10-09 cran (@0.51.0)                     
- memoise       1.0.0   2016-01-29 CRAN (R 3.2.3)                     
- munsell       0.4.3   2016-02-13 CRAN (R 3.2.3)                     
- neurobase   * 1.5.1   2016-11-04 local                              
- oro.nifti   * 0.6.2   2016-11-04 Github (bjw34032/oro.nifti@fe54c8e)
- plyr          1.8.4   2016-06-08 CRAN (R 3.3.0)                     
- R.methodsS3   1.7.1   2016-02-16 CRAN (R 3.2.3)                     
- R.oo          1.20.0  2016-02-17 CRAN (R 3.2.3)                     
- R.utils       2.4.0   2016-09-14 cran (@2.4.0)                      
- R6            2.2.0   2016-10-05 cran (@2.2.0)                      
- Rcpp          0.12.7  2016-09-05 cran (@0.12.7)                     
- reshape2      1.4.1   2014-12-06 CRAN (R 3.2.0)                     
- rmarkdown     1.1     2016-10-16 CRAN (R 3.3.1)                     
- RNifti        0.2.2   2016-10-02 cran (@0.2.2)                      
- scales        0.4.0   2016-02-26 CRAN (R 3.2.3)                     
- stringi       1.1.1   2016-05-27 CRAN (R 3.3.0)                     
- stringr       1.1.0   2016-08-19 cran (@1.1.0)                      
- tibble        1.2     2016-08-26 CRAN (R 3.3.0)                     
- withr         1.0.2   2016-06-20 CRAN (R 3.3.0)                     
- yaml          2.1.13  2014-06-12 CRAN (R 3.2.0)                     
-```
+<!-- ```{r} -->
+<!-- devtools::session_info() -->
+<!-- ``` -->

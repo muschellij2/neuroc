@@ -11,9 +11,10 @@ knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "",
 ## packages = installed.packages()
 ## packages = packages[, "Package"]
 ## if (!"oro.nifti" %in% packages) {
-##   install.packages("oro.nifti")
+##   source("https://neuroconductor.org/neurocLite.R")
+##   neuroc_install("oro.nifti")
 ##   ### development version
-##   # devtools::install_github("bjw34032/oro.nifti")
+##   #   neuroc_install("oro.nifti", release = "stable")
 ## }
 
 ## ----nifti_obj-----------------------------------------------------------
@@ -228,7 +229,4 @@ ggplot(long, aes(x = value)) +
   geom_line(stat = "density") +
   facet_wrap(~ sequence, 
              scales = "free_x")
-
-## ------------------------------------------------------------------------
-devtools::session_info()
 

@@ -135,7 +135,8 @@ sudo yum install git # centos/fedora
 
 After `devtools` is installed, you can update `ITKR`:
 ```{r, eval = FALSE}
-devtools::install_github( "stnava/ITKR" )
+source("https://neuroconductor.org/neurocLite.R")
+neuroc_install("ITKR")
 ```
 
 This will take a lot of time to compile and such.
@@ -151,7 +152,8 @@ If `ITKR` did not install, stop.  Stop here.  `ANTsR` cannot work without `ITKR`
 Again, we can install `ANTsR` using `devtools:
 
 ```{r, eval = FALSE}
-devtools::install_github( "stnava/ANTsR" )
+source("https://neuroconductor.org/neurocLite.R")
+neuroc_install("ANTsR")
 ```
 
 This also will take a lot of time to compile.
@@ -160,7 +162,8 @@ This also will take a lot of time to compile.
 
 `ANTsR` takes a long time to compile and `ITKR` takes even longer.   If you want to re-install or update `ANTsR` from GitHub, but not update any of the dependencies (including `ITKR`), then you should run: 
 ```r
-devtools::install_github("stnava/ANTsR", upgrade_dependencies = FALSE)
+source("https://neuroconductor.org/neurocLite.R")
+neuroc_install("ANTsR", upgrade_dependencies = FALSE)
 ```
 
 
@@ -191,8 +194,8 @@ sudo apt-get install r-cran-rgl
 ```
 
 
-# Session Info
+<!-- # Session Info -->
 
-```{r}
-devtools::session_info()
-```
+<!-- ```{r} -->
+<!-- devtools::session_info() -->
+<!-- ``` -->

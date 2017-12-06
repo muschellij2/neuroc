@@ -24,7 +24,8 @@ scheme_file = camino_fsl2scheme(
 ## ----subsetting----------------------------------------------------------
 camino_ver = packageVersion("rcamino")
 if (camino_ver < "0.5.2") {
-  devtools::install_github("muschellij2/rcamino")
+  source("https://neuroconductor.org/neurocLite.R")
+  neuroc_install("rcamino")  
 }
 sub_data_list = camino_subset_max_bval(
   infile = outfiles["data"],

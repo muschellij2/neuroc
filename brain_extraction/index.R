@@ -16,13 +16,14 @@ knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "",
                       cache.path = "index_cache/html/")
 
 ## ---- eval = FALSE-------------------------------------------------------
+## source("https://neuroconductor.org/neurocLite.R")
 ## packages = installed.packages()
 ## packages = packages[, "Package"]
 ## if (!"kirby21.base" %in% packages) {
-##   devtools::install_github("muschellij2/kirby21.base")
+##   neuroc_install("kirby21.base")
 ## }
 ## if (!"kirby21.t1" %in% packages) {
-##   devtools::install_github("muschellij2/kirby21.t1")
+##   neuroc_install("kirby21.t1")
 ## }
 
 ## ----data----------------------------------------------------------------
@@ -194,7 +195,4 @@ ortho_diff(t1_fname, pred = nn_spm_ss_full, roi = spm_ss)
 
 ## ----spm_bet_diff, cache=TRUE--------------------------------------------
 ortho_diff(t1_fname, pred = ss, roi = spm_ss)
-
-## ------------------------------------------------------------------------
-devtools::session_info()
 

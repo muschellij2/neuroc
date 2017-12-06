@@ -42,13 +42,14 @@ For this analysis, I will use one subject from the Kirby 21 data set.  The `kirb
 
 
 ```{r, eval = FALSE}
+source("https://neuroconductor.org/neurocLite.R")
 packages = installed.packages()
 packages = packages[, "Package"]
 if (!"kirby21.base" %in% packages) {
-  devtools::install_github("muschellij2/kirby21.base")
+  neuroc_install("kirby21.base")  
 }
 if (!"kirby21.t1" %in% packages) {
-  devtools::install_github("muschellij2/kirby21.t1")
+  neuroc_install("kirby21.t1")  
 }
 ```
 
@@ -316,8 +317,8 @@ ortho_diff(t1_fname, pred = ss, roi = spm_ss)
 We see that the SPM segmentation includes some of the extracranial CSF, is a bit "smoother" on the surface, and includes some areas towards the bottom of the brain near the brain stem (more CSF).  We also see on some areas of the surface, BET includes these as brain whereas SPM does not. If you are to compare the volume of the "brain" (in quotes because that may include non-tissue as CSF), you must keep these things in mind.
 
 
-# Session Info
+<!-- # Session Info -->
 
-```{r}
-devtools::session_info()
-```
+<!-- ```{r} -->
+<!-- devtools::session_info() -->
+<!-- ``` -->

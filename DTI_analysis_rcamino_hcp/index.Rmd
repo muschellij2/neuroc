@@ -24,6 +24,7 @@ knitr::opts_chunk$set(comment = "")
 
 # Resources and Goals
 
+
 Much of this work has been adapted by the Tutorial for DTI analysis from ISMRM 2015: [http://camino.cs.ucl.ac.uk/index.php?n=Tutorials.ISMRM2015](http://camino.cs.ucl.ac.uk/index.php?n=Tutorials.ISMRM2015).  Also, some of the model fitting (such as using gradient information) has been taken from http://camino.cs.ucl.ac.uk/index.php?n=Tutorials.HCP.
 
 We will show you a few steps that have been implemented in `rcamino`: `camino_pointset2scheme`, `camino_modelfit`, `camino_fa`, `camino_md`, and `camino_dteig`.  
@@ -78,7 +79,8 @@ If you have sufficient RAM, you can load the whole data set and extract a subset
 ```{r subsetting}
 camino_ver = packageVersion("rcamino")
 if (camino_ver < "0.5.2") {
-  devtools::install_github("muschellij2/rcamino")
+  source("https://neuroconductor.org/neurocLite.R")
+  neuroc_install("rcamino")  
 }
 sub_data_list = camino_subset_max_bval(
   infile = outfiles["data"],

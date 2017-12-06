@@ -199,6 +199,3 @@ g + ggtitle("Native Space Thalamus")
   (nlong %>% filter(str_detect(structure, "thalamus")))
 rm(list = "g")
 
-## ------------------------------------------------------------------------
-devtools::session_info()
-

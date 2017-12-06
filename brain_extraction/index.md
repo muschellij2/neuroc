@@ -1,6 +1,18 @@
-# Brain Extraction/Segmentation
-John Muschelli  
-`r Sys.Date()`  
+---
+title: "Brain Extraction/Segmentation"
+author: "John Muschelli"
+date: "2017-12-06"
+output: 
+  html_document:
+    keep_md: true
+    theme: cosmo
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+    number_sections: true      
+bibliography: ../refs.bib      
+---
 
 
 
@@ -15,13 +27,14 @@ For this analysis, I will use one subject from the Kirby 21 data set.  The `kirb
 
 
 ```r
+source("https://neuroconductor.org/neurocLite.R")
 packages = installed.packages()
 packages = packages[, "Package"]
 if (!"kirby21.base" %in% packages) {
-  devtools::install_github("muschellij2/kirby21.base")
+  neuroc_install("kirby21.base")  
 }
 if (!"kirby21.t1" %in% packages) {
-  devtools::install_github("muschellij2/kirby21.t1")
+  neuroc_install("kirby21.t1")  
 }
 ```
 
@@ -382,93 +395,8 @@ returning Inf
 We see that the SPM segmentation includes some of the extracranial CSF, is a bit "smoother" on the surface, and includes some areas towards the bottom of the brain near the brain stem (more CSF).  We also see on some areas of the surface, BET includes these as brain whereas SPM does not. If you are to compare the volume of the "brain" (in quotes because that may include non-tissue as CSF), you must keep these things in mind.
 
 
-# Session Info
+<!-- # Session Info -->
 
-
-```r
-devtools::session_info()
-```
-
-```
-Session info --------------------------------------------------------------
-```
-
-```
- setting  value                       
- version  R version 3.3.1 (2016-06-21)
- system   x86_64, darwin13.4.0        
- ui       X11                         
- language (EN)                        
- collate  en_US.UTF-8                 
- tz       America/New_York            
- date     2016-11-09                  
-```
-
-```
-Packages ------------------------------------------------------------------
-```
-
-```
- package      * version date       source                              
- abind          1.4-5   2016-07-21 cran (@1.4-5)                       
- animation    * 2.4     2015-08-16 CRAN (R 3.2.0)                      
- ANTsR        * 0.3.3   2016-10-10 Github (stnava/ANTsR@a50e986)       
- assertthat     0.1     2013-12-06 CRAN (R 3.2.0)                      
- bitops         1.0-6   2013-08-17 CRAN (R 3.2.0)                      
- codetools      0.2-14  2015-07-15 CRAN (R 3.3.1)                      
- colorout     * 1.1-0   2015-04-20 Github (jalvesaq/colorout@1539f1f)  
- colorspace     1.2-6   2015-03-11 CRAN (R 3.2.0)                      
- DBI            0.5-1   2016-09-10 CRAN (R 3.3.0)                      
- devtools       1.12.0  2016-06-24 CRAN (R 3.3.0)                      
- digest         0.6.10  2016-08-02 cran (@0.6.10)                      
- dplyr        * 0.5.0   2016-06-24 CRAN (R 3.3.0)                      
- evaluate       0.9     2016-04-29 CRAN (R 3.2.5)                      
- extrantsr    * 2.5     2016-10-31 local                               
- formatR        1.4     2016-05-09 CRAN (R 3.2.5)                      
- fslr         * 2.4     2016-11-04 Github (muschellij2/fslr@7ce0f03)   
- ggplot2      * 2.1.0   2016-03-01 CRAN (R 3.3.0)                      
- git2r          0.15.0  2016-05-11 CRAN (R 3.3.0)                      
- gtable         0.2.0   2016-02-26 CRAN (R 3.2.3)                      
- hash           2.2.6   2013-02-21 CRAN (R 3.2.0)                      
- htmltools      0.3.6   2016-09-26 Github (rstudio/htmltools@6996430)  
- igraph         1.0.1   2015-06-26 CRAN (R 3.2.0)                      
- iterators      1.0.8   2015-10-13 CRAN (R 3.2.0)                      
- kirby21.base * 1.4.2   2016-10-05 local                               
- kirby21.fmri * 1.4     2016-09-29 local (@1.4)                        
- kirby21.t1   * 1.4     2016-09-29 local                               
- knitr          1.14    2016-08-13 CRAN (R 3.3.0)                      
- lattice        0.20-34 2016-09-06 CRAN (R 3.3.0)                      
- magrittr       1.5     2014-11-22 CRAN (R 3.2.0)                      
- matlabr        1.1.3   2016-07-12 Github (muschellij2/matlabr@57d5408)
- Matrix         1.2-7.1 2016-09-01 CRAN (R 3.3.0)                      
- matrixStats  * 0.51.0  2016-10-09 cran (@0.51.0)                      
- memoise        1.0.0   2016-01-29 CRAN (R 3.2.3)                      
- mgcv           1.8-15  2016-09-14 CRAN (R 3.3.0)                      
- mmap           0.6-12  2013-08-28 CRAN (R 3.3.0)                      
- munsell        0.4.3   2016-02-13 CRAN (R 3.2.3)                      
- neurobase    * 1.5.1   2016-11-04 local                               
- neuroim        0.1.0   2016-09-27 local                               
- nlme           3.1-128 2016-05-10 CRAN (R 3.3.1)                      
- oro.nifti    * 0.6.2   2016-11-04 Github (bjw34032/oro.nifti@fe54c8e) 
- plyr           1.8.4   2016-06-08 CRAN (R 3.3.0)                      
- R.matlab       3.6.0   2016-07-05 CRAN (R 3.3.0)                      
- R.methodsS3  * 1.7.1   2016-02-16 CRAN (R 3.2.3)                      
- R.oo         * 1.20.0  2016-02-17 CRAN (R 3.2.3)                      
- R.utils      * 2.4.0   2016-09-14 cran (@2.4.0)                       
- R6             2.2.0   2016-10-05 cran (@2.2.0)                       
- RColorBrewer * 1.1-2   2014-12-07 CRAN (R 3.2.0)                      
- Rcpp           0.12.7  2016-09-05 cran (@0.12.7)                      
- reshape2     * 1.4.1   2014-12-06 CRAN (R 3.2.0)                      
- rmarkdown      1.1     2016-10-16 CRAN (R 3.3.1)                      
- RNifti         0.2.2   2016-10-02 cran (@0.2.2)                       
- scales         0.4.0   2016-02-26 CRAN (R 3.2.3)                      
- spm12r       * 2.0     2016-09-28 CRAN (R 3.3.0)                      
- stringi        1.1.1   2016-05-27 CRAN (R 3.3.0)                      
- stringr        1.1.0   2016-08-19 cran (@1.1.0)                       
- tibble         1.2     2016-08-26 CRAN (R 3.3.0)                      
- WhiteStripe    2.0     2016-09-28 local                               
- withr          1.0.2   2016-06-20 CRAN (R 3.3.0)                      
- yaImpute       1.0-26  2015-07-20 CRAN (R 3.2.0)                      
- yaml           2.1.13  2014-06-12 CRAN (R 3.2.0)                      
- zoo          * 1.7-13  2016-05-03 CRAN (R 3.2.4)                      
-```
+<!-- ```{r} -->
+<!-- devtools::session_info() -->
+<!-- ``` -->

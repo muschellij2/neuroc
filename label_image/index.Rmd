@@ -335,10 +335,10 @@ After registering these atlases, the procedure of combining these atlases into a
 The `extrantsr::malf` function allows for a simple voting scheme with multi-atlas label fusion.
 
 
-# Session Info
+<!-- # Session Info -->
 
-```{r}
-devtools::session_info()
-```
+<!-- ```{r} -->
+<!-- devtools::session_info() -->
+<!-- ``` -->
 
 # References

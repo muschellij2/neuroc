@@ -1,5 +1,15 @@
-# Neuroconductor
-`r Sys.Date()`  
+---
+title: "Neuroconductor"
+date: '2017-12-06'
+output: 
+  html_document:
+    keep_md: true
+    theme: cosmo
+    toc: true
+    toc_depth: 1
+    toc_float:
+      collapsed: false
+---
 
 # Guides for Developers {#devguides}
 

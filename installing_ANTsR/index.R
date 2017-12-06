@@ -8,16 +8,13 @@ knitr::opts_chunk$set(echo = TRUE)
 ##   install.packages("devtools")
 ## }
 
-## ---- engine = "bash", eval = FALSE--------------------------------------
 ## sudo apt-get install git # ubuntu/debian
-## sudo yum install git # centos/fedora
 
 ## ---- eval = FALSE-------------------------------------------------------
-## devtools::install_github( "stnava/ITKR" )
+## source("https://neuroconductor.org/neurocLite.R")
+## neuroc_install("ITKR")
 
 ## ---- eval = FALSE-------------------------------------------------------
-## devtools::install_github( "stnava/ANTsR" )
-
-## ------------------------------------------------------------------------
-devtools::session_info()
+## source("https://neuroconductor.org/neurocLite.R")
+## neuroc_install("ANTsR")
 
