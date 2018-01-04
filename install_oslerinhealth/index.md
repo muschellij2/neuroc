@@ -123,76 +123,51 @@ devtools::session_info()
 ```
 
 ```
-## ─ Session info ──────────────────────────────────────────────────────────
+## Session info -------------------------------------------------------------
+```
+
+```
 ##  setting  value                       
-##  version  R version 3.4.2 (2017-09-28)
-##  os       macOS Sierra 10.12.6        
+##  version  R version 3.4.3 (2017-11-30)
 ##  system   x86_64, darwin15.6.0        
 ##  ui       X11                         
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2017-12-20                  
-## 
-## ─ Packages ──────────────────────────────────────────────────────────────
-##  package     * version     date      
-##  assertthat    0.2.0       2017-04-11
-##  backports     1.1.1       2017-09-25
-##  cli           1.0.0       2017-11-29
-##  clisymbols    1.2.0       2017-06-29
-##  colorout    * 1.1-0       2015-04-20
-##  crayon        1.3.4       2017-10-10
-##  desc          1.1.1.9999  2017-07-26
-##  devtools      1.13.3.9000 2017-11-29
-##  digest        0.6.13      2017-12-14
-##  evaluate      0.10.1      2017-06-24
-##  htmltools     0.3.6       2017-04-28
-##  knitr         1.17        2017-08-10
-##  magrittr      1.5         2014-11-22
-##  memoise       1.1.0       2017-04-21
-##  pkgbuild      0.0.0.9000  2017-11-29
-##  pkgload       0.0.0.9000  2017-11-29
-##  R6            2.2.2       2017-06-17
-##  Rcpp          0.12.14     2017-11-23
-##  rlang         0.1.4       2017-11-05
-##  rmarkdown     1.8         2017-11-17
-##  rprojroot     1.2         2017-01-16
-##  sessioninfo   1.0.1.9000  2017-11-29
-##  stringi       1.1.6       2017-11-17
-##  stringr       1.2.0       2017-02-18
-##  testthat      1.0.2.9000  2017-11-29
-##  usethis       1.1.0.9000  2017-12-07
-##  withr         2.1.0       2017-11-01
-##  yaml          2.1.16      2017-12-12
-##  source                                 
-##  CRAN (R 3.4.0)                         
-##  CRAN (R 3.4.2)                         
-##  Github (r-lib/cli@ab1c3aa)             
-##  Github (gaborcsardi/clisymbols@e49b4f5)
-##  Github (jalvesaq/colorout@1539f1f)     
-##  Github (gaborcsardi/crayon@b5221ab)    
-##  Github (muschellij2/desc@d35a9db)      
-##  Github (hadley/devtools@54498b6)       
-##  CRAN (R 3.4.2)                         
-##  CRAN (R 3.4.1)                         
-##  CRAN (R 3.4.0)                         
-##  CRAN (R 3.4.1)                         
-##  CRAN (R 3.4.0)                         
-##  CRAN (R 3.4.0)                         
-##  Github (r-lib/pkgbuild@a70858f)        
-##  Github (r-lib/pkgload@70eaef8)         
-##  CRAN (R 3.4.0)                         
-##  CRAN (R 3.4.3)                         
-##  CRAN (R 3.4.2)                         
-##  CRAN (R 3.4.2)                         
-##  CRAN (R 3.4.0)                         
-##  Github (r-lib/sessioninfo@c871d01)     
-##  CRAN (R 3.4.2)                         
-##  CRAN (R 3.4.0)                         
-##  Github (hadley/testthat@6dabfd2)       
-##  Github (r-lib/usethis@3de3ac7)         
-##  CRAN (R 3.4.2)                         
-##  CRAN (R 3.4.2)
+##  date     2018-01-04
+```
+
+```
+## Packages -----------------------------------------------------------------
+```
+
+```
+##  package   * version date       source                            
+##  backports   1.1.2   2017-12-13 CRAN (R 3.4.3)                    
+##  base      * 3.4.3   2017-12-07 local                             
+##  colorout  * 1.1-0   2015-04-20 Github (jalvesaq/colorout@1539f1f)
+##  compiler    3.4.3   2017-12-07 local                             
+##  datasets  * 3.4.3   2017-12-07 local                             
+##  devtools    1.13.4  2017-11-09 CRAN (R 3.4.2)                    
+##  digest      0.6.13  2017-12-14 cran (@0.6.13)                    
+##  evaluate    0.10.1  2017-06-24 cran (@0.10.1)                    
+##  graphics  * 3.4.3   2017-12-07 local                             
+##  grDevices * 3.4.3   2017-12-07 local                             
+##  htmltools   0.3.6   2017-04-28 CRAN (R 3.4.0)                    
+##  knitr       1.18    2017-12-27 CRAN (R 3.4.3)                    
+##  magrittr    1.5     2014-11-22 CRAN (R 3.4.0)                    
+##  memoise     1.1.0   2017-04-21 CRAN (R 3.4.0)                    
+##  methods     3.4.3   2017-12-07 local                             
+##  Rcpp        0.12.14 2017-11-23 CRAN (R 3.4.3)                    
+##  rmarkdown   1.8     2017-11-17 CRAN (R 3.4.2)                    
+##  rprojroot   1.2     2017-01-16 CRAN (R 3.4.0)                    
+##  stats     * 3.4.3   2017-12-07 local                             
+##  stringi     1.1.6   2017-11-17 CRAN (R 3.4.2)                    
+##  stringr     1.2.0   2017-02-18 CRAN (R 3.4.0)                    
+##  tools       3.4.3   2017-12-07 local                             
+##  utils     * 3.4.3   2017-12-07 local                             
+##  withr       2.1.1   2017-12-19 CRAN (R 3.4.3)                    
+##  yaml        2.1.16  2017-12-12 cran (@2.1.16)
 ```
 
 # References

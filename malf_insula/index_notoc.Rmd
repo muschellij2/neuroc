@@ -4,6 +4,21 @@ output:
     theme: null
 bibliography: ../refs.bib
 ---
+---
+title: "MALF of the Insula on an ABIDE patient"
+author: "John Muschelli"
+date: '2017-12-20'
+output: 
+  html_document:
+    keep_md: true
+    theme: cosmo
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+    number_sections: true
+bibliography: ../refs.bib      
+---
 
 All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/malf_insula/index.R).
 
@@ -19,7 +34,8 @@ This tutorial requires the `neurohcp` package (>= 0.5):
 ver = installed.packages()["neurohcp", "Version"]
 if (compareVersion(ver, "0.5") < 0) {
   stop(paste0("Need to update neurohcp, ", 
-              "devtools::install_github('muschellij2/neurohcp')")
+              'source("https://neuroconductor.org/neurocLite.R");',
+              'neuroc_install("ITKR")')
   )
 }
 ```
@@ -317,7 +333,7 @@ print(fcp_data)
 ```
 
 ```
-[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpUtp76L/mprage.nii.gz"
+[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpSRk2mw/mprage.nii.gz"
 ```
 
 Note, you do not need an API key for this data.  We have an MPRAGE for this child downloaded to the disk.
@@ -334,7 +350,7 @@ Loading required package: oro.nifti
 ```
 
 ```
-oro.nifti 0.7.5
+oro.nifti 0.9.2
 ```
 
 ```r
@@ -354,10 +370,6 @@ getForms(fcp_data)[c("ssor", "sqor")]
 ```
 
 ```
-fslhd "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpUtp76L/mprage.nii.gz" 
-```
-
-```
 $ssor
 [1] "RL" "PA" "IS"
 
@@ -373,15 +385,15 @@ reor = rpi_orient(fcp_data)
 ```
 
 ```
-fslhd "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpUtp76L/mprage.nii.gz" 
+fslhd "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpSRk2mw/mprage.nii.gz" 
 ```
 
 ```
-fslorient -getorient "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpUtp76L/mprage.nii.gz"
+fslorient -getorient "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpSRk2mw/mprage.nii.gz"
 ```
 
 ```
-fslswapdim "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpUtp76L/mprage.nii.gz"  RL PA IS "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpUtp76L/file34b71b36c025";
+fslswapdim "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpSRk2mw/mprage.nii.gz"  RL PA IS "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpSRk2mw/file126242408e90a";
 ```
 
 ```r
@@ -394,6 +406,20 @@ Here we will use `fslbet_robust` to skull strip the image.  The "robust"
 
 ```r
 library(extrantsr)
+```
+
+```
+
+Attaching package: 'extrantsr'
+```
+
+```
+The following objects are masked from 'package:oro.nifti':
+
+    origin, origin<-
+```
+
+```r
 bet = fslbet_robust(img, swapdim = FALSE)
 ```
 
@@ -435,10 +461,10 @@ antsImage
 
 
 $fwdtransforms
-[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpUtp76L/file34b74ea66ce20GenericAffine.mat"
+[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpSRk2mw/file126247b71093f0GenericAffine.mat"
 
 $invtransforms
-[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpUtp76L/file34b74ea66ce20GenericAffine.mat"
+[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpSRk2mw/file126247b71093f0GenericAffine.mat"
 ```
 
 ```
@@ -478,7 +504,7 @@ $invtransforms
 ```
 
 ```
-bet2 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpUtp76L/file34b74d35d160.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpUtp76L/file34b76e9c24d3" 
+bet2 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpSRk2mw/file126242e5613a3.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpSRk2mw/file12624c68b54a" 
 ```
 
 ```
@@ -486,7 +512,7 @@ bet2 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpUtp76L/file34
 ```
 
 ```
-bet2 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpUtp76L/file34b7142229d.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpUtp76L/file34b77181cf13"  -c 128 97 132
+bet2 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpSRk2mw/file1262468b03587.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpSRk2mw/file126243fd5ba26"  -c 128 97 132
 ```
 
 ```
@@ -544,10 +570,10 @@ antsImage
 
 
 $fwdtransforms
-[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpUtp76L/file34b7128bb55d0GenericAffine.mat"
+[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpSRk2mw/file12624303414790GenericAffine.mat"
 
 $invtransforms
-[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpUtp76L/file34b7128bb55d0GenericAffine.mat"
+[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpSRk2mw/file12624303414790GenericAffine.mat"
 ```
 
 ```
@@ -587,7 +613,7 @@ $invtransforms
 ```
 
 ```
-bet2 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpUtp76L/file34b729c59ca3.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpUtp76L/file34b7acb4f56" 
+bet2 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpSRk2mw/file12624d1e179.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpSRk2mw/file126246127dfbc" 
 ```
 
 ```
@@ -595,7 +621,7 @@ bet2 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpUtp76L/file34
 ```
 
 ```
-bet2 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpUtp76L/file34b765d47093.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpUtp76L/file34b73e4600a5"  -c 128 97 131
+bet2 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpSRk2mw/file12624438301d7.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpSRk2mw/file126245dec485d"  -c 128 97 131
 ```
 
 ```
