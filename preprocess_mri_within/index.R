@@ -14,13 +14,16 @@ knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "")
 ## packages = installed.packages()
 ## packages = packages[, "Package"]
 ## if (!"kirby21.base" %in% packages) {
-##   devtools::install_github("muschellij2/kirby21.base")
+##   source("https://neuroconductor.org/neurocLite.R")
+##   neuroc_install("kirby21.base")
 ## }
 ## if (!"kirby21.smri" %in% packages) {
-##   devtools::install_github("muschellij2/kirby21.smri")
+##   source("https://neuroconductor.org/neurocLite.R")
+##   neuroc_install("kirby21.smri")
 ## }
 ## if (!"EveTemplate" %in% packages) {
-##   devtools::install_github("jfortin1/EveTemplate")
+##   source("https://neuroconductor.org/neurocLite.R")
+##   neuroc_install("EveTemplate")
 ## }
 
 ## ----data----------------------------------------------------------------

@@ -11,10 +11,12 @@ library(extrantsr)
 ## packages = installed.packages()
 ## packages = packages[, "Package"]
 ## if (!"kirby21.base" %in% packages) {
-##   devtools::install_github("muschellij2/kirby21.base")
+##   source("https://neuroconductor.org/neurocLite.R")
+##   neuroc_install("kirby21.base")
 ## }
 ## if (!"kirby21.fmri" %in% packages) {
-##   devtools::install_github("muschellij2/kirby21.fmri")
+##   source("https://neuroconductor.org/neurocLite.R")
+##   neuroc_install("kirby21.fmri")
 ## }
 
 ## ----data----------------------------------------------------------------

@@ -72,13 +72,6 @@ where `PACKAGE` is the name of the package you'd like to install, such as ``r pa
 source("`r lite_file`")
 `r installer`(`r dpacks`)
 ```
-### ``r lite_installer``: an alias for ``r installer``
-
-As Bioconductor uses the `biocLite` function to install packages, we have created a duplicate of ``r installer``, called ``r lite_installer``, for ease of use for those users accustomed to Bioconductor.  The same command could have been executed as follows:
-```r
-source("`r lite_file`")
-`r lite_installer`(`r dpacks`)
-```
 
 ### Installing the ``r install_pack`` package
 
@@ -90,6 +83,48 @@ source("`r lite_file`")
 ```
 
 After installation, you can use `` `r install_pack`::`r lite_installer`() `` to install packages without source-ing the URL above.
+
+
+## Installing Stable/Current/Release Versions
+
+### Stable Versions
+In `r master_name`, there are stable versions, which correspond to a submitted package.  This stable version has passed the `r master_name` checks on Travis for Linux using the other packages in `r master_name` that are in `r master_name` at the time of submission.  Thus, if you install this package with all the dependencies listed for this package (using specific `r master_name` versions), it should work.
+
+To install a stable version (which should be the default), you can run:
+
+```r
+source("`r lite_file`")
+`r installer`(`r dpacks`, release = "stable")
+```
+
+### Current Versions
+
+In `r master_name`, a "current" version mirrors the repository of the developer of the package.  This does not ensure that the package is passing `r master_name` checks, but will give you the development version from that developer.  This, at least, standardizes the username for all the repositories in `r master_name`.  You can install a current version using:
+
+```r
+source("`r lite_file`")
+`r installer`(`r dpacks`, release = "current")
+```
+
+### Release Versions
+
+Every few months, we snapshot all of `r master_name` in their current forms.  We save the source tarballs as well as the binary releases from Travis and Appveyor.  We then host these releases on the `r master_name` website.  These downloads are stable in time and will not be changed until the next release.  These downloads are also logged to show the activity/amount of use for each package of this release.  To install the release, you would use:
+
+```r
+source("`r lite_file`")
+`r installer`(`r dpacks`, release = "release")
+```
+
+See the `release_repo` argument for how to specify which release to use.
+
+### ``r lite_installer``: an alias for ``r installer``
+
+As Bioconductor uses the `biocLite` function to install packages, we have created a duplicate of ``r installer``, called ``r lite_installer``, for ease of use for those users accustomed to Bioconductor.  The same command could have been executed as follows:
+```r
+source("`r lite_file`")
+`r lite_installer`(`r dpacks`)
+```
+
 
 ## Installing `r master_name` Packages without upgrading dependencies
 

@@ -6,7 +6,8 @@ knitr::opts_chunk$set(echo = TRUE, cache = FALSE, comment = "")
 ver = installed.packages()["neurohcp", "Version"]
 if (compareVersion(ver, "0.5") < 0) {
   stop(paste0("Need to update neurohcp, ", 
-              "devtools::install_github('muschellij2/neurohcp')")
+              'source("https://neuroconductor.org/neurocLite.R");',
+              'neuroc_install("ITKR")')
   )
 }
 

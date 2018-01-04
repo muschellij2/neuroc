@@ -32,13 +32,6 @@ where `PACKAGE` is the name of the package you'd like to install, such as `baker
 source("http://oslerinhealth.org/oslerLite.R")
 osler_install(c("baker", "spotgear"))
 ```
-### `oslerLite`: an alias for `osler_install`
-
-As Bioconductor uses the `biocLite` function to install packages, we have created a duplicate of `osler_install`, called `oslerLite`, for ease of use for those users accustomed to Bioconductor.  The same command could have been executed as follows:
-```r
-source("http://oslerinhealth.org/oslerLite.R")
-oslerLite(c("baker", "spotgear"))
-```
 
 ### Installing the `oslerInstall` package
 
@@ -50,6 +43,48 @@ osler_install("oslerInstall")
 ```
 
 After installation, you can use `` oslerInstall::oslerLite() `` to install packages without source-ing the URL above.
+
+
+## Installing Stable/Current/Release Versions
+
+### Stable Versions
+In OSLERinHealth, there are stable versions, which correspond to a submitted package.  This stable version has passed the OSLERinHealth checks on Travis for Linux using the other packages in OSLERinHealth that are in OSLERinHealth at the time of submission.  Thus, if you install this package with all the dependencies listed for this package (using specific OSLERinHealth versions), it should work.
+
+To install a stable version (which should be the default), you can run:
+
+```r
+source("http://oslerinhealth.org/oslerLite.R")
+osler_install(c("baker", "spotgear"), release = "stable")
+```
+
+### Current Versions
+
+In OSLERinHealth, a "current" version mirrors the repository of the developer of the package.  This does not ensure that the package is passing OSLERinHealth checks, but will give you the development version from that developer.  This, at least, standardizes the username for all the repositories in OSLERinHealth.  You can install a current version using:
+
+```r
+source("http://oslerinhealth.org/oslerLite.R")
+osler_install(c("baker", "spotgear"), release = "current")
+```
+
+### Release Versions
+
+Every few months, we snapshot all of OSLERinHealth in their current forms.  We save the source tarballs as well as the binary releases from Travis and Appveyor.  We then host these releases on the OSLERinHealth website.  These downloads are stable in time and will not be changed until the next release.  These downloads are also logged to show the activity/amount of use for each package of this release.  To install the release, you would use:
+
+```r
+source("http://oslerinhealth.org/oslerLite.R")
+osler_install(c("baker", "spotgear"), release = "release")
+```
+
+See the `release_repo` argument for how to specify which release to use.
+
+### `oslerLite`: an alias for `osler_install`
+
+As Bioconductor uses the `biocLite` function to install packages, we have created a duplicate of `osler_install`, called `oslerLite`, for ease of use for those users accustomed to Bioconductor.  The same command could have been executed as follows:
+```r
+source("http://oslerinhealth.org/oslerLite.R")
+oslerLite(c("baker", "spotgear"))
+```
+
 
 ## Installing OSLERinHealth Packages without upgrading dependencies
 
@@ -97,7 +132,7 @@ devtools::session_info()
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2017-12-06                  
+##  date     2017-12-20                  
 ## 
 ## ─ Packages ──────────────────────────────────────────────────────────────
 ##  package     * version     date      
@@ -109,7 +144,7 @@ devtools::session_info()
 ##  crayon        1.3.4       2017-10-10
 ##  desc          1.1.1.9999  2017-07-26
 ##  devtools      1.13.3.9000 2017-11-29
-##  digest        0.6.12      2017-01-27
+##  digest        0.6.13      2017-12-14
 ##  evaluate      0.10.1      2017-06-24
 ##  htmltools     0.3.6       2017-04-28
 ##  knitr         1.17        2017-08-10
@@ -126,9 +161,9 @@ devtools::session_info()
 ##  stringi       1.1.6       2017-11-17
 ##  stringr       1.2.0       2017-02-18
 ##  testthat      1.0.2.9000  2017-11-29
-##  usethis       1.1.0       2017-11-29
+##  usethis       1.1.0.9000  2017-12-07
 ##  withr         2.1.0       2017-11-01
-##  yaml          2.1.14      2016-11-12
+##  yaml          2.1.16      2017-12-12
 ##  source                                 
 ##  CRAN (R 3.4.0)                         
 ##  CRAN (R 3.4.2)                         
@@ -138,7 +173,7 @@ devtools::session_info()
 ##  Github (gaborcsardi/crayon@b5221ab)    
 ##  Github (muschellij2/desc@d35a9db)      
 ##  Github (hadley/devtools@54498b6)       
-##  CRAN (R 3.4.0)                         
+##  CRAN (R 3.4.2)                         
 ##  CRAN (R 3.4.1)                         
 ##  CRAN (R 3.4.0)                         
 ##  CRAN (R 3.4.1)                         
@@ -155,9 +190,9 @@ devtools::session_info()
 ##  CRAN (R 3.4.2)                         
 ##  CRAN (R 3.4.0)                         
 ##  Github (hadley/testthat@6dabfd2)       
-##  Github (r-lib/usethis@0fb89e9)         
+##  Github (r-lib/usethis@3de3ac7)         
 ##  CRAN (R 3.4.2)                         
-##  CRAN (R 3.4.0)
+##  CRAN (R 3.4.2)
 ```
 
 # References

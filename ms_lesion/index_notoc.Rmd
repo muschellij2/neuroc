@@ -4,6 +4,21 @@ output:
     theme: null
 bibliography: ../refs.bib
 ---
+---
+title: "Multiple Sclerosis Lesion Segmentation"
+author: "John Muschelli"
+date: '2017-12-06'
+output: 
+  html_document:
+    keep_md: true
+    theme: cosmo
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+    number_sections: true
+bibliography: ../refs.bib      
+---
 
 All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/ms_lesion/index.R).
 
@@ -29,20 +44,21 @@ loaded_package_version = function(pkg) {
   packs = devtools::session_info()$packages
   ver = packs %>% 
     filter(package %in% pkg) %>% 
-    select(package, version)
+    select(package, loadedversion)
   return(ver)
 }
 check_package_version = function(pkg, min_version){
   stopifnot(length(pkg) == 1)
   ver = loaded_package_version(pkg = pkg)
-  ver = as.character(ver$version)
+  ver = as.character(ver$loadedversion)
   min_version = as.character(min_version)
   # check to see if version is at least the min_version
   utils::compareVersion(a = ver, b = min_version) >= 0
 }
 check = check_package_version("oasis", min_version = "2.2")
 if (!check) {
-  devtools::install_github("emsweene/oasis")
+  source("https://neuroconductor.org/neurocLite.R")
+  neuroc_install("oasis")  
 }
 ```
 
@@ -301,19 +317,23 @@ Smoothing Images: Sigma = 10
 ```
 
 ```
-fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b40ea93a.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b5e8820ea.nii.gz"  -s 10 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpZT2MJa/file9f8b3b291322"; fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b5e8820ea.nii.gz" -s 10 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b5e8820ea_10"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpZT2MJa/file9f8b3b291322" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b5e8820ea_10" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b5e8820ea.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpZT2MJa/file9f8b3b291322";
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f70ef45de.nii.gz"  -s 10 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f6cd42bbe";
 ```
 
 ```
-fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b5a73b86.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b2634dd50.nii.gz"  -s 10 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpZT2MJa/file9f8b58adc2c8"; fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b2634dd50.nii.gz" -s 10 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b2634dd50_10"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpZT2MJa/file9f8b58adc2c8" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b2634dd50_10" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b2634dd50.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpZT2MJa/file9f8b58adc2c8";
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f5d83fec3.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f4cae42c.nii.gz"  -s 10 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f244a0729"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f244a0729" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f6cd42bbe.nii.gz" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f4cae42c.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f244a0729";
 ```
 
 ```
-fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b77cf05f3.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b388fd1f8.nii.gz"  -s 10 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpZT2MJa/file9f8b6a220dca"; fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b388fd1f8.nii.gz" -s 10 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b388fd1f8_10"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpZT2MJa/file9f8b6a220dca" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b388fd1f8_10" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b388fd1f8.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpZT2MJa/file9f8b6a220dca";
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f781c275b.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f5c04f8.nii.gz"  -s 10 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f194a35f7"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f194a35f7" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f6cd42bbe.nii.gz" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f5c04f8.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f194a35f7";
 ```
 
 ```
-fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b61b77f35.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b5600a2b1.nii.gz"  -s 10 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpZT2MJa/file9f8b43b93e93"; fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b5600a2b1.nii.gz" -s 10 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b5600a2b1_10"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpZT2MJa/file9f8b43b93e93" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b5600a2b1_10" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b5600a2b1.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpZT2MJa/file9f8b43b93e93";
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f571cf819.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f2ee45dfd.nii.gz"  -s 10 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f12d6a518"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f12d6a518" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f6cd42bbe.nii.gz" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f2ee45dfd.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f12d6a518";
+```
+
+```
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f49f0d451.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f620337c3.nii.gz"  -s 10 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f4142157a"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f4142157a" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f6cd42bbe.nii.gz" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f620337c3.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f4142157a";
 ```
 
 ```
@@ -321,19 +341,23 @@ Smoothing Images: Sigma = 20
 ```
 
 ```
-fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b36bb47a1.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b415bb719.nii.gz"  -s 20 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpZT2MJa/file9f8b6c51ebd4"; fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b415bb719.nii.gz" -s 20 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b415bb719_20"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpZT2MJa/file9f8b6c51ebd4" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b415bb719_20" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b415bb719.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpZT2MJa/file9f8b6c51ebd4";
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f59901e0e.nii.gz"  -s 20 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f4a55712";
 ```
 
 ```
-fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b7651e2da.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b7a0492e5.nii.gz"  -s 20 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpZT2MJa/file9f8b424836f8"; fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b7a0492e5.nii.gz" -s 20 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b7a0492e5_20"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpZT2MJa/file9f8b424836f8" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b7a0492e5_20" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b7a0492e5.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpZT2MJa/file9f8b424836f8";
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f2f76120.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f3f097d65.nii.gz"  -s 20 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f8079238"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f8079238" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f4a55712.nii.gz" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f3f097d65.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f8079238";
 ```
 
 ```
-fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b1310f5c7.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b3e77e598.nii.gz"  -s 20 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpZT2MJa/file9f8b31827e32"; fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b3e77e598.nii.gz" -s 20 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b3e77e598_20"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpZT2MJa/file9f8b31827e32" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b3e77e598_20" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b3e77e598.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpZT2MJa/file9f8b31827e32";
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f29109ea6.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f21fb95a.nii.gz"  -s 20 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f70c1c4cc"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f70c1c4cc" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f4a55712.nii.gz" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f21fb95a.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f70c1c4cc";
 ```
 
 ```
-fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b6e2b1e02.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b50bf4dcf.nii.gz"  -s 20 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpZT2MJa/file9f8b3f8d7a73"; fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b50bf4dcf.nii.gz" -s 20 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b50bf4dcf_20"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpZT2MJa/file9f8b3f8d7a73" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b50bf4dcf_20" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b50bf4dcf.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpZT2MJa/file9f8b3f8d7a73";
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f415f66e9.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f5e5d6c86.nii.gz"  -s 20 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f478001d0"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f478001d0" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f4a55712.nii.gz" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f5e5d6c86.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f478001d0";
+```
+
+```
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f24f7235c.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f5d327ff9.nii.gz"  -s 20 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f1e6fe43c"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f1e6fe43c" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f4a55712.nii.gz" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f5d327ff9.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f1e6fe43c";
 ```
 
 ```r
@@ -374,7 +398,7 @@ prob_map = fslsmooth(pred_img, sigma = 1.25,
 ```
 
 ```
-fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b766c615d.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b456c5d68.nii.gz"  -s 1.25 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpZT2MJa/file9f8b4d687a73"; fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b456c5d68.nii.gz" -s 1.25 "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b456c5d68_1.25"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpZT2MJa/file9f8b4d687a73" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b456c5d68_1.25" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpZT2MJa/file9f8b456c5d68.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpZT2MJa/file9f8b4d687a73";
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0ff346219.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f38145f1b.nii.gz"  -s 1.25 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f41700260"; fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f38145f1b.nii.gz" -s 1.25 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f20ac0e30.nii.gz"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f41700260" -div "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f20ac0e30.nii.gz" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f38145f1b.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f41700260";
 ```
 
 ```r
@@ -434,7 +458,8 @@ Although the original OASIS model was done using FSL, we can perform preprocessi
 ```r
 check = check_package_version("extrantsr", min_version = "2.2.1")
 if (!check) {
-  devtools::install_github("muschellij2/extrantsr")
+  source("https://neuroconductor.org/neurocLite.R")
+  neuroc_install("extrantsr") 
 }
 ```
 
@@ -517,3 +542,5 @@ cl_img = niftiarr(ants_brain_mask, 0)
 cl_img[ants_top_voxels == 1] = res$clustering
 ortho2(n4_flair, cl_img > 3, col.y = scales::alpha("red", 0.5))
 ```
+
+# References

@@ -1,6 +1,18 @@
-# Processing Within-Visit MRI
-John Muschelli  
-`r Sys.Date()`  
+---
+title: "Processing Within-Visit MRI"
+author: "John Muschelli"
+date: "2017-12-20"
+output: 
+  html_document:
+    keep_md: true
+    theme: cosmo
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+    number_sections: true      
+bibliography: ../refs.bib      
+---
 
 All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/preprocess_mri_within/index.R).
 
@@ -20,13 +32,16 @@ For this analysis, I will use one subject from the Kirby 21 data set.  The `kirb
 packages = installed.packages()
 packages = packages[, "Package"]
 if (!"kirby21.base" %in% packages) {
-  devtools::install_github("muschellij2/kirby21.base")
+  source("https://neuroconductor.org/neurocLite.R")
+  neuroc_install("kirby21.base")    
 }
 if (!"kirby21.smri" %in% packages) {
-  devtools::install_github("muschellij2/kirby21.smri")
+  source("https://neuroconductor.org/neurocLite.R")
+  neuroc_install("kirby21.smri")     
 }
 if (!"EveTemplate" %in% packages) {
-  devtools::install_github("jfortin1/EveTemplate")
+  source("https://neuroconductor.org/neurocLite.R")
+  neuroc_install("EveTemplate")     
 }
 ```
 
@@ -168,15 +183,7 @@ n4_proc_imgs = plyr::llply(
 ```
 
 ```
-
-  |                                                                       
-  |                                                                 |   0%
-  |                                                                       
-  |======================                                           |  33%
-  |                                                                       
-  |===========================================                      |  67%
-  |                                                                       
-  |=================================================================| 100%
+  |                                                                         |                                                                 |   0%  |                                                                         |======================                                           |  33%  |                                                                         |===========================================                      |  67%  |                                                                         |=================================================================| 100%
 ```
 
 Here we will write out the processed images for later use (in other tutorials):
@@ -210,15 +217,7 @@ norm_imgs = plyr::llply(
 ```
 
 ```
-
-  |                                                                       
-  |                                                                 |   0%
-  |                                                                       
-  |======================                                           |  33%
-  |                                                                       
-  |===========================================                      |  67%
-  |                                                                       
-  |=================================================================| 100%
+  |                                                                         |                                                                 |   0%  |                                                                         |======================                                           |  33%  |                                                                         |===========================================                      |  67%  |                                                                         |=================================================================| 100%
 ```
 
 ## Visualizing the marginal intensities
