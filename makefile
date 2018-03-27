@@ -21,6 +21,7 @@ LIST += continuous_integration
 LIST += getting_ready_for_submission
 LIST += install_oslerinhealth
 LIST += continuous_integration_oslerinhealth
+LIST += r_package_workflow
 
 all:
 	Rscript -e "source('notoc.R')"
