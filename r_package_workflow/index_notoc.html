@@ -67,7 +67,7 @@ if (window.hljs) {
 <p>All code for this document is located <a href="https://github.com/muschellij2/neuroc/blob/master/r_package_workflow/index.Rmd">here</a>.</p>
 <div id="simple-script-to-start-a-package" class="section level1">
 <h1>Simple Script to Start a Package</h1>
-<p>Most of the work we will cover here will get you up and running for submission to our GitHub-based platform. We will use the <code>devtools</code> and <code>usethis</code> packages to help us with the process of package development. Change <code>&quot;/path/to/packages&quot;</code> to the path above where you want the package to be created. The package itself will be a sub0folder of this folder. The script will change directories and then install the necessary packages:</p>
+<p>Most of the work we will cover here will get you up and running for submission to our GitHub-based platform. We will use the <code>devtools</code> and <code>usethis</code> packages to help us with the process of package development. Change <code>&quot;/path/to/packages&quot;</code> to the path where you want the package to be created. The package itself will be a sub-folder of this folder. The script will change directories and then install the necessary packages:</p>
 <pre class="r"><code>setwd(&quot;/path/to/packages&quot;)
 if (!&quot;devtools&quot; %in% installed.packages()){
   install.packages(&quot;devtools&quot;)
@@ -80,11 +80,11 @@ if (!&quot;muschflow&quot; %in% installed.packages()){
 }
 library(devtools)
 library(muschflow)</code></pre>
-<p>We have the following script that you should copy into R/RStudio. You should change <code>&quot;template&quot;</code> to the package name you want to call the package.</p>
-<pre class="r"><code>pkgname = &quot;template&quot;
+<p>The following code will make the package folder. You should change <code>&quot;mypackage&quot;</code> to the package name you want to call the package.</p>
+<pre class="r"><code>pkgname = &quot;mypackage&quot;
 devtools::create(pkgname)
 setwd(pkgname)</code></pre>
-<p><code>R</code> now is in the package directory. On the top right of <code>RStudio</code>, you should see a <code>Project: (None)</code> dropdown. If you choose <code>Open Project</code> and choose the package name + <code>.Rproj</code>, it will open a new <code>RStudio</code> session.</p>
+<p>A folder named <code>R</code> is now is in the package directory. On the top right of <code>RStudio</code>, you should see a <code>Project: (None)</code> dropdown. If you choose <code>Open Project</code> and choose <code>mypackage.Rproj</code>, it will open a new <code>RStudio</code> session.</p>
 <p>As long as you’re in that directory, you can run the following code even if not in the <code>RStudio</code> project.</p>
 <p>You should also add information in the <code>title</code> and <code>description</code> fields in the <code>muschelli_workflow</code> function. Titles should be “title case” (e.g. <code>Creates Fun Plots for Analysis</code>) and <strong>not</strong> start with words like “A Package” or “Functions to”. The <code>description</code> argument should be written like prose <code>&quot;Creates fun plots for analysis in everyday situations.&quot;</code> It should end with a period like normal sentences.</p>
 <pre class="r"><code>coverage_type = &quot;coveralls&quot;
@@ -151,7 +151,7 @@ x = function(z, y, l=4, ...){
 <p>You should edit the <code>DESCRIPTION</code> file to change some specifications, such as <code>Depends:</code> fields for package dependencies. That’s documented many places on the web to find about what goes in there.</p>
 <p>Now edit your functions and docs, push to the remote repository and then allow people install your package by using:</p>
 <pre><code>library(devtools)
-install_github(&quot;myGitHubUserName/mypckg&quot;)</code></pre>
+install_github(&quot;myGitHubUserName/mypackage&quot;)</code></pre>
 <p>and there you have it - you’ve released software. <code>Build -&gt; Check Package</code> is good for testing your package (will tests your examples) and make sure everything looks OK.</p>
 <pre class="r"><code>devtools::session_info()</code></pre>
 </div>

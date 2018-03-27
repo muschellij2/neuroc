@@ -23,7 +23,13 @@ All code for this document is located [here](https://github.com/muschellij2/neur
 
 # Simple Script to Start a Package
 
-Most of the work we will cover here will get you up and running for submission to our GitHub-based platform.  We will use the `devtools` and `usethis` packages to help us with the process of package development.  Change `"/path/to/packages"` to the path above where you want the package to be created.  The package itself will be a sub0folder of this folder.   The script will change directories and then install the necessary packages:
+Most of the work we will cover here will get you up and running for submission to our GitHub-based platform.  We will use the following packages:
+
+1. `devtools` which has a large set of functions for building and checking package
+2. `usethis` functions to help us with creating additional things like the `README` file and adding things for GitHub.  
+3. `muschflow` - a workflow package I use for my pipeline that wraps `usethis`.
+
+In the code below, change `"/path/to/packages"` to the path where you want the package to be created.  The package itself will be a sub-folder of this folder.   The script will change directories and then install the necessary packages:
 
 ```r
 setwd("/path/to/packages")
@@ -40,15 +46,15 @@ library(devtools)
 library(muschflow)
 ```
 
-We have the following script that you should copy into R/RStudio.  You should change `"template"` to the package name you want to call the package.  
+The following code will make the package folder.  You should change `"mypackage"` to the package name you want to call the package.  
 
 ```r
-pkgname = "template"
+pkgname = "mypackage"
 devtools::create(pkgname)
 setwd(pkgname)
 ```
 
-`R` now is in the package directory.  On the top right of `RStudio`, you should see a `Project: (None)` dropdown.  If you choose `Open Project` and choose the package name + `.Rproj`, it will open a new `RStudio` session.
+A folder named `R` is now is in the package directory.  On the top right of `RStudio`, you should see a `Project: (None)` dropdown.  If you choose `Open Project` and choose `mypackage.Rproj`, it will open a new `RStudio` session.
 
 As long as you're in that directory, you can run the following code even if not in the `RStudio` project. 
 
@@ -129,7 +135,7 @@ You should edit the `DESCRIPTION` file to change some specifications, such as `D
 Now edit your functions and docs, push to the remote repository and then allow people install your package by using:
 ```
 library(devtools)
-install_github("myGitHubUserName/mypckg")
+install_github("myGitHubUserName/mypackage")
 ```
 and there you have it - you've released software.  `Build -> Check Package` is good for testing your package (will tests your examples) and make sure everything looks OK.
 
