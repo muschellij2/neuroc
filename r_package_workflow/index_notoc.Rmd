@@ -29,7 +29,13 @@ All code for this document is located [here](https://github.com/muschellij2/neur
 
 # Simple Script to Start a Package
 
-Most of the work we will cover here will get you up and running for submission to our GitHub-based platform.  We will use the `devtools` and `usethis` packages to help us with the process of package development.  Change `"/path/to/packages"` to the path where you want the package to be created.  The package itself will be a sub-folder of this folder.   The script will change directories and then install the necessary packages:
+Most of the work we will cover here will get you up and running for submission to our GitHub-based platform.  We will use the following packages:
+
+1. `devtools` which has a large set of functions for building and checking package
+2. `usethis` functions to help us with creating additional things like the `README` file and adding things for GitHub.  
+3. `muschflow` - a workflow package I use for my pipeline that wraps `usethis`.
+
+In the code below, change `"/path/to/packages"` to the path where you want the package to be created.  The package itself will be a sub-folder of this folder.   The script will change directories and then install the necessary packages:
 
 ```r
 setwd("/path/to/packages")

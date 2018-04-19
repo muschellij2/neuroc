@@ -67,7 +67,14 @@ if (window.hljs) {
 <p>All code for this document is located <a href="https://github.com/muschellij2/neuroc/blob/master/r_package_workflow/index.Rmd">here</a>.</p>
 <div id="simple-script-to-start-a-package" class="section level1">
 <h1>Simple Script to Start a Package</h1>
-<p>Most of the work we will cover here will get you up and running for submission to our GitHub-based platform. We will use the <code>devtools</code> and <code>usethis</code> packages to help us with the process of package development. Change <code>&quot;/path/to/packages&quot;</code> to the path where you want the package to be created. The package itself will be a sub-folder of this folder. The script will change directories and then install the necessary packages:</p>
+<p>Most of the work we will cover here will get you up and running for submission to our GitHub-based platform. We will use the following packages:</p>
+<ol style="list-style-type: decimal">
+<li><code>devtools</code> which has a large set of functions for building and checking package</li>
+<li><code>usethis</code> functions to help us with creating additional things like the <code>README</code> file and adding things for GitHub.<br />
+</li>
+<li><code>muschflow</code> - a workflow package I use for my pipeline that wraps <code>usethis</code>.</li>
+</ol>
+<p>In the code below, change <code>&quot;/path/to/packages&quot;</code> to the path where you want the package to be created. The package itself will be a sub-folder of this folder. The script will change directories and then install the necessary packages:</p>
 <pre class="r"><code>setwd(&quot;/path/to/packages&quot;)
 if (!&quot;devtools&quot; %in% installed.packages()){
   install.packages(&quot;devtools&quot;)
