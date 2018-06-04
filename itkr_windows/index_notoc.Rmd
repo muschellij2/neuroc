@@ -1,0 +1,110 @@
+---
+output:
+  html_document:
+    theme: null
+bibliography: ../refs.bib
+---
+---
+title: "Installing ITKR on Windows"
+author: "John Muschelli"
+date: "2018-05-03"
+output: 
+  html_document:
+    keep_md: true
+    theme: cosmo
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+    number_sections: true      
+bibliography: ../refs.bib      
+---
+
+
+
+All code for this document is located [here](https://github.com/muschellij2/neuroc/blob/master/itkr_windows/index.Rmd).
+
+# Why ITKR
+
+`ITKR` is a wrapper for ITK (https://itk.org/), which is the Insight ToolKit or now labeled Insight Segmentation and Registration Toolkit.  ITK provides a whole suite of C++ programs that allow users to perform imaging analyses and many packages rely on this, such as ANTs.  
+
+## Why Windows
+
+
+
+# Installing from Binary
+
+The easiest way to install `ITKR` is through a binary file.  These have been compiled using Appveyor and a workflow using [RTools](https://cran.r-project.org/bin/windows/Rtools/).  The binary files are located at https://github.com/muschellij2/ITKR/releases and will have the extension `.zip`.  Download this file to your hard drive, and then run 
+
+
+```r
+install.packages(pkgs = "/path/to/file.zip", repos = NULL)
+```
+where `/path/to/file.zip` is the location of the file on your computer.  You should now have a working copy of `ITKR`. 
+
+If for any reason, this has some sort of problem or you have a custom setup of your R installation, please go to [Compiling `ITKR` from source](#compiling-itkr-from-source).
+
+# Compiling `ITKR` from source
+
+Compiling `ITKR` from source is rather straightforward on OS X/Linux with standard compilers but some additional steps are required for Windows.  
+
+You will need:
+1. `git` [Download Git here](https://git-scm.com/downloads)
+2. `cmake` [Download CMake here](https://cmake.org/download/)
+3. `RTools` [Download RTools here](https://cran.r-project.org/bin/windows/Rtools/) (Windows Only).
+4. The `devtools` or `remotes` packages (one or the other will do)
+
+```r
+install.packages("devtools")
+install.packages("remotes")
+```
+
+## Why is it a problem on Windows?
+
+Due to some restrictions on file path names in `CMake`, file paths for code cannot be over 50 characters long on Windows.  This issue arises when you install a package via `install_github` and the package is compiled in your temporary directory.   The file is something like `C:\tmpdir\asdfadkljwer\devtools-muschellij2-ITKR-COMMIT`, which is not a problem for other packages not using `CMake`. 
+
+## Putting things in your PATH
+
+
+
+
+**NB**: I am using my fork of ITKR from https://github.com/muschellij2/ITKR, although I am not the author of the package and the original authors package is located at https://github.com/stnava/ITKR.  This is so that I am ensured control of that repo for this downloading purpose. 
+
+
+We will present 2 methods of trying to fix this: 1) building locally and 2) changing your temporary directory.
+ 
+## Building locally 
+
+Here we will use the Git Bash client if you have it available or any terminal 
+```bash
+cd C:\
+git clone https://github.com/muschellij2/ITKR
+R CMD INSTALL ITKR
+```
+
+
+## Changing your temporary directory
+
+```bash
+TMPDIR=C:\
+TMP=C:\
+echo $TMPDIR
+echo $TMP
+R
+```
+
+
+```r
+source("https://neuroconductor.org/neurocLite.R")
+neuroc_install("ITKR")    
+```
+
+
+
+
+# Session Info
+
+
+```r
+devtools::session_info()
+```

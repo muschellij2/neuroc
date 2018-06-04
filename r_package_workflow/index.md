@@ -1,7 +1,7 @@
 ---
 title: "Painlessly Building R Packages"
 author: "John Muschelli"
-date: "2018-03-27"
+date: "2018-06-04"
 output: 
   html_document:
     keep_md: true
@@ -33,13 +33,13 @@ In the code below, change `"/path/to/packages"` to the path where you want the p
 
 ```r
 setwd("/path/to/packages")
-if (!"devtools" %in% installed.packages()){
+if (!"devtools" %in% installed.packages()[, "Package"]){
   install.packages("devtools")
 }
-if (!"usethis" %in% installed.packages()){
+if (!"usethis" %in% installed.packages()[, "Package"]){
   install.packages("usethis")
 }
-if (!"muschflow" %in% installed.packages()){
+if (!"muschflow" %in% installed.packages()[, "Package"]){
   devtools::install_github("muschellij2/muschflow")
 }
 library(devtools)

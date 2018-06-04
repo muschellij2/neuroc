@@ -4,6 +4,21 @@ output:
     theme: null
 bibliography: ../refs.bib
 ---
+---
+title: "Preparing Your Package for for Submission"
+author: "John Muschelli"
+date: "2018-04-19"
+output: 
+  html_document:
+    keep_md: true
+    theme: cosmo
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+    number_sections: true      
+bibliography: ../refs.bib      
+---
 
 
 
@@ -133,7 +148,7 @@ warnings_are_errors: true
 
 so that warnings are treated as errors, which we require in our platform.  
 
-If you would like to test on Mac OSX and Linux (the default is Linux only), addt he following lines.  
+If you would like to test on Mac OSX and Linux (the default is Linux only), add the following lines.  
 
 ```
 os:
@@ -220,13 +235,13 @@ To make your package more user-friendly (and therefore more likely to be used), 
 usethis::use_vignette("my-vignette")
 ```
 
-where you'd change `my-vignette` to the **filename** of hte vignette (which means **no spaces!**).  This will create an [R Markdown](http://rmarkdown.rstudio.com/) vignette with the following metadata:
+where you'd change `my-vignette` to the **filename** of the vignette (which means **no spaces!**).  This will create an [R Markdown](http://rmarkdown.rstudio.com/) vignette with the following metadata:
 
 ```
 ---
 title: "Vignette Title"
 author: "Vignette Author"
-date: "2017-10-05"
+date: "2018-04-19"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}

@@ -128,13 +128,13 @@ devtools::session_info()
 
 ```
 ##  setting  value                       
-##  version  R version 3.4.4 (2018-03-15)
+##  version  R version 3.5.0 (2018-04-23)
 ##  system   x86_64, darwin15.6.0        
 ##  ui       X11                         
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2018-04-19
+##  date     2018-06-04
 ```
 
 ```
@@ -143,31 +143,31 @@ devtools::session_info()
 
 ```
 ##  package   * version date       source                            
-##  backports   1.1.2   2017-12-13 CRAN (R 3.4.3)                    
-##  base      * 3.4.4   2018-03-15 local                             
-##  colorout  * 1.1-0   2015-04-20 Github (jalvesaq/colorout@1539f1f)
-##  compiler    3.4.4   2018-03-15 local                             
-##  datasets  * 3.4.4   2018-03-15 local                             
-##  devtools    1.13.5  2018-02-18 CRAN (R 3.4.3)                    
-##  digest      0.6.15  2018-01-28 CRAN (R 3.4.3)                    
-##  evaluate    0.10.1  2017-06-24 cran (@0.10.1)                    
-##  graphics  * 3.4.4   2018-03-15 local                             
-##  grDevices * 3.4.4   2018-03-15 local                             
-##  htmltools   0.3.6   2017-04-28 CRAN (R 3.4.0)                    
-##  knitr       1.20    2018-02-20 CRAN (R 3.4.3)                    
-##  magrittr    1.5     2014-11-22 CRAN (R 3.4.0)                    
-##  memoise     1.1.0   2017-04-21 CRAN (R 3.4.0)                    
-##  methods     3.4.4   2018-03-15 local                             
-##  Rcpp        0.12.16 2018-03-13 CRAN (R 3.4.4)                    
-##  rmarkdown   1.9     2018-03-01 CRAN (R 3.4.3)                    
-##  rprojroot   1.3-2   2018-01-03 cran (@1.3-2)                     
-##  stats     * 3.4.4   2018-03-15 local                             
-##  stringi     1.1.7   2018-03-12 CRAN (R 3.4.4)                    
-##  stringr     1.3.0   2018-02-19 cran (@1.3.0)                     
-##  tools       3.4.4   2018-03-15 local                             
-##  utils     * 3.4.4   2018-03-15 local                             
-##  withr       2.1.2   2018-03-15 CRAN (R 3.4.3)                    
-##  yaml        2.1.18  2018-03-08 CRAN (R 3.4.4)
+##  backports   1.1.2   2017-12-13 CRAN (R 3.5.0)                    
+##  base      * 3.5.0   2018-04-24 local                             
+##  colorout  * 1.2-0   2018-05-10 Github (jalvesaq/colorout@c42088d)
+##  compiler    3.5.0   2018-04-24 local                             
+##  datasets  * 3.5.0   2018-04-24 local                             
+##  devtools    1.13.5  2018-02-18 CRAN (R 3.5.0)                    
+##  digest      0.6.15  2018-01-28 CRAN (R 3.5.0)                    
+##  evaluate    0.10.1  2017-06-24 CRAN (R 3.5.0)                    
+##  graphics  * 3.5.0   2018-04-24 local                             
+##  grDevices * 3.5.0   2018-04-24 local                             
+##  htmltools   0.3.6   2017-04-28 CRAN (R 3.5.0)                    
+##  knitr       1.20    2018-02-20 CRAN (R 3.5.0)                    
+##  magrittr    1.5     2014-11-22 CRAN (R 3.5.0)                    
+##  memoise     1.1.0   2017-04-21 CRAN (R 3.5.0)                    
+##  methods   * 3.5.0   2018-04-24 local                             
+##  Rcpp        0.12.17 2018-05-18 CRAN (R 3.5.0)                    
+##  rmarkdown   1.9     2018-03-01 CRAN (R 3.5.0)                    
+##  rprojroot   1.3-2   2018-01-03 CRAN (R 3.5.0)                    
+##  stats     * 3.5.0   2018-04-24 local                             
+##  stringi     1.2.2   2018-05-02 CRAN (R 3.5.0)                    
+##  stringr     1.3.1   2018-05-10 CRAN (R 3.5.0)                    
+##  tools       3.5.0   2018-04-24 local                             
+##  utils     * 3.5.0   2018-04-24 local                             
+##  withr       2.1.2   2018-03-15 CRAN (R 3.5.0)                    
+##  yaml        2.1.19  2018-05-01 CRAN (R 3.5.0)
 ```
 
 # References

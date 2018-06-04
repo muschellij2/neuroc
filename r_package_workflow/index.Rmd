@@ -38,13 +38,13 @@ In the code below, change `"/path/to/packages"` to the path where you want the p
 
 ```r
 setwd("/path/to/packages")
-if (!"devtools" %in% installed.packages()){
+if (!"devtools" %in% installed.packages()[, "Package"]){
   install.packages("devtools")
 }
-if (!"usethis" %in% installed.packages()){
+if (!"usethis" %in% installed.packages()[, "Package"]){
   install.packages("usethis")
 }
-if (!"muschflow" %in% installed.packages()){
+if (!"muschflow" %in% installed.packages()[, "Package"]){
   devtools::install_github("muschellij2/muschflow")
 }
 library(devtools)

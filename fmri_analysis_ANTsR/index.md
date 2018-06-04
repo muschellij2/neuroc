@@ -1,7 +1,7 @@
 ---
 title: "An example of an fMRI analysis in ANTsR"
 author: "John Muschelli"
-date: "2017-12-20"
+date: "2018-06-04"
 output: 
   html_document:
     keep_md: true
@@ -19,7 +19,7 @@ All code for this document is located at [here](https://raw.githubusercontent.co
 
 
 
-In this tutorial we will discuss performing some preprocessing of a single subject functional MRI in FSL.  
+In this tutorial we will discuss performing some preprocessing of a single subject functional MRI in `ANTsR`.  
 
 # Data Packages
 
@@ -429,198 +429,177 @@ devtools::session_info()
 ```
 
 ```
-─ Session info ──────────────────────────────────────────────────────────
+Session info -------------------------------------------------------------
+```
+
+```
  setting  value                       
- version  R version 3.4.2 (2017-09-28)
- os       macOS Sierra 10.12.6        
+ version  R version 3.5.0 (2018-04-23)
  system   x86_64, darwin15.6.0        
  ui       X11                         
  language (EN)                        
  collate  en_US.UTF-8                 
  tz       America/New_York            
- date     2017-12-20                  
+ date     2018-06-04                  
+```
 
-─ Packages ──────────────────────────────────────────────────────────────
+```
+Packages -----------------------------------------------------------------
+```
+
+```
  package      * version     date      
  abind          1.4-5       2016-07-21
  animation    * 2.5         2017-03-30
- ANTsR        * 0.7.0       2017-09-30
- ANTsRCore    * 0.4.6.1     2017-10-02
+ ANTsR        * 0.7.2.0     2018-05-18
+ ANTsRCore    * 0.5.0       2018-05-18
  assertthat     0.2.0       2017-04-11
- backports      1.1.1       2017-09-25
- bindr          0.1         2016-11-13
- bindrcpp       0.2         2017-06-17
+ backports      1.1.2       2017-12-13
+ base         * 3.5.0       2018-04-24
+ bindr          0.1.1       2018-03-13
+ bindrcpp       0.2.2       2018-03-29
  bitops         1.0-6       2013-08-17
- cli            1.0.0       2017-11-29
- clisymbols     1.2.0       2017-06-29
- colorout     * 1.1-0       2015-04-20
+ colorout     * 1.2-0       2018-05-10
  colorspace     1.3-2       2016-12-14
- crayon         1.3.4       2017-10-10
- desc           1.1.1.9999  2017-07-26
- devtools       1.13.3.9000 2017-11-29
- digest         0.6.13      2017-12-14
- dplyr        * 0.7.4       2017-09-28
+ compiler       3.5.0       2018-04-24
+ datasets     * 3.5.0       2018-04-24
+ devtools       1.13.5      2018-02-18
+ digest         0.6.15      2018-01-28
+ dplyr        * 0.7.5       2018-05-19
  evaluate       0.10.1      2017-06-24
- extrantsr    * 3.7.1       2017-12-18
- foreign        0.8-69      2017-06-22
- fslr           2.17.3      2017-12-15
- ggplot2      * 2.2.1.9000  2017-11-07
- git2r          0.19.0      2017-07-19
+ foreign        0.8-70      2017-11-28
+ ggplot2      * 2.2.1.9000  2018-06-01
+ git2r          0.21.0.9002 2018-05-30
  glue           1.2.0       2017-10-29
+ graphics     * 3.5.0       2018-04-24
+ grDevices    * 3.5.0       2018-04-24
+ grid           3.5.0       2018-04-24
  gtable         0.2.0       2016-02-26
- hash           2.2.6       2013-02-21
- hms            0.4.0       2017-11-23
  htmltools      0.3.6       2017-04-28
- htmlwidgets    0.9         2017-07-10
- httpuv         1.3.5       2017-07-04
- iterators      1.0.8       2015-10-13
- ITKR           0.4.12.3    2017-08-22
- jsonlite       1.5         2017-06-01
- kirby21.base * 1.6.0       2017-12-14
- kirby21.fmri * 1.6.0       2017-11-07
- knitr          1.17        2017-08-10
+ ITKR           0.4.14.0    2018-05-18
+ kirby21.base * 1.6.0       2017-10-11
+ kirby21.fmri * 1.6.0       2018-02-01
+ knitr          1.20        2018-02-20
  lattice        0.20-35     2017-03-25
- lazyeval       0.2.1.9000  2017-11-07
- magic          1.5-6       2013-11-20
+ lazyeval       0.2.1       2017-10-29
+ magic          1.5-8       2018-01-26
  magrittr       1.5         2014-11-22
- Matrix         1.2-12      2017-11-15
- matrixStats  * 0.52.2      2017-04-14
+ Matrix         1.2-14      2018-04-13
+ matrixStats  * 0.53.1      2018-02-11
  memoise        1.1.0       2017-04-21
- mFilter      * 0.1-3       2007-11-06
- mgcv           1.8-22      2017-09-19
- mime           0.5         2016-07-07
+ methods      * 3.5.0       2018-04-24
  mnormt         1.5-5       2016-10-15
  munsell        0.4.3       2016-02-13
- neurobase    * 1.26.1      2017-12-14
- neuroim        0.0.6       2016-01-07
- nlme           3.1-131     2017-02-06
- oro.nifti    * 0.9.2       2017-12-14
- pkgbuild       0.0.0.9000  2017-11-29
+ neurobase    * 1.26.3      2018-05-11
+ nlme           3.1-137     2018-04-07
+ oro.nifti    * 0.9.6       2018-05-11
+ parallel       3.5.0       2018-04-24
+ pillar         1.2.3       2018-05-25
  pkgconfig      2.0.1       2017-03-21
- pkgload        0.0.0.9000  2017-11-29
  plyr           1.8.4       2016-06-08
- psych          1.7.8       2017-09-09
- R.matlab       3.6.1       2016-10-20
+ psych          1.8.4       2018-05-06
+ purrr          0.2.4       2017-10-18
  R.methodsS3  * 1.7.1       2016-02-16
- R.oo         * 1.21.0      2016-11-01
+ R.oo         * 1.22.0      2018-04-22
  R.utils      * 2.6.0       2017-11-05
  R6             2.2.2       2017-06-17
  RColorBrewer * 1.1-2       2014-12-07
- Rcpp           0.12.14     2017-11-23
- RcppEigen      0.3.3.3.1   2017-11-20
- readr          1.1.1       2017-05-16
- reshape2     * 1.4.2       2016-10-22
- rgl            0.98.22     2017-12-13
- rlang          0.1.4       2017-11-05
- rmarkdown    * 1.8         2017-11-17
+ Rcpp           0.12.17     2018-05-18
+ RcppEigen      0.3.3.4.0   2018-02-07
+ reshape2     * 1.4.3       2017-12-11
+ rlang          0.2.1       2018-05-30
+ rmarkdown      1.9         2018-03-01
  RNifti         0.7.1       2017-09-14
- rprojroot      1.2         2017-01-16
- rsvd           0.6         2016-07-29
- scales         0.5.0.9000  2017-10-05
- sessioninfo    1.0.1.9000  2017-11-29
- shiny          1.0.5       2017-08-23
- stapler        0.6.4       2017-12-05
- stringi        1.1.6       2017-11-17
- stringr        1.2.0       2017-02-18
- testthat       1.0.2.9000  2017-11-29
- tibble         1.3.4       2017-08-22
- usethis        1.1.0.9000  2017-12-07
- WhiteStripe    2.2.2       2017-10-12
- withr          2.1.0       2017-11-01
- xtable         1.8-2       2016-02-05
- yaImpute       1.0-26      2015-07-20
- yaml           2.1.16      2017-12-12
- zoo          * 1.8-0       2017-04-12
- source                                   
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.0)                           
- local                                    
- local                                    
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.2)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.0)                           
- Github (r-lib/cli@ab1c3aa)               
- Github (gaborcsardi/clisymbols@e49b4f5)  
- Github (jalvesaq/colorout@1539f1f)       
- CRAN (R 3.4.0)                           
- Github (gaborcsardi/crayon@b5221ab)      
- Github (muschellij2/desc@d35a9db)        
- Github (hadley/devtools@54498b6)         
- CRAN (R 3.4.2)                           
- CRAN (R 3.4.2)                           
- CRAN (R 3.4.1)                           
- local                                    
- CRAN (R 3.4.2)                           
- local                                    
- Github (tidyverse/ggplot2@47c3f75)       
- CRAN (R 3.4.1)                           
- CRAN (R 3.4.2)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.3)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.1)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.0)                           
- Github (stnava/ITKR@f071cb1)             
- CRAN (R 3.4.0)                           
- Github (muschellij2/kirby21.base@d250fd1)
- Github (muschellij2/kirby21.fmri@be9f44e)
- CRAN (R 3.4.1)                           
- CRAN (R 3.4.2)                           
- Github (hadley/lazyeval@93c455c)         
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.2)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.2)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.0)                           
- Github (muschellij2/neurobase@63ecb9e)   
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.2)                           
- Github (muschellij2/oro.nifti@a799d19)   
- Github (r-lib/pkgbuild@a70858f)          
- CRAN (R 3.4.0)                           
- Github (r-lib/pkgload@70eaef8)           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.1)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.2)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.3)                           
- CRAN (R 3.4.3)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.2)                           
- CRAN (R 3.4.2)                           
- CRAN (R 3.4.2)                           
- CRAN (R 3.4.1)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.0)                           
- Github (hadley/scales@d767915)           
- Github (r-lib/sessioninfo@c871d01)       
- CRAN (R 3.4.1)                           
- local                                    
- CRAN (R 3.4.2)                           
- CRAN (R 3.4.0)                           
- Github (hadley/testthat@6dabfd2)         
- CRAN (R 3.4.1)                           
- Github (r-lib/usethis@3de3ac7)           
- local                                    
- CRAN (R 3.4.2)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.2)                           
- CRAN (R 3.4.0)                           
+ rprojroot      1.3-2       2018-01-03
+ rsvd           0.9         2017-12-08
+ scales         0.5.0       2017-08-24
+ splines        3.5.0       2018-04-24
+ stats        * 3.5.0       2018-04-24
+ stringi        1.2.2       2018-05-02
+ stringr        1.3.1       2018-05-10
+ tibble         1.4.2       2018-01-22
+ tidyselect     0.2.4       2018-02-26
+ tools          3.5.0       2018-04-24
+ utils        * 3.5.0       2018-04-24
+ withr          2.1.2       2018-03-15
+ yaml           2.1.19      2018-05-01
+ zoo          * 1.8-1       2018-01-08
+ source                                
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ Github (ANTsX/ANTsR@91d252a)          
+ Github (stnava/ANTsRCore@44ee82c)     
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ local                                 
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ Github (jalvesaq/colorout@c42088d)    
+ CRAN (R 3.5.0)                        
+ local                                 
+ local                                 
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ Github (tidyverse/ggplot2@66ebf0a)    
+ Github (ropensci/git2r@866b14b)       
+ CRAN (R 3.5.0)                        
+ local                                 
+ local                                 
+ local                                 
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ Github (stnava/ITKR@805a390)          
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ local                                 
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ Github (muschellij2/neurobase@471a35d)
+ CRAN (R 3.5.0)                        
+ Github (bjw34032/oro.nifti@c84ab00)   
+ local                                 
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ cran (@0.2.1)                         
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ local                                 
+ local                                 
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ local                                 
+ local                                 
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
+ CRAN (R 3.5.0)                        
 ```
 
 # References

@@ -33,7 +33,7 @@ library(zoo)
 knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "")
 ```
 
-In this tutorial we will discuss performing some preprocessing of a single subject functional MRI in FSL.  
+In this tutorial we will discuss performing some preprocessing of a single subject functional MRI in `ANTsR`.  
 
 # Data Packages
 
