@@ -24,11 +24,11 @@ All code for this document is located at [here](https://raw.githubusercontent.co
 
 
 
-In [Processing Within-Visit MRI](neuroc-help-preprocess-mri-within) we show how to register a T1-weighted image to the Eve template.  The Eve template has two full brain segmentations and one white matter segmentations, each done by hand.  I will refer to these as "atlases" because they tell you "where" you are in the brain with the corresponding labels.
+In [Processing Within-Visit MRI](preprocess-mri-within) we show how to register a T1-weighted image to the Eve template.  The Eve template has two full brain segmentations and one white matter segmentations, each done by hand.  I will refer to these as "atlases" because they tell you "where" you are in the brain with the corresponding labels.
 
 # Labels in template space
 
-In [Processing Within-Visit MRI](neuroc-help-preprocess-mri-within), we registered the T1 image to the Eve template using a non-linear registration (SyN) [@avants_symmetric_2008].  Also, we applied this transformation to the intensity-normalized T1, T2, and FLAIR images, so that these image are located in the same space as the Eve atlases.  We can overlay the atlases on these registered images and look at the average intensity of each structure for each imaging sequence.
+In [Processing Within-Visit MRI](preprocess-mri-within), we registered the T1 image to the Eve template using a non-linear registration (SyN) [@avants_symmetric_2008].  Also, we applied this transformation to the intensity-normalized T1, T2, and FLAIR images, so that these image are located in the same space as the Eve atlases.  We can overlay the atlases on these registered images and look at the average intensity of each structure for each imaging sequence.
 
 ## Reading in registered images
 
@@ -322,7 +322,7 @@ In the above section, we registered the subject's T1 image to the Eve template a
 
 ## Registration of Eve to the subject T1
 
-Here we will use the N4 corrected, processed images from [Processing Within-Visit MRI](neuroc-help-preprocess-mri-within) and register the Eve T1 brain to the processed T1 image.  Let us get the filenames that we want:
+Here we will use the N4 corrected, processed images from [Processing Within-Visit MRI](preprocess-mri-within) and register the Eve T1 brain to the processed T1 image.  Let us get the filenames that we want:
 
 
 ```r
@@ -338,7 +338,7 @@ n4_files = file.path("..",
 names(n4_files) = mods
 ```
 
-Now we can register **Eve to the subject T1** (note this is the opposite from [Processing Within-Visit MRI](neuroc-help-preprocess-mri-within)).  We will use a `NearestNeighbor` interpolator here.  For the Eve brain image, this may not be a good interpolation and usually we would use a windowed sinc or linear interpolator.  
+Now we can register **Eve to the subject T1** (note this is the opposite from [Processing Within-Visit MRI](preprocess-mri-within)).  We will use a `NearestNeighbor` interpolator here.  For the Eve brain image, this may not be a good interpolation and usually we would use a windowed sinc or linear interpolator.  
 
 We are using `NearestNeighbor` here for the labels, so that after interpolation, the value of the voxel in subject space is from the nearest neighbor, which ensures that the label is a integer within the origninal set.  For example, let's say after registration, a voxel is near labels 1 and 5.  If we used an averaging interpolator (windowed sinc or linear), it may give the value of 3, which is an **entirely different label** and may not represent anything remotely close to correct.  Moreover, these are labels so the numbering is arbirtrary, categorical values.  Let's say we shuffled the labels on the Eve atlas (but kept track of the structures), then the atlas is exactly the same.  But if we applied the transformation to this shuffled atlas, the voxel may be near labels 420 and 6, which average to 120 or something.  Thus, we want the interpolation for the labels to result in picking from a label set, which we generall would use `NearestNeighbor` or `multiLabel`, see `antsApplyTransforms`.  
 

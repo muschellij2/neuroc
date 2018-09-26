@@ -82,9 +82,13 @@ notoc = function(
     ###############################
     # Replacing references with the neuroc ones for index
     ###############################
-    index_notoc = gsub("(../index.html)", "(neuroc-help)", index_notoc,
-                       fixed = TRUE)
+    # index_notoc = gsub("(../index.html)", "(neuroc-help)", index_notoc,
+    #                    fixed = TRUE)
 
+    index_notoc = gsub("(../index.html)", "(..)", index_notoc,
+                       fixed = TRUE)
+    
+    
     ###############################
     # Finding references to other tutorials
     ###############################
@@ -117,7 +121,7 @@ notoc = function(
         ind = grepl("^___", x)
         x[ind] = gsub("___", "", x[ind])
         x[ind] = gsub("_", "-", x[ind])
-        x[ind] = paste0("neuroc-help-", x[ind])
+        # x[ind] = paste0("neuroc-help-", x[ind])
         x = paste(x, collapse = "")
         return(x)
       })

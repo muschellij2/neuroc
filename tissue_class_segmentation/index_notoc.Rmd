@@ -28,7 +28,7 @@ In this tutorial we will discuss performing tissue class segmentation using `atr
 
 # Data Packages
 
-For this analysis, I will use one subject from the Kirby 21 data set.  The `kirby21.base` and `kirby21.fmri` packages are necessary for this analysis and have the data we will be working on.  You need devtools to install these.  Please refer to [installing devtools](neuroc-help-installing-devtools) for additional instructions or troubleshooting.
+For this analysis, I will use one subject from the Kirby 21 data set.  The `kirby21.base` and `kirby21.fmri` packages are necessary for this analysis and have the data we will be working on.  You need devtools to install these.  Please refer to [installing devtools](installing-devtools) for additional instructions or troubleshooting.
 
 
 
@@ -64,7 +64,7 @@ t1_fname = fnames$T1[1]
 
 ## Brain extracted image
 
-Please visit the [brain extraction tutorial](neuroc-help-brain-extraction) on how to extract a brain from this image.  We will use the output from `fslbet_robust` from that tutorial.  
+Please visit the [brain extraction tutorial](brain-extraction) on how to extract a brain from this image.  We will use the output from `fslbet_robust` from that tutorial.  
 
 
 ```r
@@ -231,7 +231,7 @@ rm(list = "df")
 
 ## Tissue-Class Segmentation with SPM
 
-In the [brain extraction tutorial](neuroc-help-brain-extraction) we discuss the SPM segmenation procedures and show how to use them to produce hard segmentations, probability maps, and a brain extracted image.  We will use the results of that tutorial to compare to that of `atropos`.  We will exclude any tissues outside of GM, WM, and CSF (those > 3).
+In the [brain extraction tutorial](brain-extraction) we discuss the SPM segmenation procedures and show how to use them to produce hard segmentations, probability maps, and a brain extracted image.  We will use the results of that tutorial to compare to that of `atropos`.  We will exclude any tissues outside of GM, WM, and CSF (those > 3).
 
 
 ```r
@@ -367,7 +367,7 @@ rm(list = "df")
 
 ## Discussion
 
-Note, `atropos` and `fast` generally require a skull-stripped image.  Many skull-stripping algorithms remove the extra-cortical areas of the brain but inside the skull, which generally are CSF spaces with meninges.  These CSF spaces are dropped after skull-stripping/brain extraction.  If we are trying to consistently measure the CSF or "whole brain volume" (if that includes CSF spaces), this may cause issues.  The SPM segmentation usually includes more CSF spaces, but we have shown in the [brain extraction tutorial](neuroc-help-brain-extraction) that there are areas that BET denotes as brain and SPM does not on the surface.   
+Note, `atropos` and `fast` generally require a skull-stripped image.  Many skull-stripping algorithms remove the extra-cortical areas of the brain but inside the skull, which generally are CSF spaces with meninges.  These CSF spaces are dropped after skull-stripping/brain extraction.  If we are trying to consistently measure the CSF or "whole brain volume" (if that includes CSF spaces), this may cause issues.  The SPM segmentation usually includes more CSF spaces, but we have shown in the [brain extraction tutorial](brain-extraction) that there are areas that BET denotes as brain and SPM does not on the surface.   
 
 
 # Session Info

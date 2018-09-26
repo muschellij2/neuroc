@@ -33,7 +33,7 @@ We will show you a few steps that have been implemented in `rcamino`: `camino_po
 
 
 # Reading in the Data
-First, we download the data from HCP.  You must have your access keys set (see [Getting Data from the Human Connectome Project (HCP)](neuroc-help-neurohcp)).  
+First, we download the data from HCP.  You must have your access keys set (see [Getting Data from the Human Connectome Project (HCP)](neurohcp)).  
 
 We will use the `neurohcp` package to download one subject data.
 

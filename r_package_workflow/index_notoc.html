@@ -12,9 +12,9 @@
 
 <meta name="author" content="John Muschelli" />
 
-<meta name="date" content="2018-03-27" />
+<meta name="date" content="2018-06-04" />
 
-<title>Painlessly Building R Packages</title>
+<title>index_notoc.utf8.md</title>
 
 <style type="text/css">.hljs-literal {
 color: #990073;
@@ -60,7 +60,7 @@ if (window.hljs) {
 
 <h1 class="title toc-ignore">Painlessly Building R Packages</h1>
 <h4 class="author"><em>John Muschelli</em></h4>
-<h4 class="date"><em>2018-03-27</em></h4>
+<h4 class="date"><em>2018-06-04</em></h4>
 
 
 
@@ -76,13 +76,13 @@ if (window.hljs) {
 </ol>
 <p>In the code below, change <code>&quot;/path/to/packages&quot;</code> to the path where you want the package to be created. The package itself will be a sub-folder of this folder. The script will change directories and then install the necessary packages:</p>
 <pre class="r"><code>setwd(&quot;/path/to/packages&quot;)
-if (!&quot;devtools&quot; %in% installed.packages()){
+if (!&quot;devtools&quot; %in% installed.packages()[, &quot;Package&quot;]){
   install.packages(&quot;devtools&quot;)
 }
-if (!&quot;usethis&quot; %in% installed.packages()){
+if (!&quot;usethis&quot; %in% installed.packages()[, &quot;Package&quot;]){
   install.packages(&quot;usethis&quot;)
 }
-if (!&quot;muschflow&quot; %in% installed.packages()){
+if (!&quot;muschflow&quot; %in% installed.packages()[, &quot;Package&quot;]){
   devtools::install_github(&quot;muschellij2/muschflow&quot;)
 }
 library(devtools)

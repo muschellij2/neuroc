@@ -5,7 +5,7 @@ output:
 ---
 ---
 title: "Neuroconductor"
-date: '2018-04-19'
+date: '2018-06-04'
 output: 
   html_document:
     keep_md: true
@@ -18,49 +18,49 @@ output:
 
 # Guides for Developers {#devguides}
 
-1. [Preparing Your Package for Submission](neuroc-help-getting-ready-for-submission)
-2. [Changes to your Package](neuroc-help-continuous-integration)
+1. [Preparing Your Package for Submission](getting-ready-for-submission)
+2. [Changes to your Package](continuous-integration)
 
 # Frequently Asked Questions (FAQ)
 
-Please visit the [FAQ](neuroc-help-faq) for information on how to begin.
+Please visit the [FAQ](faq) for information on how to begin.
 
 # Installation Guides {#install}
 
-1. [Installing devtools](neuroc-help-installing-devtools)
-2. [Installing ANTsR](neuroc-help-installing-antsr)
+1. [Installing devtools](installing-devtools)
+2. [Installing ANTsR](installing-antsr)
 
 # Required Readings {#req}
 
-1. [NIfTI Basics](neuroc-help-nifti-basics)
+1. [NIfTI Basics](nifti-basics)
 
 # Data
-1. [Downloading Human Connectome Project Data](neuroc-help-neurohcp)
-1. [Downloading Functional Connectomes Projects](neuroc-help-fcp-indi)
+1. [Downloading Human Connectome Project Data](neurohcp)
+1. [Downloading Functional Connectomes Projects](fcp-indi)
 
 # General Tutorials {#tutorials}
 
 ## Structural Imaging
 
-1. [Brain Extraction](neuroc-help-brain-extraction)
-2. [Tissue-Class Segmentation](neuroc-help-tissue-class-segmentation)
-3. [Labeling Brain Structures](neuroc-help-label-image)
-6. [Processing Within-Visit Structural MRI](neuroc-help-preprocess-mri-within)
-9. [Cortical Thickness Estimation (NOT DONE)](neuroc-help-cortical-thickness)
+1. [Brain Extraction](brain-extraction)
+2. [Tissue-Class Segmentation](tissue-class-segmentation)
+3. [Labeling Brain Structures](label-image)
+6. [Processing Within-Visit Structural MRI](preprocess-mri-within)
+9. [Cortical Thickness Estimation (NOT DONE)](cortical-thickness)
 
 ## fMRI 
 
-4. [Resting-State fMRI analysis using ANTsR](neuroc-help-fmri-analysis-antsr)
-5. [Resting-State fMRI analysis using fslr](neuroc-help-fmri-analysis-fslr)
-5. [Resting-State fMRI analysis using spm12r](neuroc-help-fmri-analysis-spm12r)
+4. [Resting-State fMRI analysis using ANTsR](fmri-analysis-antsr)
+5. [Resting-State fMRI analysis using fslr](fmri-analysis-fslr)
+5. [Resting-State fMRI analysis using spm12r](fmri-analysis-spm12r)
 
 ## DTI
-7. [DTI analysis with fslr](neuroc-help-dti-analysis-fslr)
-8. [DTI analysis with Camino](neuroc-help-dti-analysis-rcamino)
-8. [DTI analysis with Camino with HCP data](neuroc-help-dti-analysis-rcamino-hcp)
+7. [DTI analysis with fslr](dti-analysis-fslr)
+8. [DTI analysis with Camino](dti-analysis-rcamino)
+8. [DTI analysis with Camino with HCP data](dti-analysis-rcamino-hcp)
 
 # Disease-specific Tutorials
 
-1. [Multiple Sclerosis Lesion Segmentation](neuroc-help-ms-lesion)
+1. [Multiple Sclerosis Lesion Segmentation](ms-lesion)
 
 

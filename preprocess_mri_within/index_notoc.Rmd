@@ -30,7 +30,7 @@ In this tutorial we will discuss within a visit registration (co-registration) o
 
 # Data Packages
 
-For this analysis, I will use one subject from the Kirby 21 data set.  The `kirby21.base` and `kirby21.fmri` packages are necessary for this analysis and have the data we will be working on.  You need devtools to install these.  Please refer to [installing devtools](neuroc-help-installing-devtools) for additional instructions or troubleshooting.
+For this analysis, I will use one subject from the Kirby 21 data set.  The `kirby21.base` and `kirby21.fmri` packages are necessary for this analysis and have the data we will be working on.  You need devtools to install these.  Please refer to [installing devtools](installing-devtools) for additional instructions or troubleshooting.
 
 
 
@@ -82,7 +82,7 @@ The function `preprocess_mri_within` from `extrantsr` wraps a series of steps.  
 2.  Estimate the transformation to the first file (T1 image).
 3.  Perform this transformation, registering the images, and interpolating the images using a Lanczos windowed sinc interpolator.
 
-`preprocess_mri_within` can also perform skull stripping using BET, but we have shown in the [brain extraction tutorial](neuroc-help-brain-extraction) that running BET without running neck removal.
+`preprocess_mri_within` can also perform skull stripping using BET, but we have shown in the [brain extraction tutorial](brain-extraction) that running BET without running neck removal.
 
 
 ```r
@@ -125,7 +125,7 @@ NULL
 
 ## Brain Extraction of the T1 image
 
-Similar to the [brain extraction tutorial](neuroc-help-brain-extraction), we can run `fslbet_robust` to get a good brain mask for the T1 image.  
+Similar to the [brain extraction tutorial](brain-extraction), we can run `fslbet_robust` to get a good brain mask for the T1 image.  
 
 
 ```r

@@ -111,7 +111,7 @@ All code for the tutorials and installation guides can be located at [https://gi
 
 <!-- ## Where should I start? -->
 
-The workflow is that one would go through [Installation Guides](neuroc-help), then [Required Readings](neuroc-help), and then to any specific [Tutorial](neuroc-help) that a reader would like to learn about. 
+The workflow is that one would go through [Installation Guides](..), then [Required Readings](..), and then to any specific [Tutorial](..) that a reader would like to learn about. 
 <!--html_preserve--></div> </div> </div><!--/html_preserve-->
 
 

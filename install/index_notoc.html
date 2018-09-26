@@ -12,7 +12,7 @@
 
 
 
-<title>index_notoc.utf8</title>
+<title>index_notoc.utf8.md</title>
 
 <style type="text/css">.hljs-literal {
 color: #990073;
@@ -60,9 +60,9 @@ if (window.hljs) {
 
 
 <p>All code for this document is located at <a href="https://raw.githubusercontent.com/muschellij2/neuroc/master/install/index.R">here</a>.</p>
-<section id="installing-neuroconductor-packages" class="level1">
+<div id="installing-neuroconductor-packages" class="section level1">
 <h1>Installing Neuroconductor Packages</h1>
-<p><a href="#installing-and-starting-r">Install and start the latest release version of R</a>. Although the installer will try to download and install <code>devtools</code>, there may be some system requirements for <code>devtools</code> that you may need before going forward. Please visit <a href="neuroc-help-installing-devtools">installing devtools</a> before going forward if you do not have <code>devtools</code> currently installed.</p>
+<p><a href="#installing-and-starting-r">Install and start the latest release version of R</a>. Although the installer will try to download and install <code>devtools</code>, there may be some system requirements for <code>devtools</code> that you may need before going forward. Please visit <a href="installing-devtools">installing devtools</a> before going forward if you do not have <code>devtools</code> currently installed.</p>
 <p>Then, you can install a package using the following command:</p>
 <pre class="r"><code>## try http:// if https:// URLs are supported
 source(&quot;https://neuroconductor.org/neurocLite.R&quot;)
@@ -70,64 +70,64 @@ neuro_install(&quot;PACKAGE&quot;)</code></pre>
 <p>where <code>PACKAGE</code> is the name of the package you’d like to install, such as <code>fslr</code>. For example, if we want to install <code>neurohcp</code> and <code>fslr</code> we can run:</p>
 <pre class="r"><code>source(&quot;https://neuroconductor.org/neurocLite.R&quot;)
 neuro_install(c(&quot;fslr&quot;, &quot;neurohcp&quot;))</code></pre>
-<section id="installing-the-neurocinstall-package" class="level3">
+<div id="installing-the-neurocinstall-package" class="section level3">
 <h3>Installing the <code>neurocInstall</code> package</h3>
 <p>The <code>neurocInstall</code> package contains the <code>neurocLite</code>/<code>neuro_install</code> functions, as well as others relevant for Neuroconductor. You can install the package as follows:</p>
 <pre class="r"><code>source(&quot;https://neuroconductor.org/neurocLite.R&quot;)
 neuro_install(&quot;neurocInstall&quot;)</code></pre>
 <p>After installation, you can use <code>neurocInstall::neurocLite()</code> to install packages without source-ing the URL above.</p>
-</section>
-<section id="installing-stablecurrentrelease-versions" class="level2">
+</div>
+<div id="installing-stablecurrentrelease-versions" class="section level2">
 <h2>Installing Stable/Current/Release Versions</h2>
-<section id="stable-versions" class="level3">
+<div id="stable-versions" class="section level3">
 <h3>Stable Versions</h3>
 <p>In Neuroconductor, there are stable versions, which correspond to a submitted package. This stable version has passed the Neuroconductor checks on Travis for Linux using the other packages in Neuroconductor that are in Neuroconductor at the time of submission. Thus, if you install this package with all the dependencies listed for this package (using specific Neuroconductor versions), it should work.</p>
 <p>To install a stable version (which should be the default), you can run:</p>
 <pre class="r"><code>source(&quot;https://neuroconductor.org/neurocLite.R&quot;)
 neuro_install(c(&quot;fslr&quot;, &quot;neurohcp&quot;), release = &quot;stable&quot;)</code></pre>
-</section>
-<section id="current-versions" class="level3">
+</div>
+<div id="current-versions" class="section level3">
 <h3>Current Versions</h3>
 <p>In Neuroconductor, a “current” version mirrors the repository of the developer of the package. This does not ensure that the package is passing Neuroconductor checks, but will give you the development version from that developer. This, at least, standardizes the username for all the repositories in Neuroconductor. You can install a current version using:</p>
 <pre class="r"><code>source(&quot;https://neuroconductor.org/neurocLite.R&quot;)
 neuro_install(c(&quot;fslr&quot;, &quot;neurohcp&quot;), release = &quot;current&quot;)</code></pre>
-</section>
-<section id="release-versions" class="level3">
+</div>
+<div id="release-versions" class="section level3">
 <h3>Release Versions</h3>
 <p>Every few months, we snapshot all of Neuroconductor in their current forms. We save the source tarballs as well as the binary releases from Travis and Appveyor. We then host these releases on the Neuroconductor website. These downloads are stable in time and will not be changed until the next release. These downloads are also logged to show the activity/amount of use for each package of this release. To install the release, you would use:</p>
 <pre class="r"><code>source(&quot;https://neuroconductor.org/neurocLite.R&quot;)
 neuro_install(c(&quot;fslr&quot;, &quot;neurohcp&quot;), release = &quot;release&quot;)</code></pre>
 <p>See the <code>release_repo</code> argument for how to specify which release to use.</p>
-</section>
-<section id="neuroclite-an-alias-for-neuro_install" class="level3">
+</div>
+<div id="neuroclite-an-alias-for-neuro_install" class="section level3">
 <h3><code>neurocLite</code>: an alias for <code>neuro_install</code></h3>
 <p>As Bioconductor uses the <code>biocLite</code> function to install packages, we have created a duplicate of <code>neuro_install</code>, called <code>neurocLite</code>, for ease of use for those users accustomed to Bioconductor. The same command could have been executed as follows:</p>
 <pre class="r"><code>source(&quot;https://neuroconductor.org/neurocLite.R&quot;)
 neurocLite(c(&quot;fslr&quot;, &quot;neurohcp&quot;))</code></pre>
-</section>
-</section>
-<section id="installing-neuroconductor-packages-without-upgrading-dependencies" class="level2">
+</div>
+</div>
+<div id="installing-neuroconductor-packages-without-upgrading-dependencies" class="section level2">
 <h2>Installing Neuroconductor Packages without upgrading dependencies</h2>
 <p>The <code>neurocLite</code>/<code>neuro_install</code> functions depend on <code>devtools::install_github</code>, which will upgrade dependencies by default, which is recommended. If you would like to install a package, but not upgrade the dependencies (missing dependencies will still be installed), you can set the <code>upgrade_dependencies</code> argument to <code>FALSE</code>:</p>
 <pre class="r"><code>neurocLite(c(&quot;fslr&quot;, &quot;neurohcp&quot;), upgrade_dependencies = FALSE)</code></pre>
-</section>
-</section>
-<section id="installing-and-starting-r" class="level1">
+</div>
+</div>
+<div id="installing-and-starting-r" class="section level1">
 <h1>Installing and starting R</h1>
-<ol type="1">
+<ol style="list-style-type: decimal">
 <li><p>Download the most recent version of R from <a href="https://cran.r-project.org/" class="uri">https://cran.r-project.org/</a>. There are detailed instructions on the R website as well as the specific R installation for the platform you are using, typically Linux, OSX, and Windows.</p></li>
 <li><p>Start R; we recommend using R through <a href="https://www.rstudio.com/">RStudio</a>. You can start R using RStudio (Windows, OSX, Linux), typing “R” at in a terminal (Linux or OSX), or using the R application either by double-clicking on the R application (Windows and OSX).</p></li>
 <li><p>For learning R, there are many resources such as <a href="http://tryr.codeschool.com/">Try-R at codeschool</a> and <a href="https://www.datacamp.com/getting-started?step=2&amp;track=r">DataCamp</a>.</p></li>
 </ol>
-</section>
-<section id="packages-not-available-on-neuroconductor" class="level1">
+</div>
+<div id="packages-not-available-on-neuroconductor" class="section level1">
 <h1>Packages not available on Neuroconductor</h1>
 <p>If a package is not in the Neuroconductor <a href="https://neuroconductor.org/list-packages/all">list of packages</a>, then it is not located on the <a href="https://github.com/neuroconductor?tab=repositories">Neuroconductor Github</a>. Therefore, when installing, you’ll get the following error:</p>
 <pre class="r"><code>Error in neuro_install(...) : 
   Package(s) PACKAGE_TRIED_TO_INSTALL are not in neuroconductor</code></pre>
 <p>Once a package is located on the list of packages, then it will be available to install.</p>
-</section>
-<section id="session-info" class="level1">
+</div>
+<div id="session-info" class="section level1">
 <h1>Session Info</h1>
 <pre class="r"><code>devtools::session_info()</code></pre>
 <pre><code>## ─ Session info ──────────────────────────────────────────────────────────
@@ -200,10 +200,10 @@ neurocLite(c(&quot;fslr&quot;, &quot;neurohcp&quot;))</code></pre>
 ##  Github (r-lib/usethis@3de3ac7)         
 ##  CRAN (R 3.4.2)                         
 ##  CRAN (R 3.4.2)</code></pre>
-</section>
-<section id="references" class="level1">
+</div>
+<div id="references" class="section level1">
 <h1>References</h1>
-</section>
+</div>
 
 
 
