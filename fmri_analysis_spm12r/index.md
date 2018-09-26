@@ -1,6 +1,17 @@
-# An example of an fMRI analysis in SPM12
-John Muschelli  
-`r Sys.Date()`  
+---
+title: "An example of an fMRI analysis in SPM12"
+author: "John Muschelli"
+date: "2018-09-26"
+output: 
+  html_document:
+    keep_md: true
+    theme: cosmo
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+    number_sections: true      
+---
 
 
 
@@ -559,7 +570,7 @@ Here we will perform spatial smoothing of the 4D fMRI data in template space.  W
 $$
 FWHM = \sigma \sqrt{8 \log(2)}
 $$
-where $\log$` is the natural log.  
+where $\log$ is the natural log.  
 
 
 ```r
