@@ -1,6 +1,7 @@
 wget -O getting_ready_for_submission.html https://raw.githubusercontent.com/muschellij2/neuroc/master/getting_ready_for_submission/index_notoc.html
 wget -O continuous_integration.html https://raw.githubusercontent.com/muschellij2/neuroc/master/continuous_integration/index_notoc.html
 wget -O faq.html https://raw.githubusercontent.com/muschellij2/neuroc/master/faq/index_notoc.html
+wget -O windows_wsl.html https://raw.githubusercontent.com/muschellij2/neuroc/master/windows_wsl/index_notoc.html
 wget -O installing_devtools.html https://raw.githubusercontent.com/muschellij2/neuroc/master/installing_devtools/index_notoc.html
 wget -O installing_ANTsR.html https://raw.githubusercontent.com/muschellij2/neuroc/master/installing_ANTsR/index_notoc.html
 wget -O nifti_basics.html https://raw.githubusercontent.com/muschellij2/neuroc/master/nifti_basics/index_notoc.html

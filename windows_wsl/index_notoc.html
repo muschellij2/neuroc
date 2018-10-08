@@ -10,6 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<meta name="author" content="John Muschelli" />
 
 <meta name="date" content="2018-10-08" />
 
@@ -57,77 +58,100 @@ if (window.hljs) {
 
 
 
-<h1 class="title toc-ignore">Neuroconductor</h1>
+<h1 class="title toc-ignore">Installing on the Windows Subsystem for Linux (WSL)</h1>
+<h4 class="author"><em>John Muschelli</em></h4>
 <h4 class="date"><em>2018-10-08</em></h4>
 
 
 
-<div id="devguides" class="section level1">
-<h1>Guides for Developers</h1>
+<p>All code for this document is located <a href="https://github.com/muschellij2/neuroc/blob/master/windows_wsl/index.Rmd">here</a>.</p>
+<p>Here we will discuss hwo to get FSL (and other Linux only applications) onto a Windows machine using the <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Windows Subsystem for Linux (WSL)</a>. All of these instructions require Windows 10 or higher. Some of this content was adapted from <a href="http://www.nemotos.net/?p=1481" class="uri">http://www.nemotos.net/?p=1481</a>.</p>
+<div id="install-linux-subsystem" class="section level1">
+<h1>Install Linux Subsystem</h1>
+<p>Information below can be found here (<a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10" class="uri">https://docs.microsoft.com/en-us/windows/wsl/install-win10</a>)</p>
 <ol style="list-style-type: decimal">
-<li><a href="getting-ready-for-submission">Preparing Your Package for Submission</a></li>
-<li><a href="continuous-integration">Changes to your Package</a></li>
+<li>Enable <strong>“Windows Subsystem for Linux”</strong> feature using one of the options here</li>
 </ol>
-</div>
-<div id="frequently-asked-questions-faq" class="section level1">
-<h1>Frequently Asked Questions (FAQ)</h1>
-<p>Please visit the <a href="faq">FAQ</a> for information on how to begin.</p>
-</div>
-<div id="install" class="section level1">
-<h1>Installation Guides</h1>
-<ol style="list-style-type: decimal">
-<li><a href="windows-wsl">Using the Windows Subsystem for Linux</a></li>
-<li><a href="installing-devtools">Installing devtools</a></li>
-<li><a href="installing-antsr">Installing ANTsR</a></li>
+<ul>
+<li>Option 1 (easy): Check the appropriate box within “Turn Windows features on or off” dialog box. (Open Settings -&gt; Search “programs” -&gt; Select “Turn Windows features on or off”) Step 1b: You will need to restart your computer, as prompted, after this feature is enabled.</li>
+<li>Option 1 (faster but harder): Use Command-Line/PowerShell by pasting in the code below</li>
+</ul>
+<pre><code>Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux </code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Download and install your preferred Linux distribution from the Windows Store – Ubuntu is the recommended distribution. There are other options to download from Command-Line/Script or download and manually Unpack/Install.</p></li>
+<li><p>Open Ubuntu. Here we will set up <a href="http://neuro.debian.net/">NeuroDebian</a> using <code>bash</code>, which houses a ton of neuroimaging software:</p></li>
 </ol>
-</div>
-<div id="req" class="section level1">
-<h1>Required Readings</h1>
-<ol style="list-style-type: decimal">
-<li><a href="nifti-basics">NIfTI Basics</a></li>
-</ol>
-</div>
-<div id="data" class="section level1">
-<h1>Data</h1>
-<ol style="list-style-type: decimal">
-<li><a href="neurohcp">Downloading Human Connectome Project Data</a></li>
-<li><a href="fcp-indi">Downloading Functional Connectomes Projects</a></li>
-</ol>
-</div>
-<div id="tutorials" class="section level1">
-<h1>General Tutorials</h1>
-<div id="structural-imaging" class="section level2">
-<h2>Structural Imaging</h2>
-<ol style="list-style-type: decimal">
-<li><a href="brain-extraction">Brain Extraction</a></li>
-<li><a href="tissue-class-segmentation">Tissue-Class Segmentation</a></li>
-<li><a href="label-image">Labeling Brain Structures</a></li>
-<li><a href="preprocess-mri-within">Processing Within-Visit Structural MRI</a></li>
-<li><a href="cortical-thickness">Cortical Thickness Estimation (NOT DONE)</a></li>
-</ol>
-</div>
-<div id="fmri" class="section level2">
-<h2>fMRI</h2>
+<pre class="bash"><code>sudo apt-get update -qq -y
+sudo apt-get install -y wget git
+OS_DISTRIBUTION=$(lsb_release -cs)
+wget -O- http://neuro.debian.net/lists/${OS_DISTRIBUTION}.us-nh.full | sudo tee /etc/apt/sources.list.d/neurodebian.sources.list
+sudo apt-key adv --recv-keys --keyserver hkp://pool.sks-keyservers.net:80 0xA5D32F012649A5A9
+sudo apt-get update</code></pre>
 <ol start="4" style="list-style-type: decimal">
-<li><a href="fmri-analysis-antsr">Resting-State fMRI analysis using ANTsR</a></li>
-<li><a href="fmri-analysis-fslr">Resting-State fMRI analysis using fslr</a></li>
-<li><a href="fmri-analysis-spm12r">Resting-State fMRI analysis using spm12r</a></li>
+<li>Install FSL:</li>
 </ol>
-</div>
-<div id="dti" class="section level2">
-<h2>DTI</h2>
-<ol start="7" style="list-style-type: decimal">
-<li><a href="dti-analysis-fslr">DTI analysis with fslr</a></li>
-<li><a href="dti-analysis-rcamino">DTI analysis with Camino</a></li>
-<li><a href="dti-analysis-rcamino-hcp">DTI analysis with Camino with HCP data</a></li>
+<pre class="bash"><code>sudo apt-get install fsl</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Run these following commands:</li>
 </ol>
+<pre class="bash"><code>echo &quot;. /etc/fsl/fsl.sh&quot; &gt;&gt; ~/.bashrc
+echo &quot;export DISPLAY=localhost:0.0&quot; &gt;&gt; ~/.bashrc</code></pre>
+<p>This will set up the FSL environment whenever you have <code>bash</code> opened up in a new window. Also, this will allow FSL to open displays on the machine.</p>
 </div>
-</div>
-<div id="disease-specific-tutorials" class="section level1">
-<h1>Disease-specific Tutorials</h1>
+<div id="getting-windows-to-pop-up" class="section level1">
+<h1>Getting Windows to Pop up</h1>
 <ol style="list-style-type: decimal">
-<li><a href="ms-lesion">Multiple Sclerosis Lesion Segmentation</a></li>
+<li>In Linux, Install <code>x11</code> apps (<a href="https://virtualizationreview.com/articles/2017/02/08/graphical-programs-on-windows-subsystem-on-linux.aspx" class="uri">https://virtualizationreview.com/articles/2017/02/08/graphical-programs-on-windows-subsystem-on-linux.aspx</a>):</li>
 </ol>
+<pre class="bash"><code>sudo apt-get install x11-apps</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Start <a href="https://sourceforge.net/projects/xming/">Xming</a> (or other x11 app) on the <strong>Windows</strong> side.</li>
+</ol>
+</div>
+<div id="setting-up-r" class="section level1">
+<h1>Setting up <code>R</code></h1>
+<ol style="list-style-type: decimal">
+<li>Install <code>R</code> with OpenBLAS capabilities:</li>
+</ol>
+<pre class="bash"><code>sudo apt-get install libopenblas-base r-base</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Install RStudio Server. Check <a href="https://www.rstudio.com/products/rstudio/download-server/" class="uri">https://www.rstudio.com/products/rstudio/download-server/</a> to make sure this is the most up-to-date version:</li>
+</ol>
+<pre class="bash"><code>export RSTUDIO_VERSION=$(wget --no-check-certificate -qO- https://s3.amazonaws.com/rstudio-server/current.ver)
+echo &quot;VERSION ${RSTUDIO_VERSION}&quot;
+sudo wget -q http://download2.rstudio.org/rstudio-server-${RSTUDIO_VERSION}-amd64.deb
+sudo gdebi --non-interactive rstudio-server-${RSTUDIO_VERSION}-amd64.deb
+sudo rm rstudio-server-*-amd64.deb </code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>On the <strong>Windows</strong> side, navigate on a browser (e.g. Chrome) to <code>https://localhost:8787</code>, which should give you a login screen. Use the login information for the Ubuntu machine to use RStudio (with the Linux backend) on the Windows machine!</li>
+</ol>
+</div>
+<div id="installing-packages-in-r" class="section level1">
+<h1>Installing Packages in <code>R</code></h1>
+<ol style="list-style-type: decimal">
+<li>Install the requirements for the dependencies for <code>devtools</code>:</li>
+</ol>
+<pre class="bash"><code>sudo apt-get update -qq -y
+sudo apt-get install -y libgit2-dev 
+sudo apt-get install -y libcurl4-openssl-dev libssl-dev
+sudo apt-get install -y zlib1g-dev libssh2-1-dev libpq-dev libxml2-dev 
+sudo apt-get install -y libhdf5</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>In the RStudio server or <code>R</code>. Install <code>devtools</code> and <code>fslr</code>:</li>
+</ol>
+<pre class="r"><code>install.packages(&quot;devtools&quot;, repos = &quot;https://cran.rstudio.com/&quot;)
+source(&quot;https://neuroconductor.org/neurocLite.R&quot;) 
+neuro_install(&quot;fslr&quot;)</code></pre>
+<p>Check this installation by trying to run some help file, such as:</p>
+<pre class="r"><code>fslr::fast.help()</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>In the RStudio server or <code>R</code>. Install <code>devtools</code> and <code>fslr</code>:</li>
+</ol>
+<pre class="r"><code>neuro_install(&quot;extrantsr&quot;)</code></pre>
+</div>
+<div id="session-info" class="section level1">
+<h1>Session Info</h1>
+<pre class="r"><code>devtools::session_info()</code></pre>
 </div>
 
 

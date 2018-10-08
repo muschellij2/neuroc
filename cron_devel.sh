@@ -1,6 +1,7 @@
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/getting_ready_for_submission/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/getting_ready_for_submission.html
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/continuous_integration/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/continuous_integration.html
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/faq/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/faq.html
+wget https://raw.githubusercontent.com/muschellij2/neuroc/master/windows_wsl/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/windows_wsl.html
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/installing_devtools/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/installing_devtools.html
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/installing_ANTsR/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/installing_ANTsR.html
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/nifti_basics/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/nifti_basics.html

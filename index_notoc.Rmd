@@ -5,7 +5,7 @@ output:
 ---
 ---
 title: "Neuroconductor"
-date: '2018-09-26'
+date: '2018-10-08'
 output: 
   html_document:
     keep_md: true
@@ -27,8 +27,9 @@ Please visit the [FAQ](faq) for information on how to begin.
 
 # Installation Guides {#install}
 
-1. [Installing devtools](installing-devtools)
-2. [Installing ANTsR](installing-antsr)
+1. [Using the Windows Subsystem for Linux](windows-wsl)
+2. [Installing devtools](installing-devtools)
+3. [Installing ANTsR](installing-antsr)
 
 # Required Readings {#req}
 

@@ -1,7 +1,7 @@
 ---
 title: "Continuous Integration and Testing"
 author: "John Muschelli"
-date: "2018-09-26"
+date: "2018-10-08"
 output: 
   html_document:
     keep_md: true
@@ -203,7 +203,7 @@ devtools::session_info()
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  tz       America/Toronto             
-##  date     2018-09-26
+##  date     2018-10-08
 ```
 
 ```
@@ -227,7 +227,7 @@ devtools::session_info()
 ##  magrittr    1.5     2014-11-22 CRAN (R 3.5.0)                    
 ##  memoise     1.1.0   2017-04-21 CRAN (R 3.5.0)                    
 ##  methods   * 3.5.1   2018-07-05 local                             
-##  Rcpp        0.12.18 2018-07-23 cran (@0.12.18)                   
+##  Rcpp        0.12.19 2018-10-01 cran (@0.12.19)                   
 ##  rmarkdown   1.10    2018-06-11 cran (@1.10)                      
 ##  rprojroot   1.3-2   2018-01-03 CRAN (R 3.5.0)                    
 ##  stats     * 3.5.1   2018-07-05 local                             

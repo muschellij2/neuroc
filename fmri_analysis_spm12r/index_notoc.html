@@ -10,7 +10,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<meta name="author" content="John Muschelli" />
 
+<meta name="date" content="2018-09-26" />
 
 <title>index_notoc.utf8.md</title>
 
@@ -56,6 +58,9 @@ if (window.hljs) {
 
 
 
+<h1 class="title toc-ignore">An example of an fMRI analysis in SPM12</h1>
+<h4 class="author"><em>John Muschelli</em></h4>
+<h4 class="date"><em>2018-09-26</em></h4>
 
 
 
@@ -413,7 +418,7 @@ which calls /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpko4uTU/Normali
 <p>Here we will perform spatial smoothing of the 4D fMRI data in template space. We can set the full-width half max (FWHM) for the Gaussian smoother. The relationship between the FWHM and the Gaussian standard deviation is:</p>
 <p><span class="math display">\[
 FWHM = \sigma \sqrt{8 \log(2)}
-\]</span> where <span class="math inline">\(\log\)</span>` is the natural log.</p>
+\]</span> where <span class="math inline">\(\log\)</span> is the natural log.</p>
 <pre class="r"><code>if (have_matlab()) {
   smoothed = spm12_smooth(
     filename = norm_data[&quot;fmri&quot;],

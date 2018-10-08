@@ -22,8 +22,9 @@ Please visit the [FAQ](faq/index.html) for information on how to begin.
 
 # Installation Guides {#install}
 
-1. [Installing devtools](installing_devtools/index.html)
-2. [Installing ANTsR](installing_ANTsR/index.html)
+1. [Using the Windows Subsystem for Linux](windows_wsl/index.html)
+2. [Installing devtools](installing_devtools/index.html)
+3. [Installing ANTsR](installing_ANTsR/index.html)
 
 # Required Readings {#req}
 
