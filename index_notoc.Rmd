@@ -5,7 +5,7 @@ output:
 ---
 ---
 title: "Neuroconductor"
-date: '2018-10-08'
+date: '2018-12-03'
 output: 
   html_document:
     keep_md: true
@@ -44,10 +44,11 @@ Please visit the [FAQ](faq) for information on how to begin.
 ## Structural Imaging
 
 1. [Brain Extraction](brain-extraction)
-2. [Tissue-Class Segmentation](tissue-class-segmentation)
-3. [Labeling Brain Structures](label-image)
-6. [Processing Within-Visit Structural MRI](preprocess-mri-within)
-9. [Cortical Thickness Estimation (NOT DONE)](cortical-thickness)
+2. [Brain Extraction for CT](ss-ct)
+3. [Tissue-Class Segmentation](tissue-class-segmentation)
+4. [Labeling Brain Structures](label-image)
+5. [Processing Within-Visit Structural MRI](preprocess-mri-within)
+6. [Cortical Thickness Estimation (NOT DONE)](cortical-thickness)
 
 ## fMRI 
 

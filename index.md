@@ -1,6 +1,6 @@
 ---
 title: "Neuroconductor"
-date: '2018-10-08'
+date: '2018-12-03'
 output: 
   html_document:
     keep_md: true
@@ -39,10 +39,11 @@ Please visit the [FAQ](faq/index.html) for information on how to begin.
 ## Structural Imaging
 
 1. [Brain Extraction](brain_extraction/index.html)
-2. [Tissue-Class Segmentation](tissue_class_segmentation/index.html)
-3. [Labeling Brain Structures](label_image/index.html)
-6. [Processing Within-Visit Structural MRI](preprocess_mri_within/index.html)
-9. [Cortical Thickness Estimation (NOT DONE)](cortical_thickness/index.html)
+2. [Brain Extraction for CT](ss_ct/index.html)
+3. [Tissue-Class Segmentation](tissue_class_segmentation/index.html)
+4. [Labeling Brain Structures](label_image/index.html)
+5. [Processing Within-Visit Structural MRI](preprocess_mri_within/index.html)
+6. [Cortical Thickness Estimation (NOT DONE)](cortical_thickness/index.html)
 
 ## fMRI 
 

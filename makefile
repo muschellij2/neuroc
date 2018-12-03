@@ -23,8 +23,12 @@ LIST += install_oslerinhealth
 LIST += continuous_integration_oslerinhealth
 LIST += r_package_workflow
 LIST += windows_wsl
+LIST += ss_ct
 
 all:
+	for fol in $(LIST) ; do \
+		pwd && echo $$fol && cp makefile.copy $$fol/makefile ; \
+	done
 	Rscript -e "source('notoc.R')"
 	Rscript -e "source('link_table.R')"
 	Rscript -e "source('make_links.R')"

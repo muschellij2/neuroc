@@ -8,6 +8,7 @@ wget -O nifti_basics.html https://raw.githubusercontent.com/muschellij2/neuroc/m
 wget -O neurohcp.html https://raw.githubusercontent.com/muschellij2/neuroc/master/neurohcp/index_notoc.html
 wget -O fcp_indi.html https://raw.githubusercontent.com/muschellij2/neuroc/master/fcp_indi/index_notoc.html
 wget -O brain_extraction.html https://raw.githubusercontent.com/muschellij2/neuroc/master/brain_extraction/index_notoc.html
+wget -O ss_ct.html https://raw.githubusercontent.com/muschellij2/neuroc/master/ss_ct/index_notoc.html
 wget -O tissue_class_segmentation.html https://raw.githubusercontent.com/muschellij2/neuroc/master/tissue_class_segmentation/index_notoc.html
 wget -O label_image.html https://raw.githubusercontent.com/muschellij2/neuroc/master/label_image/index_notoc.html
 wget -O preprocess_mri_within.html https://raw.githubusercontent.com/muschellij2/neuroc/master/preprocess_mri_within/index_notoc.html

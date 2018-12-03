@@ -12,7 +12,7 @@
 
 <meta name="author" content="John Muschelli" />
 
-<meta name="date" content="2018-04-19" />
+<meta name="date" content="2018-11-29" />
 
 <title>index_notoc.utf8.md</title>
 
@@ -60,7 +60,7 @@ if (window.hljs) {
 
 <h1 class="title toc-ignore">Preparing Your Package for for Submission</h1>
 <h4 class="author"><em>John Muschelli</em></h4>
-<h4 class="date"><em>2018-04-19</em></h4>
+<h4 class="date"><em>2018-11-29</em></h4>
 
 
 
@@ -105,7 +105,7 @@ if (window.hljs) {
 </div>
 <div id="hosting-git-repositories-on-github" class="section level1">
 <h1>Hosting Git Repositories on GitHub</h1>
-<p>Our platform is based on <a href="https://github.com/">GitHub</a>, which is an online server of the to host <code>git</code> repositories. There are other online repositories for <code>git</code>, such as <a href="https://bitbucket.org/">BitBucket</a> and <a href="https://about.gitlab.com">GitLab</a>. Although hosting on these repositories should be valid, we currently require all developers to currently host on GitHub. GitHub is the most popular platform in our experience and all hooks/backend development we use is based on that. Note, <code>git</code> is a system/software, usually installed on your machine, and GitHub is the online server hosting it. In order to host your repository on GitHub, you must sign up for an account at <a href="https://github.com/" class="uri">https://github.com/</a>.</p>
+<p>Our platform is based on <a href="https://github.com/">GitHub</a>, which is an online server of the to host <code>git</code> repositories. There are other online repositories for <code>git</code>, such as <a href="https://bitbucket.org/">BitBucket</a> and <a href="https://about.gitlab.com">GitLab</a>. Although hosting on these repositories should be valid, we currently require all developers to currently host on GitHub. GitHub is the most popular platform in our experience and all hooks/backend development we use is based on that. Note, <code>git</code> is a system/software, usually installed on your machine, and GitHub is the online server hosting it. In order to host your repository on GitHub, you must sign up for an account at <a href="https://github.com/">https://github.com/</a>.</p>
 <div id="setting-up-github" class="section level2">
 <h2>Setting up GitHub</h2>
 <div id="using-the-github-website" class="section level3">
@@ -171,7 +171,7 @@ usethis::use_readme_md()</code></pre>
 <p>This will add a <code>appveyor.yml</code> YAML file to your folder and added this to your <code>.Rbuildignore</code> file. We recommend adding the following options to your <code>.travis.yml</code> file:</p>
 <pre><code>environment:
   global:
-    WARNINGS_ARE_ERORRS: 1</code></pre>
+    WARNINGS_ARE_ERRORS: 1</code></pre>
 <p>so that warnings are treated as errors, which we require in our platform.</p>
 <p>If you would like to use our platform’s customized Appveyor configuration file, you can use the <a href="https://github.com/muschellij2/neuroc_travis/blob/master/neuroc_appveyor.yml">YAML file</a>, but make sure you rename it to <code>appveyor.yml</code> in your folder.</p>
 <div id="enabling-appveyor" class="section level3">
@@ -204,7 +204,7 @@ usethis::use_readme_md()</code></pre>
 <pre><code>---
 title: &quot;Vignette Title&quot;
 author: &quot;Vignette Author&quot;
-date: &quot;2018-04-19&quot;
+date: &quot;2018-11-29&quot;
 output: rmarkdown::html_vignette
 vignette: &gt;
   %\VignetteIndexEntry{Vignette Title}
@@ -233,17 +233,17 @@ vignette: &gt;
 usethis::use_coverage(type = &quot;codecov&quot;)</code></pre>
 <p>where you would use the one whichever service you prefer (they should be the same). This will add the <code>covr</code> package to the “Suggests” field of the <code>DESCRIPTION</code> (if not in another dependency). The message states to add:</p>
 <pre><code>after_success:
-  - Rscript -e 'covr::coveralls()'</code></pre>
+  - Rscript -e &#39;covr::coveralls()&#39;</code></pre>
 <p>or</p>
 <pre><code>after_success:
-  - Rscript -e 'covr::codecov()'</code></pre>
+  - Rscript -e &#39;covr::codecov()&#39;</code></pre>
 <p>to the <code>.travis.yml</code> file (respective to the service you use).</p>
 <p>We suggest adding the argument <code>type = &quot;all&quot;</code> so that the code coverage is calculated after going through the unit tests, vignettes, and examples. The default is to only use the coverage of the unit tests. Thus, you would add:</p>
 <pre><code>after_success:
-  - Rscript -e 'covr::coveralls(type = &quot;all&quot;)'</code></pre>
+  - Rscript -e &#39;covr::coveralls(type = &quot;all&quot;)&#39;</code></pre>
 <p>or</p>
 <pre><code>after_success:
-  - Rscript -e 'covr::codecov(type = &quot;all&quot;)'</code></pre>
+  - Rscript -e &#39;covr::codecov(type = &quot;all&quot;)&#39;</code></pre>
 <p>to the <code>.travis.yml</code> file, respectively.</p>
 </div>
 </div>
@@ -312,7 +312,7 @@ usethis::use_coverage(type = &quot;codecov&quot;)</code></pre>
 <p>For Appveyor, you must add the following to your <code>appveyor.yml</code>:</p>
 <pre class="yaml"><code>deploy:
   provider: GitHub
-  description: 'Windows Binary'
+  description: &#39;Windows Binary&#39;
   auth_token:
     secure: ENCRYPTED_GITHUB_PAT_FROM_APPVEYOR_WEBSITE
   draft: false
@@ -344,7 +344,7 @@ usethis::use_coverage(type = &quot;coveralls&quot;)</code></pre>
 <p>Add (or change in terms of code coverage) the following lines:</p>
 <pre><code>warnings_are_errors: true 
 after_success:
-  - Rscript -e 'covr::coveralls(type = &quot;all&quot;)'</code></pre>
+  - Rscript -e &#39;covr::coveralls(type = &quot;all&quot;)&#39;</code></pre>
 <p>to <code>.travis.yml</code>.</p>
 </div>
 <div id="appveyor.yml" class="section level2">
@@ -352,7 +352,7 @@ after_success:
 <p>Add the following lines:</p>
 <pre><code>environment:
   global:
-    WARNINGS_ARE_ERORRS: 1</code></pre>
+    WARNINGS_ARE_ERRORS: 1</code></pre>
 <p>to <code>appveyor.yml</code>.</p>
 </div>
 <div id="readme.md" class="section level2">

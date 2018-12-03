@@ -1,0 +1,183 @@
+---
+title: "Skull Stripping CT data"
+author: "John Muschelli"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    keep_md: true
+    theme: cosmo
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+    number_sections: true      
+---
+
+
+All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/ss_ct/index.R).
+
+
+```{r setup, include=FALSE}
+library(dcm2niir)
+library(ichseg)
+library(dplyr)
+library(fslr)
+library(extrantsr)
+library(TCIApathfinder)
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "")
+```
+
+
+# Goal
+In this tutorial, we will discuss skull-stripping (or brain-extracting) x_ray computed tomography (CT) scans.  We will use data from TCIA (http://www.cancerimagingarchive.net/) as there is a great package called [`TCIApathfinder`](https://CRAN.R-project.org/package=TCIApathfinder) to interface with TCIA.
+
+## Using TCIApathfinder
+
+In order to use `TCIApathfinder`, please see the [vignette to obtain API keys](https://cran.r-project.org/web/packages/TCIApathfinder/vignettes/introduction.html).  Here we will look at the collections:
+
+```{r}
+library(TCIApathfinder)
+library(dplyr)
+collections = get_collection_names()
+collections = collections$collection_names
+head(collections)
+
+mods = get_modality_names(body_part = "BREAST")
+head(mods$mods)
+
+```
+
+## Getting Body Part Information
+Here we can see all the parts of the body examined.
+
+```{r}
+bp = get_body_part_names()
+bp$body_parts
+```
+
+Particularly, these areas are of interest.  There seems to be a "bug" in `TCIApathfinder::get_series_info` which is acknowledged in the help file.  Namely, the `body_part_examined` is not always a parameter to be set.  We could get all the series info for all the collections from the code below, but it takes some times (> 15 minutes):
+```{r bp_get, eval = FALSE}
+# could look for any of these
+get_bp = c("BRAIN", "HEAD", "HEADNECK")
+
+# takes a long time
+res = pbapply::pblapply(collections, function(collection) {
+  x = get_series_info(
+    collection = collection, 
+    modality = "CT")
+  x$series
+})
+```
+
+## Getting Series
+
+Here we will gather the series information for a study we know to have head CT data:
+
+```{r}
+collection = "CPTAC-GBM"
+series = get_series_info(
+  collection = collection, 
+  modality = "CT")
+series = series$series
+head(series)
+```
+
+Here we grab the first series ID from this data which has a description of "HEAD STD" for standard head:
+
+```{r}
+std_head = series %>% 
+  filter(grepl("HEAD STD", series_description))
+series_instance_uid = std_head$series_instance_uid[1]
+
+download_unzip_series = function(series_instance_uid) {
+  tdir = tempfile()
+  dir.create(tdir, recursive = TRUE)
+  tfile = tempfile(fileext = ".zip")
+  tfile = basename(tfile)
+  res = save_image_series(
+    series_instance_uid = series_instance_uid, 
+    out_dir = tdir, 
+    out_file_name = tfile)
+  stopifnot(file.exists(res$out_file))
+  tdir = tempfile()
+  dir.create(tdir, recursive = TRUE)
+  res = unzip(zipfile = res$out_file  , exdir = tdir)
+  L = list(files = res,
+           dirs = unique(dirname(normalizePath(res))))
+  return(L)
+}
+# Download and unzip the image series
+
+file_list = download_unzip_series(
+  series_instance_uid = series_instance_uid)
+```
+
+```{r}
+library(dcm2niir)
+dcm_result = dcm2nii(file_list$dirs)
+result = check_dcm2nii(dcm_result)
+```
+
+```{r}
+library(neurobase)
+img = readnii(result)
+ortho2(img)
+range(img)
+```
+
+```{r}
+img = rescale_img(img, min.val = -1024, max.val = 3071)
+ortho2(img)
+ortho2(img, window = c(0, 100))
+```
+
+
+## Skull Strip
+
+We can skull strip the image using `CT_Skull_Strip` or `CT_Skull_Stripper`.  The `CT_Skull_Stripper` has a simple switch to use `CT_Skull_Strip` or `CT_Skull_Strip_robust`.  
+```{r}
+library(ichseg)
+ss = CT_Skull_Strip(img)
+ortho2(img, ss > 0, 
+       window = c(0, 100),
+       col.y = scales::alpha("red", 0.5))
+```
+
+The `CT_Skull_Strip_robust` function does 2 neck removals using `remove_neck` from `extrantsr` and then find the center of gravity (COG) twice to make sure the segmentation focuses on the head.  In some instances, the whole neck is included in the scan, such as some of the head-neck studies in TCIA.
+
+
+## The website data
+We could also look at the website, but these do not always correspond to the API and get all the necessary results.
+
+```{r tabler}
+library(rvest)
+library(dplyr)
+x = read_html("http://www.cancerimagingarchive.net/")
+tab = html_table(x)[[1]]
+head_tab = tab %>% 
+  filter(grepl("Head|Brain", Location),
+         grepl("CT", Modalities), 
+         Access == "Public")
+brain_tab = tab %>% 
+  filter(grepl("Brain", Location),
+         grepl("CT", Modalities), 
+         Access == "Public")
+brain_tab
+```
+
+In `brain_tab`, we see we have a few collections.  We are going to use the collection `r collection` from above.
+
+## Getting Patient Information
+
+We could sample patients from the collection here and get the patient information:
+
+```{r}
+set.seed(20181203)
+
+patients = get_patient_info(collection = collection)
+info = patients$patients
+head(info)
+```
+
+Though we are not guaranteed the data will have Brain CT data.  We will use the `series` variable to grab a relevant scan.
+
