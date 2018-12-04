@@ -1,7 +1,7 @@
 ---
 title: "Skull Stripping CT data"
 author: "John Muschelli"
-date: "2018-12-03"
+date: "2018-12-04"
 output: 
   html_document:
     keep_md: true
@@ -198,6 +198,10 @@ Downloading Series
 Unzipping Series
 ```
 
+## Converting DICOM to NIfTI
+
+We will use [`dcm2niix`](https://github.com/rordenlab/dcm2niix) to convert from DICOM to NIfTI.  The function `dcm2niix` is wrapped in `dcm2niir`.  We will use `dcm2niir::dcm2nii` to convert the file.  We use `check_dcm2nii` to grab the relevant output files:
+ 
 
 ```r
 library(dcm2niir)
@@ -220,6 +224,7 @@ dcm_result = dcm2nii(file_list$dirs)
 result = check_dcm2nii(dcm_result)
 ```
 
+Here we read the data into `R` into a `nifti` object:
 
 ```r
 library(neurobase)
@@ -237,6 +242,8 @@ range(img)
 [1] -3024  3071
 ```
 
+Here we will use `neurobase::rescale_img` to make sure the minimum is $-1024$ and the maximum is $3071$.  The minimum can be lower for areas outside the field of view (FOV).  Here we plot the image and the Winsorized version to see the brain tissue:
+
 
 ```r
 img = rescale_img(img, min.val = -1024, max.val = 3071)
@@ -250,7 +257,6 @@ ortho2(img, window = c(0, 100))
 ```
 
 ![](index_files/figure-html/unnamed-chunk-7-2.png)<!-- -->
-
 
 ## Skull Strip
 
@@ -361,6 +367,7 @@ dcm_result = dcm2nii(file_list$dirs, merge_files = TRUE)
 result = check_dcm2nii(dcm_result)
 ```
 
+Here we see the original data has a lot of the neck and some of the shoulders in the scan:
 
 ```r
 img = readnii(result)
@@ -370,6 +377,7 @@ ortho2(img, window = c(0, 100))
 
 ![](index_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
 
+We will try `CT_Skull_Strip` without adding any robust options:
 
 ```r
 ss_wb = CT_Skull_Strip(img, verbose = FALSE)
@@ -416,6 +424,8 @@ ortho2(ss_wb, window = c(0, 100))
 ```
 
 ![](index_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
+
+We see that this does not work very well.  We will use the robust version.  Here we use `CT_Skull_Stripper`, which will call `CT_Skull_Strip_robust`.  This will run `extrantsr::remove_neck`, runs `CT_Skull_Strip`, then estimates a new center of gravity (COG) and then run `CT_Skull_Strip` again, and then run some hole filling:
 
 
 ```r
@@ -728,6 +738,7 @@ ortho2(ss_wb_robust, window = c(0, 100))
 
 ![](index_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
 
+We see that this robust version works well for even data with the neck.  We can try it on a whole body image as well.  
 
 # The website data
 We could also look at the website, but these do not always correspond to the API and get all the necessary results.
