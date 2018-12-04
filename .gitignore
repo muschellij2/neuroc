@@ -38,6 +38,7 @@ nifti_basics/*_cache
 cortical_thickness/*_cache
 label_image/*_cache
 ms_lesion/*_cache
+ss_ct/*_cache
 
 fmri_analysis_ANTsR/113-01-fMRI_moco_img.nii.gz
 fmri_analysis_ANTsR/113-01-fMRI_moco_nuisance_filtered.nii.gz
