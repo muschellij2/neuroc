@@ -160,15 +160,22 @@ std_head = series %>%
   filter(grepl("HEAD STD", series_description))
 series_instance_uid = std_head$series_instance_uid[1]
 
-download_unzip_series = function(series_instance_uid) {
+download_unzip_series = function(series_instance_uid,
+                                 verbose = TRUE) {
   tdir = tempfile()
   dir.create(tdir, recursive = TRUE)
   tfile = tempfile(fileext = ".zip")
   tfile = basename(tfile)
+  if (verbose) {
+    message("Downloading Series")
+  }
   res = save_image_series(
     series_instance_uid = series_instance_uid, 
     out_dir = tdir, 
     out_file_name = tfile)
+  if (verbose) {
+    message("Unzipping Series")
+  }  
   stopifnot(file.exists(res$out_file))
   tdir = tempfile()
   dir.create(tdir, recursive = TRUE)
@@ -181,6 +188,14 @@ download_unzip_series = function(series_instance_uid) {
 
 file_list = download_unzip_series(
   series_instance_uid = series_instance_uid)
+```
+
+```
+Downloading Series
+```
+
+```
+Unzipping Series
 ```
 
 
@@ -243,107 +258,43 @@ We can skull strip the image using `CT_Skull_Strip` or `CT_Skull_Stripper`.  The
 
 ```r
 library(ichseg)
-ss = CT_Skull_Strip(img)
+ss = CT_Skull_Strip(img, verbose = FALSE)
 ```
 
 ```
-# Thresholding Image to 0-100
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuPbDe5/file83b0184d2c54.nii.gz" -thr 0.000000 -uthr 100.000000  "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07f2bdb56"
 ```
 
 ```
-Warning in get.fsl(): Setting fsl.path to /usr/local/fsl
+fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07f2bdb56"  -abs "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b072994b42";
 ```
 
 ```
-Warning in get.fsloutput(): Can't find FSLOUTPUTTYPE, setting to NIFTI_GZ
+fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b072994b42" -bin -fillh "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b02e1c14d5"
 ```
 
 ```
-FSLDIR='/usr/local/fsl'; PATH=${FSLDIR}/bin:${PATH};export PATH FSLDIR; sh "${FSLDIR}/etc/fslconf/fsl.sh"; FSLOUTPUTTYPE=NIFTI_GZ; export FSLOUTPUTTYPE; ${FSLDIR}/bin/fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpocd8lW/file712d54a32a52.nii.gz" -thr 0.000000 -uthr 100.000000  "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpocd8lW/file712d74354288"
+fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07f2bdb56"  -s 1 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07f2bdb56";
 ```
 
 ```
-# Thresholding return: 0
+fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07f2bdb56" -mas "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b02e1c14d5"  "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07f2bdb56"
 ```
 
 ```
-# Absolute value so fslmaths -bin keeps all mask even if lthres < 0
+bet2 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07f2bdb56" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07f2bdb56" -f 0.01 -v
 ```
 
 ```
-FSLDIR='/usr/local/fsl'; PATH=${FSLDIR}/bin:${PATH};export PATH FSLDIR; sh "${FSLDIR}/etc/fslconf/fsl.sh"; FSLOUTPUTTYPE=NIFTI_GZ; export FSLOUTPUTTYPE; ${FSLDIR}/bin/fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpocd8lW/file712d74354288"  -abs "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpocd8lW/file712d242f98e7";
+fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07f2bdb56"  -abs "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b0359bc399";
 ```
 
 ```
-# Abs return: /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpocd8lW/file712d242f98e7.nii.gz
+fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b0359bc399" -bin -fillh "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07f2bdb56_Mask"
 ```
 
 ```
-# Creating 0 - 100 mask to remask after filling
-```
-
-```
-FSLDIR='/usr/local/fsl'; PATH=${FSLDIR}/bin:${PATH};export PATH FSLDIR; sh "${FSLDIR}/etc/fslconf/fsl.sh"; FSLOUTPUTTYPE=NIFTI_GZ; export FSLOUTPUTTYPE; ${FSLDIR}/bin/fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpocd8lW/file712d242f98e7" -bin -fillh "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpocd8lW/file712d30df7840"
-```
-
-```
-# Presmoothing image
-```
-
-```
-FSLDIR='/usr/local/fsl'; PATH=${FSLDIR}/bin:${PATH};export PATH FSLDIR; sh "${FSLDIR}/etc/fslconf/fsl.sh"; FSLOUTPUTTYPE=NIFTI_GZ; export FSLOUTPUTTYPE; ${FSLDIR}/bin/fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpocd8lW/file712d74354288"  -s 1 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpocd8lW/file712d74354288";
-```
-
-```
-# Pre Smoothing Diagnostic: 0
-```
-
-```
-# Remasking Smoothed Image
-```
-
-```
-FSLDIR='/usr/local/fsl'; PATH=${FSLDIR}/bin:${PATH};export PATH FSLDIR; sh "${FSLDIR}/etc/fslconf/fsl.sh"; FSLOUTPUTTYPE=NIFTI_GZ; export FSLOUTPUTTYPE; ${FSLDIR}/bin/fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpocd8lW/file712d74354288" -mas "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpocd8lW/file712d30df7840"  "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpocd8lW/file712d74354288"
-```
-
-```
-# Pre Smoothing Diagnostic: 0
-```
-
-```
-# Running bet2
-```
-
-```
-FSLDIR='/usr/local/fsl'; PATH=${FSLDIR}/bin:${PATH};export PATH FSLDIR; sh "${FSLDIR}/etc/fslconf/fsl.sh"; FSLOUTPUTTYPE=NIFTI_GZ; export FSLOUTPUTTYPE; ${FSLDIR}/bin/bet2 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpocd8lW/file712d74354288" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpocd8lW/file712d74354288" -f 0.01 -v
-```
-
-```
-# bet2 output: 0
-```
-
-```
-# Using fslfill to fill in any holes in mask 
-```
-
-```
-FSLDIR='/usr/local/fsl'; PATH=${FSLDIR}/bin:${PATH};export PATH FSLDIR; sh "${FSLDIR}/etc/fslconf/fsl.sh"; FSLOUTPUTTYPE=NIFTI_GZ; export FSLOUTPUTTYPE; ${FSLDIR}/bin/fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpocd8lW/file712d74354288"  -abs "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpocd8lW/file712d1f4fcad1";
-```
-
-```
-FSLDIR='/usr/local/fsl'; PATH=${FSLDIR}/bin:${PATH};export PATH FSLDIR; sh "${FSLDIR}/etc/fslconf/fsl.sh"; FSLOUTPUTTYPE=NIFTI_GZ; export FSLOUTPUTTYPE; ${FSLDIR}/bin/fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpocd8lW/file712d1f4fcad1" -bin -fillh "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpocd8lW/file712d74354288_Mask"
-```
-
-```
-# fslfill output: 0
-```
-
-```
-# Using the filled mask to mask original image
-```
-
-```
-FSLDIR='/usr/local/fsl'; PATH=${FSLDIR}/bin:${PATH};export PATH FSLDIR; sh "${FSLDIR}/etc/fslconf/fsl.sh"; FSLOUTPUTTYPE=NIFTI_GZ; export FSLOUTPUTTYPE; ${FSLDIR}/bin/fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpocd8lW/file712d2f8c6f66.nii.gz" -mas "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpocd8lW/file712d74354288_Mask"  "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpocd8lW/file712d74354288"
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuPbDe5/file83b05468d4e.nii.gz" -mas "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07f2bdb56_Mask"  "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07f2bdb56"
 ```
 
 ```r
@@ -357,7 +308,428 @@ ortho2(img, ss > 0,
 The `CT_Skull_Strip_robust` function does 2 neck removals using `remove_neck` from `extrantsr` and then find the center of gravity (COG) twice to make sure the segmentation focuses on the head.  In some instances, the whole neck is included in the scan, such as some of the head-neck studies in TCIA.
 
 
-## The website data
+# Showing a Robust Example with the neck
+
+## Getting Series
+
+Here we will gather the series information for the `Head-Neck Cetuximab` collection:
+
+
+```r
+collection = "Head-Neck Cetuximab"
+series = get_series_info(
+  collection = collection, 
+  modality = "CT")
+series = series$series
+whole_body = series %>% 
+  filter(grepl("WB", series_description))
+```
+
+
+
+```r
+file_list = download_unzip_series(
+  series_instance_uid = series$series_instance_uid[1])
+```
+
+```
+Downloading Series
+```
+
+```
+Unzipping Series
+```
+
+
+```r
+dcm_result = dcm2nii(file_list$dirs, merge_files = TRUE)
+```
+
+```
+#Copying Files
+```
+
+```
+# Converting to nii 
+```
+
+```
+'/Library/Frameworks/R.framework/Versions/3.5/Resources/library/dcm2niir/dcm2niix' -9  -m y -z y -f %p_%t_%s '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b02cae0714'
+```
+
+```r
+result = check_dcm2nii(dcm_result)
+```
+
+
+```r
+img = readnii(result)
+img = rescale_img(img, min.val = -1024, max.val = 3071)
+ortho2(img, window = c(0, 100))
+```
+
+![](index_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
+
+
+```r
+ss_wb = CT_Skull_Strip(img, verbose = FALSE)
+```
+
+```
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuPbDe5/file83b01a8426d2.nii.gz" -thr 0.000000 -uthr 100.000000  "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07d541266"
+```
+
+```
+fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07d541266"  -abs "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b05a10b297";
+```
+
+```
+fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b05a10b297" -bin -fillh "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07e3d05b2"
+```
+
+```
+fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07d541266"  -s 1 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07d541266";
+```
+
+```
+fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07d541266" -mas "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07e3d05b2"  "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07d541266"
+```
+
+```
+bet2 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07d541266" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07d541266" -f 0.01 -v
+```
+
+```
+fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07d541266"  -abs "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b0584129dd";
+```
+
+```
+fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b0584129dd" -bin -fillh "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07d541266_Mask"
+```
+
+```
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuPbDe5/file83b01e23996f.nii.gz" -mas "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07d541266_Mask"  "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07d541266"
+```
+
+```r
+ortho2(ss_wb, window = c(0, 100))
+```
+
+![](index_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
+
+
+```r
+ss_wb_robust = CT_Skull_Stripper(img, verbose = FALSE, robust = TRUE)
+```
+
+```
+# Registration to template
+```
+
+```
+# Swapping Dimensions 
+```
+
+```
+fslhd "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuPbDe5/file83b05c6295c2.nii.gz" 
+```
+
+```
+fslorient -getorient "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuPbDe5/file83b05c6295c2.nii.gz"
+```
+
+```
+fslswapdim "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuPbDe5/file83b05c6295c2.nii.gz"  RL PA IS "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b02b0fe1b7";
+```
+
+```
+# Running Registration of file to template
+```
+
+```
+# Applying Registration output is
+```
+
+```
+$warpedmovout
+antsImage
+  Pixel Type          : float 
+  Components Per Pixel: 1 
+  Dimensions          : 512x512x107 
+  Voxel Spacing       : 1.12000000476837x1.12000000476837x3 
+  Origin              : -286.72 285.6 61 
+  Direction           : 1 0 0 0 -1 0 0 0 1 
+
+
+$warpedfixout
+antsImage
+  Pixel Type          : float 
+  Components Per Pixel: 1 
+  Dimensions          : 181x217x181 
+  Voxel Spacing       : 1x1x1 
+  Origin              : 90 125 -71 
+  Direction           : -1 0 0 0 -1 0 0 0 1 
+
+
+$fwdtransforms
+[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b047bb01df0GenericAffine.mat"
+
+$invtransforms
+[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b047bb01df0GenericAffine.mat"
+
+$prev_transforms
+character(0)
+```
+
+```
+# Applying Transformations to file
+```
+
+```
+# Applying Transforms to other.files
+```
+
+```
+# Writing out file
+```
+
+```
+# Writing out other.files
+```
+
+```
+# Removing Warping images
+```
+
+```
+# Reading data back into R
+```
+
+```
+# Reading in Transformed data
+```
+
+```
+# Dropping slices not in mask
+```
+
+```
+# Swapping Dimensions Back
+```
+
+```
+fslswapdim "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuPbDe5/file83b01f6299a8.nii.gz"  RL PA IS "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b0255f4b1";
+```
+
+```
+# Thresholding Image to 0-100
+```
+
+```
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuPbDe5/file83b0593391a9.nii.gz" -thr 0.000000 -uthr 100.000000  "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b027077c12"
+```
+
+```
+# Thresholding return: 0
+```
+
+```
+# Absolute value so fslmaths -bin keeps all mask even if lthres < 0
+```
+
+```
+fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b027077c12"  -abs "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b048a01bff";
+```
+
+```
+# Abs return: /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b048a01bff.nii.gz
+```
+
+```
+# Creating 0 - 100 mask to remask after filling
+```
+
+```
+fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b048a01bff" -bin -fillh "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b078e2799"
+```
+
+```
+# Presmoothing image
+```
+
+```
+fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b027077c12"  -s 1 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b027077c12";
+```
+
+```
+# Pre Smoothing Diagnostic: 0
+```
+
+```
+# Remasking Smoothed Image
+```
+
+```
+fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b027077c12" -mas "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b078e2799"  "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b027077c12"
+```
+
+```
+# Pre Smoothing Diagnostic: 0
+```
+
+```
+# Running bet2
+```
+
+```
+bet2 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b027077c12" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b027077c12" -f  0.01 
+```
+
+```
+# bet2 output: 0
+```
+
+```
+# Using fslfill to fill in any holes in mask 
+```
+
+```
+fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b027077c12"  -abs "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b05c9b1af";
+```
+
+```
+fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b05c9b1af" -bin -fillh "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b027077c12_Mask"
+```
+
+```
+# fslfill output: 0
+```
+
+```
+# Using the filled mask to mask original image
+```
+
+```
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuPbDe5/file83b0593391a9.nii.gz" -mas "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b027077c12_Mask"  "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b027077c12"
+```
+
+```
+# Thresholding Image to 0-100
+```
+
+```
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuPbDe5/file83b0593391a9.nii.gz" -thr 0.000000 -uthr 100.000000  "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b027077c12"
+```
+
+```
+# Thresholding return: 0
+```
+
+```
+# Absolute value so fslmaths -bin keeps all mask even if lthres < 0
+```
+
+```
+fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b027077c12"  -abs "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07cb05b20";
+```
+
+```
+# Abs return: /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07cb05b20.nii.gz
+```
+
+```
+# Creating 0 - 100 mask to remask after filling
+```
+
+```
+fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b07cb05b20" -bin -fillh "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b01e2ed1d4"
+```
+
+```
+# Presmoothing image
+```
+
+```
+fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b027077c12"  -s 1 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b027077c12";
+```
+
+```
+# Pre Smoothing Diagnostic: 0
+```
+
+```
+# Remasking Smoothed Image
+```
+
+```
+fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b027077c12" -mas "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b01e2ed1d4"  "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b027077c12"
+```
+
+```
+# Pre Smoothing Diagnostic: 0
+```
+
+```
+# Running bet2
+```
+
+```
+bet2 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b027077c12" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b027077c12" -f  0.01  -w  2 -c 261 272 79
+```
+
+```
+# bet2 output: 0
+```
+
+```
+# Using fslfill to fill in any holes in mask 
+```
+
+```
+fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b027077c12"  -abs "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b013d1c4c7";
+```
+
+```
+fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b013d1c4c7" -bin -fillh "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b027077c12_Mask"
+```
+
+```
+# fslfill output: 0
+```
+
+```
+# Using the filled mask to mask original image
+```
+
+```
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuPbDe5/file83b0593391a9.nii.gz" -mas "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b027077c12_Mask"  "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b027077c12"
+```
+
+```
+Dimension of kernel is 11x11x11
+Creating Kernel fft
+Creating Image fft
+Convolution
+Shifting
+Dimension of kernel is 11x11x11
+Creating Kernel fft
+Creating Image fft
+Convolution
+Shifting
+```
+
+```
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuPbDe5/file83b0164044ef.nii.gz" -bin -fillh "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuPbDe5/file83b02004b9c5"
+```
+
+```r
+ortho2(ss_wb_robust, window = c(0, 100))
+```
+
+![](index_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
+
+
+# The website data
 We could also look at the website, but these do not always correspond to the API and get all the necessary results.
 
 
@@ -397,7 +769,7 @@ brain_tab
 4             Yes Public Complete 2014/05/08
 ```
 
-In `brain_tab`, we see we have a few collections.  We are going to use the collection CPTAC-GBM from above.
+In `brain_tab`, we see we have a few collections.  We are going to use the collection Head-Neck Cetuximab from above.
 
 ## Getting Patient Information
 
@@ -414,19 +786,19 @@ head(info)
 
 ```
   patient_id patient_name patient_dob patient_sex patient_ethnic_group
-1  C3N-01515    C3N-01515          NA           F                   NA
-2  C3L-00019    C3L-00019          NA           F                   NA
-3  C3L-01327    C3L-01327          NA           M                   NA
-4  C3L-00677    C3L-00677          NA           F                   NA
-5  C3L-00429    C3L-00429          NA           M                   NA
-6  C3L-00016    C3L-00016          NA           M                   NA
-  collection
-1  CPTAC-GBM
-2  CPTAC-GBM
-3  CPTAC-GBM
-4  CPTAC-GBM
-5  CPTAC-GBM
-6  CPTAC-GBM
+1  0522c0001    0522c0001          NA           F                   NA
+2  0522c0002    0522c0002          NA           M                   NA
+3  0522c0003    0522c0003          NA           M                   NA
+4  0522c0009    0522c0009          NA           M                   NA
+5  0522c0013    0522c0013          NA           M                   NA
+6  0522c0070    0522c0070          NA           M                   NA
+           collection
+1 Head-Neck Cetuximab
+2 Head-Neck Cetuximab
+3 Head-Neck Cetuximab
+4 Head-Neck Cetuximab
+5 Head-Neck Cetuximab
+6 Head-Neck Cetuximab
 ```
 
 Though we are not guaranteed the data will have Brain CT data.  We will use the `series` variable to grab a relevant scan.

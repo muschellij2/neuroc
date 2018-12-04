@@ -47,15 +47,22 @@ std_head = series %>%
   filter(grepl("HEAD STD", series_description))
 series_instance_uid = std_head$series_instance_uid[1]
 
-download_unzip_series = function(series_instance_uid) {
+download_unzip_series = function(series_instance_uid,
+                                 verbose = TRUE) {
   tdir = tempfile()
   dir.create(tdir, recursive = TRUE)
   tfile = tempfile(fileext = ".zip")
   tfile = basename(tfile)
+  if (verbose) {
+    message("Downloading Series")
+  }
   res = save_image_series(
     series_instance_uid = series_instance_uid, 
     out_dir = tdir, 
     out_file_name = tfile)
+  if (verbose) {
+    message("Unzipping Series")
+  }  
   stopifnot(file.exists(res$out_file))
   tdir = tempfile()
   dir.create(tdir, recursive = TRUE)
@@ -87,10 +94,40 @@ ortho2(img, window = c(0, 100))
 
 ## ------------------------------------------------------------------------
 library(ichseg)
-ss = CT_Skull_Strip(img)
+ss = CT_Skull_Strip(img, verbose = FALSE)
 ortho2(img, ss > 0, 
        window = c(0, 100),
        col.y = scales::alpha("red", 0.5))
+
+## ------------------------------------------------------------------------
+collection = "Head-Neck Cetuximab"
+series = get_series_info(
+  collection = collection, 
+  modality = "CT")
+series = series$series
+whole_body = series %>% 
+  filter(grepl("WB", series_description))
+
+## ------------------------------------------------------------------------
+file_list = download_unzip_series(
+  series_instance_uid = series$series_instance_uid[1])
+
+## ------------------------------------------------------------------------
+dcm_result = dcm2nii(file_list$dirs, merge_files = TRUE)
+result = check_dcm2nii(dcm_result)
+
+## ------------------------------------------------------------------------
+img = readnii(result)
+img = rescale_img(img, min.val = -1024, max.val = 3071)
+ortho2(img, window = c(0, 100))
+
+## ------------------------------------------------------------------------
+ss_wb = CT_Skull_Strip(img, verbose = FALSE)
+ortho2(ss_wb, window = c(0, 100))
+
+## ------------------------------------------------------------------------
+ss_wb_robust = CT_Skull_Stripper(img, verbose = FALSE, robust = TRUE)
+ortho2(ss_wb_robust, window = c(0, 100))
 
 ## ----tabler--------------------------------------------------------------
 library(rvest)

@@ -1,7 +1,7 @@
 ---
 title: "Continuous Integration and Testing"
 author: "John Muschelli"
-date: "2018-12-03"
+date: "2018-12-04"
 output: 
   html_document:
     keep_md: true
@@ -202,7 +202,7 @@ devtools::session_info()
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2018-12-03                  
+##  date     2018-12-04                  
 ## 
 ## ─ Packages ──────────────────────────────────────────────────────────────
 ##  package     * version    date       lib

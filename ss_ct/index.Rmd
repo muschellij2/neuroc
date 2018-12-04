@@ -89,15 +89,22 @@ std_head = series %>%
   filter(grepl("HEAD STD", series_description))
 series_instance_uid = std_head$series_instance_uid[1]
 
-download_unzip_series = function(series_instance_uid) {
+download_unzip_series = function(series_instance_uid,
+                                 verbose = TRUE) {
   tdir = tempfile()
   dir.create(tdir, recursive = TRUE)
   tfile = tempfile(fileext = ".zip")
   tfile = basename(tfile)
+  if (verbose) {
+    message("Downloading Series")
+  }
   res = save_image_series(
     series_instance_uid = series_instance_uid, 
     out_dir = tdir, 
     out_file_name = tfile)
+  if (verbose) {
+    message("Unzipping Series")
+  }  
   stopifnot(file.exists(res$out_file))
   tdir = tempfile()
   dir.create(tdir, recursive = TRUE)
@@ -137,7 +144,7 @@ ortho2(img, window = c(0, 100))
 We can skull strip the image using `CT_Skull_Strip` or `CT_Skull_Stripper`.  The `CT_Skull_Stripper` has a simple switch to use `CT_Skull_Strip` or `CT_Skull_Strip_robust`.  
 ```{r}
 library(ichseg)
-ss = CT_Skull_Strip(img)
+ss = CT_Skull_Strip(img, verbose = FALSE)
 ortho2(img, ss > 0, 
        window = c(0, 100),
        col.y = scales::alpha("red", 0.5))
@@ -146,7 +153,51 @@ ortho2(img, ss > 0,
 The `CT_Skull_Strip_robust` function does 2 neck removals using `remove_neck` from `extrantsr` and then find the center of gravity (COG) twice to make sure the segmentation focuses on the head.  In some instances, the whole neck is included in the scan, such as some of the head-neck studies in TCIA.
 
 
-## The website data
+# Showing a Robust Example with the neck
+
+## Getting Series
+
+Here we will gather the series information for the `Head-Neck Cetuximab` collection:
+
+```{r}
+collection = "Head-Neck Cetuximab"
+series = get_series_info(
+  collection = collection, 
+  modality = "CT")
+series = series$series
+whole_body = series %>% 
+  filter(grepl("WB", series_description))
+```
+
+
+```{r}
+file_list = download_unzip_series(
+  series_instance_uid = series$series_instance_uid[1])
+```
+
+```{r}
+dcm_result = dcm2nii(file_list$dirs, merge_files = TRUE)
+result = check_dcm2nii(dcm_result)
+```
+
+```{r}
+img = readnii(result)
+img = rescale_img(img, min.val = -1024, max.val = 3071)
+ortho2(img, window = c(0, 100))
+```
+
+```{r}
+ss_wb = CT_Skull_Strip(img, verbose = FALSE)
+ortho2(ss_wb, window = c(0, 100))
+```
+
+```{r}
+ss_wb_robust = CT_Skull_Stripper(img, verbose = FALSE, robust = TRUE)
+ortho2(ss_wb_robust, window = c(0, 100))
+```
+
+
+# The website data
 We could also look at the website, but these do not always correspond to the API and get all the necessary results.
 
 ```{r tabler}
