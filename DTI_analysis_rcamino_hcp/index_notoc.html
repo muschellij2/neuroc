@@ -67,7 +67,7 @@ if (window.hljs) {
 <p>All code for this document is located at <a href="https://raw.githubusercontent.com/muschellij2/neuroc/master/DTI_analysis_rcamino_hcp/index.R">here</a>.</p>
 <div id="resources-and-goals" class="section level1">
 <h1>Resources and Goals</h1>
-<p>Much of this work has been adapted by the Tutorial for DTI analysis from ISMRM 2015: <a href="http://camino.cs.ucl.ac.uk/index.php?n=Tutorials.ISMRM2015" class="uri">http://camino.cs.ucl.ac.uk/index.php?n=Tutorials.ISMRM2015</a>. Also, some of the model fitting (such as using gradient information) has been taken from <a href="http://camino.cs.ucl.ac.uk/index.php?n=Tutorials.HCP" class="uri">http://camino.cs.ucl.ac.uk/index.php?n=Tutorials.HCP</a>.</p>
+<p>Much of this work has been adapted by the Tutorial for DTI analysis from ISMRM 2015: <a href="http://camino.cs.ucl.ac.uk/index.php?n=Tutorials.ISMRM2015">http://camino.cs.ucl.ac.uk/index.php?n=Tutorials.ISMRM2015</a>. Also, some of the model fitting (such as using gradient information) has been taken from <a href="http://camino.cs.ucl.ac.uk/index.php?n=Tutorials.HCP" class="uri">http://camino.cs.ucl.ac.uk/index.php?n=Tutorials.HCP</a>.</p>
 <p>We will show you a few steps that have been implemented in <code>rcamino</code>: <code>camino_pointset2scheme</code>, <code>camino_modelfit</code>, <code>camino_fa</code>, <code>camino_md</code>, and <code>camino_dteig</code>.</p>
 </div>
 <div id="data-location" class="section level1">
@@ -121,7 +121,7 @@ sub_data_list = camino_subset_max_bval(
   max_bval = 1500,
   verbose = TRUE) </code></pre>
 <pre><code>/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/split4dnii -inputfile /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuyYwcz/file94b5fd527a4/data.nii.gz -outputroot /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuyYwcz/file94b5439819d9_</code></pre>
-<pre><code>/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/image2voxel -imagelist '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuyYwcz/file94b536c9183a.txt' -outputfile '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuyYwcz/file94b54c55a3ef.Bfloat' -outputdatatype float</code></pre>
+<pre><code>/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/image2voxel -imagelist &#39;/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuyYwcz/file94b536c9183a.txt&#39; -outputfile &#39;/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuyYwcz/file94b54c55a3ef.Bfloat&#39; -outputdatatype float</code></pre>
 <pre class="r"><code>sub_data = sub_data_list$image
 sub_scheme = sub_data_list$scheme</code></pre>
 <p>This process may take a while, and using the <code>RNifti</code> package may be quicker.</p>
@@ -147,7 +147,7 @@ mod_file = camino_modelfit(
   mask = outfiles[&quot;nodif_brain_mask&quot;], 
   gradadj = outfiles[&quot;grad_dev&quot;],
   model = &quot;ldt_wtd&quot;)</code></pre>
-<pre><code>/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/modelfit -inputfile '/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuyYwcz/file94b54c55a3ef.Bfloat' -outputfile '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuyYwcz/file94b548434e0f.Bdouble' -inputdatatype float -schemefile /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuyYwcz/file94b51867c0a3.scheme -bgmask /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuyYwcz/file94b5fd527a4/nodif_brain_mask.nii.gz -maskdatatype float -model ldt_wtd -gradadj /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuyYwcz/file94b5fd527a4/grad_dev.nii.gz</code></pre>
+<pre><code>/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/modelfit -inputfile &#39;/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuyYwcz/file94b54c55a3ef.Bfloat&#39; -outputfile &#39;/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuyYwcz/file94b548434e0f.Bdouble&#39; -inputdatatype float -schemefile /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuyYwcz/file94b51867c0a3.scheme -bgmask /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuyYwcz/file94b5fd527a4/nodif_brain_mask.nii.gz -maskdatatype float -model ldt_wtd -gradadj /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuyYwcz/file94b5fd527a4/grad_dev.nii.gz</code></pre>
 <div id="getting-fa-vlaues" class="section level2">
 <h2>Getting FA vlaues</h2>
 <pre class="r"><code># fa -inputfile caminoProc/wdt_dt.nii.gz -outputfile caminoProc/wdt_fa.nii.gz
@@ -155,7 +155,7 @@ fa_img = camino_fa_img(
   infile = mod_file,
   header = outfiles[&quot;nodif_brain_mask&quot;],
   retimg = FALSE)</code></pre>
-<pre><code>cat '/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuyYwcz/file94b548434e0f.Bdouble' |  /Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/fa -inputmodel dt -outputdatatype double &gt; '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuyYwcz/file94b51173dae.Bdouble'</code></pre>
+<pre><code>cat &#39;/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuyYwcz/file94b548434e0f.Bdouble&#39; |  /Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/fa -inputmodel dt -outputdatatype double &gt; &#39;/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuyYwcz/file94b51173dae.Bdouble&#39;</code></pre>
 <pre><code>/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/voxel2image -inputfile /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuyYwcz/file94b51173dae.Bdouble -header /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuyYwcz/file94b5fd527a4/nodif_brain_mask.nii.gz -outputroot /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuyYwcz/file94b51cd26b11_ -components 1 -gzip </code></pre>
 <div id="visualizing-fa-images" class="section level3">
 <h3>Visualizing FA images</h3>
@@ -177,7 +177,7 @@ md_img = camino_md_img(
   infile = mod_file,
   header = outfiles[&quot;nodif_brain_mask&quot;],
   retimg = FALSE)</code></pre>
-<pre><code>cat '/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuyYwcz/file94b548434e0f.Bdouble' |  /Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/md -inputmodel dt -outputdatatype double &gt; '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuyYwcz/file94b51845b1d4.Bdouble'</code></pre>
+<pre><code>cat &#39;/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuyYwcz/file94b548434e0f.Bdouble&#39; |  /Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/md -inputmodel dt -outputdatatype double &gt; &#39;/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuyYwcz/file94b51845b1d4.Bdouble&#39;</code></pre>
 <pre><code>/Library/Frameworks/R.framework/Versions/3.4/Resources/library/rcamino/camino/bin/voxel2image -inputfile /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuyYwcz/file94b51845b1d4.Bdouble -header /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpuyYwcz/file94b5fd527a4/nodif_brain_mask.nii.gz -outputroot /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpuyYwcz/file94b579de1bf_ -components 1 -gzip </code></pre>
 <div id="visualizing-md-images" class="section level3">
 <h3>Visualizing MD images</h3>
@@ -246,12 +246,12 @@ hist(mask_vals(rob, t1_mask), breaks = 2000)</code></pre>
 <h2>Rigid-body Registration of DTI to T1</h2>
 <p>Here we can register the FA image to the T1-weighted image using a rigid-body transformation. We could have also used the MD image or the diffusion data directly, such as the mean over the tensors.</p>
 <pre class="r"><code>library(extrantsr)</code></pre>
-<pre><code>Warning: multiple methods tables found for 'pixdim'
+<pre><code>Warning: multiple methods tables found for &#39;pixdim&#39;
 
-Warning: multiple methods tables found for 'pixdim'</code></pre>
+Warning: multiple methods tables found for &#39;pixdim&#39;</code></pre>
 <pre><code>
-Attaching package: 'extrantsr'</code></pre>
-<pre><code>The following objects are masked from 'package:oro.nifti':
+Attaching package: &#39;extrantsr&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:oro.nifti&#39;:
 
     origin, origin&lt;-</code></pre>
 <pre class="r"><code>rigid = registration(

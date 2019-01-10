@@ -93,7 +93,7 @@ devtools::create(pkgname)
 setwd(pkgname)</code></pre>
 <p>A folder named <code>R</code> is now is in the package directory. On the top right of <code>RStudio</code>, you should see a <code>Project: (None)</code> dropdown. If you choose <code>Open Project</code> and choose <code>mypackage.Rproj</code>, it will open a new <code>RStudio</code> session.</p>
 <p>As long as you’re in that directory, you can run the following code even if not in the <code>RStudio</code> project.</p>
-<p>You should also add information in the <code>title</code> and <code>description</code> fields in the <code>muschelli_workflow</code> function. Titles should be “title case” (e.g. <code>Creates Fun Plots for Analysis</code>) and <strong>not</strong> start with words like “A Package” or “Functions to”. The <code>description</code> argument should be written like prose <code>&quot;Creates fun plots for analysis in everyday situations.&quot;</code> It should end with a period like normal sentences.</p>
+<p>You should also add information in the <code>title</code> and <code>description</code> fields in the <code>muschelli_workflow</code> function. Titles should be “title case” (e.g. <code>Creates Fun Plots for Analysis</code>) and <strong>not</strong> start with words like “A Package” or “Functions to”. The <code>description</code> argument should be written like prose <code>&quot;Creates fun plots for analysis in everyday situations.&quot;</code> It should end with a period like normal sentences.</p>
 <pre class="r"><code>coverage_type = &quot;coveralls&quot;
 usethis::use_git()
 muschflow::muschelli_workflow(
@@ -128,24 +128,24 @@ muschflow::muschelli_workflow(
 </div>
 <div id="documentation-examples-vignettes" class="section level1">
 <h1>DOCUMENTATION! EXAMPLES! VIGNETTES!</h1>
-<p>Now that you have everything set up, you have to do the big things that differentiate a bunch of functions from a package: documentation and examples (including vignettes). Again, for documentation, we’ll be using the <code>roxygen2</code> package. Roxygen is essentially a format that starts with a line with <code>#'</code> followed by <code>@</code> followed by a “tag”. The tags can be found at <code>?rd_roclet</code>. Now, I highly recommend vignettes, but I’m not an expert on these and think we’ll just stick to function docs right now.</p>
+<p>Now that you have everything set up, you have to do the big things that differentiate a bunch of functions from a package: documentation and examples (including vignettes). Again, for documentation, we’ll be using the <code>roxygen2</code> package. Roxygen is essentially a format that starts with a line with <code>#&#39;</code> followed by <code>@</code> followed by a “tag”. The tags can be found at <code>?rd_roclet</code>. Now, I highly recommend vignettes, but I’m not an expert on these and think we’ll just stick to function docs right now.</p>
 <div id="creating-roxygen-tags" class="section level2">
 <h2>Creating Roxygen Tags</h2>
 <p>Before we start documentation, let me again tell about MY workflow rather than Roxygen. Now we can open a R script with functions in there. Select the function definition such as <code>x = function(z, y, l=4, ...){</code> and go to the <code>Code → Insert Roxygen Skeleton</code> to create Roxygen tags!</p>
-<pre><code>#' Title
-#'
-#' @param z 
-#' @param y 
-#' @param l 
-#' @param ... 
-#'
-#' @return
-#' @export
-#'
-#' @examples
+<pre><code>#&#39; Title
+#&#39;
+#&#39; @param z 
+#&#39; @param y 
+#&#39; @param l 
+#&#39; @param ... 
+#&#39;
+#&#39; @return
+#&#39; @export
+#&#39;
+#&#39; @examples
 x = function(z, y, l=4, ...){
 }</code></pre>
-<p>One thing to note is that RStudio will assume you’re trying to stay in Roxygen notation with a return of line (which is great for multi-line descriptions/titles/etc). Also, if you have <code>#' @</code> starting a line, then RStudio will do tab completion of Roxygen tags. Not leaps and bounds saved on time, but hey, I like tab completion.</p>
+<p>One thing to note is that RStudio will assume you’re trying to stay in Roxygen notation with a return of line (which is great for multi-line descriptions/titles/etc). Also, if you have <code>#&#39; @</code> starting a line, then RStudio will do tab completion of Roxygen tags. Not leaps and bounds saved on time, but hey, I like tab completion.</p>
 <p>Now you have to write your examples, the description of arguments (denoted as parameters), the overall function description and title, and use the <code>@export</code> to allow this function accessible to the user. One note is that if you depend on another function or package, use the <code>@import pkgname</code> or <code>@importsFrom pkgname funcName funcName2</code> tags. <code>R CMD check</code> will warn you if you don’t have anything in <code>@examples</code>, so remove these if not necessary (they usually are though).</p>
 </div>
 <div id="just-let-me-check-my-functions" class="section level2">

@@ -161,7 +161,7 @@ $mat
 # Read in Motion data
 ####################################
 if (have_matlab()) {
-  rpfile = realigned[['rp']]
+  rpfile = realigned[[&#39;rp&#39;]]
   rp = read.table(file = rpfile, header = FALSE)
   colnames(rp) = c(&quot;x&quot;, &quot;y&quot;, &quot;z&quot;, 
     &quot;roll&quot;, &quot;pitch&quot;, &quot;yaw&quot;)
@@ -199,7 +199,7 @@ ta = tr - tr/nslices
 n_time_points = ntim(run_fmri)
 if (have_matlab()) {
   aimg = spm12_slice_timing(
-    filename = realigned[['outfiles']],
+    filename = realigned[[&#39;outfiles&#39;]],
     nslices = nslices,
     tr = tr, 
     slice_order = slice_order,
@@ -456,7 +456,7 @@ which calls /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpko4uTU/Smooth_
 </div>
 <div id="bibliography" class="section level2">
 <h2>Bibliography</h2>
-<pre class="r"><code>bib = '@article{ashburner2005unified,
+<pre class="r"><code>bib = &#39;@article{ashburner2005unified,
   title={Unified segmentation},
   author={Ashburner, John and Friston, Karl J},
   journal={Neuroimage},
@@ -465,7 +465,7 @@ which calls /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpko4uTU/Smooth_
   pages={839--851},
   year={2005},
   publisher={Elsevier}
-}'</code></pre>
+}&#39;</code></pre>
 </div>
 </div>
 
