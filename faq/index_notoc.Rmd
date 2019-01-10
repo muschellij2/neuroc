@@ -139,10 +139,11 @@ The workflow is that one would go through [Installation Guides](..), then [Requi
 
 <div class="card-body"><!--/html_preserve-->
 
-<!-- ## What if something doesn't work? -->
-
 Please [open an issue on GitHub](https://github.com/muschellij2/neuroc/issues).  
 
 <!--html_preserve--> </div> </div><!--/html_preserve-->
 
+
 <!--html_preserve--></div> </div><!--/html_preserve-->
+<!-- ## What if something doesn't work? -->
+
