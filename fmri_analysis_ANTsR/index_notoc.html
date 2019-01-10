@@ -68,7 +68,7 @@ if (window.hljs) {
 <p>In this tutorial we will discuss performing some preprocessing of a single subject functional MRI in <code>ANTsR</code>.</p>
 <div id="data-packages" class="section level1">
 <h1>Data Packages</h1>
-<p>For this analysis, I will use one subject from the Kirby 21 data set. The <code>kirby21.base</code> and <code>kirby21.fmri</code> packages are necessary for this analysis and have the data we will be working on. You need devtools to install these. Please refer to <a href="installing-devtools">installing devtools</a> for additional instructions or troubleshooting.</p>
+<p>For this analysis, I will use one subject from the Kirby 21 data set. The <code>kirby21.base</code> and <code>kirby21.fmri</code> packages are necessary for this analysis and have the data we will be working on. You need devtools to install these. Please refer to <a href="installing_devtools">installing devtools</a> for additional instructions or troubleshooting.</p>
 <pre class="r"><code>packages = installed.packages()
 packages = packages[, &quot;Package&quot;]
 if (!&quot;kirby21.base&quot; %in% packages) {
@@ -205,7 +205,7 @@ moco_params =
 moco_params = moco_params %&gt;% 
     select(starts_with(&quot;MOCO&quot;))</code></pre>
 <pre><code>Warning: failed to assign NativeSymbolInfo for env since env is already
-defined in the 'lazyeval' namespace</code></pre>
+defined in the &#39;lazyeval&#39; namespace</code></pre>
 <pre class="r"><code>nuisanceVariables = moco_params
 mp = round(moco_params, 4)
 print(head(mp, 3))</code></pre>
@@ -281,7 +281,7 @@ plot(fd, type =&quot;h&quot;,
 <p>We can find the index which has the highest mean value, which may indicate some motion artifact.</p>
 <pre class="r"><code>library(RColorBrewer)
 library(matrixStats)
-rf &lt;- colorRampPalette(rev(brewer.pal(11,'Spectral')))
+rf &lt;- colorRampPalette(rev(brewer.pal(11,&#39;Spectral&#39;)))
 r &lt;- rf(32)
 mat = scale(boldMatrix)
 image(x = 1:nrow(mat), 
@@ -524,10 +524,10 @@ ggplot(long, aes(x = scan_num, y = value)) + geom_line() + facet_wrap(~component
 <h1>References</h1>
 <div id="refs" class="references">
 <div id="ref-behzadi2007component">
-<p>Behzadi, Yashar, Khaled Restom, Joy Liau, and Thomas T Liu. 2007. “A Component Based Noise Correction Method (Compcor) for Bold and Perfusion Based fMRI.” <em>Neuroimage</em> 37 (1). Elsevier:90–101.</p>
+<p>Behzadi, Yashar, Khaled Restom, Joy Liau, and Thomas T Liu. 2007. “A Component Based Noise Correction Method (Compcor) for Bold and Perfusion Based fMRI.” <em>Neuroimage</em> 37 (1): 90–101.</p>
 </div>
 <div id="ref-power2012spurious">
-<p>Power, Jonathan D, Kelly A Barnes, Abraham Z Snyder, Bradley L Schlaggar, and Steven E Petersen. 2012. “Spurious but Systematic Correlations in Functional Connectivity Mri Networks Arise from Subject Motion.” <em>Neuroimage</em> 59 (3). Elsevier:2142–54.</p>
+<p>Power, Jonathan D, Kelly A Barnes, Abraham Z Snyder, Bradley L Schlaggar, and Steven E Petersen. 2012. “Spurious but Systematic Correlations in Functional Connectivity Mri Networks Arise from Subject Motion.” <em>Neuroimage</em> 59 (3): 2142–54.</p>
 </div>
 </div>
 </div>

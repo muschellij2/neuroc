@@ -67,11 +67,11 @@ if (window.hljs) {
 <p>All code for this document is located at <a href="https://raw.githubusercontent.com/muschellij2/neuroc/master/DTI_analysis_fslr/index.R">here</a>.</p>
 <div id="resources-and-goals" class="section level1">
 <h1>Resources and Goals</h1>
-<p>Much of this work has been adapted by the FSL guide for DTI: <a href="http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FDT/UserGuide" class="uri">http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FDT/UserGuide</a>. We will show you a few steps that have been implemented in <code>fslr</code>: <code>eddy_correct</code> and <code>dtifit</code>. Although <code>xfibres</code> has been adapted for <code>fslr</code>, which is the backend for <code>bedpostx</code> from FSL, it takes a long time to run and the results are not seen in this vignette, though code is given to illustrate how it would be run.</p>
+<p>Much of this work has been adapted by the FSL guide for DTI: <a href="http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FDT/UserGuide">http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FDT/UserGuide</a>. We will show you a few steps that have been implemented in <code>fslr</code>: <code>eddy_correct</code> and <code>dtifit</code>. Although <code>xfibres</code> has been adapted for <code>fslr</code>, which is the backend for <code>bedpostx</code> from FSL, it takes a long time to run and the results are not seen in this vignette, though code is given to illustrate how it would be run.</p>
 </div>
 <div id="data-packages" class="section level1">
 <h1>Data Packages</h1>
-<p>For this analysis, I will use one subject from the Kirby 21 data set. The <code>kirby21.base</code> and <code>kirby21.dti</code> packages are necessary for this analysis and have the data we will be working on. You need devtools to install these. Please refer to <a href="installing-devtools">installing devtools</a> for additional instructions or troubleshooting.</p>
+<p>For this analysis, I will use one subject from the Kirby 21 data set. The <code>kirby21.base</code> and <code>kirby21.dti</code> packages are necessary for this analysis and have the data we will be working on. You need devtools to install these. Please refer to <a href="installing_devtools">installing devtools</a> for additional instructions or troubleshooting.</p>
 <pre class="r"><code>packages = installed.packages()
 packages = packages[, &quot;Package&quot;]
 if (!&quot;kirby21.base&quot; %in% packages) {
@@ -202,7 +202,7 @@ rm(list = &quot;mask&quot;)</code></pre>
 </div>
 <div id="fitting-bedpostx" class="section level1">
 <h1>Fitting bedpostx</h1>
-<p>Accoriding to <a href="http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FDT/UserGuide" class="uri">http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FDT/UserGuide</a>, the <code>bedpostx</code> function from FSL stands for “Bayesian Estimation of Diffusion Parameters Obtained using Sampling Techniques. The X stands for modelling Crossing Fibres”. It also states “bedpostx takes about 15 hours to run”. We have implemented <code>xfibres</code>, the function <code>bedpostx</code> calls. Running it with the default options, the command would be:</p>
+<p>Accoriding to <a href="http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FDT/UserGuide">http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FDT/UserGuide</a>, the <code>bedpostx</code> function from FSL stands for “Bayesian Estimation of Diffusion Parameters Obtained using Sampling Techniques. The X stands for modelling Crossing Fibres”. It also states “bedpostx takes about 15 hours to run”. We have implemented <code>xfibres</code>, the function <code>bedpostx</code> calls. Running it with the default options, the command would be:</p>
 <pre class="r"><code>xfibres(infile = outfile, 
         bvecs = b_vecs,
         bvals = b_vals,

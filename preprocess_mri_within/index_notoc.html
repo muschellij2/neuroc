@@ -68,7 +68,7 @@ if (window.hljs) {
 <p>In this tutorial we will discuss within a visit registration (co-registration) of multi-sequence MRI images.</p>
 <div id="data-packages" class="section level1">
 <h1>Data Packages</h1>
-<p>For this analysis, I will use one subject from the Kirby 21 data set. The <code>kirby21.base</code> and <code>kirby21.fmri</code> packages are necessary for this analysis and have the data we will be working on. You need devtools to install these. Please refer to <a href="installing-devtools">installing devtools</a> for additional instructions or troubleshooting.</p>
+<p>For this analysis, I will use one subject from the Kirby 21 data set. The <code>kirby21.base</code> and <code>kirby21.fmri</code> packages are necessary for this analysis and have the data we will be working on. You need devtools to install these. Please refer to <a href="installing_devtools">installing devtools</a> for additional instructions or troubleshooting.</p>
 <pre class="r"><code>packages = installed.packages()
 packages = packages[, &quot;Package&quot;]
 if (!&quot;kirby21.base&quot; %in% packages) {
@@ -111,7 +111,7 @@ visit_2 = visit_2[run_mods]</code></pre>
 <li>Estimate the transformation to the first file (T1 image).</li>
 <li>Perform this transformation, registering the images, and interpolating the images using a Lanczos windowed sinc interpolator.</li>
 </ol>
-<p><code>preprocess_mri_within</code> can also perform skull stripping using BET, but we have shown in the <a href="brain-extraction">brain extraction tutorial</a> that running BET without running neck removal.</p>
+<p><code>preprocess_mri_within</code> can also perform skull stripping using BET, but we have shown in the <a href="brain_extraction">brain extraction tutorial</a> that running BET without running neck removal.</p>
 <pre class="r"><code>library(extrantsr)
 outfiles = nii.stub(visit_1, bn = TRUE)
 proc_files = paste0(outfiles, &quot;_proc.nii.gz&quot;)
@@ -137,7 +137,7 @@ $FLAIR
 NULL</code></pre>
 <div id="brain-extraction-of-the-t1-image" class="section level2">
 <h2>Brain Extraction of the T1 image</h2>
-<p>Similar to the <a href="brain-extraction">brain extraction tutorial</a>, we can run <code>fslbet_robust</code> to get a good brain mask for the T1 image.</p>
+<p>Similar to the <a href="brain_extraction">brain extraction tutorial</a>, we can run <code>fslbet_robust</code> to get a good brain mask for the T1 image.</p>
 <pre class="r"><code>outfile = nii.stub(visit_1[&quot;T1&quot;], bn = TRUE)
 outfile = paste0(outfile, &quot;_SS.nii.gz&quot;)
 if (!file.exists(outfile)) {
@@ -250,7 +250,7 @@ g + aes(x = T1, y = T2)</code></pre>
 <div id="registration-to-the-eve-template" class="section level1">
 <h1>Registration to the Eve template</h1>
 <p>As many MRI studies involve multiple subjects, registration to a template is sometimes necessary. When using registration tools, it is good to note that some may inherently discard voxels less than zero. This may be due to the cost functions used or implied masking that is done behind the scenes. As such, here we will register the non-intensity-normalized T1 image to the template and then apply the estimated transform to the intensity-normalized data.</p>
-<p>We will use symmetric normalization (SyN) <span class="citation">(Avants et al. 2008)</span> which is a non-linear registration, which implicitly performs an affine registration before the non-linear component. We will register to the “Eve” template <span class="citation">(Oishi et al. 2009,<span class="citation">@Oishi_Faria_Mori2010</span>)</span>, and we will register only to the brain image and not the raw image (with extracranial tissue included).</p>
+<p>We will use symmetric normalization (SyN) <span class="citation">(Avants et al. 2008)</span> which is a non-linear registration, which implicitly performs an affine registration before the non-linear component. We will register to the “Eve” template <span class="citation">(Oishi et al. 2009,@Oishi_Faria_Mori2010)</span>, and we will register only to the brain image and not the raw image (with extracranial tissue included).</p>
 <p>Again we will use the <code>extrantsr::registration</code> function which wraps <code>antsRegistration</code>.</p>
 <pre class="r"><code>outfiles = nii.stub(visit_1, bn = TRUE)
 norm_reg_files = paste0(outfiles, &quot;_norm_eve.nii.gz&quot;)
@@ -368,16 +368,13 @@ NULL</code></pre>
 <h1>References</h1>
 <div id="refs" class="references">
 <div id="ref-avants_symmetric_2008">
-<p>Avants, B. B., C. L. Epstein, M. Grossman, and J. C. Gee. 2008. “Symmetric Diffeomorphic Image Registration with Cross-Correlation: Evaluating Automated Labeling of Elderly and Neurodegenerative Brain.” <em>Medical Image Analysis</em>, Special issue on the third international workshop on biomedical image registration - WBIR 2006, 12 (1):26–41. <a href="https://doi.org/10.1016/j.media.2007.06.004" class="uri">https://doi.org/10.1016/j.media.2007.06.004</a>.</p>
+<p>Avants, B. B., C. L. Epstein, M. Grossman, and J. C. Gee. 2008. “Symmetric Diffeomorphic Image Registration with Cross-Correlation: Evaluating Automated Labeling of Elderly and Neurodegenerative Brain.” <em>Medical Image Analysis</em>, Special issue on the third international workshop on biomedical image registration - WBIR 2006, 12 (1): 26–41. <a href="https://doi.org/10.1016/j.media.2007.06.004">https://doi.org/10.1016/j.media.2007.06.004</a>.</p>
 </div>
 <div id="ref-oishi2009atlas">
-<p>Oishi, Kenichi, Andreia Faria, Hangyi Jiang, Xin Li, Kazi Akhter, Jiangyang Zhang, John T Hsu, et al. 2009. “Atlas-Based Whole Brain White Matter Analysis Using Large Deformation Diffeomorphic Metric Mapping: Application to Normal Elderly and Alzheimer’s Disease Participants.” <em>Neuroimage</em> 46 (2). Elsevier:486–99.</p>
-</div>
-<div id="ref-Oishi_Faria_Mori2010">
-<p>Oishi, Kenichi, Andreia Faria, and Susumu Mori. 2010. “JHU-Mni-Ss Atlas.” <em>Https://Www.slicer.org/Publications/Item/View/1883</em>, May. Johns Hopkins University School of Medicine, Department of Radiology, Center for Brain Imaging Science.</p>
+<p>Oishi, Kenichi, Andreia Faria, Hangyi Jiang, Xin Li, Kazi Akhter, Jiangyang Zhang, John T Hsu, et al. 2009. “Atlas-Based Whole Brain White Matter Analysis Using Large Deformation Diffeomorphic Metric Mapping: Application to Normal Elderly and Alzheimer’s Disease Participants.” <em>Neuroimage</em> 46 (2): 486–99.</p>
 </div>
 <div id="ref-tustison_n4itk_2010">
-<p>Tustison, Nicholas J., Brian B. Avants, Philip A. Cook, Yuanjie Zheng, Alexander Egan, Paul A. Yushkevich, and James C. Gee. 2010. “N4ITK: Improved N3 Bias Correction.” <em>IEEE Transactions on Medical Imaging</em> 29 (6):1310–20. <a href="https://doi.org/10.1109/TMI.2010.2046908" class="uri">https://doi.org/10.1109/TMI.2010.2046908</a>.</p>
+<p>Tustison, Nicholas J., Brian B. Avants, Philip A. Cook, Yuanjie Zheng, Alexander Egan, Paul A. Yushkevich, and James C. Gee. 2010. “N4ITK: Improved N3 Bias Correction.” <em>IEEE Transactions on Medical Imaging</em> 29 (6): 1310–20. <a href="https://doi.org/10.1109/TMI.2010.2046908">https://doi.org/10.1109/TMI.2010.2046908</a>.</p>
 </div>
 </div>
 </div>

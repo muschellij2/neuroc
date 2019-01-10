@@ -61,7 +61,7 @@ In this tutorial we will discuss performing some preprocessing of a single subje
 
 # Data Packages
 
-For this analysis, I will use one subject from the Kirby 21 data set.  The `kirby21.base` and `kirby21.fmri` packages are necessary for this analysis and have the data we will be working on.  You need devtools to install these.  Please refer to [installing devtools](installing-devtools) for additional instructions or troubleshooting.
+For this analysis, I will use one subject from the Kirby 21 data set.  The `kirby21.base` and `kirby21.fmri` packages are necessary for this analysis and have the data we will be working on.  You need devtools to install these.  Please refer to [installing devtools](installing_devtools) for additional instructions or troubleshooting.
 
 
 
@@ -248,7 +248,7 @@ head(moco_params)
 
 ## Let's Make a Matrix!
 
-`img_ts_to_matrix` creates $V\times T$ matrix, $V$ voxels in mask, unlike `ANTsR::timeseries2matrix`.  Therefore, we transpose the matrix so that it is consistent with the [ANTsR tutorial for fMRI](fmri-analysis-antsr) and so `boldMatrix` is $T\times V$.  We will get the average of the co-registered image using `fslmaths`.  We wil use this average image to get a mask using the `oMask` function, which calls `getMask`, but for `nifti` objects.  We will then zero out the average image using the mask image.
+`img_ts_to_matrix` creates $V\times T$ matrix, $V$ voxels in mask, unlike `ANTsR::timeseries2matrix`.  Therefore, we transpose the matrix so that it is consistent with the [ANTsR tutorial for fMRI](fmri_analysis_antsr) and so `boldMatrix` is $T\times V$.  We will get the average of the co-registered image using `fslmaths`.  We wil use this average image to get a mask using the `oMask` function, which calls `getMask`, but for `nifti` objects.  We will then zero out the average image using the mask image.
 
 
 

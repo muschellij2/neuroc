@@ -47,7 +47,7 @@ if (!"devtools" %in% packages) {
 }
 ```
 
-Please refer to [installing devtools](installing-devtools) for additional instructions or troubleshooting.
+Please refer to [installing devtools](installing_devtools) for additional instructions or troubleshooting.
 
 ## Mac OSX
 

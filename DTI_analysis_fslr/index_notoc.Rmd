@@ -28,7 +28,7 @@ Much of this work has been adapted by the FSL guide for DTI: [http://fsl.fmrib.o
 
 # Data Packages
 
-For this analysis, I will use one subject from the Kirby 21 data set.  The `kirby21.base` and `kirby21.dti` packages are necessary for this analysis and have the data we will be working on.  You need devtools to install these.  Please refer to [installing devtools](installing-devtools) for additional instructions or troubleshooting.
+For this analysis, I will use one subject from the Kirby 21 data set.  The `kirby21.base` and `kirby21.dti` packages are necessary for this analysis and have the data we will be working on.  You need devtools to install these.  Please refer to [installing devtools](installing_devtools) for additional instructions or troubleshooting.
 
 
 

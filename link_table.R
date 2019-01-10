@@ -1,12 +1,13 @@
 rm(list = ls())
 library(dplyr)
 library(readr)
+library(tibble)
 x = readLines("index.Rmd")
 x = trimws(x)
 x = grep("index[.]html", x, value = TRUE)
 x = gsub(".*\\]\\((.*)/index.html\\).*", "\\1", x)
 
-df = data_frame(file = x)
+df = tibble(file = x)
 df = df %>% 
   mutate(
     neuroc_link = paste0("neuroc-help-", gsub("_", "-", file)),

@@ -1,7 +1,7 @@
 ---
 title: "Skull Stripping CT data"
 author: "John Muschelli"
-date: "2018-12-04"
+date: "2019-01-10"
 output: 
   html_document:
     keep_md: true
@@ -43,11 +43,11 @@ head(collections)
 
 ```r
 mods = get_modality_names(body_part = "BREAST")
-head(mods$mods)
+head(mods$modalities)
 ```
 
 ```
-NULL
+[1] "CT"  "MG"  "MR"  "PT"  "SEG"
 ```
 
 ## Getting Body Part Information

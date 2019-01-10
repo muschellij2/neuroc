@@ -120,7 +120,11 @@ notoc = function(
       function(x) {
         ind = grepl("^___", x)
         x[ind] = gsub("___", "", x[ind])
-        x[ind] = gsub("_", "-", x[ind])
+        # Adi is using _ now! 2019/1/10
+        # comment line below
+        # x[ind] = gsub("_", "-", x[ind])
+        
+        
         # x[ind] = paste0("neuroc-help-", x[ind])
         x = paste(x, collapse = "")
         return(x)

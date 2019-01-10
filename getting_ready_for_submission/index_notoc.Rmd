@@ -322,7 +322,7 @@ to the `.travis.yml` file, respectively.
 
 # Submitting your Package
 
-Now that you've performed all the checks and ensured that the package is thoroughly tested, you can submit your package.  Please provide your name, email, and link to the GitHub repository on the [Neuroconductor](https://neuroconductor.org/submit-package) or [OSLER](http://oslerinhealth.org/submit-package) submission pages.  The maintainer of the package will receive and email to verify this is a valid submission and the package will begin [the changes to your package and integration](continuous-integration).  
+Now that you've performed all the checks and ensured that the package is thoroughly tested, you can submit your package.  Please provide your name, email, and link to the GitHub repository on the [Neuroconductor](https://neuroconductor.org/submit-package) or [OSLER](http://oslerinhealth.org/submit-package) submission pages.  The maintainer of the package will receive and email to verify this is a valid submission and the package will begin [the changes to your package and integration](continuous_integration).  
 
 
 

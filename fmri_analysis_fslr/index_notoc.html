@@ -73,14 +73,14 @@ library(fslr)</code></pre>
 <pre class="r"><code>library(neurobase)
 library(extrantsr)</code></pre>
 <pre><code>
-Attaching package: 'extrantsr'</code></pre>
-<pre><code>The following objects are masked from 'package:oro.nifti':
+Attaching package: &#39;extrantsr&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:oro.nifti&#39;:
 
     origin, origin&lt;-</code></pre>
 <p>In this tutorial we will discuss performing some preprocessing of a single subject functional MRI in FSL.</p>
 <div id="data-packages" class="section level1">
 <h1>Data Packages</h1>
-<p>For this analysis, I will use one subject from the Kirby 21 data set. The <code>kirby21.base</code> and <code>kirby21.fmri</code> packages are necessary for this analysis and have the data we will be working on. You need devtools to install these. Please refer to <a href="installing-devtools">installing devtools</a> for additional instructions or troubleshooting.</p>
+<p>For this analysis, I will use one subject from the Kirby 21 data set. The <code>kirby21.base</code> and <code>kirby21.fmri</code> packages are necessary for this analysis and have the data we will be working on. You need devtools to install these. Please refer to <a href="installing_devtools">installing devtools</a> for additional instructions or troubleshooting.</p>
 <pre class="r"><code>packages = installed.packages()
 packages = packages[, &quot;Package&quot;]
 if (!&quot;kirby21.base&quot; %in% packages) {
@@ -226,7 +226,7 @@ head(moco_params)</code></pre>
 [6,]  0.0439374</code></pre>
 <div id="lets-make-a-matrix" class="section level2">
 <h2>Let’s Make a Matrix!</h2>
-<p><code>img_ts_to_matrix</code> creates <span class="math inline">\(V\times T\)</span> matrix, <span class="math inline">\(V\)</span> voxels in mask, unlike <code>ANTsR::timeseries2matrix</code>. Therefore, we transpose the matrix so that it is consistent with the <a href="fmri-analysis-antsr">ANTsR tutorial for fMRI</a> and so <code>boldMatrix</code> is <span class="math inline">\(T\times V\)</span>. We will get the average of the co-registered image using <code>fslmaths</code>. We wil use this average image to get a mask using the <code>oMask</code> function, which calls <code>getMask</code>, but for <code>nifti</code> objects. We will then zero out the average image using the mask image.</p>
+<p><code>img_ts_to_matrix</code> creates <span class="math inline">\(V\times T\)</span> matrix, <span class="math inline">\(V\)</span> voxels in mask, unlike <code>ANTsR::timeseries2matrix</code>. Therefore, we transpose the matrix so that it is consistent with the <a href="fmri_analysis_antsr">ANTsR tutorial for fMRI</a> and so <code>boldMatrix</code> is <span class="math inline">\(T\times V\)</span>. We will get the average of the co-registered image using <code>fslmaths</code>. We wil use this average image to get a mask using the <code>oMask</code> function, which calls <code>getMask</code>, but for <code>nifti</code> objects. We will then zero out the average image using the mask image.</p>
 <pre class="r"><code>moco_avg_img = fslmaths(moco_fname, opts = &quot;-Tmean&quot;)</code></pre>
 <pre><code>fslmaths &quot;/Users/johnmuschelli/Dropbox/Projects/neuroc/fmri_analysis_fslr/113-01-fMRI_motion_corr.nii.gz&quot;  -Tmean &quot;/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpTpoByj/file1226aaffedca&quot;;</code></pre>
 <pre class="r"><code>maskImage = oMask(moco_avg_img, 
@@ -310,7 +310,7 @@ for (i in 2:ncol(mp)) {
 <p>We can find the index which has the highest mean value, which may indicate some motion artifact.</p>
 <pre class="r"><code>library(RColorBrewer)
 library(matrixStats)
-rf &lt;- colorRampPalette(rev(brewer.pal(11,'Spectral')))
+rf &lt;- colorRampPalette(rev(brewer.pal(11,&#39;Spectral&#39;)))
 r &lt;- rf(32)
 mat = scale(boldMatrix)
 image(x = 1:nrow(mat), 

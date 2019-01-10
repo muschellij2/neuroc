@@ -15,7 +15,7 @@ collections = collections$collection_names
 head(collections)
 
 mods = get_modality_names(body_part = "BREAST")
-head(mods$mods)
+head(mods$modalities)
 
 
 ## ------------------------------------------------------------------------
