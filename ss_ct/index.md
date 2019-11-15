@@ -1,7 +1,7 @@
 ---
 title: "Skull Stripping CT data"
 author: "John Muschelli"
-date: "2019-01-10"
+date: "2019-11-14"
 output: 
   html_document:
     keep_md: true
@@ -179,7 +179,7 @@ download_unzip_series = function(series_instance_uid,
   stopifnot(file.exists(res$out_file))
   tdir = tempfile()
   dir.create(tdir, recursive = TRUE)
-  res = unzip(zipfile = res$out_file  , exdir = tdir)
+  res = unzip(zipfile = res$out_file, exdir = tdir)
   L = list(files = res,
            dirs = unique(dirname(normalizePath(res))))
   return(L)

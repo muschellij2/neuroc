@@ -7,12 +7,13 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <meta name="author" content="John Muschelli" />
 
-<meta name="date" content="2019-01-10" />
+<meta name="date" content="2019-11-14" />
 
 <title>index_notoc.utf8.md</title>
 
@@ -51,6 +52,9 @@ if (window.hljs) {
 
 
 
+
+
+
 </head>
 
 <body>
@@ -59,8 +63,8 @@ if (window.hljs) {
 
 
 <h1 class="title toc-ignore">Skull Stripping CT data</h1>
-<h4 class="author"><em>John Muschelli</em></h4>
-<h4 class="date"><em>2019-01-10</em></h4>
+<h4 class="author">John Muschelli</h4>
+<h4 class="date">2019-11-14</h4>
 
 
 
@@ -190,7 +194,7 @@ download_unzip_series = function(series_instance_uid,
   stopifnot(file.exists(res$out_file))
   tdir = tempfile()
   dir.create(tdir, recursive = TRUE)
-  res = unzip(zipfile = res$out_file  , exdir = tdir)
+  res = unzip(zipfile = res$out_file, exdir = tdir)
   L = list(files = res,
            dirs = unique(dirname(normalizePath(res))))
   return(L)
@@ -328,6 +332,9 @@ head(info)</code></pre>
 </div>
 </div>
 
+
+
+<!-- code folding -->
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

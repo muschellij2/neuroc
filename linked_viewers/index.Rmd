@@ -1,0 +1,80 @@
+---
+title: "Linked Viewers"
+author: "John Muschelli"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    keep_md: true
+    theme: cosmo
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+    number_sections: true      
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+All code for this document is located [here](https://github.com/muschellij2/neuroc/blob/master/linked_viewers/index.Rmd).
+
+# Description of the Problem
+
+In many image analyses, you would like to see a set of images.  These images may be an image with an overlay or a set of overlays, or multiple sequences of the data, or multiple sequences with sets of overlays.  Either way, we can display them with the [`papayaWidget` package](https://github.com/muschellij2/papayaWidget).  Many instances, however, we'd like to keep the cursor the same when viewing areas.
+
+# Non-linked Viewing
+
+Here we will use the `MNITemplate` package to get the MNI data into R, including the T1-weighted image and a segmentation:
+
+```{r cars}
+library(MNITemplate)
+library(papayaWidget)
+img1 = MNITemplate::readMNI()
+img2 = MNITemplate::readMNISeg()
+```
+
+## See the images
+
+Here we view the images using a static orthographic view using `neurobase::ortho2`
+
+```{r}
+library(neurobase)
+ortho2(img1)
+ortho2(img2)
+```
+
+## Dynamic Viewing
+
+Using `papayaWidget::papaya`, however, we can view the images dynamically, which works within Shiny as well as RMarkdown!
+```{r}
+papaya(img1)
+papaya(img2)
+```
+
+# Linked Viewing
+
+The `sync_view` parameter in `papaya` is by default set to `FALSE`.  That is, when you have 2 viewers, they are disconnected.  If you set `sync_view = TRUE` to both (or as many), the views will change together!
+```{r}
+papaya(img1, sync_view = TRUE)
+papaya(img2, sync_view = TRUE)
+```
+
+You cannot set the views to be referencing another viewer, either they all go together or not.  That is to say you cannot have sets of containers that have different views but are also linked, it's somewhat of a global option we turn off by default, see https://github.com/rii-mango/Papaya/issues/122. 
+
+## Sizing 
+
+Now the size of the viewers can be controlled using HTML `divs`s, which we can show side by side:
+
+<div style="width: 100%; overflow: hidden;">
+<div style="width: 48%; float: left;"> 
+```{r}
+papaya(img1, sync_view = TRUE, hide_toolbar = TRUE, hide_controls = TRUE)
+```
+</div>
+<div style="width: 48%; float: right;"> 
+```{r}    
+papaya(img2, sync_view = TRUE, hide_toolbar = TRUE, hide_controls = TRUE)
+```
+</div>
+</div>

@@ -24,6 +24,7 @@ LIST += continuous_integration_oslerinhealth
 LIST += r_package_workflow
 LIST += windows_wsl
 LIST += ss_ct
+LIST += linked_viewers
 
 all:
 	for fol in $(LIST) ; do \

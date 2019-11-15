@@ -1,6 +1,7 @@
 ## ----devtools, include=FALSE---------------------------------------------
 library(devtools)
 
+
 ## ----setup, include=FALSE------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
 project_name = readLines("project_name")[1]
@@ -19,8 +20,10 @@ website = switch(
   oslerinhealth = "http://oslerinhealth.org"
 )
 
+
 ## ---- eval = FALSE-------------------------------------------------------
 ## devtools::install_github("muschellij2/neuroc.deps")
+
 
 ## ------------------------------------------------------------------------
 devtools::session_info()

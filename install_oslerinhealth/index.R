@@ -39,6 +39,7 @@ packs = switch(
 )
 dpacks = paste0('c("', packs[1], '", "', packs[2], '")')
 
+
 ## ---- cache = FALSE------------------------------------------------------
 devtools::session_info()
 

@@ -7,7 +7,7 @@ bibliography: ../refs.bib
 ---
 title: "Installing on the Windows Subsystem for Linux (WSL)"
 author: "John Muschelli"
-date: "2018-10-08"
+date: "2019-11-14"
 output: 
   html_document:
     keep_md: true
@@ -24,7 +24,7 @@ bibliography: ../refs.bib
 
 All code for this document is located [here](https://github.com/muschellij2/neuroc/blob/master/windows_wsl/index.Rmd).
 
-Here we will discuss hwo to get FSL (and other Linux only applications) onto a Windows machine using the [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/install-win10).  All of these instructions require Windows 10 or higher.  Some of this content was adapted from http://www.nemotos.net/?p=1481.
+Here we will discuss how to get FSL (and other Linux only applications) onto a Windows machine using the [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/install-win10).  All of these instructions require Windows 10 or higher.  Some of this content was adapted from http://www.nemotos.net/?p=1481.
 
 
 # Install Linux Subsystem

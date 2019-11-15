@@ -1,6 +1,6 @@
 ---
 title: "Neuroconductor"
-date: '2019-01-10'
+date: '2019-11-14'
 output: 
   html_document:
     keep_md: true
@@ -29,6 +29,7 @@ Please visit the [FAQ](faq/index.html) for information on how to begin.
 # Required Readings {#req}
 
 1. [NIfTI Basics](nifti_basics/index.html)
+2. [Viewing Data: Linked Viewers](linked_viewers/index.html)
 
 # Data
 1. [Downloading Human Connectome Project Data](neurohcp/index.html)
