@@ -10,10 +10,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<meta name="author" content="Adi Gherman" />
 
 <meta name="date" content="2020-01-07" />
 
-<title>Neuroconductor</title>
+<title>Rxnat: Query and retrieves neuroimaging sets from XNAT projects</title>
 
 <style type="text/css">.hljs-literal {
 color: #990073;
@@ -60,79 +61,224 @@ if (window.hljs) {
 
 
 
-<h1 class="title toc-ignore">Neuroconductor</h1>
+<h1 class="title toc-ignore">Rxnat: Query and retrieves neuroimaging sets from XNAT projects</h1>
+<h4 class="author">Adi Gherman</h4>
 <h4 class="date">2020-01-07</h4>
 
 
 
-<div id="devguides" class="section level1">
-<h1>Guides for Developers</h1>
-<ol style="list-style-type: decimal">
-<li><a href="getting_ready_for_submission">Preparing Your Package for Submission</a></li>
-<li><a href="continuous_integration">Changes to your Package</a></li>
-</ol>
+<div id="xnat" class="section level1">
+<h1>XNAT</h1>
+<p><a href="https://www.xnat.org">XNAT</a> is an open source imaging informatics platform developed by the Neuroinformatics Research Group at Washington University. XNAT was originally developed in the Buckner Lab at Washington University, now at Harvard University. It facilitates common management, productivity, and quality assurance tasks for imaging and associated data. Thanks to its extensibility, XNAT can be used to support a wide range of imaging-based projects.</p>
+<p>XNAT has become the data archiving tool of choice for multiple neuroimaging projects and research labs around the world. Listed below are some of the most popular image repositories that use XANT.</p>
+<ul>
+<li><a href="https://nitrc.org">NITRC</a> - Neuroimaging Informatics Tools and Resources Clearinghouse is currently a free one-stop-shop collaboratory for science researchers that need resources such as neuroimaging analysis software, publicly available data sets, or computing power.</li>
+<li><a href="https://db.humanconnectome.org/">ConnectomeDB</a> - The Human Connectome Project (HCP) is a project to construct a map of the complete structural and functional neural connections in vivo within and across individuals.</li>
+<li><a href="https://central.xnat.org">XNAT Central</a> - XNAT Central is a database for sharing neuroimaging and related data with select collaborators or the general community.</li>
+</ul>
+<p>For a more complete list of XNAT implementations around the world you can click <a href="https://www.xnat.org/about/xnat-implementations.php">here</a>.</p>
+<div id="installing-the-rxnat-package" class="section level2">
+<h2>Installing the Rxnat package</h2>
+<p>You can install <code>Rxnat</code> from Neuroconductor (Rxnat will be incorporated with the Feb 2019 release) or from GitHub with:</p>
+<pre class="r"><code>source(&quot;http://neuroconductor.org/neurocLite.R&quot;)
+neuro_install(&quot;Rxnat&quot;, release = &quot;stable&quot;)
+
+# install.packages(&quot;remotes&quot;)
+remotes::install_github(&quot;adigherman/Rxnat&quot;)</code></pre>
 </div>
-<div id="frequently-asked-questions-faq" class="section level1">
-<h1>Frequently Asked Questions (FAQ)</h1>
-<p>Please visit the <a href="faq">FAQ</a> for information on how to begin.</p>
+<div id="accessing-xnat-data" class="section level2">
+<h2>Accessing XNAT Data</h2>
+<div id="how-to-get-a-usernamepassword-for-a-xnat-project" class="section level3">
+<h3>How to get a username/password for a XNAT project</h3>
+<p>XNAT projects can be public or private. In order to access a private repository a set of credentials are required. To obtain a user name and password combo you will need to visit:</p>
+<ul>
+<li>HCP (Human Connectome Project) - <a href="https://db.humanconnectome.org">new account request</a> and click on the Register button</li>
+<li>NITRC - <a href="https://www.nitrc.org/account/register.php">new account request</a>. Some of the NITRC hosted projects will require additional access reuquests but this can be easily requested using the NITRC web interface for each project.</li>
+<li>XNAT Central - this is mostly public, but you can also perform a <a href="https://central.xnat.org/app/template/Register.vm">new account request</a> if any of the projects require it.</li>
+</ul>
 </div>
-<div id="install" class="section level1">
-<h1>Installation Guides</h1>
-<ol style="list-style-type: decimal">
-<li><a href="windows_wsl">Using the Windows Subsystem for Linux</a></li>
-<li><a href="installing_devtools">Installing devtools</a></li>
-<li><a href="installing_antsr">Installing ANTsR</a></li>
-</ol>
+<div id="establishing-a-xnat-connection-with-the-rxnat-package" class="section level3">
+<h3>Establishing a XNAT connection with the <code>Rxnat</code> package</h3>
+<p>The <code>Rxnat</code> package will accept credentials provided in the function call or read from the system environment.</p>
+<div id="function-parameters" class="section level4">
+<h4>Function parameters</h4>
+<p>To establish a connection using the credentials as function parameters we can call the <code>xnat_connect</code> function:</p>
+<pre class="r"><code>nitrc &lt;- xnat_connect(&#39;https://nitrc.org/ir&#39;, username=&#39;XXXX&#39;, password=&#39;YYYY&#39;, xnat_name=NULL)</code></pre>
 </div>
-<div id="req" class="section level1">
-<h1>Required Readings</h1>
-<ol style="list-style-type: decimal">
-<li><a href="nifti_basics">NIfTI Basics</a></li>
-<li><a href="linked_viewers">Viewing Data: Linked Viewers</a></li>
-</ol>
-</div>
-<div id="data" class="section level1">
-<h1>Data</h1>
-<ol style="list-style-type: decimal">
-<li><a href="neurohcp">Downloading Human Connectome Project Data</a></li>
-<li><a href="fcp_indi">Downloading Functional Connectomes Projects</a></li>
-</ol>
-</div>
-<div id="tutorials" class="section level1">
-<h1>General Tutorials</h1>
-<div id="structural-imaging" class="section level2">
-<h2>Structural Imaging</h2>
-<ol style="list-style-type: decimal">
-<li><a href="brain_extraction">Brain Extraction</a></li>
-<li><a href="ss_ct">Brain Extraction for CT</a></li>
-<li><a href="tissue_class_segmentation">Tissue-Class Segmentation</a></li>
-<li><a href="label_image">Labeling Brain Structures</a></li>
-<li><a href="preprocess_mri_within">Processing Within-Visit Structural MRI</a></li>
-<li><a href="cortical_thickness">Cortical Thickness Estimation (NOT DONE)</a></li>
-</ol>
-</div>
-<div id="fmri" class="section level2">
-<h2>fMRI</h2>
-<ol start="4" style="list-style-type: decimal">
-<li><a href="fmri_analysis_antsr">Resting-State fMRI analysis using ANTsR</a></li>
-<li><a href="fmri_analysis_fslr">Resting-State fMRI analysis using fslr</a></li>
-<li><a href="fmri_analysis_spm12r">Resting-State fMRI analysis using spm12r</a></li>
-</ol>
-</div>
-<div id="dti" class="section level2">
-<h2>DTI</h2>
-<ol start="7" style="list-style-type: decimal">
-<li><a href="dti_analysis_fslr">DTI analysis with fslr</a></li>
-<li><a href="dti_analysis_rcamino">DTI analysis with Camino</a></li>
-<li><a href="dti_analysis_rcamino_hcp">DTI analysis with Camino with HCP data</a></li>
-</ol>
+<div id="setting-up-system-environment-variables" class="section level4">
+<h4>Setting up system environment variables</h4>
+<p>To use system environment variables we need to add them to the <code>.Renviron</code> file located in the user’s home folder. Use <code>Sys.getenv(&quot;HOME&quot;)</code> to get the path (for unix/osx users the location can be easily accessed with ~, eg. <code>vi ~/.Renviron</code>). The <code>Rxnat</code> package will be able to automatically read / use a system environment variable provided the following format is used: <code>XXXX_Rxnat_USER</code> and <code>XXXX_Rxnat_PASS</code>. <code>XXXX</code> is provided as an argument when an XNAT connection is initiated.</p>
+<p>As an example <code>NITRC</code> is used as argument and the system environment variables names should be <code>NITRC_Rxnat_USER</code>, and <code>NITRC_Rxnat_PASS</code>.</p>
+<pre class="r"><code>nitrc &lt;- xnat_connect(&#39;https://nitrc.org/ir&#39;, xnat_name=&#39;NITRC&#39;)</code></pre>
 </div>
 </div>
-<div id="disease-specific-tutorials" class="section level1">
-<h1>Disease-specific Tutorials</h1>
-<ol style="list-style-type: decimal">
-<li><a href="ms_lesion">Multiple Sclerosis Lesion Segmentation</a></li>
-</ol>
+</div>
+<div id="get-list-of-available-xnat-projects" class="section level2">
+<h2>Get list of available XNAT projects</h2>
+<p>Once a connection is established using the <code>xnat_connect</code> function a list of available projects can be easily retrieved by using the class internal function <code>projects</code>:</p>
+<pre class="r"><code>hcp &lt;-xnat_connect(&#39;https://db.humanconnectome.org&#39;, xnat_name = &quot;hcp&quot;)
+hcp_projects &lt;- hcp$projects()
+head(hcp_projects[c(&#39;id&#39;,&#39;name&#39;)])
+            id                                        name
+1 CCF_DMCC_STG                        DMCC Staging Project
+2     HCP_1200            WU-Minn HCP Data - 1200 Subjects
+3      HCP_500 WU-Minn HCP Data &amp;#150; 500 Subjects + MEG2
+4  HCP_500_RST      HCP 500 Subject + MEG2 Restricted Data
+5      HCP_900        WU-Minn HCP Data - 900 Subjects + 7T
+6    HCP_Coded                                   HCP_Coded</code></pre>
+</div>
+<div id="retrieve-a-list-with-all-accessible-subjects" class="section level2">
+<h2>Retrieve a list with all accessible subjects</h2>
+<p>A full list of subjects for each XNAT connection can be retrieved using the <code>subjects</code> function:</p>
+<pre class="r"><code>hcp_subjects &lt;- hcp$subjects()
+head(hcp_subjects)
+       project                  ID  label gender handedness yob education ses group race ethnicity
+1 HCP_Subjects ConnectomeDB_S02177 100004      M         NA  NA        NA  NA    NA   NA        NA
+2 HCP_Subjects ConnectomeDB_S01982 100206      M         NA  NA        NA  NA    NA   NA        NA
+3 HCP_Subjects ConnectomeDB_S00230 100307      F         NA  NA        NA  NA    NA   NA        NA
+4 HCP_Subjects ConnectomeDB_S00381 100408      M         NA  NA        NA  NA    NA   NA        NA
+5 HCP_Subjects ConnectomeDB_S01590 100610      M         NA  NA        NA  NA    NA   NA        NA
+6 HCP_Subjects ConnectomeDB_S00551 101006      F         NA  NA        NA  NA    NA   NA        NA</code></pre>
+</div>
+<div id="get-full-list-of-experiments" class="section level2">
+<h2>Get full list of experiments</h2>
+<p>To obtain a full list of experiments the <code>experiments</code> function will be used:</p>
+<pre class="r"><code>hcp_experiments &lt;- hcp$experiments()
+head(hcp_experiments)
+       project subject                  ID                type      label age
+1 HCP_Subjects  100206 ConnectomeDB_E13304  xnat:mrSessionData  100206_3T  26
+2 HCP_Subjects  100307 ConnectomeDB_E03657  xnat:mrSessionData  100307_3T  26
+3 HCP_Subjects  100307 ConnectomeDB_E10373 xnat:megSessionData 100307_MEG  NA
+4 HCP_Subjects  100408 ConnectomeDB_E03658  xnat:mrSessionData  100408_3T  31
+5 HCP_Subjects  100610 ConnectomeDB_E11186  xnat:mrSessionData  100610_3T  26
+6 HCP_Subjects  100610 ConnectomeDB_E24170  xnat:mrSessionData  100610_7T  26</code></pre>
+</div>
+<div id="get-the-complete-list-of-resources-for-a-specific-experiment" class="section level2">
+<h2>Get the complete list of resources for a specific experiment</h2>
+<p>The scan resources for an experiment can be retrieved using the <code>get_xnat_experiment_resources</code> function:</p>
+<pre class="r"><code>ConnectomeDB_E13304_resources &lt;- hcp$get_xnat_experiment_resources(&#39;ConnectomeDB_E13304&#39;)
+head(ConnectomeDB_E13304_resources[c(&#39;Name&#39;,&#39;URI&#39;)])
+                                 Name                                                                                                        URI
+1            100206_3T_BIAS_BC.nii.gz            /data/experiments/ConnectomeDB_E13304/scans/101/resources/274961/files/100206_3T_BIAS_BC.nii.gz
+2          100206_3T_BIAS_32CH.nii.gz          /data/experiments/ConnectomeDB_E13304/scans/102/resources/274962/files/100206_3T_BIAS_32CH.nii.gz
+3           100206_3T_T1w_MPR1.nii.gz           /data/experiments/ConnectomeDB_E13304/scans/103/resources/274963/files/100206_3T_T1w_MPR1.nii.gz
+4           100206_3T_T2w_SPC1.nii.gz           /data/experiments/ConnectomeDB_E13304/scans/106/resources/274964/files/100206_3T_T2w_SPC1.nii.gz
+5 100206_3T_FieldMap_Magnitude.nii.gz /data/experiments/ConnectomeDB_E13304/scans/107/resources/274965/files/100206_3T_FieldMap_Magnitude.nii.gz
+6     100206_3T_FieldMap_Phase.nii.gz     /data/experiments/ConnectomeDB_E13304/scans/108/resources/274966/files/100206_3T_FieldMap_Phase.nii.gz</code></pre>
+</div>
+<div id="query-the-xnat-projects-for-matching-entries" class="section level2">
+<h2>Query the XNAT projects for matching entries</h2>
+<p>If you are interested just in a subset of subjects/experiments that match a certain criteria you can use the <code>query_scan_resources</code> function. Accepted query parameters are:</p>
+<ul>
+<li>subject_ID - subject ID identifier</li>
+<li>project - the project ID</li>
+<li>age - subject’s age</li>
+<li>experiment_ID - experiment ID identifier</li>
+<li>type - type of image scan</li>
+<li>TR - repetition time</li>
+<li>TE - echo time</li>
+<li>TI - inversion time</li>
+<li>flip - flip status</li>
+<li>voxel_res - overall image voxel resolution</li>
+<li>voxel_res_X - voxel X resolution</li>
+<li>voxel_res_Y - voxel Y resolution</li>
+<li>voxel_res_Z - voxel Z resolution</li>
+<li>orientation - image orientation</li>
+</ul>
+<p>To retrieve a list of all subject IDs and associated experiment IDs we can use the <code>query_scan_resources</code> function. In the example below, we are querying the HCP XNAT database for all subjects belonging the the HCP_500 project with scans taken at age 26.</p>
+<pre class="r"><code>hcp_500_age_26 &lt;- query_scan_resources(hcp,age=&#39;26&#39;, project=&#39;HCP_500&#39;)
+head(hcp_500_age_26[c(&quot;subject_ID&quot;,&quot;experiment_ID&quot;, &quot;Project&quot;, &quot;Age&quot;)])
+           subject_ID       experiment_ID Project Age
+1 ConnectomeDB_S00230 ConnectomeDB_E03657 HCP_500  26
+2 ConnectomeDB_S00231 ConnectomeDB_E03664 HCP_500  26
+3 ConnectomeDB_S00234 ConnectomeDB_E03684 HCP_500  26
+4 ConnectomeDB_S00235 ConnectomeDB_E03690 HCP_500  26
+5 ConnectomeDB_S00236 ConnectomeDB_E03694 HCP_500  26
+6 ConnectomeDB_S00237 ConnectomeDB_E03988 HCP_500  26</code></pre>
+</div>
+<div id="getting-data-download-a-single-scan-imageresource-file" class="section level2">
+<h2>Getting Data: Download a single scan image/resource file</h2>
+<p>To download a single file we will use the <code>download_file</code> function. Using the first <code>experiment_ID</code> from the above example, we will get all scan resources associated with it first.</p>
+<pre class="r"><code>scan_resources &lt;- get_scan_resources(hcp,&#39;ConnectomeDB_E03657&#39;)
+scan_resources[1,&quot;Name&quot;]
+[1] &quot;100307_3T_BIAS_BC.nii.gz&quot;
+&gt; scan_resources[1,&quot;URI&quot;]
+[1] &quot;/data/experiments/ConnectomeDB_E03657/scans/101/resources/69128/files/100307_3T_BIAS_BC.nii.gz&quot;</code></pre>
+<p>To download the resource file (100307_3T_BIAS_BC.nii.gz) we will do:</p>
+<pre class="r"><code>&gt; download_xnat_file(hcp,&quot;/data/experiments/ConnectomeDB_E03657/scans/101/resources/69128/files/100307_3T_BIAS_BC.nii.gz&quot;)
+[1] &quot;/var/folders/wb/l7jtkdy14f761vm4xr9zxjj80000gn/T//RtmpFfYbQ7/100307_3T_BIAS_BC.nii.gz&quot;</code></pre>
+</div>
+<div id="getting-data-download-a-directory-of-data" class="section level2">
+<h2>Getting Data: Download a directory of data</h2>
+<p>To download all the T2w type images from experiment ConnectomeDB_E03657 we will use the <code>download_xnat_dir</code> function.</p>
+<pre class="r"><code>download_xnat_dir(hcp, experiment_ID=&#39;ConnectomeDB_E03657&#39;,scan_type=&#39;T2w&#39;, verbose=TRUE)
+Downloading: 28 MB     [1] &quot;/var/folders/wb/l7jtkdy14f761vm4xr9zxjj80000gn/T//RtmpFfYbQ7/ConnectomeDB_E03657.zip&quot;
+
+
+# Session Info</code></pre>
+<pre class="r"><code>devtools::session_info()</code></pre>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────
+ setting  value                       
+ version  R version 3.6.0 (2019-04-26)
+ os       macOS Mojave 10.14.6        
+ system   x86_64, darwin15.6.0        
+ ui       X11                         
+ language (EN)                        
+ collate  en_US.UTF-8                 
+ ctype    en_US.UTF-8                 
+ tz       America/New_York            
+ date     2020-01-07                  
+
+─ Packages ───────────────────────────────────────────────────────────────────
+ package     * version     date       lib source                             
+ assertthat    0.2.1       2019-03-21 [1] CRAN (R 3.6.0)                     
+ backports     1.1.5       2019-10-02 [1] CRAN (R 3.6.0)                     
+ bitops        1.0-6       2013-08-17 [1] CRAN (R 3.6.0)                     
+ callr         3.4.0       2019-12-09 [1] CRAN (R 3.6.0)                     
+ cli           2.0.0       2019-12-09 [1] CRAN (R 3.6.0)                     
+ colorout    * 1.2-1       2019-06-19 [1] Github (jalvesaq/colorout@7ea9440) 
+ crayon        1.3.4       2017-09-16 [1] CRAN (R 3.6.0)                     
+ desc          1.2.0       2019-07-10 [1] Github (muschellij2/desc@b0c374f)  
+ devtools      2.2.1.9000  2019-12-03 [1] local                              
+ digest        0.6.23      2019-11-23 [1] CRAN (R 3.6.0)                     
+ ellipsis      0.3.0       2019-09-20 [1] CRAN (R 3.6.0)                     
+ evaluate      0.14        2019-05-28 [1] CRAN (R 3.6.0)                     
+ fansi         0.4.0       2018-10-05 [1] CRAN (R 3.6.0)                     
+ fs            1.3.1       2019-05-06 [1] CRAN (R 3.6.0)                     
+ glue          1.3.1       2019-03-12 [1] CRAN (R 3.6.0)                     
+ htmltools     0.4.0       2019-10-04 [1] CRAN (R 3.6.0)                     
+ httr          1.4.1       2019-08-05 [1] CRAN (R 3.6.0)                     
+ knitr         1.26.1      2020-01-05 [1] Github (muschellij2/knitr@f5af631) 
+ magrittr      1.5         2014-11-22 [1] CRAN (R 3.6.0)                     
+ memoise       1.1.0       2017-04-21 [1] CRAN (R 3.6.0)                     
+ pkgbuild      1.0.6       2019-10-09 [1] CRAN (R 3.6.0)                     
+ pkgload       1.0.2       2018-10-29 [1] CRAN (R 3.6.0)                     
+ prettyunits   1.0.2       2015-07-13 [1] CRAN (R 3.6.0)                     
+ processx      3.4.1       2019-07-18 [1] CRAN (R 3.6.0)                     
+ ps            1.3.0       2018-12-21 [1] CRAN (R 3.6.0)                     
+ R6            2.4.1       2019-11-12 [1] CRAN (R 3.6.0)                     
+ Rcpp          1.0.3       2019-11-08 [1] CRAN (R 3.6.0)                     
+ RCurl         1.95-4.12   2019-03-04 [1] CRAN (R 3.6.0)                     
+ remotes       2.1.0       2019-06-24 [1] CRAN (R 3.6.0)                     
+ rlang         0.4.2       2019-11-23 [1] CRAN (R 3.6.0)                     
+ rmarkdown     2.0         2019-12-12 [1] CRAN (R 3.6.0)                     
+ rprojroot     1.3-2       2018-01-03 [1] CRAN (R 3.6.0)                     
+ rstudioapi    0.10.0-9003 2020-01-05 [1] Github (rstudio/rstudioapi@abe596d)
+ Rxnat       * 1.0.6       2019-06-07 [1] CRAN (R 3.6.0)                     
+ sessioninfo   1.1.1       2018-11-05 [1] CRAN (R 3.6.0)                     
+ stringi       1.4.3       2019-03-12 [1] CRAN (R 3.6.0)                     
+ stringr       1.4.0       2019-02-10 [1] CRAN (R 3.6.0)                     
+ testthat      2.3.0       2019-11-05 [1] CRAN (R 3.6.0)                     
+ usethis       1.5.1.9000  2019-08-15 [1] local                              
+ withr         2.1.2       2018-03-15 [1] CRAN (R 3.6.0)                     
+ xfun          0.11        2019-11-12 [1] CRAN (R 3.6.0)                     
+ yaml          2.2.0       2018-07-25 [1] CRAN (R 3.6.0)                     
+
+[1] /Library/Frameworks/R.framework/Versions/3.6/Resources/library</code></pre>
+</div>
+</div>
+<div id="references" class="section level1">
+<h1>References</h1>
 </div>
 
 

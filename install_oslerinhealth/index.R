@@ -1,4 +1,4 @@
-## ----setup, include=FALSE------------------------------------------------
+## ----setup, include=FALSE-----------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
 project_name = readLines("project_name")[1]
 master_name = switch(
@@ -40,6 +40,6 @@ packs = switch(
 dpacks = paste0('c("', packs[1], '", "', packs[2], '")')
 
 
-## ---- cache = FALSE------------------------------------------------------
+## ---- cache = FALSE-----------------------------------------------------------
 devtools::session_info()
 

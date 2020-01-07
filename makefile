@@ -25,6 +25,7 @@ LIST += r_package_workflow
 LIST += windows_wsl
 LIST += ss_ct
 LIST += linked_viewers
+LIST += rxnat
 
 all:
 	for fol in $(LIST) ; do \
