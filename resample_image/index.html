@@ -1648,10 +1648,31 @@ antsImage
   Pixel Dimension : 1.2 x 1 x 1
   Voxel Units     : mm
   Time Units      : Unknown</code></pre>
+<p>By default, this will write the image to disk and then read it in using <code>readnii</code>, but you can pass in a <code>reference</code> image that header information will be copied from (but not checked for consistency):</p>
+<pre class="r"><code>ants2oro(ants_img, reference = oro_img)</code></pre>
+<pre><code>NIfTI-1 format
+  Type            : nifti
+  Data Type       : 16 (FLOAT32)
+  Bits per Pixel  : 32
+  Slice Code      : 0 (Unknown)
+  Intent Code     : 0 (None)
+  Qform Code      : 1 (Scanner_Anat)
+  Sform Code      : 0 (Unknown)
+  Dimension       : 170 x 256 x 256
+  Pixel Dimension : 1.2 x 1 x 1
+  Voxel Units     : mm
+  Time Units      : sec</code></pre>
+<p>which we see is much faster:</p>
+<pre class="r"><code>system.time(ants2oro(ants_img))</code></pre>
+<pre><code>   user  system elapsed 
+  3.144   0.072   3.229 </code></pre>
+<pre class="r"><code>system.time(ants2oro(ants_img, reference = oro_img))</code></pre>
+<pre><code>   user  system elapsed 
+  0.648   0.022   0.670 </code></pre>
 </div>
 <div id="oro.nifti-nifti-to-antsrcore-antsimage-format" class="section level2" number="3.4">
 <h2 number="3.4"><span class="header-section-number">3.4</span> <code>oro.nifti</code> <code>nifti</code> to <code>ANTsRCore</code> <code>antsImage</code> format</h2>
-<p>The <code>extrantsr</code> functions <code>ants2oro</code> will convert from <code>ANTsRCore</code> <code>antsImage</code> to <code>oro.nifti</code> <code>nifti</code> objects. Note, this essentially writes the output to disk, then reads it back in using <code>antsImageRead</code>, but is a convenience image for this:</p>
+<p>The <code>extrantsr</code> functions <code>oro2ants</code> will convert from <code>oro.nifti</code> <code>nifti</code> to <code>ANTsRCore</code> <code>antsImage</code> objects. Note, this essentially writes the output to disk, then reads it back in using <code>antsImageRead</code>, but is a convenience image for this:</p>
 <pre class="r"><code>oro2ants(oro_img)</code></pre>
 <pre><code>antsImage
   Pixel Type          : float 
@@ -1660,7 +1681,7 @@ antsImage
   Voxel Spacing       : 1.20000004768372x1x1 
   Origin              : 202.8 0 0 
   Direction           : -1 0 0 0 1 0 0 0 1 
-  Filename           : /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpY91K5I/file82343b35eb47.nii.gz </code></pre>
+  Filename           : /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpnJANZS/file8b625b3ceaf5.nii.gz </code></pre>
 <p>The <code>as.antsImage</code> function should work as well (and is much faster), but doesn’t carry the appropriate header information:</p>
 <pre class="r"><code>as.antsImage(oro_img)</code></pre>
 <pre><code>antsImage
@@ -1685,7 +1706,7 @@ antsImage
   Voxel Spacing       : 1.20000004768372x1x1 
   Origin              : 202.8 0 0 
   Direction           : -1 0 0 0 1 0 0 0 1 
-  Filename           : /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpY91K5I/file823420b3df93.nii.gz </code></pre>
+  Filename           : /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpnJANZS/file8b621e65405c.nii.gz </code></pre>
 <p>but does not work directly with <code>as.antsImage</code></p>
 <pre class="r"><code>as.antsImage(rnif_img)</code></pre>
 <pre><code>Error in (function (classes, fdef, mtable) : unable to find an inherited method for function &#39;as.antsImage&#39; for signature &#39;&quot;niftiImage&quot;&#39;</code></pre>
@@ -1701,9 +1722,7 @@ antsImage
 <pre><code>[1] 1.2 1.0 1.0</code></pre>
 <p>The <code>fsl_resample</code> function allows you to resample an image on disk. Thus, if you have the character path of the image or <code>nifti</code> object, these images can be resampled using <code>fsl_resample</code>. This code calls <code>flirt</code> from FSL and uses the <code>applyisoxfm</code> to perform isotoropic sampling (all the same size). Thus, <code>fsl_resample</code> can only resample images to cubes with all the same side length. Some of the examples below have more flexibility.</p>
 <pre class="r"><code>res = fsl_resample(file = fname, voxel_size = 1)</code></pre>
-<pre><code>Warning in get.fsl(): Setting fsl.path to /usr/local/fsl</code></pre>
-<pre><code>Warning in get.fsloutput(): Can&#39;t find FSLOUTPUTTYPE, setting to NIFTI_GZ</code></pre>
-<pre><code>FSLDIR=&#39;/usr/local/fsl&#39;; PATH=${FSLDIR}/bin:${PATH};export PATH FSLDIR; sh &quot;${FSLDIR}/etc/fslconf/fsl.sh&quot;; FSLOUTPUTTYPE=NIFTI_GZ; export FSLOUTPUTTYPE; ${FSLDIR}/bin/flirt -in &quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/kirby21.t1/visit_1/113/113-01-T1.nii.gz&quot;  -ref /Library/Frameworks/R.framework/Versions/4.0/Resources/library/kirby21.t1/visit_1/113/113-01-T1.nii.gz -applyisoxfm 1 -out &quot;/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpY91K5I/file82343bec54e2&quot;;</code></pre>
+<pre><code>flirt -in &quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/kirby21.t1/visit_1/113/113-01-T1.nii.gz&quot;  -ref /Library/Frameworks/R.framework/Versions/4.0/Resources/library/kirby21.t1/visit_1/113/113-01-T1.nii.gz -applyisoxfm 1 -out &quot;/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpnJANZS/file8b62229dbe52&quot;;</code></pre>
 <pre class="r"><code>res</code></pre>
 <pre><code>NIfTI-1 format
   Type            : nifti
@@ -1718,7 +1737,7 @@ antsImage
   Voxel Units     : mm
   Time Units      : sec</code></pre>
 <pre class="r"><code>oro_res = fsl_resample(oro_img, voxel_size = 1)</code></pre>
-<pre><code>FSLDIR=&#39;/usr/local/fsl&#39;; PATH=${FSLDIR}/bin:${PATH};export PATH FSLDIR; sh &quot;${FSLDIR}/etc/fslconf/fsl.sh&quot;; FSLOUTPUTTYPE=NIFTI_GZ; export FSLOUTPUTTYPE; ${FSLDIR}/bin/flirt -in &quot;/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpY91K5I/file823418b8e02a.nii.gz&quot;  -ref /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpY91K5I/file823418b8e02a.nii.gz -applyisoxfm 1 -out &quot;/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpY91K5I/file82341184f214&quot;;</code></pre>
+<pre><code>flirt -in &quot;/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpnJANZS/file8b62223a0b3f.nii.gz&quot;  -ref /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpnJANZS/file8b62223a0b3f.nii.gz -applyisoxfm 1 -out &quot;/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpnJANZS/file8b6210b866a7&quot;;</code></pre>
 <pre class="r"><code>all.equal(res, oro_res)</code></pre>
 <pre><code>[1] TRUE</code></pre>
 <pre class="r"><code>res@pixdim[2:4]</code></pre>
@@ -1891,7 +1910,6 @@ double_ortho(interp0, interp3)</code></pre>
  bitops         1.0-6       2013-08-17 [2]
  callr          3.4.4       2020-09-07 [1]
  cli            2.0.2       2020-02-28 [2]
- codetools      0.2-16      2018-12-24 [2]
  colorout     * 1.2-2       2020-06-01 [2]
  colorspace     1.4-1       2019-03-18 [2]
  crayon         1.3.4       2017-09-16 [2]
@@ -1965,7 +1983,6 @@ double_ortho(interp0, interp3)</code></pre>
  CRAN (R 4.0.0)                        
  CRAN (R 4.0.2)                        
  CRAN (R 4.0.0)                        
- CRAN (R 4.0.2)                        
  Github (jalvesaq/colorout@726d681)    
  CRAN (R 4.0.0)                        
  CRAN (R 4.0.0)                        

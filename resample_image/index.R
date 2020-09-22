@@ -5,7 +5,7 @@ library(ANTsRCore)
 library(fslr)
 library(extrantsr)
 library(kirby21.t1)
-knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "")
+knitr::opts_chunk$set(echo = TRUE, cache = FALSE, comment = "")
 
 
 ## ----files--------------------------------------------------------------------
@@ -37,6 +37,15 @@ scl_slope(nii2oro(rnif_img))
 
 ## -----------------------------------------------------------------------------
 ants2oro(ants_img)
+
+
+## -----------------------------------------------------------------------------
+ants2oro(ants_img, reference = oro_img)
+
+
+## -----------------------------------------------------------------------------
+system.time(ants2oro(ants_img))
+system.time(ants2oro(ants_img, reference = oro_img))
 
 
 ## -----------------------------------------------------------------------------

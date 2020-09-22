@@ -24,7 +24,7 @@ library(ANTsRCore)
 library(fslr)
 library(extrantsr)
 library(kirby21.t1)
-knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "")
+knitr::opts_chunk$set(echo = TRUE, cache = FALSE, comment = "")
 ```
 
 # Goal 
@@ -88,6 +88,7 @@ By default, this will write the image to disk and then read it in using `readnii
 ```{r}
 ants2oro(ants_img, reference = oro_img)
 ```
+
 
 which we see is much faster:
 ```{r}
