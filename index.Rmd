@@ -26,10 +26,11 @@ Please visit the [FAQ](faq/index.html) for information on how to begin.
 2. [Installing devtools](installing_devtools/index.html)
 3. [Installing ANTsR](installing_ANTsR/index.html)
 
-# Required Readings {#req}
+# Required/General Readings {#req}
 
 1. [NIfTI Basics](nifti_basics/index.html)
 2. [Viewing Data: Linked Viewers](linked_viewers/index.html)
+2. [Resampling Images](resample_image/index.html)
 
 # Data
 1. [Downloading Human Connectome Project Data](neurohcp/index.html)

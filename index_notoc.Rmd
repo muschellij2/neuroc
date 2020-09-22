@@ -5,7 +5,7 @@ output:
 ---
 ---
 title: "Neuroconductor"
-date: '2020-01-07'
+date: '2020-09-22'
 output: 
   html_document:
     keep_md: true
@@ -31,10 +31,11 @@ Please visit the [FAQ](faq) for information on how to begin.
 2. [Installing devtools](installing_devtools)
 3. [Installing ANTsR](installing_antsr)
 
-# Required Readings {#req}
+# Required/General Readings {#req}
 
 1. [NIfTI Basics](nifti_basics)
 2. [Viewing Data: Linked Viewers](linked_viewers)
+2. [Resampling Images](resample_image)
 
 # Data
 1. [Downloading Human Connectome Project Data](neurohcp)

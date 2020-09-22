@@ -1,20 +1,23 @@
-## ----setup, include=FALSE------------------------------------------------
+## ----setup, include=FALSE-----------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
 
-## ---- eval = FALSE-------------------------------------------------------
+
+## ---- eval = FALSE------------------------------------------------------------
 ## packages = installed.packages()
 ## packages = packages[, "Package"]
 ## if (!"devtools" %in% packages) {
 ##   install.packages("devtools")
 ## }
 
-## ---- eval = FALSE-------------------------------------------------------
+
+## ---- eval = FALSE------------------------------------------------------------
 ## packages = installed.packages()
 ## packages = packages[, "Package"]
 ## if (!"remotes" %in% packages) {
 ##   install.packages("remotes")
 ## }
 
-## ------------------------------------------------------------------------
+
+## -----------------------------------------------------------------------------
 devtools::session_info()
 

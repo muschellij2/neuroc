@@ -1,4 +1,4 @@
-## ---- echo=FALSE, results='asis'-----------------------------------------
+## ---- echo=FALSE, results='asis'----------------------------------------------
 library(htmltools)
 # func = function(id, title, inner = FALSE){
 #   id_no = paste0("#", id)

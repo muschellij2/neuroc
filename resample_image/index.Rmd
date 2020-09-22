@@ -1,0 +1,263 @@
+---
+title: "Resampling an Image"
+author: "John Muschelli"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    keep_md: true
+    theme: cosmo
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+    number_sections: true
+bibliography: ../refs.bib      
+---
+
+All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/resample_image/index.R).
+
+
+```{r setup, include=FALSE}
+library(RNifti)
+library(neurobase)
+library(ANTsRCore)
+library(fslr)
+library(extrantsr)
+library(kirby21.t1)
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "")
+```
+
+# Goal 
+In this short tutorial, we will show various ways of resampling an image to different voxel sizes and image dimensions.  This procedure may be necessary in some analyses and can also be used to reduce the size of the image for demonstration purposes.  
+
+# Reading in one file
+
+We will read in one T1-weighted NIfTI image to see the dimensions of the image.  We can read in the data a number of ways, including the `neurobase::readnii` function, which relies on the `oro.nifti::readNIfTI` function, the `RNifti::readNifti`, and `ANTsRCore::antsImageRead` functions.  Note, all of these functions give back different types of objects.
+
+```{r files}
+fname = kirby21.t1::get_t1_filenames()[1]
+if (file.exists(fname)) {
+  oro_img = readnii(fname)
+  print(oro_img)
+  rnif_img = readNifti(fname)
+  print(rnif_img)
+  ants_img = antsImageRead(fname)
+  print(ants_img)
+}
+```
+
+
+# Conversion between objects
+
+Here we will show some ways to convert from one format to another.  Note, you should always check cases of conversion, such as the data type, especsially when there are missing values or `NaN` values.
+
+## `oro.nifti` `nifti` `RNifti` `niftiImage` format
+
+The `RNifti` function `asNifti` allows for a direct conversion of formats.  
+
+```{r}
+asNifti(oro_img)
+all(asNifti(oro_img) == rnif_img)
+```
+
+## `RNifti` `niftiImage` to `oro.nifti` `nifti` format
+
+The `oro.nifti` function `nii2oro` will convert from `niftiImage` object to `nifti` objects.  
+
+```{r}
+nii2oro(rnif_img)
+all(oro_img == nii2oro(rnif_img))
+```
+Note, the slots for the header are directly copied from the output of `niftiHeader`, even if they are inconsistent in what `readnii` would give.  For example, the `scl_slope` argument may not be the same:
+
+```{r}
+scl_slope(oro_img)
+scl_slope(nii2oro(rnif_img))
+```
+
+## `ANTsRCore` `antsImage` to `oro.nifti` `nifti` format
+
+The `extrantsr` functions `ants2oro` will convert from `ANTsRCore` `antsImage` to `oro.nifti` `nifti` objects:
+
+```{r}
+ants2oro(ants_img)
+```
+
+By default, this will write the image to disk and then read it in using `readnii`, but you can pass in a `reference` image that header information will be copied from (but not checked for consistency):
+
+```{r}
+ants2oro(ants_img, reference = oro_img)
+```
+
+which we see is much faster:
+```{r}
+system.time(ants2oro(ants_img))
+system.time(ants2oro(ants_img, reference = oro_img))
+```
+
+##  `oro.nifti` `nifti` to `ANTsRCore` `antsImage` format
+
+The `extrantsr` functions `oro2ants` will convert from  `oro.nifti` `nifti` to `ANTsRCore` `antsImage` objects.  Note, this essentially writes the output to disk, then reads it back in using `antsImageRead`, but is a convenience image for this:
+
+```{r}
+oro2ants(oro_img)
+```
+
+The `as.antsImage` function should work as well (and is much faster), but doesn't carry the appropriate header information:
+
+```{r}
+as.antsImage(oro_img)
+```
+
+And can error as the header information is different:
+```{r, error = TRUE}
+as.antsImage(oro_img) == ants_img
+```
+
+You can specify this with a reference, or the arguments of `spacing`, `origin`, and `direction` (which may be difficult), however:
+```{r}
+all(as.array(as.antsImage(oro_img, reference = ants_img) == ants_img) == 1)
+```
+
+
+Also, `niftiImage` objects work as well using `oro2ants`:
+```{r rnifti2ants}
+oro2ants(oro_img)
+```
+
+but does not work directly with `as.antsImage`
+```{r ants2rnifti, error = TRUE}
+as.antsImage(rnif_img)
+```
+
+
+# Resampling Images
+
+## Using FSL and `fslr`
+The `fslr` package calls FSL to perform operations on images that are on disk.  For functions that pass in `nifti` objects in the `fslr` package, these images are written to disk using in a temporary location and then the FSL function is applied.  If a resulting image is returned, then it can be read back in as a `nifti` object.     
+
+Let's just display the pixel dimensions of the original image:
+
+```{r}
+oro_img@pixdim[2:4]
+```
+
+The `fsl_resample` function allows you to resample an image on disk.  Thus, if you have the character path of the image or `nifti` object, these images can be resampled using `fsl_resample`.  This code calls `flirt` from FSL and uses the `applyisoxfm` to perform isotoropic sampling (all the same size).  Thus, `fsl_resample` can only resample images to cubes with all the same side length.  Some of the examples below have more flexibility.
+
+```{r fslresample}
+res = fsl_resample(file = fname, voxel_size = 1)
+res
+oro_res = fsl_resample(oro_img, voxel_size = 1)
+all.equal(res, oro_res)
+res@pixdim[2:4]
+```
+
+## Using `RNiftyReg` `rescale` function
+
+To resample a `niftiImage` object, you need to use the `RNiftyReg` package.  In this case, the `scales` argument is the "Scale factors along each axis", which is *not* the voxel sizes.  The output dimensions will be the current dimensions *multiplied* by the scale factors.  Alternatively, you can think of the output voxel dimensions as the current voxel dimensions *divided* by the scale factors.  Thus, if we run the following code:
+
+```{r}
+niftiHeader(rnif_img)$pixdim[2:4]
+RNiftyReg::rescale(rnif_img, c(2,1.5,1))
+```
+The image will be scaled by 2 in the x-direction, 1.5 in the y-direction and stay the same for the z-direction.  Thus, if we want an image to be `1x1x1`, then we need to scale the dimensions as follows:
+
+```{r}
+RNiftyReg::rescale(rnif_img, c(1.2,1,1))
+```
+
+If we want to make the output image 2.5 mm$^3$, then we can run:
+
+```{r}
+pdim = niftiHeader(rnif_img)$pixdim[2:4]
+RNiftyReg::rescale(rnif_img, pdim / c(2.5, 2.5, 2.5))
+```
+
+Or we can refactor the arguments such that if we want an image to be `2.5x2.3x3` we can run:
+
+```{r}
+rescale2 = function(img, voxel_size = c(1,1,1), ...) {
+  pdim = niftiHeader(rnif_img)$pixdim[2:4]
+  scales = pdim / voxel_size
+  RNiftyReg::rescale(img, scales = scales, ...)
+}
+rescale2(rnif_img, c(2.5, 2.3, 3))
+```
+
+**NB**: you can pass in `nifti` objects as well, and the output is converted to a niftiImage
+```{r}
+rescale2(oro_img, c(2.5, 2.3, 3))
+```
+
+which you can wrap in `nii2oro`:
+
+```{r}
+nii2oro(rescale2(oro_img, c(2.5, 2.3, 3)))
+```
+
+### Additional arguments - interpolation
+
+The `interpolation` argument in `rescale`, which is passed to `applyTransform` in `RNiftyReg` can also specify the interpolation done, using `0 (nearest neighbour), 1 (trilinear) or 3 (cubic spline)`, where cubic spline is the default:
+
+```{r diff_interp}
+interp0 = nii2oro(rescale2(oro_img, c(2.5, 2.3, 3), interpolation = 0L))
+interp3 = nii2oro(rescale2(oro_img, c(2.5, 2.3, 3), interpolation = 3L))
+double_ortho(interp0, interp3)
+```
+
+## Using `ANTsRCore` `resampleImage` and `extrantsr` `resample_image`
+
+The `resampleImage` provides a flexible function to resample `antsImage` objects.  The `useVoxels` argument determines what the resample parameters are specified in, either millimeters (default) or output voxel spacing
+
+```{r}
+resampleImage(ants_img, resampleParams = c(1, 1, 1))
+resampleImage(ants_img, resampleParams = c(1, 1, 1), useVoxels = TRUE)
+resampleImage(ants_img, resampleParams = c(150, 200, 200), useVoxels = TRUE)
+```
+
+
+The `extrantsr::resample_image` wrapper function refactors the arguments so that you can pass in the target voxel sizes in `mm` or dimensions.  
+
+```{r}
+resample_image(oro_img, parameters = c(1, 1, 1))
+resample_image(ants_img, parameters = c(1, 1, 1))
+```
+
+
+where we see the output depends on the input.  Also, we can perform operations where the output is not isotropic:
+
+```{r}
+resample_image(ants_img, parameters = c(2.5, 2.3, 1))
+```
+
+We can also specify the resampling by image dimensions:
+
+```{r}
+resample_image(ants_img, parameters = c(150, 200, 200), parameter_type = "voxels")
+```
+
+### Additional arguments - interpolation
+As with `rescale`, we can perform different interpolations:
+```{r}
+formals(resample_image)$interpolator
+formals(resampleImage)$interpType
+```
+where we see the nearest neighbor interpolation is the default:
+
+```{r}
+interp0 = resample_image(ants_img, parameters = c(2.5, 2.3, 3), interpolator = "nearestneighbor")
+interp3 = resample_image(ants_img, parameters = c(2.5, 2.3, 3), interpolator = "bspline")
+double_ortho(interp0, interp3)
+ortho2(interp0, interp3 - interp0, col.y = scales::alpha(hotmetal(), 0.5))
+```
+
+
+
+
+# Session Info
+
+```{r, cache = FALSE}
+devtools::session_info()
+```
+
+# References

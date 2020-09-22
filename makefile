@@ -26,6 +26,7 @@ LIST += windows_wsl
 LIST += ss_ct
 LIST += linked_viewers
 LIST += rxnat
+LIST += resample_image
 
 all:
 	for fol in $(LIST) ; do \

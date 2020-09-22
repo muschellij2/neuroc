@@ -1,11 +1,13 @@
-## ----setup, include=FALSE------------------------------------------------
+## ----setup, include=FALSE-----------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "")
+
 
 ## ----knit-setup, echo=FALSE, results='hide', eval=TRUE, cache = FALSE, warning = FALSE, message = FALSE----
 library(spm12r)
 library(methods)
 
-## ----makefiles-----------------------------------------------------------
+
+## ----makefiles----------------------------------------------------------------
 library(kirby21.t1)
 library(kirby21.fmri)
 stopifnot(download_fmri_data())
@@ -16,7 +18,8 @@ files = c(anatomical = anatomical,
           functional = functional)
 files
 
-## ------------------------------------------------------------------------
+
+## -----------------------------------------------------------------------------
 library(neurobase)
 tr = 2 # seconds
 DROP = 10 # 20 seconds for stabilization
@@ -26,10 +29,12 @@ fmri = readnii(files["functional"])
 times = (DROP + 1):ntim(fmri)
 run_fmri = copyNIfTIHeader(fmri, fmri[,,,times], drop = TRUE)
 
-## ---- echo = FALSE-------------------------------------------------------
+
+## ---- echo = FALSE------------------------------------------------------------
 rm(list = "fmri"); gc(); gc();
 
-## ----nb_version, echo = FALSE, results="hide"----------------------------
+
+## ----nb_version, echo = FALSE, results="hide"---------------------------------
 library(neurobase)
 ip = installed.packages()
 ver = ip["neurobase", "Version"]
@@ -60,11 +65,13 @@ if (ver < 0) {
   }
 }
 
-## ----have_matlab---------------------------------------------------------
+
+## ----have_matlab--------------------------------------------------------------
 library(matlabr)
 have_matlab()
 
-## ----realign-------------------------------------------------------------
+
+## ----realign------------------------------------------------------------------
 library(spm12r)
 ####################################
 # Realignment
@@ -79,7 +86,8 @@ if (have_matlab()) {
   print(realigned)
 }
 
-## ----rp_file-------------------------------------------------------------
+
+## ----rp_file------------------------------------------------------------------
 ####################################
 # Read in Motion data
 ####################################
@@ -93,7 +101,8 @@ if (have_matlab()) {
   print(dim(rp))
 }
 
-## ----slice_time----------------------------------------------------------
+
+## ----slice_time---------------------------------------------------------------
 ####################################
 # Slice Timing Correction
 ####################################
@@ -118,14 +127,16 @@ if (have_matlab()) {
   mean_nifti = readnii(mean_img)
 }
 
-## ----acpc----------------------------------------------------------------
+
+## ----acpc---------------------------------------------------------------------
 if (have_matlab()) {
   acpc_reorient(
     infiles = c(mean_img, aimg),
     modality = "T1")
 }
 
-## ----direct_norm---------------------------------------------------------
+
+## ----direct_norm--------------------------------------------------------------
 if (have_matlab()) {
   bbox = matrix(
   		c(-90, -126, -72, 
@@ -143,7 +154,8 @@ if (have_matlab()) {
   dnorm_mean_img = readnii(dnorm_files[1])
 }
 
-## ----coreg---------------------------------------------------------------
+
+## ----coreg--------------------------------------------------------------------
 if (have_matlab()) {
   anatomical = files["anatomical"]
   anat_img = checknii(anatomical)
@@ -162,7 +174,8 @@ if (have_matlab()) {
   double_ortho(coreg_img, mean_nifti)
 }
 
-## ----seg-----------------------------------------------------------------
+
+## ----seg----------------------------------------------------------------------
 if (have_matlab()) {
   seg_res = spm12_segment(
   	filename = coreg_anat,
@@ -171,7 +184,8 @@ if (have_matlab()) {
   print(seg_res)
 }
 
-## ----segs_to_hard--------------------------------------------------------
+
+## ----segs_to_hard-------------------------------------------------------------
 alpha = function(col, alpha = 1) {
   cols = t(col2rgb(col, alpha = FALSE)/255)
   rgb(cols, alpha = alpha)
@@ -185,7 +199,8 @@ if (have_matlab()) {
          col.y = alpha(c("red", "green", "blue"), 0.5))
 }
 
-## ----norm_write----------------------------------------------------------
+
+## ----norm_write---------------------------------------------------------------
 bbox = matrix(
   c(-90, -126, -72, 
     90, 90, 108), 
@@ -204,7 +219,8 @@ if (have_matlab()) {
   norm_anat_img = readnii(norm_data["anat"])
 }
 
-## ----check_norm----------------------------------------------------------
+
+## ----check_norm---------------------------------------------------------------
 if (have_matlab()) {
   template_path = file.path(spm_dir(), 
                             "canonical", "avg152T1.nii")
@@ -228,7 +244,8 @@ if (have_matlab()) {
   double_ortho(norm_mean_img, dnorm_mean_img)
 }
 
-## ----smooth--------------------------------------------------------------
+
+## ----smooth-------------------------------------------------------------------
 if (have_matlab()) {
   smoothed = spm12_smooth(
   	filename = norm_data["fmri"],
@@ -239,7 +256,8 @@ if (have_matlab()) {
   smoothed_data = smoothed$outfiles
 }
 
-## ----smooth_mean---------------------------------------------------------
+
+## ----smooth_mean--------------------------------------------------------------
 if (have_matlab()) {
   smoothed_mean = spm12_smooth(
   	filename = norm_data["mean"],
@@ -249,13 +267,15 @@ if (have_matlab()) {
   smoothed_mean_data = smoothed_mean$outfiles
 }
 
-## ----plot_smoothed_mean--------------------------------------------------
+
+## ----plot_smoothed_mean-------------------------------------------------------
 if (have_matlab()) {
   smooth_mean_img = readnii(smoothed_mean_data)
   ortho2(smooth_mean_img)
 }
 
-## ------------------------------------------------------------------------
+
+## -----------------------------------------------------------------------------
 bib = '@article{ashburner2005unified,
   title={Unified segmentation},
   author={Ashburner, John and Friston, Karl J},

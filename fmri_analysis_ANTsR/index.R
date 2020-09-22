@@ -1,4 +1,4 @@
-## ----setup, include=FALSE------------------------------------------------
+## ----setup, include=FALSE-----------------------------------------------------
 library(kirby21.fmri)
 library(kirby21.base)
 library(dplyr)
@@ -13,7 +13,8 @@ library(animation)
 library(zoo)
 knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "")
 
-## ---- eval = FALSE-------------------------------------------------------
+
+## ---- eval = FALSE------------------------------------------------------------
 ## packages = installed.packages()
 ## packages = packages[, "Package"]
 ## if (!"kirby21.base" %in% packages) {
@@ -25,7 +26,8 @@ knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "")
 ##   neuroc_install("kirby21.fmri")
 ## }
 
-## ----data----------------------------------------------------------------
+
+## ----data---------------------------------------------------------------------
 library(kirby21.fmri)
 library(kirby21.base)
 fnames = get_image_filenames_df(ids = 113, 
@@ -35,7 +37,8 @@ fnames = get_image_filenames_df(ids = 113,
 t1_fname = fnames$T1[1]
 fmri_fname = fnames$fMRI[1]
 
-## ----par_data------------------------------------------------------------
+
+## ----par_data-----------------------------------------------------------------
 library(R.utils)
 par_file = system.file("visit_1/113/113-01-fMRI.par.gz", 
                        package = "kirby21.fmri")
@@ -45,13 +48,15 @@ con = gunzip(par_file, temporary = TRUE,
 info = readLines(con = con)
 info[11:23]
 
-## ----fmri, cache = TRUE--------------------------------------------------
+
+## ----fmri, cache = TRUE-------------------------------------------------------
 library(neurobase)
 fmri = readnii(fmri_fname)
 ortho2(fmri, w = 1, add.orient = FALSE)
 rm(list = "fmri") # just used for cleanup 
 
-## ----subset_run, eval = TRUE---------------------------------------------
+
+## ----subset_run, eval = TRUE--------------------------------------------------
 library(extrantsr)
 library(oro.nifti)
 library(ANTsR)
@@ -60,7 +65,8 @@ tr = 2 # 2 seconds
 first_scan = floor(10.0 / tr) + 1 # 10 seconds "stabilization of signal"
 sub_fmri = extrantsr::subset_4d(ants_fmri, first_scan:ntim(ants_fmri))
 
-## ----motion_corr_run, echo = TRUE, message=FALSE, dependson="subset_run"----
+
+## ----motion_corr_run, echo = TRUE, message=FALSE, dependson="subset_run"------
 library(dplyr)
 library(neurobase)
 library(ANTsR)
@@ -108,6 +114,7 @@ mp = round(moco_params, 4)
 print(head(mp, 3))
 rm(list = c("mp"))
 
+
 ## ----moco_run_plot, echo = TRUE, fig.height = 4, fig.width= 8, dependson="motion_corr_run"----
 mp = moco_params
 mp[, 1:3] = mp[, 1:3] * 50
@@ -124,7 +131,8 @@ for (i in 2:ncol(mp)) {
 }
 rm(list = "mp")
 
-## ----ts_run, echo = TRUE, dependson="motion_corr_run"--------------------
+
+## ----ts_run, echo = TRUE, dependson="motion_corr_run"-------------------------
 moco_img = antsImageRead(moco_fname)
 moco_avg_img = 
     getAverageOfTimeSeries(moco_img)
@@ -140,7 +148,8 @@ boldMatrix = timeseries2matrix(
     moco_img, 
     maskImage)
 
-## ----compute_dvars, echo = TRUE, dependson = "ts_run"--------------------
+
+## ----compute_dvars, echo = TRUE, dependson = "ts_run"-------------------------
 dvars = computeDVARS(boldMatrix)
 uncorr_dvars = motion_res$dvars
 plot(dvars, uncorr_dvars,
@@ -148,7 +157,8 @@ plot(dvars, uncorr_dvars,
   ylab = "Non-Realigned DVARS")
 abline( a = 0, b = 1, col = "red")
 
-## ----dvars_show, echo = TRUE, eval = FALSE-------------------------------
+
+## ----dvars_show, echo = TRUE, eval = FALSE------------------------------------
 ## mp = moco_params
 ## mp[, 1:3] = mp[, 1:3] * 50
 ## mp = apply(mp, 2, diff)
@@ -157,6 +167,7 @@ abline( a = 0, b = 1, col = "red")
 ## fd = rowSums(mp)
 ## plot(fd, type ="h",
 ##   xlab = "Scan", ylab = "FD")
+
 
 ## ----ts_heatmap, echo = TRUE, dependson="ts_run", fig.height = 3.5, fig.width = 8----
 library(RColorBrewer)
@@ -182,7 +193,8 @@ sds = rowSds(mat)
 print(which.max(sds))
 rm(list = "mat")
 
-## ----plot_bad_ortho, echo = TRUE, dependson="ts_heatmap"-----------------
+
+## ----plot_bad_ortho, echo = TRUE, dependson="ts_heatmap"----------------------
 library(animation)
 ani.options(autobrowse = FALSE)
 gif_name = "bad_dimension.gif"
@@ -196,7 +208,8 @@ if (!file.exists(gif_name)) {
   }, movie.name = gif_name)
 }
 
-## ----ccor_run, echo = TRUE, dependson="motion_corr_run"------------------
+
+## ----ccor_run, echo = TRUE, dependson="motion_corr_run"-----------------------
 library(reshape2)
 library(ggplot2)
 ccor_file = paste0(base_fname, 
@@ -226,6 +239,7 @@ colnames(long) = c("scan_num", "component", "value")
 
 ggplot(long, aes(x = scan_num, y = value)) + geom_line() + facet_wrap(~component, ncol = 1)
 
-## ---- cache = FALSE------------------------------------------------------
+
+## ---- cache = FALSE-----------------------------------------------------------
 devtools::session_info()
 

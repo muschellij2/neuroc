@@ -6,6 +6,7 @@ wget https://raw.githubusercontent.com/muschellij2/neuroc/master/installing_devt
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/installing_ANTsR/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/installing_ANTsR.html
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/nifti_basics/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/nifti_basics.html
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/linked_viewers/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/linked_viewers.html
+wget https://raw.githubusercontent.com/muschellij2/neuroc/master/resample_image/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/resample_image.html
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/neurohcp/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/neurohcp.html
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/fcp_indi/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/fcp_indi.html
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/brain_extraction/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/brain_extraction.html

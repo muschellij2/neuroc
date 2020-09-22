@@ -8,14 +8,27 @@
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <meta name="author" content="John Muschelli" />
 
-<meta name="date" content="2020-01-07" />
+<meta name="date" content="2020-09-22" />
 
 <title>Continuous Integration and Testing</title>
 
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
 <style type="text/css">.hljs-literal {
 color: #990073;
 }
@@ -63,7 +76,7 @@ if (window.hljs) {
 
 <h1 class="title toc-ignore">Continuous Integration and Testing</h1>
 <h4 class="author">John Muschelli</h4>
-<h4 class="date">2020-01-07</h4>
+<h4 class="date">2020-09-22</h4>
 
 
 
@@ -73,7 +86,7 @@ if (window.hljs) {
 <p>To submit a package to OSLERinHealth, the author/maintainer of the package provides the GitHub URL for the package. Once the package is submitted several initial checks are conducted. These checks ensure that the package has been created correctly. After initial checks are complete, the package must be verified by email. This verification is designed to prevent spam and allow the developer to stop a package if they would like to revise the package before re-submitting.</p>
 <p>Once the verification is complete, the package is processed. Overall, the package is copied/cloned to a remote server. Standardized Travis CI and Appveyor configuration files, specific to OSLERinHealth, are added. These are to ensure that the checks performed on these services are consistent for each package. Some parameters of the package DESCRIPTION file are changed. These parameters ensure that when a package is downloaded from OSLERinHealth, the correct versions of the dependent packages are used.</p>
 <p>Next, the package is pushed to the central OSLERinHealth GitHub (<a href="https://github.com/oslerinhealth" class="uri">https://github.com/oslerinhealth</a>) and submitted to Travis CI and AppVeyor to be built and checked on multiple systems. Parameters are set to ensure that Travis CI and AppVeyor use the correct versions of OSLERinHealth packages for checking and external dependencies are installed. The author of the package receives an automatic email indicating whether the package was built successfully and is integrated with OSLERinHealth together with a description file containing pertinent information about the process.</p>
-<div id="stable-vs.current-versions" class="section level2">
+<div id="stable-vs.-current-versions" class="section level2">
 <h2>Stable vs. Current Versions</h2>
 <p>We use the terminology “Stable” and “Current” to differentiate a different status of development for a OSLERinHealth package. On the initial submission, after all checks are passed, the package is incorporated into OSLERinHealth and deemed the Stable version. The Current version of the package is the result of nightly pulls and mirror the latest package version from the developer’s GitHub repository. This provides OSLERinHealth users with a way to use the latest versions of a package and at the same time it provides the OSLERinHealth platform with a safe way of checking new versions of a package against the existing set of Current OSLERinHealth packages. If a Current version of a package passes all the required OSLERinHealth tests, we contact the developer of the package and suggest an official re-submission to OSLERinHealth. If the newly re-submitted version of the package passes the checks against the Stable OSLERinHealth packages, this version is incorporated to the Stable version of OSLERinHealth.</p>
 </div>
@@ -200,58 +213,60 @@ $ export GITHUB_PAT=[secure]</code></pre>
 <pre class="r"><code>devtools::session_info()</code></pre>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────
 ##  setting  value                       
-##  version  R version 3.6.0 (2019-04-26)
-##  os       macOS Mojave 10.14.6        
-##  system   x86_64, darwin15.6.0        
+##  version  R version 4.0.2 (2020-06-22)
+##  os       macOS Catalina 10.15.6      
+##  system   x86_64, darwin17.0          
 ##  ui       X11                         
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2020-01-07                  
+##  date     2020-09-22                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────
-##  package     * version     date       lib source                             
-##  assertthat    0.2.1       2019-03-21 [1] CRAN (R 3.6.0)                     
-##  backports     1.1.5       2019-10-02 [1] CRAN (R 3.6.0)                     
-##  callr         3.4.0       2019-12-09 [1] CRAN (R 3.6.0)                     
-##  cli           2.0.0       2019-12-09 [1] CRAN (R 3.6.0)                     
-##  colorout    * 1.2-1       2019-06-19 [1] Github (jalvesaq/colorout@7ea9440) 
-##  crayon        1.3.4       2017-09-16 [1] CRAN (R 3.6.0)                     
-##  desc          1.2.0       2019-07-10 [1] Github (muschellij2/desc@b0c374f)  
-##  devtools    * 2.2.1.9000  2019-12-03 [1] local                              
-##  digest        0.6.23      2019-11-23 [1] CRAN (R 3.6.0)                     
-##  ellipsis      0.3.0       2019-09-20 [1] CRAN (R 3.6.0)                     
-##  evaluate      0.14        2019-05-28 [1] CRAN (R 3.6.0)                     
-##  fansi         0.4.0       2018-10-05 [1] CRAN (R 3.6.0)                     
-##  fs            1.3.1       2019-05-06 [1] CRAN (R 3.6.0)                     
-##  glue          1.3.1       2019-03-12 [1] CRAN (R 3.6.0)                     
-##  htmltools     0.4.0       2019-10-04 [1] CRAN (R 3.6.0)                     
-##  knitr         1.26.1      2020-01-05 [1] Github (muschellij2/knitr@f5af631) 
-##  magrittr      1.5         2014-11-22 [1] CRAN (R 3.6.0)                     
-##  memoise       1.1.0       2017-04-21 [1] CRAN (R 3.6.0)                     
-##  pkgbuild      1.0.6       2019-10-09 [1] CRAN (R 3.6.0)                     
-##  pkgload       1.0.2       2018-10-29 [1] CRAN (R 3.6.0)                     
-##  prettyunits   1.0.2       2015-07-13 [1] CRAN (R 3.6.0)                     
-##  processx      3.4.1       2019-07-18 [1] CRAN (R 3.6.0)                     
-##  ps            1.3.0       2018-12-21 [1] CRAN (R 3.6.0)                     
-##  R6            2.4.1       2019-11-12 [1] CRAN (R 3.6.0)                     
-##  Rcpp          1.0.3       2019-11-08 [1] CRAN (R 3.6.0)                     
-##  remotes       2.1.0       2019-06-24 [1] CRAN (R 3.6.0)                     
-##  rlang         0.4.2       2019-11-23 [1] CRAN (R 3.6.0)                     
-##  rmarkdown     2.0         2019-12-12 [1] CRAN (R 3.6.0)                     
-##  rprojroot     1.3-2       2018-01-03 [1] CRAN (R 3.6.0)                     
-##  rstudioapi    0.10.0-9003 2020-01-05 [1] Github (rstudio/rstudioapi@abe596d)
-##  sessioninfo   1.1.1       2018-11-05 [1] CRAN (R 3.6.0)                     
-##  stringi       1.4.3       2019-03-12 [1] CRAN (R 3.6.0)                     
-##  stringr       1.4.0       2019-02-10 [1] CRAN (R 3.6.0)                     
-##  testthat      2.3.0       2019-11-05 [1] CRAN (R 3.6.0)                     
-##  usethis     * 1.5.1.9000  2019-08-15 [1] local                              
-##  withr         2.1.2       2018-03-15 [1] CRAN (R 3.6.0)                     
-##  xfun          0.11        2019-11-12 [1] CRAN (R 3.6.0)                     
-##  yaml          2.2.0       2018-07-25 [1] CRAN (R 3.6.0)                     
+##  package     * version     date       lib source                            
+##  assertthat    0.2.1       2019-03-21 [2] CRAN (R 4.0.0)                    
+##  backports     1.1.10      2020-09-15 [1] CRAN (R 4.0.2)                    
+##  callr         3.4.4       2020-09-07 [1] CRAN (R 4.0.2)                    
+##  cli           2.0.2       2020-02-28 [2] CRAN (R 4.0.0)                    
+##  colorout    * 1.2-2       2020-06-01 [2] Github (jalvesaq/colorout@726d681)
+##  crayon        1.3.4       2017-09-16 [2] CRAN (R 4.0.0)                    
+##  desc          1.2.0       2020-06-01 [2] Github (muschellij2/desc@b0c374f) 
+##  devtools    * 2.3.1.9000  2020-08-25 [2] Github (r-lib/devtools@df619ce)   
+##  digest        0.6.25      2020-02-23 [2] CRAN (R 4.0.0)                    
+##  ellipsis      0.3.1       2020-05-15 [2] CRAN (R 4.0.0)                    
+##  evaluate      0.14        2019-05-28 [2] CRAN (R 4.0.0)                    
+##  fansi         0.4.1       2020-01-08 [2] CRAN (R 4.0.0)                    
+##  fs            1.5.0       2020-07-31 [2] CRAN (R 4.0.2)                    
+##  glue          1.4.2       2020-08-27 [1] CRAN (R 4.0.2)                    
+##  htmltools     0.5.0       2020-06-16 [2] CRAN (R 4.0.0)                    
+##  knitr         1.29        2020-06-23 [2] CRAN (R 4.0.2)                    
+##  lifecycle     0.2.0       2020-03-06 [2] CRAN (R 4.0.0)                    
+##  magrittr      1.5         2014-11-22 [2] CRAN (R 4.0.0)                    
+##  memoise       1.1.0       2017-04-21 [2] CRAN (R 4.0.0)                    
+##  pkgbuild      1.1.0       2020-07-13 [2] CRAN (R 4.0.2)                    
+##  pkgload       1.1.0       2020-05-29 [2] CRAN (R 4.0.0)                    
+##  prettyunits   1.1.1       2020-01-24 [2] CRAN (R 4.0.0)                    
+##  processx      3.4.4       2020-09-03 [1] CRAN (R 4.0.2)                    
+##  ps            1.3.4       2020-08-11 [2] CRAN (R 4.0.2)                    
+##  purrr         0.3.4       2020-04-17 [2] CRAN (R 4.0.0)                    
+##  R6            2.4.1       2019-11-12 [2] CRAN (R 4.0.0)                    
+##  remotes       2.2.0       2020-07-21 [2] CRAN (R 4.0.2)                    
+##  rlang         0.4.7.9000  2020-09-09 [1] Github (r-lib/rlang@60c0151)      
+##  rmarkdown     2.3         2020-06-18 [2] CRAN (R 4.0.0)                    
+##  rprojroot     1.3-2       2018-01-03 [2] CRAN (R 4.0.0)                    
+##  rstudioapi    0.11        2020-02-07 [2] CRAN (R 4.0.0)                    
+##  sessioninfo   1.1.1       2018-11-05 [2] CRAN (R 4.0.0)                    
+##  stringi       1.5.3       2020-09-09 [1] CRAN (R 4.0.2)                    
+##  stringr       1.4.0       2019-02-10 [2] CRAN (R 4.0.0)                    
+##  testthat      2.99.0.9000 2020-09-17 [1] Github (r-lib/testthat@fbbd667)   
+##  usethis     * 1.6.1.9001  2020-08-25 [2] Github (r-lib/usethis@860c1ea)    
+##  withr         2.2.0       2020-04-20 [2] CRAN (R 4.0.0)                    
+##  xfun          0.17        2020-09-09 [1] CRAN (R 4.0.2)                    
+##  yaml          2.2.1       2020-02-01 [2] CRAN (R 4.0.0)                    
 ## 
-## [1] /Library/Frameworks/R.framework/Versions/3.6/Resources/library</code></pre>
+## [1] /Users/johnmuschelli/Library/R/4.0/library
+## [2] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</code></pre>
 </div>
 
 
