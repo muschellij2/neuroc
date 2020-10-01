@@ -1,0 +1,142 @@
+---
+output:
+  html_document:
+    theme: null
+bibliography: ../refs.bib
+---
+---
+title: "Rxnat Paper Case Scenario"
+author: "Adi Gherman"
+date: "2020-06-22"
+output: 
+  html_document:
+    keep_md: true
+    theme: cosmo
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+    number_sections: true      
+bibliography: ../refs.bib      
+---
+
+All code for this document is located at [here]().
+
+```{r setup, include=FALSE}
+library(Rxnat)
+library(dplyr)
+library(fslr)
+library(extrantsr)
+library(malf.templates)
+library(scales)
+library(WhiteStripe)
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "")
+```
+
+
+In this tutorial I will discuss performing tissue class segmentation using the `FAST` function from `FSL` and it's wrapper function in `fslr`, `fast_nobias` [@muschelli2015fslr]. 
+
+# Data Packages
+To perform this analysis, I will select one subject from the IXI neuroimaging dataset hosted on [https://nitrc.org/](https://nitrc.org/) [@kennedy2016nitrc]. The `Rxnat` package is required to be installed in order to access the NITRC image repository as well as an account with NITRC: [new account request](https://www.nitrc.org/account/register.php)
+```{r, eval = FALSE}
+packages = installed.packages()
+packages = packages[, "Package"]
+if (!"Rxnat" %in% packages) {
+  source("https://neuroconductor.org/neurocLite.R")
+  neuroc_install("Rxnat")    
+}
+```
+
+# Loading Data
+Please visit the [general Rxnat tutorial](../rxnat/index.html) on how to setup the Rxnat environment variables. Next we'll read and reorient the T1 image using the `readrpi` function from the `fslr` package.
+```{r data, message = FALSE, warning = FALSE, cache = TRUE, fig.cap = "T1 Weighted Image"}
+library(Rxnat)
+nitrc <- xnat_connect("https://nitrc.org/ir", xnat_name="NITRC")
+# Download the subject T1 weighted image
+file_path <- nitrc$download_dir(
+                experiment_ID = 'NITRC_IR_E10464',
+                scan_type = "T1",
+                extract = TRUE)
+t1_fname <- file_path[1]
+t1 <- readrpi(t1_fname)
+ortho2(t1, add.orient = TRUE)
+```
+
+# Remove neck and drop empty dimensions
+The neck removal step is implemented using the `remove_neck` function from the `extrantsr` package. The empty image dimensions (including the neck slices) can be dropped by using the function `dropEmptyImageDimensions` from the `neurobase` package.
+```{r remove-neck, message = FALSE, warning = FALSE, cache = TRUE}
+noneck = remove_neck(file_path,
+    template.file = fslr::mni_fname(brain = TRUE, mm = 1),
+    template.mask = fslr::mni_fname(mm = 1, brain = TRUE, mask = TRUE),
+    verbose = FALSE
+)
+red = dropEmptyImageDimensions(noneck)
+red <- readrpi(red)
+ortho2(red, add.orient = TRUE)
+```
+
+# Inhomogeneity correction
+To correct the bias field signal we use the `bias_correct` function from the `extrantsr` package, which uses the N4 inhomogeneity correction.
+```{r correction, message = FALSE, warning = FALSE, cache = TRUE}
+t1_n4 = bias_correct(red,
+                     correction = "N4",
+                     outfile = tempfile(fileext = ".nii.gz"), retimg = FALSE
+)
+t1_n4 <- readrpi(t1_n4)
+```
+
+# Malf registration
+Once images are bias field corrected, we apply brain extraction using a form of multi-atlas label fusion (MALF). MALF uses a collection of previously labeled brain images (atlases), aligns the T1-weighted image to each atlas, and obtains a labeled T1-weighted image for each registration. This approach is implemented using the `malf` function from the `malf.templates` package, which includes the templates from the 2012 MICCAI Multi-Atlas Labeling Challenge.
+
+```{r malf, message = FALSE, warning = FALSE, cache = TRUE}
+timgs = mass_images(n_templates = 35)
+ss = malf(infile = t1_n4,
+          template.images = timgs$images,
+          template.structs = timgs$masks,
+          keep_images = FALSE,
+          verbose = FALSE)
+```
+
+# Perform skull stripping
+To do this we use the `preprocess_mri_within` function from the `extrantsr` package. This function performs N4 bias correction, image registration (if multi- sequence data is given), skull stripping (estimating the brain mask if one is not supplied), and brain mask application to the registered images.
+
+```{r ss, message = FALSE, warning = FALSE, cache = TRUE}
+proc_outfile <- paste0("T1_Processed.nii.gz")
+proc_outfile <- file.path(tempdir(),proc_outfile)
+skull_ss <- preprocess_mri_within(
+  files = t1_n4,
+  outfiles = proc_outfile,
+  correction = "N4",
+  maskfile = ss,
+  correct_after_mask = FALSE)
+t1_ss <- readrpi(proc_outfile)
+ortho2(red,
+       t1_ss,
+       col.y=alpha("red", 0.3),
+       add.orient = TRUE)
+```
+
+# Perform WhiteStripe intensity normalization
+WhiteStripe intensity normalization can be implemented using the `whitestripe` and` whitestripe_norm` functions from the `WhiteStripe` package.
+```{r ws, message = FALSE, warning = FALSE, cache = TRUE}
+ind = whitestripe(img = t1_ss, type = "T1", stripped = TRUE)$whitestripe.ind
+ws_t1 = whitestripe_norm(t1_ss, ind)
+```
+
+# Perform segmentation
+This is implemented here using the FAST function from FSL. FAST segments a 3D brain image into different tissue types. We will use the `fast_nobias` from the `fslr` package, which assumes that the the bias field was removed.
+```{r tcs, message = FALSE, warning = FALSE, cache = TRUE}
+ss_tcs = fslr::fast_nobias(ws_t1,
+                  verbose = TRUE)
+double_ortho(ws_t1,
+             ss_tcs,
+             add.orient=TRUE)
+```
+
+# Session Info
+
+```{r, cache = FALSE}
+devtools::session_info()
+```
+
+# References
