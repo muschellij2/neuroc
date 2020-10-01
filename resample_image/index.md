@@ -198,7 +198,7 @@ system.time(ants2oro(ants_img))
 
 ```
    user  system elapsed 
-  3.144   0.072   3.229 
+  4.426   0.116   4.567 
 ```
 
 ```r
@@ -207,7 +207,7 @@ system.time(ants2oro(ants_img, reference = oro_img))
 
 ```
    user  system elapsed 
-  0.648   0.022   0.670 
+  0.894   0.026   0.920 
 ```
 
 ##  `oro.nifti` `nifti` to `ANTsRCore` `antsImage` format
@@ -227,7 +227,7 @@ antsImage
   Voxel Spacing       : 1.20000004768372x1x1 
   Origin              : 202.8 0 0 
   Direction           : -1 0 0 0 1 0 0 0 1 
-  Filename           : /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpnJANZS/file8b625b3ceaf5.nii.gz 
+  Filename           : /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpT19arO/file8e0a66a2519e.nii.gz 
 ```
 
 The `as.antsImage` function should work as well (and is much faster), but doesn't carry the appropriate header information:
@@ -282,7 +282,7 @@ antsImage
   Voxel Spacing       : 1.20000004768372x1x1 
   Origin              : 202.8 0 0 
   Direction           : -1 0 0 0 1 0 0 0 1 
-  Filename           : /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpnJANZS/file8b621e65405c.nii.gz 
+  Filename           : /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpT19arO/file8e0a74b17cdf.nii.gz 
 ```
 
 but does not work directly with `as.antsImage`
@@ -320,7 +320,15 @@ res = fsl_resample(file = fname, voxel_size = 1)
 ```
 
 ```
-flirt -in "/Library/Frameworks/R.framework/Versions/4.0/Resources/library/kirby21.t1/visit_1/113/113-01-T1.nii.gz"  -ref /Library/Frameworks/R.framework/Versions/4.0/Resources/library/kirby21.t1/visit_1/113/113-01-T1.nii.gz -applyisoxfm 1 -out "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpnJANZS/file8b62229dbe52";
+Warning in get.fsl(): Setting fsl.path to /usr/local/fsl
+```
+
+```
+Warning in get.fsloutput(): Can't find FSLOUTPUTTYPE, setting to NIFTI_GZ
+```
+
+```
+FSLDIR='/usr/local/fsl'; PATH=${FSLDIR}/bin:${PATH};export PATH FSLDIR; sh "${FSLDIR}/etc/fslconf/fsl.sh"; FSLOUTPUTTYPE=NIFTI_GZ; export FSLOUTPUTTYPE; ${FSLDIR}/bin/flirt -in "/Library/Frameworks/R.framework/Versions/4.0/Resources/library/kirby21.t1/visit_1/113/113-01-T1.nii.gz"  -ref /Library/Frameworks/R.framework/Versions/4.0/Resources/library/kirby21.t1/visit_1/113/113-01-T1.nii.gz -applyisoxfm 1 -out "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpT19arO/file8e0a7c296b3c";
 ```
 
 ```r
@@ -347,7 +355,7 @@ oro_res = fsl_resample(oro_img, voxel_size = 1)
 ```
 
 ```
-flirt -in "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpnJANZS/file8b62223a0b3f.nii.gz"  -ref /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpnJANZS/file8b62223a0b3f.nii.gz -applyisoxfm 1 -out "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpnJANZS/file8b6210b866a7";
+FSLDIR='/usr/local/fsl'; PATH=${FSLDIR}/bin:${PATH};export PATH FSLDIR; sh "${FSLDIR}/etc/fslconf/fsl.sh"; FSLOUTPUTTYPE=NIFTI_GZ; export FSLOUTPUTTYPE; ${FSLDIR}/bin/flirt -in "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpT19arO/file8e0a33f6fd3.nii.gz"  -ref /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpT19arO/file8e0a33f6fd3.nii.gz -applyisoxfm 1 -out "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpT19arO/file8e0a39c6874f";
 ```
 
 ```r

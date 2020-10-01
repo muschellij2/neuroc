@@ -1,0 +1,258 @@
+---
+title: "Reorienting an Image"
+author: "John Muschelli"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    keep_md: true
+    theme: cosmo
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+    number_sections: true
+bibliography: ../refs.bib      
+---
+
+All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/reorient_image/index.R).
+
+
+```{r setup, include=FALSE}
+library(RNifti)
+library(neurobase)
+library(ANTsRCore)
+library(fslr)
+library(extrantsr)
+library(kirby21.t1)
+knitr::opts_chunk$set(echo = TRUE, cache = FALSE, comment = "")
+```
+
+# Goal 
+In this short tutorial, we will show various ways of reorienting an image to different orientations.  This procedure may be necessary in some analyses. 
+
+# Reading in one file
+
+We will read in one T1-weighted NIfTI image to see the dimensions of the image.  We can read in the data a number of ways, including the `neurobase::readnii` function, which relies on the `oro.nifti::readNIfTI` function, the `RNifti::readNifti`, and `ANTsRCore::antsImageRead` functions.  Note, all of these functions give back different types of objects.
+
+```{r files}
+fname = system.file( "nifti", "mniLR.nii.gz", package = "oro.nifti")
+if (file.exists(fname)) {
+  oro_img = readnii(fname)
+  print(oro_img)
+  rnif_img = readNifti(fname)
+  print(rnif_img)
+  ants_img = antsImageRead(fname)
+  print(ants_img)
+}
+ortho2(oro_img, add.orient = TRUE)
+```
+
+
+# Conversion between objects
+
+Please see [resample image](../resample_image/) to see how to convert between objects.
+
+# Note on Orientation
+
+Note that orientation is a confusing and hard problem, but a lot of care needs to be done in some instances.  
+The first thing you should do is get yourself oriented to orientation: http://www.grahamwideman.com/gw/brain/orientation/orientterms.htm.  See https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Orientation%20Explained for a detailed discussion and https://nifti.nimh.nih.gov/nifti-1/documentation/nifti1fields/nifti1fields_pages/qsform.html for a discussion of the fields.  
+
+Depending on the software used for visualization, you may have different results: https://community.mrtrix.org/t/inconsistent-qform-sform-on-nifti-image/1663
+
+> On NIfTI image load, if both qform and sform are flagged as present within the image, MRtrix3 will now uses the qform transform by default; in previous versions, it would automatically use the sform.
+
+In almost all instances, you will now know left from right unless there a tablet was placed on a side for orientation, a gross asymmetry, a pathology (such as stroke/tumor), or any additional notes.  In some instances, that is not relevant, but it may be in other cases.
+
+In most cases, however, you want to be sure of the *order* of the axes, not necessarily the direction of each axis.  For example, you may want to ensure that the first axis is the right/left axis, the second is posterior/anterior, and the third is inferior/superior.  
+
+## Using FSL and `fslr`
+The `fslr` package calls FSL to perform operations on images that are on disk.  For functions that pass in `nifti` objects in the `fslr` package, these images are written to disk using in a temporary location and then the FSL function is applied.  If a resulting image is returned, then it can be read back in as a `nifti` object.     
+
+# Extracting the Orientation
+
+Below we will use the objects we have read in and the original file name to pass into the orientation extractors to show the data did not need to be read in. 
+
+## RNifti::orientation function
+Let's just display the orientation the original image (from `RNifti`):
+
+```{r}
+orientation(fname)
+orientation(oro_img)
+orientation(rnif_img)
+```
+
+## `fslr` functions
+
+There are a number of ways to do this, but there are some convenience wrappers from `fslr`.  Here we show it doesn't matter if you put in an image or the original filename (assuming the image was not transformed):
+
+```{r}
+fname_forms = getForms(fname)
+forms = getForms(oro_img)
+all.equal(fname_forms, forms)
+forms
+```
+
+Note, although the `qform` and `q*` data seems to have conflicting information, the `q*` data is only relevant when `qform_code != 0`, and we see that it is zero in this case, and should be disregarded.  As `sform_code != 0`, we should use that.  The non-exported function `.orient_file` from `fslr` can also be used to check this out
+
+```{r}
+forms$ssor
+fslr:::.orient_file(oro_img)$orientation
+```
+
+Note, that these 2 definitions seem exactly opposite, but this is not true.  See https://github.com/jonclayden/RNifti/issues/7 for a brief discussion that they are simply different norms for returning the orientation.  See the table "MRI Image File Voxel Ordering" from http://www.grahamwideman.com/gw/brain/orientation/orientterms.htm to see the first line:
+
+> Storage order in file/Slice orientation
+(ambiguous)/3-Letter
+"from" Name/Increasing position in file is in
+direction of spatial axes...
+> R-L within P-A within I-S/"Axial"/RPI/LAS
+
+and 
+
+> **Common 3-Letter Name vs Spatial Direction**: My current strong impression is that it's customary to refer to a particular voxel order by using the "from" letters of the three from-to pairs. This is not universal -- some people refer to a particular voxel ordering by stating the spatial direction of increasing index. This situation is error-inviting, as the two different naming scheme are opposite.
+
+## ANTsRCore
+
+The `antsGetDirection` or `direction` functions from `ANTsRCore` will give you a matrix that represents the directions:
+```{r}
+direction(ants_img)
+antsGetDirection(ants_img)
+```
+
+
+
+# Convention: RPI
+The convention I use is the first letter for the output from FSL, also referred to as `3-Letter "from" Name`, and the exact opposite of the `RNifti` convention.  When I reorient my images, I'm almost always reorienting them into "RPI", which is represented as above.  This orientation is what will be set for the image below.  One of the main reasons that this is desirable is that the orientation markers in `oro.nifti::orthographic` (and therefore `neurobase::ortho2`) assumes the image is in this orientation.
+
+# Reorientating the Image
+
+## RNifti
+The orientation can also **assign** orientations to set them.  You **do not** do this for file names.  Let's look at the original image:   
+
+```{r}
+orientation(rnif_img)
+ortho2(rnif_img)
+```
+
+which is already in the "RPI" orientation we want.  And then we can set the image to the same to something completely different.
+
+```{r}
+orientation(rnif_img) = "PIR"
+orientation(rnif_img)
+ortho2(rnif_img)
+```
+
+```{r}
+orientation(rnif_img) = "RAS"
+orientation(rnif_img)
+ortho2(rnif_img)
+```
+
+We can reset it back:
+```{r}
+orientation(rnif_img) = "LAS"
+ortho2(rnif_img)
+```
+
+**NB: this will change the object itself to a `niftiImage`**!  We will copy `oro_img` to another object and then set the orientation and show that this orientation has been changed, but the copy is now a `niftiImage`:
+
+```{r}
+oro_img_copy = oro_img
+orientation(oro_img_copy) = "RPI"
+oro_img_copy
+class(oro_img_copy)
+```
+
+But the image has been reoriented:
+```{r}
+ortho2(oro_img)
+ortho2(oro_img_copy)
+```
+If you would like to change the output back to a `nifti` object, then you can use `nii2oro`:
+
+```{r}
+orientation(oro_img_copy)
+orientation(oro_img_copy) = "LAS"
+oro_img_copy = nii2oro(oro_img_copy)
+class(oro_img_copy)
+oro_img_copy
+stopifnot(all(oro_img_copy == oro_img))
+```
+
+
+## `fslr` functions
+
+The `rpi_orient` and `rpi_orient_file` functions should reorient the image to this "RPI" orientation and will return a list:
+
+```{r}
+rpi_oro = rpi_orient(oro_img, verbose = FALSE)
+rpi_oro
+rpi_oro = rpi_oro$img
+```
+
+And we can see that this is the case (even though this was the case to begin).
+```{r}
+fslr:::.orient_file(rpi_oro)
+is_rpi(rpi_oro)
+```
+
+The only difference is that `rpi_orient_file` returns a file name versus a `nifti` object:
+
+```{r}
+rpi_orient_file(oro_img, verbose = FALSE)
+```
+
+### Reading in Reoriented Data
+
+The `fslr` package has a convenience wrapper for reading in an image (swapping the dimensions) called `readrpi`:
+
+```{r}
+rpi = readrpi(fname, verbose = FALSE, reset_slope = TRUE)
+all.equal(rpi, rpi_oro)
+```
+
+```{r}
+lpi_fname = system.file( "nifti", "mniRL.nii.gz", package = "oro.nifti")
+orientation(readNifti(lpi_fname))
+lpi_oro = readnii(lpi_fname)
+orientation(lpi_oro)
+ortho2(lpi_oro)
+
+oname = rpi_orient(lpi_fname)
+img = oname$img
+orientation(img) = "LAS"
+
+
+check = lpi_oro
+orientation(check) = "LAS"
+orientation(check)
+check == lpi_oro
+check == oname$img
+
+# FAILURE!!
+all(oname$img == lpi_oro)
+```
+
+```{r}
+oname = rpi_orient(lpi_fname)
+orientation(oname$img)
+
+
+double_ortho(oro_img, lpi_oro)
+rpi2 = readrpi(lpi_fname)
+double_ortho(oro_img, rpi2)
+```
+
+
+
+
+
+
+
+# Session Info
+
+```{r, cache = FALSE}
+devtools::session_info()
+```
+
+# References

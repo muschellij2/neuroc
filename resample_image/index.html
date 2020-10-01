@@ -1665,10 +1665,10 @@ antsImage
 <p>which we see is much faster:</p>
 <pre class="r"><code>system.time(ants2oro(ants_img))</code></pre>
 <pre><code>   user  system elapsed 
-  3.144   0.072   3.229 </code></pre>
+  4.426   0.116   4.567 </code></pre>
 <pre class="r"><code>system.time(ants2oro(ants_img, reference = oro_img))</code></pre>
 <pre><code>   user  system elapsed 
-  0.648   0.022   0.670 </code></pre>
+  0.894   0.026   0.920 </code></pre>
 </div>
 <div id="oro.nifti-nifti-to-antsrcore-antsimage-format" class="section level2" number="3.4">
 <h2 number="3.4"><span class="header-section-number">3.4</span> <code>oro.nifti</code> <code>nifti</code> to <code>ANTsRCore</code> <code>antsImage</code> format</h2>
@@ -1681,7 +1681,7 @@ antsImage
   Voxel Spacing       : 1.20000004768372x1x1 
   Origin              : 202.8 0 0 
   Direction           : -1 0 0 0 1 0 0 0 1 
-  Filename           : /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpnJANZS/file8b625b3ceaf5.nii.gz </code></pre>
+  Filename           : /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpT19arO/file8e0a66a2519e.nii.gz </code></pre>
 <p>The <code>as.antsImage</code> function should work as well (and is much faster), but doesn’t carry the appropriate header information:</p>
 <pre class="r"><code>as.antsImage(oro_img)</code></pre>
 <pre><code>antsImage
@@ -1706,7 +1706,7 @@ antsImage
   Voxel Spacing       : 1.20000004768372x1x1 
   Origin              : 202.8 0 0 
   Direction           : -1 0 0 0 1 0 0 0 1 
-  Filename           : /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpnJANZS/file8b621e65405c.nii.gz </code></pre>
+  Filename           : /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpT19arO/file8e0a74b17cdf.nii.gz </code></pre>
 <p>but does not work directly with <code>as.antsImage</code></p>
 <pre class="r"><code>as.antsImage(rnif_img)</code></pre>
 <pre><code>Error in (function (classes, fdef, mtable) : unable to find an inherited method for function &#39;as.antsImage&#39; for signature &#39;&quot;niftiImage&quot;&#39;</code></pre>
@@ -1722,7 +1722,9 @@ antsImage
 <pre><code>[1] 1.2 1.0 1.0</code></pre>
 <p>The <code>fsl_resample</code> function allows you to resample an image on disk. Thus, if you have the character path of the image or <code>nifti</code> object, these images can be resampled using <code>fsl_resample</code>. This code calls <code>flirt</code> from FSL and uses the <code>applyisoxfm</code> to perform isotoropic sampling (all the same size). Thus, <code>fsl_resample</code> can only resample images to cubes with all the same side length. Some of the examples below have more flexibility.</p>
 <pre class="r"><code>res = fsl_resample(file = fname, voxel_size = 1)</code></pre>
-<pre><code>flirt -in &quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/kirby21.t1/visit_1/113/113-01-T1.nii.gz&quot;  -ref /Library/Frameworks/R.framework/Versions/4.0/Resources/library/kirby21.t1/visit_1/113/113-01-T1.nii.gz -applyisoxfm 1 -out &quot;/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpnJANZS/file8b62229dbe52&quot;;</code></pre>
+<pre><code>Warning in get.fsl(): Setting fsl.path to /usr/local/fsl</code></pre>
+<pre><code>Warning in get.fsloutput(): Can&#39;t find FSLOUTPUTTYPE, setting to NIFTI_GZ</code></pre>
+<pre><code>FSLDIR=&#39;/usr/local/fsl&#39;; PATH=${FSLDIR}/bin:${PATH};export PATH FSLDIR; sh &quot;${FSLDIR}/etc/fslconf/fsl.sh&quot;; FSLOUTPUTTYPE=NIFTI_GZ; export FSLOUTPUTTYPE; ${FSLDIR}/bin/flirt -in &quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/kirby21.t1/visit_1/113/113-01-T1.nii.gz&quot;  -ref /Library/Frameworks/R.framework/Versions/4.0/Resources/library/kirby21.t1/visit_1/113/113-01-T1.nii.gz -applyisoxfm 1 -out &quot;/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpT19arO/file8e0a7c296b3c&quot;;</code></pre>
 <pre class="r"><code>res</code></pre>
 <pre><code>NIfTI-1 format
   Type            : nifti
@@ -1737,7 +1739,7 @@ antsImage
   Voxel Units     : mm
   Time Units      : sec</code></pre>
 <pre class="r"><code>oro_res = fsl_resample(oro_img, voxel_size = 1)</code></pre>
-<pre><code>flirt -in &quot;/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpnJANZS/file8b62223a0b3f.nii.gz&quot;  -ref /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpnJANZS/file8b62223a0b3f.nii.gz -applyisoxfm 1 -out &quot;/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpnJANZS/file8b6210b866a7&quot;;</code></pre>
+<pre><code>FSLDIR=&#39;/usr/local/fsl&#39;; PATH=${FSLDIR}/bin:${PATH};export PATH FSLDIR; sh &quot;${FSLDIR}/etc/fslconf/fsl.sh&quot;; FSLOUTPUTTYPE=NIFTI_GZ; export FSLOUTPUTTYPE; ${FSLDIR}/bin/flirt -in &quot;/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpT19arO/file8e0a33f6fd3.nii.gz&quot;  -ref /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpT19arO/file8e0a33f6fd3.nii.gz -applyisoxfm 1 -out &quot;/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpT19arO/file8e0a39c6874f&quot;;</code></pre>
 <pre class="r"><code>all.equal(res, oro_res)</code></pre>
 <pre><code>[1] TRUE</code></pre>
 <pre class="r"><code>res@pixdim[2:4]</code></pre>

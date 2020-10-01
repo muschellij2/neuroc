@@ -1,17 +1,10 @@
-rm(list = ls())
-library(rmarkdown)
-library(yaml)
-library(tools)
-library(stringr)
-fname = "index.Rmd"
-all_indices = list.files(pattern = "[.]Rmd$",
-                         recursive = TRUE)
-all_indices = all_indices[ grep("notoc[.]Rmd$", all_indices, invert = TRUE)]
-all_indices = all_indices[ file.exists(gsub(".Rmd$", ".md", all_indices))]
-all_indices = setdiff(all_indices, "index.Rmd")
-fname = all_indices[2]
-subber = TRUE
 
+rmarkdown::render(fname, 
+                  output_file = basename(sub("[.]Rmd$", "_notoc.html", fname)),
+                  output_dir = dirname(fname),
+                  envir = new.env(),
+                  intermediates_dir = file.path(dirname(fname), "index_files"),
+                  output_format = html_document())
 
 notoc = function(
   fname = "index.Rmd",
@@ -46,6 +39,7 @@ notoc = function(
     doc$output$html_document$toc_depth = NULL
     doc$output$html_document$toc_float = NULL
     doc$output$html_document$keep_md = NULL
+
     # doc$output$html_document$self_contained = FALSE
 
     # remove numbered sections
