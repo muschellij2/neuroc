@@ -26,6 +26,10 @@ library(neurobase)
 library(ANTsR)
 library(ggplot2)
 library(reshape2)
+if (!is.na(Sys.getenv("PERSONAL_AWS_ACCESS_KEY_ID", unset = NA))) {
+  Sys.setenv(AWS_ACCESS_KEY_ID = Sys.getenv("PERSONAL_AWS_ACCESS_KEY_ID"))
+  Sys.setenv(AWS_SECRET_ACCESS_KEY = Sys.getenv("PERSONAL_AWS_SECRET_ACCESS_KEY"))
+}
 ```
 
 All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/DTI_analysis_fslr/index.R).
@@ -59,6 +63,7 @@ We will use the `get_image_filenames_df` function to extract the filenames on ou
 ```{r data}
 library(kirby21.dti)
 library(kirby21.base)
+download_dti_data()
 fnames = get_image_filenames_df(ids = 113, 
                     modalities = c("T1", "DTI"), 
                     visits = c(1),
