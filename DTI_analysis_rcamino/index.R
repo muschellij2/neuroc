@@ -1,23 +1,30 @@
-## ----setup, include=FALSE, message=FALSE---------------------------------
+## ----setup, include=FALSE, message=FALSE--------------------------------------
 library(knitr)
 library(methods)
 library(neurobase)
 knitr::opts_chunk$set(comment = "")
+if (!is.na(Sys.getenv("HCP_AWS_ACCESS_KEY_ID", unset = NA))) {
+  Sys.setenv(AWS_ACCESS_KEY_ID = Sys.getenv("HCP_AWS_ACCESS_KEY_ID"))
+  Sys.setenv(AWS_SECRET_ACCESS_KEY = Sys.getenv("HCP_AWS_SECRET_ACCESS_KEY"))
+}
 
-## ------------------------------------------------------------------------
+
+## -----------------------------------------------------------------------------
 tdir = tempdir()
 tfile = file.path(tdir, "example_dwi.zip")
 download.file("http://cmic.cs.ucl.ac.uk/camino//uploads/Tutorials/example_dwi.zip",
               destfile = tfile)
 files = unzip(zipfile = tfile, exdir = tdir, overwrite = TRUE)
 
-## ----bvecs---------------------------------------------------------------
+
+## ----bvecs--------------------------------------------------------------------
 library(rcamino)
 b_data_file = grep("[.]txt$", files, value = TRUE)
 scheme_file = camino_pointset2scheme(infile = b_data_file,
                                 bvalue = 1e9)
 
-## ----check_img-----------------------------------------------------------
+
+## ----check_img----------------------------------------------------------------
 img_fname = grep("4Ddwi_b1000", files, value = TRUE)
 img = neurobase::readnii(img_fname)
 ntim(img)
@@ -26,11 +33,13 @@ length(grads)
 # cleanup
 rm(list= "img"); gc()
 
-## ------------------------------------------------------------------------
+
+## -----------------------------------------------------------------------------
 float_fname = camino_image2voxel(infile = img_fname, 
                                 outputdatatype = "float")
 
-## ------------------------------------------------------------------------
+
+## -----------------------------------------------------------------------------
 mask_fname = grep("mask", files, value = TRUE)
 model_fname = camino_modelfit(
   infile = float_fname,
@@ -39,10 +48,12 @@ model_fname = camino_modelfit(
   outputdatatype = "double"
   )
 
-## ------------------------------------------------------------------------
+
+## -----------------------------------------------------------------------------
 fa_fname = camino_fa(infile = model_fname)
 
-## ------------------------------------------------------------------------
+
+## -----------------------------------------------------------------------------
 library(neurobase)
 fa_img_name = camino_voxel2image(infile = fa_fname, 
                             header = img_fname, 
@@ -50,7 +61,8 @@ fa_img_name = camino_voxel2image(infile = fa_fname,
                             components = 1)
 fa_img = readnii(fa_img_name)
 
-## ------------------------------------------------------------------------
+
+## -----------------------------------------------------------------------------
 library(magrittr)
 fa_img2 = model_fname %>% 
   camino_fa() %>% 
@@ -58,17 +70,20 @@ fa_img2 = model_fname %>%
   readnii
 all.equal(fa_img2, fa_img2)
 
-## ------------------------------------------------------------------------
+
+## -----------------------------------------------------------------------------
 ortho2(fa_img)
 
-## ------------------------------------------------------------------------
+
+## -----------------------------------------------------------------------------
 md_img = model_fname %>% 
   camino_md() %>% 
   camino_voxel2image(header = img_fname, gzip = TRUE, components = 1) %>% 
   readnii
 ortho2(md_img)
 
-## ------------------------------------------------------------------------
+
+## -----------------------------------------------------------------------------
 nifti_dt = camino_dt2nii(
   infile = model_fname, 
   inputmodel = "dt",
@@ -78,6 +93,7 @@ nifti_dt = camino_dt2nii(
 stopifnot(all(file.exists(nifti_dt)))
 print(nifti_dt)
 
-## ------------------------------------------------------------------------
+
+## -----------------------------------------------------------------------------
 dt_imgs = lapply(nifti_dt, readnii, drop_dim = FALSE)
 

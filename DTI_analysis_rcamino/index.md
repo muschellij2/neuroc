@@ -1,6 +1,17 @@
-# DTI Analysis in Camino using rcamino
-John Muschelli  
-`r Sys.Date()`  
+---
+title: "DTI Analysis in Camino using rcamino"
+author: "John Muschelli"
+date: "2021-02-16"
+output: 
+  html_document:
+    keep_md: true
+    theme: cosmo
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+    number_sections: true      
+---
 
 All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/DTI_analysis_rcamino/index.R).
 
@@ -41,7 +52,7 @@ scheme_file = camino_pointset2scheme(infile = b_data_file,
 ```
 
 ```
-/Library/Frameworks/R.framework/Versions/3.3/Resources/library/rcamino/camino/bin/pointset2scheme -inputfile '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmp0XnCJg/grad_dirs.txt' -bvalue 1000000000 -outputfile /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmp0XnCJg/file110146774647f.scheme
+/Library/Frameworks/R.framework/Versions/4.0/Resources/library/rcamino/camino/bin/pointset2scheme -inputfile '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpoGZTxY/grad_dirs.txt' -bvalue 1000000000 -outputfile /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpoGZTxY/file1395d96e0bd7.scheme
 ```
 
 ## Checking our data
@@ -73,9 +84,9 @@ rm(list= "img"); gc()
 ```
 
 ```
-          used (Mb) gc trigger   (Mb)  max used   (Mb)
-Ncells  545859 29.2     940480   50.3    750400   40.1
-Vcells 1269859  9.7  140046597 1068.5 173092334 1320.6
+          used (Mb) gc trigger  (Mb) limit (Mb)  max used  (Mb)
+Ncells  785111 42.0    1275181  68.2         NA   1275181  68.2
+Vcells 1344098 10.3  100702109 768.3      65536 107190963 817.9
 ```
 
 
@@ -90,7 +101,7 @@ float_fname = camino_image2voxel(infile = img_fname,
 ```
 
 ```
-/Library/Frameworks/R.framework/Versions/3.3/Resources/library/rcamino/camino/bin/image2voxel -inputfile '/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmp0XnCJg/4Ddwi_b1000.nii.gz' -outputfile '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmp0XnCJg/file110142a234322.Bfloat' -outputdatatype float
+/Library/Frameworks/R.framework/Versions/4.0/Resources/library/rcamino/camino/bin/image2voxel -inputfile '/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpoGZTxY/4Ddwi_b1000.nii.gz' -outputfile '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpoGZTxY/file1395dc0d8e31.Bfloat' -outputdatatype float
 ```
 
 Note, from here on forward we will use either the filename for the output of the eddy current correction or the eddy-current-corrected `nifti` object.
@@ -110,7 +121,7 @@ model_fname = camino_modelfit(
 ```
 
 ```
-/Library/Frameworks/R.framework/Versions/3.3/Resources/library/rcamino/camino/bin/modelfit -inputfile '/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmp0XnCJg/file110142a234322.Bfloat' -outputfile '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmp0XnCJg/file110146c5ed5c1.Bdouble' -inputdatatype float -schemefile /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmp0XnCJg/file110146774647f.scheme -bgmask /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmp0XnCJg/brain_mask.nii.gz -maskdatatype float -model dt
+/Library/Frameworks/R.framework/Versions/4.0/Resources/library/rcamino/camino/bin/modelfit -inputfile '/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpoGZTxY/file1395dc0d8e31.Bfloat' -outputfile '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpoGZTxY/file1395d5985d41d.Bdouble' -inputdatatype float -schemefile /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpoGZTxY/file1395d96e0bd7.scheme -bgmask /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpoGZTxY/brain_mask.nii.gz -maskdatatype float -model dt
 ```
 
 
@@ -122,7 +133,7 @@ fa_fname = camino_fa(infile = model_fname)
 ```
 
 ```
-cat '/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmp0XnCJg/file110146c5ed5c1.Bdouble' |  /Library/Frameworks/R.framework/Versions/3.3/Resources/library/rcamino/camino/bin/fa -inputmodel dt -outputdatatype double > '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmp0XnCJg/file110144f4c2fdd.Bdouble'
+cat '/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpoGZTxY/file1395d5985d41d.Bdouble' |  /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rcamino/camino/bin/fa -inputmodel dt -outputdatatype double > '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpoGZTxY/file1395d450fd0c8.Bdouble'
 ```
 
 ### Converting FA values back into an image
@@ -138,7 +149,7 @@ fa_img_name = camino_voxel2image(infile = fa_fname,
 ```
 
 ```
-/Library/Frameworks/R.framework/Versions/3.3/Resources/library/rcamino/camino/bin/voxel2image -inputfile /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmp0XnCJg/file110144f4c2fdd.Bdouble -header /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmp0XnCJg/4Ddwi_b1000.nii.gz -outputroot /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmp0XnCJg/file1101446bd5eec_ -components 1 -gzip 
+/Library/Frameworks/R.framework/Versions/4.0/Resources/library/rcamino/camino/bin/voxel2image -inputfile /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpoGZTxY/file1395d450fd0c8.Bdouble -header /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpoGZTxY/4Ddwi_b1000.nii.gz -outputroot /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpoGZTxY/file1395d29766c9f_ -components 1 -gzip 
 ```
 
 ```r
@@ -159,11 +170,11 @@ fa_img2 = model_fname %>%
 ```
 
 ```
-cat '/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmp0XnCJg/file110146c5ed5c1.Bdouble' |  /Library/Frameworks/R.framework/Versions/3.3/Resources/library/rcamino/camino/bin/fa -inputmodel dt -outputdatatype double > '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmp0XnCJg/file11014225de537.Bdouble'
+cat '/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpoGZTxY/file1395d5985d41d.Bdouble' |  /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rcamino/camino/bin/fa -inputmodel dt -outputdatatype double > '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpoGZTxY/file1395d1f767a58.Bdouble'
 ```
 
 ```
-/Library/Frameworks/R.framework/Versions/3.3/Resources/library/rcamino/camino/bin/voxel2image -inputfile /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmp0XnCJg/file11014225de537.Bdouble -header /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmp0XnCJg/4Ddwi_b1000.nii.gz -outputroot /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmp0XnCJg/file1101442738f81_ -components 1 -gzip 
+/Library/Frameworks/R.framework/Versions/4.0/Resources/library/rcamino/camino/bin/voxel2image -inputfile /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpoGZTxY/file1395d1f767a58.Bdouble -header /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpoGZTxY/4Ddwi_b1000.nii.gz -outputroot /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpoGZTxY/file1395d1b5a378b_ -components 1 -gzip 
 ```
 
 ```r
@@ -196,11 +207,11 @@ md_img = model_fname %>%
 ```
 
 ```
-cat '/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmp0XnCJg/file110146c5ed5c1.Bdouble' |  /Library/Frameworks/R.framework/Versions/3.3/Resources/library/rcamino/camino/bin/md -inputmodel dt -outputdatatype double > '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmp0XnCJg/file110141fcc56ed.Bdouble'
+cat '/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpoGZTxY/file1395d5985d41d.Bdouble' |  /Library/Frameworks/R.framework/Versions/4.0/Resources/library/rcamino/camino/bin/md -inputmodel dt -outputdatatype double > '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpoGZTxY/file1395d35d26266.Bdouble'
 ```
 
 ```
-/Library/Frameworks/R.framework/Versions/3.3/Resources/library/rcamino/camino/bin/voxel2image -inputfile /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmp0XnCJg/file110141fcc56ed.Bdouble -header /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmp0XnCJg/4Ddwi_b1000.nii.gz -outputroot /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmp0XnCJg/file11014205ef1ea_ -components 1 -gzip 
+/Library/Frameworks/R.framework/Versions/4.0/Resources/library/rcamino/camino/bin/voxel2image -inputfile /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpoGZTxY/file1395d35d26266.Bdouble -header /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpoGZTxY/4Ddwi_b1000.nii.gz -outputroot /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpoGZTxY/file1395d73a3225_ -components 1 -gzip 
 ```
 
 ```r
@@ -223,7 +234,7 @@ nifti_dt = camino_dt2nii(
 ```
 
 ```
-/Library/Frameworks/R.framework/Versions/3.3/Resources/library/rcamino/camino/bin/dt2nii -inputfile /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmp0XnCJg/file110146c5ed5c1.Bdouble -header /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmp0XnCJg/4Ddwi_b1000.nii.gz -inputmodel dt -outputroot /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmp0XnCJg/file110145a0ecd2b_ -gzip 
+/Library/Frameworks/R.framework/Versions/4.0/Resources/library/rcamino/camino/bin/dt2nii -inputfile /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpoGZTxY/file1395d5985d41d.Bdouble -header /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpoGZTxY/4Ddwi_b1000.nii.gz -inputmodel dt -outputroot /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpoGZTxY/file1395d3906f5b9_ -gzip 
 ```
 
 ```r
@@ -232,9 +243,9 @@ print(nifti_dt)
 ```
 
 ```
-[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmp0XnCJg/file110145a0ecd2b_exitcode.nii.gz"
-[2] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmp0XnCJg/file110145a0ecd2b_lns0.nii.gz"    
-[3] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmp0XnCJg/file110145a0ecd2b_dt.nii.gz"      
+[1] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpoGZTxY/file1395d3906f5b9_exitcode.nii.gz"
+[2] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpoGZTxY/file1395d3906f5b9_lns0.nii.gz"    
+[3] "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpoGZTxY/file1395d3906f5b9_dt.nii.gz"      
 ```
 
 We can read these DT images into `R` again using `readnii`, but we must set `drop_dim = FALSE` for diffusion tensor images because the pixel dimensions are zero and `readnii` assumes you want to drop "empty" dimensions

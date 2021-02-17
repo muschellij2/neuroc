@@ -6,6 +6,7 @@ LIST += brain_extraction
 LIST += tissue_class_segmentation
 LIST += cortical_thickness
 LIST += preprocess_mri_within
+LIST += rxnat
 LIST += fcp_indi
 LIST += fmri_analysis_ANTsR
 LIST += fmri_analysis_fslr
@@ -25,7 +26,6 @@ LIST += r_package_workflow
 LIST += windows_wsl
 LIST += ss_ct
 LIST += linked_viewers
-LIST += rxnat
 LIST += resample_image
 
 all:

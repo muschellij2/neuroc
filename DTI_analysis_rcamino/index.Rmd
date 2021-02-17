@@ -20,9 +20,9 @@ library(knitr)
 library(methods)
 library(neurobase)
 knitr::opts_chunk$set(comment = "")
-if (!is.na(Sys.getenv("PERSONAL_AWS_ACCESS_KEY_ID", unset = NA))) {
-  Sys.setenv(AWS_ACCESS_KEY_ID = Sys.getenv("PERSONAL_AWS_ACCESS_KEY_ID"))
-  Sys.setenv(AWS_SECRET_ACCESS_KEY = Sys.getenv("PERSONAL_AWS_SECRET_ACCESS_KEY"))
+if (!is.na(Sys.getenv("HCP_AWS_ACCESS_KEY_ID", unset = NA))) {
+  Sys.setenv(AWS_ACCESS_KEY_ID = Sys.getenv("HCP_AWS_ACCESS_KEY_ID"))
+  Sys.setenv(AWS_SECRET_ACCESS_KEY = Sys.getenv("HCP_AWS_SECRET_ACCESS_KEY"))
 }
 ```
 

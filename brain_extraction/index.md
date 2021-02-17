@@ -1,7 +1,7 @@
 ---
 title: "Brain Extraction/Segmentation"
 author: "John Muschelli"
-date: "2017-12-06"
+date: "2021-02-16"
 output: 
   html_document:
     keep_md: true
@@ -336,26 +336,6 @@ Here, if we assume the original skull stripped image as the gold standard and th
 ortho_diff(t1_fname, pred = nn_spm_ss_full, roi = spm_ss)
 ```
 
-```
-Warning in max(img, na.rm = TRUE): no non-missing arguments to max;
-returning -Inf
-```
-
-```
-Warning in min(img, na.rm = TRUE): no non-missing arguments to min;
-returning Inf
-```
-
-```
-Warning in max(img, na.rm = TRUE): no non-missing arguments to max;
-returning -Inf
-```
-
-```
-Warning in min(img, na.rm = TRUE): no non-missing arguments to min;
-returning Inf
-```
-
 ![](index_files/figure-html/spm_diff-1.png)<!-- -->
 
 Here we see that for brain segmentation, there was not a large effect of removing the neck.
@@ -368,26 +348,6 @@ Here we will compare the results from SPM and BET similarly to those above.  Jus
 
 ```r
 ortho_diff(t1_fname, pred = ss, roi = spm_ss)
-```
-
-```
-Warning in max(img, na.rm = TRUE): no non-missing arguments to max;
-returning -Inf
-```
-
-```
-Warning in min(img, na.rm = TRUE): no non-missing arguments to min;
-returning Inf
-```
-
-```
-Warning in max(img, na.rm = TRUE): no non-missing arguments to max;
-returning -Inf
-```
-
-```
-Warning in min(img, na.rm = TRUE): no non-missing arguments to min;
-returning Inf
 ```
 
 ![](index_files/figure-html/spm_bet_diff-1.png)<!-- -->

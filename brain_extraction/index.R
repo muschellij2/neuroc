@@ -1,4 +1,4 @@
-## ----setup, include=FALSE------------------------------------------------
+## ----setup, include=FALSE-----------------------------------------------------
 library(kirby21.fmri)
 library(kirby21.base)
 library(dplyr)
@@ -15,7 +15,8 @@ library(zoo)
 knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "",
                       cache.path = "index_cache/html/")
 
-## ---- eval = FALSE-------------------------------------------------------
+
+## ---- eval = FALSE------------------------------------------------------------
 ## source("https://neuroconductor.org/neurocLite.R")
 ## packages = installed.packages()
 ## packages = packages[, "Package"]
@@ -26,7 +27,8 @@ knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "",
 ##   neuroc_install("kirby21.t1")
 ## }
 
-## ----data----------------------------------------------------------------
+
+## ----data---------------------------------------------------------------------
 library(kirby21.t1)
 library(kirby21.base)
 fnames = get_image_filenames_df(ids = 113, 
@@ -35,12 +37,14 @@ fnames = get_image_filenames_df(ids = 113,
                     long = FALSE)
 t1_fname = fnames$T1[1]
 
-## ----t1_plot, cache = TRUE-----------------------------------------------
+
+## ----t1_plot, cache = TRUE----------------------------------------------------
 t1 = readnii(t1_fname)
 ortho2(t1)
 rm(list = "t1")
 
-## ----t1_naive_ss, cache = FALSE------------------------------------------
+
+## ----t1_naive_ss, cache = FALSE-----------------------------------------------
 library(fslr)
 outfile = nii.stub(t1_fname, bn = TRUE)
 outfile = paste0(outfile, "_SS_Naive.nii.gz")
@@ -50,10 +54,12 @@ if (!file.exists(outfile)) {
   ss_naive = readnii(outfile)
 }
 
-## ----t1_naive_plot, cache = TRUE-----------------------------------------
+
+## ----t1_naive_plot, cache = TRUE----------------------------------------------
 ortho2(ss_naive)
 
-## ----t1_ss, cache = FALSE------------------------------------------------
+
+## ----t1_ss, cache = FALSE-----------------------------------------------------
 outfile = nii.stub(t1_fname, bn = TRUE)
 outfile = paste0(outfile, "_SS.nii.gz")
 if (!file.exists(outfile)) {
@@ -64,24 +70,29 @@ if (!file.exists(outfile)) {
   ss = readnii(outfile)
 }
 
-## ----t1_ss_plot, cache = TRUE--------------------------------------------
+
+## ----t1_ss_plot, cache = TRUE-------------------------------------------------
 ortho2(ss)
 
-## ----t1_ss_plot2, cache = TRUE-------------------------------------------
+
+## ----t1_ss_plot2, cache = TRUE------------------------------------------------
 alpha = function(col, alpha = 1) {
   cols = t(col2rgb(col, alpha = FALSE)/255)
   rgb(cols, alpha = alpha)
 }      
 ortho2(t1_fname, ss > 0, col.y = alpha("red", 0.5))
 
-## ----t1_ss_red, cache = FALSE--------------------------------------------
+
+## ----t1_ss_red, cache = FALSE-------------------------------------------------
 ss_red = dropEmptyImageDimensions(ss)
 ortho2(ss_red)
 
-## ----spm12---------------------------------------------------------------
+
+## ----spm12--------------------------------------------------------------------
 library(spm12r)
 
-## ----spm12_segment, cache=FALSE, eval = TRUE-----------------------------
+
+## ----spm12_segment, cache=FALSE, eval = TRUE----------------------------------
 outfile = nii.stub(t1_fname, bn = TRUE)
 spm_prob_files = paste0(outfile,
                         "_prob_", 1:6,
@@ -110,17 +121,20 @@ if (!all(file.exists(outfiles))) {
   spm_ss = readnii(ss_outfile)
 }
 
-## ----t1_spm_seg_plot, cache = TRUE---------------------------------------
+
+## ----t1_spm_seg_plot, cache = TRUE--------------------------------------------
 double_ortho(t1_fname, spm_hard_seg)
 
-## ----t1_spm_ss, cache = TRUE---------------------------------------------
+
+## ----t1_spm_ss, cache = TRUE--------------------------------------------------
 alpha = function(col, alpha = 1) {
   cols = t(col2rgb(col, alpha = FALSE)/255)
   rgb(cols, alpha = alpha)
 }      
 ortho2(t1_fname, spm_ss > 0, col.y = alpha("red", 0.5))
 
-## ----noneck, cache = FALSE-----------------------------------------------
+
+## ----noneck, cache = FALSE----------------------------------------------------
 outfile = nii.stub(t1_fname, bn = TRUE)
 outfile = paste0(outfile,
                  "_noneck.nii.gz")
@@ -137,14 +151,17 @@ if (!file.exists(outfile)) {
   noneck = readnii(outfile)
 }
 
-## ----noneck_plot, cache = TRUE-------------------------------------------
+
+## ----noneck_plot, cache = TRUE------------------------------------------------
 double_ortho(t1_fname, noneck)
 
-## ----reduce_noneck, cache=FALSE------------------------------------------
+
+## ----reduce_noneck, cache=FALSE-----------------------------------------------
 noneck_red = dropEmptyImageDimensions(noneck)
 ortho2(noneck_red)
 
-## ----nn_spm12_segment, cache=FALSE, eval = TRUE--------------------------
+
+## ----nn_spm12_segment, cache=FALSE, eval = TRUE-------------------------------
 library(spm12r)
 outfile = nii.stub(t1_fname, bn = TRUE)
 outfile = paste0(outfile, "_noneck")
@@ -175,24 +192,30 @@ if (!all(file.exists(outfiles))) {
   nn_spm_ss = readnii(ss_outfile)
 }
 
-## ----t1_nn_spm_seg_plot, cache = TRUE------------------------------------
+
+## ----t1_nn_spm_seg_plot, cache = TRUE-----------------------------------------
 double_ortho(noneck_red, nn_spm_hard_seg)
 
-## ----t1_nn_spm_ss, cache = TRUE------------------------------------------
+
+## ----t1_nn_spm_ss, cache = TRUE-----------------------------------------------
 ortho2(noneck_red, nn_spm_ss > 0, col.y = alpha("red", 0.5))
 
-## ----replace_empty_dims, cache=FALSE-------------------------------------
+
+## ----replace_empty_dims, cache=FALSE------------------------------------------
 dd = dropEmptyImageDimensions(noneck, keep_ind = TRUE)
 nn_spm_ss_full = replace_dropped_dimensions(img = nn_spm_ss,
                                             inds = dd$inds,
                                             orig.dim = dd$orig.dim)
 
-## ----t1_nn_ss_plot_full, cache = TRUE------------------------------------
+
+## ----t1_nn_ss_plot_full, cache = TRUE-----------------------------------------
 ortho2(t1_fname, nn_spm_ss_full, col.y = alpha("red", 0.5))
 
-## ----spm_diff, cache=TRUE------------------------------------------------
+
+## ----spm_diff, cache=TRUE-----------------------------------------------------
 ortho_diff(t1_fname, pred = nn_spm_ss_full, roi = spm_ss)
 
-## ----spm_bet_diff, cache=TRUE--------------------------------------------
+
+## ----spm_bet_diff, cache=TRUE-------------------------------------------------
 ortho_diff(t1_fname, pred = ss, roi = spm_ss)
 

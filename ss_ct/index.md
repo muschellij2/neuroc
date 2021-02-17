@@ -1,7 +1,7 @@
 ---
 title: "Skull Stripping CT data"
 author: "John Muschelli"
-date: "2019-11-14"
+date: "2020-10-02"
 output: 
   html_document:
     keep_md: true
@@ -37,8 +37,8 @@ head(collections)
 ```
 
 ```
-[1] "4D-Lung"               "Anti-PD-1_Lung"        "Anti-PD-1_MELANOMA"   
-[4] "APOLLO"                "BREAST-DIAGNOSIS"      "Breast-MRI-NACT-Pilot"
+[1] "4D-Lung"             "AAPM-RT-MAC"         "ACRIN-DSC-MR-Brain" 
+[4] "ACRIN-FLT-Breast"    "ACRIN-FMISO-Brain"   "ACRIN-NSCLC-FDG-PET"
 ```
 
 ```r
@@ -47,7 +47,7 @@ head(mods$modalities)
 ```
 
 ```
-[1] "CT"  "MG"  "MR"  "PT"  "SEG"
+[1] "CT"  "MG"  "MR"  "OT"  "PT"  "SEG"
 ```
 
 ## Getting Body Part Information
@@ -60,22 +60,26 @@ bp$body_parts
 ```
 
 ```
- [1] "ABDOMEN"         "BD CT ABD WO_W " "BLADDER"        
- [4] "BRAIN"           "BREAST"          "CAROTID"        
- [7] "CERVIX"          "CHEST"           "CHEST_ABDOMEN"  
-[10] "CHEST_TO_PELVIS" "CHESTABDPELVIS"  "COLON"          
-[13] "CT CHEST WO CE"  "CT THORAX W CNT" "ESOPHAGUS"      
-[16] "EXTREMITY"       "FUSION"          "HEAD"           
-[19] "HEADNECK"        "HEART"           "J brzuszna"     
-[22] "J BRZUSZNA"      "Kidney"          "KIDNEY"         
-[25] "LEG"             "LIVER"           "LUMBO-SACRAL SP"
-[28] "LUNG"            "MEDIASTINUM"     "NECK"           
-[31] "OVARY"           "PANCREAS"        "PELVIS"         
-[34] "Phantom"         "PHANTOM"         "PROSTATE"       
-[37] "RECTUM"          "SEG"             "SELLA"          
-[40] "SKULL"           "STOMACH"         "TH CT CHEST WO "
-[43] "THORAX_1HEAD_NE" "THYROID"         "TSPINE"         
-[46] "UNDEFINED"       "UTERUS"         
+ [1] "ABD"             "ABD PEL"         "ABD PELV"        "ABDOMEN"        
+ [5] "ABDOMEN_PELVIS " "ABDOMENPELVIS"   "AP PORTABLE CHE" "BD CT ABD WO_W "
+ [9] "BLADDER"         "BRAIN"           "BRAIN W/WO_AH32" "BREAST"         
+[13] "CAP"             "CAROTID"         "CERVIX"          "CHEST"          
+[17] "CHEST (THORAX) " "CHEST COMPUTED " "CHEST NO GRID"   "CHEST_ABDOMEN"  
+[21] "CHEST_TO_PELVIS" "CHEST/ABD"       "CHESTABDOMEN"    "CHESTABDPELVIS" 
+[25] "COLON"           "CT 3PHASE REN"   "CT CHEST W_ENHA" "CT CHEST WO CE" 
+[29] "CT THORAX W CNT" "CTA CHEST"       "ESOPHAGUS"       "EXTREMITY"      
+[33] "FUSION"          "HEAD"            "Head-and-Neck"   "Head-Neck"      
+[37] "HEADANDNECK"     "HEADNECK"        "HEART"           "J brzuszna"     
+[41] "J BRZUSZNA"      "Kidney"          "KIDNEY"          "LEG"            
+[45] "LIVER"           "LUMBO-SACRAL SP" "LUNG"            "MEDIASTINUM"    
+[49] "NECK"            "OUTSIDE FIL"     "OVARY"           "PANCREAS"       
+[53] "Pelvis"          "PELVIS"          "PET_ABDOMEN_PEL" "PET_CT SCAN CHE"
+[57] "Phantom"         "PHANTOM"         "PROSTATE"        "RECTUM"         
+[61] "SEG"             "SELLA"           "SKULL"           "SPI CHEST 5MM"  
+[65] "STOMACH"         "TH CT CHEST WO " "Thorax"          "THORAX"         
+[69] "THORAX CT _AH05" "THORAX CT _OT01" "THORAX_1HEAD_NE" "THORAXABD"      
+[73] "THYROID"         "TSPINE"          "UNDEFINED"       "UTERUS"         
+[77] "WHOLEBODY"       "WO INTER"       
 ```
 
 Particularly, these areas are of interest.  There seems to be a "bug" in `TCIApathfinder::get_series_info` which is acknowledged in the help file.  Namely, the `body_part_examined` is not always a parameter to be set.  We could get all the series info for all the collections from the code below, but it takes some times (> 15 minutes):
@@ -116,40 +120,40 @@ head(series)
 5         NA  CPTAC-GBM
 6         NA  CPTAC-GBM
                                                 study_instance_uid
-1 1.3.6.1.4.1.14519.5.2.1.2857.3707.221249410799063035815783816913
-2 1.3.6.1.4.1.14519.5.2.1.2857.3707.221249410799063035815783816913
-3 1.3.6.1.4.1.14519.5.2.1.2857.3707.221249410799063035815783816913
-4 1.3.6.1.4.1.14519.5.2.1.2857.3707.170705714007862724678123629040
-5 1.3.6.1.4.1.14519.5.2.1.2857.3707.170705714007862724678123629040
-6 1.3.6.1.4.1.14519.5.2.1.2857.3707.170705714007862724678123629040
-                                               series_instance_uid
-1 1.3.6.1.4.1.14519.5.2.1.2857.3707.100565015879506080275493644685
-2 1.3.6.1.4.1.14519.5.2.1.2857.3707.176470763322052742670285487681
-3 1.3.6.1.4.1.14519.5.2.1.2857.3707.272098545527401893663335969793
-4 1.3.6.1.4.1.14519.5.2.1.2857.3707.254723691164851053423448594844
-5 1.3.6.1.4.1.14519.5.2.1.2857.3707.531177247834252562951224965872
-6 1.3.6.1.4.1.14519.5.2.1.2857.3707.225513954801691101397384975174
-  modality                           protocol_name series_date
-1       CT         1.6 CTA HEAD WITH WAND PROTOCOL  2001-01-15
-2       CT         1.6 CTA HEAD WITH WAND PROTOCOL  2001-01-15
-3       CT         1.6 CTA HEAD WITH WAND PROTOCOL  2001-01-15
-4       CT 1.8 CTV HEAD Auto Transfer 75mL Iso 300  2001-01-23
-5       CT 1.8 CTV HEAD Auto Transfer 75mL Iso 300  2001-01-23
-6       CT 1.8 CTV HEAD Auto Transfer 75mL Iso 300  2001-01-23
-  series_description body_part_examined series_number annotations_flag
-1     SAG 10 X 2 MIP               <NA>    603.000000               NA
-2      AX 10 X 2 MIP               <NA>    601.000000               NA
-3      COR10 X 2 MIP               <NA>    602.000000               NA
-4            CTV COR               <NA>    602.000000               NA
-5            CTV SAG               <NA>    603.000000               NA
-6          CTV AXIAL               <NA>    601.000000               NA
-        manufacturer manufacturer_model_name software_versions image_count
-1 GE MEDICAL SYSTEMS          LightSpeed VCT              <NA>          93
-2 GE MEDICAL SYSTEMS          LightSpeed VCT              <NA>         124
-3 GE MEDICAL SYSTEMS          LightSpeed VCT              <NA>         101
-4 GE MEDICAL SYSTEMS          LightSpeed VCT              <NA>         107
-5 GE MEDICAL SYSTEMS          LightSpeed VCT              <NA>          89
-6 GE MEDICAL SYSTEMS          LightSpeed VCT              <NA>          53
+1 1.3.6.1.4.1.14519.5.2.1.7085.2626.152038797759059676757908129170
+2 1.3.6.1.4.1.14519.5.2.1.7085.2626.152038797759059676757908129170
+3 1.3.6.1.4.1.14519.5.2.1.7085.2626.152038797759059676757908129170
+4 1.3.6.1.4.1.14519.5.2.1.7085.2626.152038797759059676757908129170
+5 1.3.6.1.4.1.14519.5.2.1.7085.2626.152038797759059676757908129170
+6 1.3.6.1.4.1.14519.5.2.1.7085.2626.152038797759059676757908129170
+                                               series_instance_uid modality
+1 1.3.6.1.4.1.14519.5.2.1.7085.2626.266389668431277785910473784392       CT
+2 1.3.6.1.4.1.14519.5.2.1.7085.2626.271135940248690454987590009541       CT
+3 1.3.6.1.4.1.14519.5.2.1.7085.2626.316379244620470116710983822059       CT
+4 1.3.6.1.4.1.14519.5.2.1.7085.2626.553702562283708139549481090858       CT
+5 1.3.6.1.4.1.14519.5.2.1.7085.2626.133541559422492408312749080472       CT
+6 1.3.6.1.4.1.14519.5.2.1.7085.2626.331402094428484964438653951551       CT
+  protocol_name series_date  series_description body_part_examined
+1 CHEST_ABD_PEL  2010-04-10   ABD  3.0  I30f  2            ABDOMEN
+2 CHEST_ABD_PEL  2010-04-10 TOPOGRAM  0.6  T20s              CHEST
+3 CHEST_ABD_PEL  2010-04-10            SAGITTAL              CHEST
+4 CHEST_ABD_PEL  2010-04-10            CORONALS              CHEST
+5 CHEST_ABD_PEL  2010-04-10 CHEST  3.0  I70f  2              CHEST
+6 CHEST_ABD_PEL  2010-04-10 CHEST  3.0  I31f  2              CHEST
+  series_number annotations_flag manufacturer  manufacturer_model_name
+1      6.000000               NA      SIEMENS SOMATOM Definition Flash
+2      1.000000               NA      SIEMENS SOMATOM Definition Flash
+3      5.000000               NA      SIEMENS SOMATOM Definition Flash
+4      4.000000               NA      SIEMENS SOMATOM Definition Flash
+5      3.000000               NA      SIEMENS SOMATOM Definition Flash
+6      2.000000               NA      SIEMENS SOMATOM Definition Flash
+  software_versions image_count
+1    syngo CT 2012B         154
+2    syngo CT 2012B           1
+3    syngo CT 2012B         118
+4    syngo CT 2012B          75
+5    syngo CT 2012B          84
+6    syngo CT 2012B          84
 ```
 
 Here we grab the first series ID from this data which has a description of "HEAD STD" for standard head:
@@ -217,7 +221,7 @@ dcm_result = dcm2nii(file_list$dirs)
 ```
 
 ```
-'/Library/Frameworks/R.framework/Versions/3.5/Resources/library/dcm2niir/dcm2niix' -9 -z y -f %p_%t_%s '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpz3AN9m/file97d844b974bf'
+'/Library/Frameworks/R.framework/Versions/4.0/Resources/library/dcm2niir/dcm2niix' -9  -v 1 -z y -f %p_%t_%s '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmp3YhZ1g/file9b7051955e4c'
 ```
 
 ```r
@@ -232,7 +236,7 @@ img = readnii(result)
 ortho2(img)
 ```
 
-![](index_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+![](index_files/figure-html/readnii-1.png)<!-- -->
 
 ```r
 range(img)
@@ -250,13 +254,13 @@ img = rescale_img(img, min.val = -1024, max.val = 3071)
 ortho2(img)
 ```
 
-![](index_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+![](index_files/figure-html/unnamed-chunk-1-1.png)<!-- -->
 
 ```r
 ortho2(img, window = c(0, 100))
 ```
 
-![](index_files/figure-html/unnamed-chunk-7-2.png)<!-- -->
+![](index_files/figure-html/unnamed-chunk-1-2.png)<!-- -->
 
 ## Skull Strip
 
@@ -270,7 +274,7 @@ ortho2(img, ss > 0,
        col.y = scales::alpha("red", 0.5))
 ```
 
-![](index_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+![](index_files/figure-html/ss-1.png)<!-- -->
 
 The `CT_Skull_Strip_robust` function does 2 neck removals using `remove_neck` from `extrantsr` and then find the center of gravity (COG) twice to make sure the segmentation focuses on the head.  In some instances, the whole neck is included in the scan, such as some of the head-neck studies in TCIA.
 
@@ -321,7 +325,7 @@ dcm_result = dcm2nii(file_list$dirs, merge_files = TRUE)
 ```
 
 ```
-'/Library/Frameworks/R.framework/Versions/3.5/Resources/library/dcm2niir/dcm2niix' -9  -m y -z y -f %p_%t_%s '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpz3AN9m/file97d85deabc8'
+'/Library/Frameworks/R.framework/Versions/4.0/Resources/library/dcm2niir/dcm2niix' -9  -m y  -v 1 -z y -f %p_%t_%s '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmp3YhZ1g/file9b7053a8436c'
 ```
 
 ```r
@@ -336,7 +340,7 @@ img = rescale_img(img, min.val = -1024, max.val = 3071)
 ortho2(img, window = c(0, 100))
 ```
 
-![](index_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
+![](index_files/figure-html/readnii2-1.png)<!-- -->
 
 We will try `CT_Skull_Strip` without adding any robust options:
 
@@ -345,17 +349,26 @@ ss_wb = CT_Skull_Strip(img, verbose = FALSE)
 ortho2(ss_wb, window = c(0, 100))
 ```
 
-![](index_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
+![](index_files/figure-html/ss2-1.png)<!-- -->
 
 We see that this does not work very well.  We will use the robust version.  Here we use `CT_Skull_Stripper`, which will call `CT_Skull_Strip_robust`.  This will run `extrantsr::remove_neck`, runs `CT_Skull_Strip`, then estimates a new center of gravity (COG) and then run `CT_Skull_Strip` again, and then run some hole filling:
 
 
 ```r
 ss_wb_robust = CT_Skull_Stripper(img, verbose = FALSE, robust = TRUE)
+```
+
+```
+Warning: 'rpi_orient_file' is deprecated.
+Use 'rpi_orient_file is going to be deprecated in the coming releases of fslr, and things this relies on,  including readrpi and rpi_orient.  Please use orient_rpi_file, orient_rpi, and read_rpi in the future.' instead.
+See help("Deprecated")
+```
+
+```r
 ortho2(ss_wb_robust, window = c(0, 100))
 ```
 
-![](index_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
+![](index_files/figure-html/ss_robust-1.png)<!-- -->
 
 We see that this robust version works well for even data with the neck.  We can try it on a whole body image as well.  
 
@@ -365,38 +378,42 @@ We could also look at the website, but these do not always correspond to the API
 
 ```r
 library(rvest)
-```
-
-```
-Loading required package: xml2
-```
-
-```r
 library(dplyr)
-x = read_html("http://www.cancerimagingarchive.net/")
+x = read_html("https://www.cancerimagingarchive.net/collections/")
 tab = html_table(x)[[1]]
 head_tab = tab %>% 
   filter(grepl("Head|Brain", Location),
-         grepl("CT", Modalities), 
+         grepl("CT", `Image Types`), 
          Access == "Public")
 brain_tab = tab %>% 
   filter(grepl("Brain", Location),
-         grepl("CT", Modalities), 
+         grepl("CT", `Image Types`), 
          Access == "Public")
 brain_tab
 ```
 
 ```
-  Collection             Cancer Type Modalities Subjects Location
-1  CPTAC-GBM Glioblastoma Multiforme     CT, MR       32    Brain
-2     IvyGAP            Glioblastoma     MR, CT       39    Brain
-3   TCGA-LGG        Low Grade Glioma     MR, CT      199    Brain
-4   TCGA-GBM Glioblastoma Multiforme MR, CT, DX      262    Brain
-  Supporting Data Access   Status    Updated
-1             Yes Public  Ongoing 2018/10/26
-2             Yes Public Complete 2016/12/30
-3             Yes Public Complete 2014/09/04
-4             Yes Public Complete 2014/05/08
+                                 Collection             Cancer Type Location
+1 ACRIN-DSC-MR-Brain (ACRIN 6677/RTOG 0625) Glioblastoma Multiforme    Brain
+2                                 CPTAC-GBM Glioblastoma Multiforme    Brain
+3            Acrin-FMISO-Brain (ACRIN 6684)            Glioblastoma    Brain
+4                                    IvyGAP            Glioblastoma    Brain
+5                                  TCGA-LGG        Low Grade Glioma    Brain
+6                                  TCGA-GBM Glioblastoma Multiforme    Brain
+  Species Subjects               Image Types                    Supporting Data
+1   Human      123                    MR, CT                           Clinical
+2   Human      189 CT, CR, SC, MR, Pathology     Clinical, Genomics, Proteomics
+3   Human       45                CT, MR, PT                           Clinical
+4   Human       39         MR, CT, Pathology                 Clinical, Genomics
+5   Human      199         MR, CT, Pathology Clinical, Genomics, Image Analyses
+6   Human      262     MR, CT, DX, Pathology Clinical, Genomics, Image Analyses
+  Access   Status    Updated
+1 Public Complete 2020-09-09
+2 Public  Ongoing 2020-03-31
+3 Public Complete 2019-09-16
+4 Public Complete 2016-12-30
+5 Public Complete 2014-09-04
+6 Public Complete 2014-05-08
 ```
 
 In `brain_tab`, we see we have a few collections.  We are going to use the collection Head-Neck Cetuximab from above.

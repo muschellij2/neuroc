@@ -1,7 +1,7 @@
 ---
 title: "Tissue Class Segmentation"
 author: "John Muschelli"
-date: "2017-12-20"
+date: "2021-02-16"
 output: 
   html_document:
     keep_md: true
@@ -195,14 +195,6 @@ df = reshape2::melt(df, id.vars = c("ind", "value"),
                     value.name = "class",
                     variable.name = "segmentation")
 df = df %>% arrange(ind)
-```
-
-```
-Warning: failed to assign NativeSymbolInfo for env since env is already
-defined in the 'lazyeval' namespace
-```
-
-```r
 df$ind = NULL
 
 df$class = c("CSF", "GM", "WM")[df$class]
@@ -372,160 +364,244 @@ devtools::session_info()
 ```
 
 ```
-─ Session info ──────────────────────────────────────────────────────────
+─ Session info ───────────────────────────────────────────────────────────────
  setting  value                       
- version  R version 3.4.2 (2017-09-28)
- os       macOS Sierra 10.12.6        
- system   x86_64, darwin15.6.0        
+ version  R version 4.0.2 (2020-06-22)
+ os       macOS Catalina 10.15.7      
+ system   x86_64, darwin17.0          
  ui       X11                         
  language (EN)                        
  collate  en_US.UTF-8                 
+ ctype    en_US.UTF-8                 
  tz       America/New_York            
- date     2017-12-20                  
+ date     2021-02-16                  
 
-─ Packages ──────────────────────────────────────────────────────────────
- package      * version     date      
- abind          1.4-5       2016-07-21
- animation    * 2.5         2017-03-30
- ANTsR        * 0.7.0       2017-09-30
- ANTsRCore    * 0.4.6.1     2017-10-02
- assertthat     0.2.0       2017-04-11
- backports      1.1.1       2017-09-25
- bindr          0.1         2016-11-13
- bindrcpp       0.2         2017-06-17
- bitops         1.0-6       2013-08-17
- cli            1.0.0       2017-11-29
- clisymbols     1.2.0       2017-06-29
- colorout     * 1.1-0       2015-04-20
- colorspace     1.3-2       2016-12-14
- crayon         1.3.4       2017-10-10
- desc           1.1.1.9999  2017-07-26
- devtools       1.13.3.9000 2017-11-29
- digest         0.6.13      2017-12-14
- dplyr        * 0.7.4       2017-09-28
- evaluate       0.10.1      2017-06-24
- foreign        0.8-69      2017-06-22
- fslr         * 2.17.3      2017-12-15
- ggplot2      * 2.2.1.9000  2017-11-07
- git2r          0.19.0      2017-07-19
- glue           1.2.0       2017-10-29
- gtable         0.2.0       2016-02-26
- htmltools      0.3.6       2017-04-28
- ITKR           0.4.12.3    2017-08-22
- kirby21.base * 1.6.0       2017-12-14
- kirby21.fmri * 1.6.0       2017-11-07
- knitr          1.17        2017-08-10
- lattice        0.20-35     2017-03-25
- lazyeval       0.2.1.9000  2017-11-07
- magic          1.5-6       2013-11-20
- magrittr       1.5         2014-11-22
- Matrix         1.2-12      2017-11-15
- matrixStats  * 0.52.2      2017-04-14
- memoise        1.1.0       2017-04-21
- mnormt         1.5-5       2016-10-15
- munsell        0.4.3       2016-02-13
- neurobase    * 1.26.1      2017-12-14
- nlme           3.1-131     2017-02-06
- oro.nifti    * 0.9.2       2017-12-14
- pkgbuild       0.0.0.9000  2017-11-29
- pkgconfig      2.0.1       2017-03-21
- pkgload        0.0.0.9000  2017-11-29
- plyr           1.8.4       2016-06-08
- psych          1.7.8       2017-09-09
- R.methodsS3  * 1.7.1       2016-02-16
- R.oo         * 1.21.0      2016-11-01
- R.utils      * 2.6.0       2017-11-05
- R6             2.2.2       2017-06-17
- RColorBrewer * 1.1-2       2014-12-07
- Rcpp           0.12.14     2017-11-23
- RcppEigen      0.3.3.3.1   2017-11-20
- reshape2     * 1.4.2       2016-10-22
- rlang          0.1.4       2017-11-05
- rmarkdown      1.8         2017-11-17
- RNifti         0.7.1       2017-09-14
- rprojroot      1.2         2017-01-16
- rsvd           0.6         2016-07-29
- scales         0.5.0.9000  2017-10-05
- sessioninfo    1.0.1.9000  2017-11-29
- stringi        1.1.6       2017-11-17
- stringr        1.2.0       2017-02-18
- testthat       1.0.2.9000  2017-11-29
- tibble         1.3.4       2017-08-22
- usethis        1.1.0.9000  2017-12-07
- withr          2.1.0       2017-11-01
- yaml           2.1.16      2017-12-12
- zoo          * 1.8-0       2017-04-12
- source                                   
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.0)                           
- local                                    
- local                                    
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.2)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.0)                           
- Github (r-lib/cli@ab1c3aa)               
- Github (gaborcsardi/clisymbols@e49b4f5)  
- Github (jalvesaq/colorout@1539f1f)       
- CRAN (R 3.4.0)                           
- Github (gaborcsardi/crayon@b5221ab)      
- Github (muschellij2/desc@d35a9db)        
- Github (hadley/devtools@54498b6)         
- CRAN (R 3.4.2)                           
- CRAN (R 3.4.2)                           
- CRAN (R 3.4.1)                           
- CRAN (R 3.4.2)                           
- local                                    
- Github (tidyverse/ggplot2@47c3f75)       
- CRAN (R 3.4.1)                           
- CRAN (R 3.4.2)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.0)                           
- Github (stnava/ITKR@f071cb1)             
- Github (muschellij2/kirby21.base@d250fd1)
- Github (muschellij2/kirby21.fmri@be9f44e)
- CRAN (R 3.4.1)                           
- CRAN (R 3.4.2)                           
- Github (hadley/lazyeval@93c455c)         
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.2)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.0)                           
- Github (muschellij2/neurobase@63ecb9e)   
- CRAN (R 3.4.2)                           
- Github (muschellij2/oro.nifti@a799d19)   
- Github (r-lib/pkgbuild@a70858f)          
- CRAN (R 3.4.0)                           
- Github (r-lib/pkgload@70eaef8)           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.1)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.2)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.3)                           
- CRAN (R 3.4.3)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.2)                           
- CRAN (R 3.4.2)                           
- CRAN (R 3.4.1)                           
- CRAN (R 3.4.0)                           
- CRAN (R 3.4.0)                           
- Github (hadley/scales@d767915)           
- Github (r-lib/sessioninfo@c871d01)       
- CRAN (R 3.4.2)                           
- CRAN (R 3.4.0)                           
- Github (hadley/testthat@6dabfd2)         
- CRAN (R 3.4.1)                           
- Github (r-lib/usethis@3de3ac7)           
- CRAN (R 3.4.2)                           
- CRAN (R 3.4.2)                           
- CRAN (R 3.4.0)                           
+─ Packages ───────────────────────────────────────────────────────────────────
+ package        * version   date       lib
+ abind            1.4-5     2016-07-21 [2]
+ animation      * 2.6       2018-12-11 [2]
+ ANTsR          * 0.5.6.1   2020-06-01 [2]
+ ANTsRCore      * 0.7.4.6   2020-07-07 [2]
+ assertthat       0.2.1     2019-03-21 [2]
+ base64enc        0.1-3     2015-07-28 [2]
+ bindr            0.1.1     2018-03-13 [2]
+ bindrcpp       * 0.2.2     2018-03-29 [2]
+ bitops           1.0-6     2013-08-17 [2]
+ cachem           1.0.4     2021-02-13 [1]
+ callr            3.5.1     2020-10-13 [1]
+ cli              2.3.0     2021-01-31 [1]
+ codetools        0.2-18    2020-11-04 [1]
+ colorout       * 1.2-2     2020-06-01 [2]
+ colorspace       2.0-0     2020-11-11 [1]
+ crayon           1.4.1     2021-02-08 [1]
+ DBI              1.1.1     2021-01-15 [1]
+ dcm2niir       * 0.6.9.1   2020-06-01 [2]
+ desc             1.2.0     2020-06-01 [2]
+ devtools         2.3.2     2020-09-18 [1]
+ digest           0.6.27    2020-10-24 [1]
+ dplyr          * 1.0.4     2021-02-02 [1]
+ ellipsis         0.3.1     2020-05-15 [2]
+ evaluate         0.14      2019-05-28 [2]
+ EveTemplate    * 1.0.0     2020-06-01 [2]
+ extrantsr      * 3.9.13.1  2020-09-03 [2]
+ farver           2.0.3     2020-01-16 [2]
+ fastmap          1.1.0     2021-01-25 [1]
+ fs               1.5.0     2020-07-31 [2]
+ fslr           * 2.25.0    2021-02-16 [1]
+ generics         0.1.0     2020-10-31 [1]
+ ggplot2        * 3.3.3     2020-12-30 [1]
+ git2r          * 0.28.0    2021-01-11 [1]
+ glue             1.4.2     2020-08-27 [1]
+ gtable           0.3.0     2019-03-25 [2]
+ hexbin         * 1.28.2    2021-01-08 [1]
+ highr            0.8       2019-03-20 [2]
+ htmltools        0.5.1.1   2021-01-22 [1]
+ htmlwidgets      1.5.3     2020-12-10 [1]
+ httr             1.4.2     2020-07-20 [2]
+ ichseg         * 0.17.5    2020-08-13 [2]
+ ITKR             0.5.3.3.0 2021-02-15 [1]
+ jsonlite         1.7.2     2020-12-09 [1]
+ kirby21.base   * 1.7.4     2020-10-01 [1]
+ kirby21.fmri   * 1.7.0     2018-08-13 [2]
+ kirby21.t1     * 1.7.3.2   2021-01-09 [1]
+ knitr            1.31      2021-01-27 [1]
+ labeling         0.4.2     2020-10-20 [1]
+ lattice          0.20-41   2020-04-02 [2]
+ lifecycle        1.0.0     2021-02-15 [1]
+ magic            1.5-9     2018-09-17 [2]
+ magrittr         2.0.1     2020-11-17 [1]
+ matlabr        * 1.6.0     2020-07-01 [2]
+ Matrix           1.3-2     2021-01-06 [1]
+ matrixStats    * 0.58.0    2021-01-29 [1]
+ memoise          2.0.0     2021-01-26 [1]
+ mgcv             1.8-33    2020-08-27 [1]
+ mmand            1.6.1     2020-03-03 [2]
+ MNITemplate    * 1.0.0     2020-06-01 [2]
+ munsell          0.5.0     2018-06-12 [2]
+ neurobase      * 1.31.0    2020-10-07 [1]
+ neurohcp       * 0.9.0     2020-10-19 [1]
+ nlme             3.1-152   2021-02-04 [1]
+ oasis          * 3.0.4     2018-02-21 [2]
+ oro.nifti      * 0.11.0    2020-09-04 [2]
+ papayaWidget   * 0.7.1     2020-09-14 [1]
+ pillar           1.4.7     2020-11-20 [1]
+ pkgbuild         1.2.0     2020-12-15 [1]
+ pkgconfig        2.0.3     2019-09-22 [2]
+ pkgload          1.1.0     2020-05-29 [2]
+ plyr             1.8.6     2020-03-03 [2]
+ prettyunits      1.1.1     2020-01-24 [2]
+ processx         3.4.5     2020-11-30 [1]
+ ps               1.5.0     2020-12-05 [1]
+ purrr            0.3.4     2020-04-17 [2]
+ R.matlab         3.6.2     2018-09-27 [2]
+ R.methodsS3    * 1.8.1     2020-08-26 [1]
+ R.oo           * 1.24.0    2020-08-26 [1]
+ R.utils        * 2.10.1    2020-08-26 [1]
+ R6               2.5.0     2020-10-28 [1]
+ randomForest     4.6-14    2018-03-25 [2]
+ RColorBrewer   * 1.1-2     2014-12-07 [2]
+ Rcpp             1.0.6     2021-01-15 [1]
+ RcppEigen        0.3.3.9.1 2020-12-17 [1]
+ remotes          2.2.0     2020-07-21 [2]
+ reshape2       * 1.4.4     2020-04-09 [2]
+ rlang            0.4.10    2020-12-30 [1]
+ rmarkdown      * 2.6       2020-12-14 [1]
+ RNifti         * 1.3.0     2020-12-04 [1]
+ rprojroot        2.0.2     2020-11-15 [1]
+ rstudioapi       0.13      2020-11-12 [1]
+ rvest          * 0.3.6     2020-07-25 [2]
+ scales         * 1.1.1     2020-05-11 [2]
+ sessioninfo      1.1.1     2018-11-05 [2]
+ spm12r         * 2.8.2     2021-01-11 [1]
+ stapler          0.7.2     2020-07-09 [2]
+ stringi          1.5.3     2020-09-09 [1]
+ stringr        * 1.4.0     2019-02-10 [2]
+ TCIApathfinder * 1.0.7     2021-02-04 [1]
+ testthat         3.0.2     2021-02-14 [1]
+ tibble           3.0.6     2021-01-29 [1]
+ tidyselect       1.1.0     2020-05-11 [2]
+ usethis          2.0.1     2021-02-10 [1]
+ vctrs            0.3.6     2020-12-17 [1]
+ WhiteStripe      2.3.2     2019-10-01 [2]
+ withr            2.4.1     2021-01-26 [1]
+ xfun             0.21      2021-02-10 [1]
+ xml2           * 1.3.2     2020-04-23 [2]
+ yaml           * 2.2.1     2020-02-01 [2]
+ zoo            * 1.8-8     2020-05-02 [2]
+ source                                  
+ CRAN (R 4.0.0)                          
+ CRAN (R 4.0.0)                          
+ Github (ANTsX/ANTsR@9c7c9b7)            
+ Github (muschellij2/ANTsRCore@61c37a1)  
+ CRAN (R 4.0.0)                          
+ CRAN (R 4.0.0)                          
+ CRAN (R 4.0.0)                          
+ CRAN (R 4.0.0)                          
+ CRAN (R 4.0.0)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ Github (jalvesaq/colorout@726d681)      
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ Github (muschellij2/dcm2niir@4515762)   
+ Github (muschellij2/desc@b0c374f)       
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.0)                          
+ CRAN (R 4.0.0)                          
+ Github (muschellij2/EveTemplate@ed54115)
+ Github (muschellij2/extrantsr@00c75ad)  
+ CRAN (R 4.0.0)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ local                                   
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ Github (ropensci/git2r@4e342ca)         
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.0)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.0)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ Github (muschellij2/ichseg@2741696)     
+ Github (stnava/ITKR@ea0ac19)            
+ CRAN (R 4.0.2)                          
+ local                                   
+ CRAN (R 4.0.0)                          
+ local                                   
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.0)                          
+ CRAN (R 4.0.2)                          
+ local                                   
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.0)                          
+ Github (muschellij2/MNITemplate@46e8f81)
+ CRAN (R 4.0.0)                          
+ local                                   
+ local                                   
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.0)                          
+ local                                   
+ local                                   
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.0)                          
+ CRAN (R 4.0.0)                          
+ CRAN (R 4.0.0)                          
+ CRAN (R 4.0.0)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.0)                          
+ CRAN (R 4.0.0)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.0)                          
+ CRAN (R 4.0.0)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.0)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.0)                          
+ CRAN (R 4.0.0)                          
+ local                                   
+ Github (muschellij2/stapler@79e23d2)    
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.0)                          
+ local                                   
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.0)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.0)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.2)                          
+ CRAN (R 4.0.0)                          
+ CRAN (R 4.0.0)                          
+ CRAN (R 4.0.0)                          
+
+[1] /Users/johnmuschelli/Library/R/4.0/library
+[2] /Library/Frameworks/R.framework/Versions/4.0/Resources/library
 ```
 
 # References

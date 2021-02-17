@@ -1,7 +1,7 @@
 ---
 title: "NIfTI Basics"
 author: "John Muschelli"
-date: "2017-12-06"
+date: "2021-02-16"
 output: 
   html_document:
     keep_md: true
@@ -159,7 +159,7 @@ class(slice)
 ```
 
 ```
-[1] "matrix"
+[1] "matrix" "array" 
 ```
 
 Thus we see we get a matrix of values from the 3rd "slice".  We should note that we generally reference an image by x, y, and z planes (in that order).   Most of the time, the x direction refers to going left/right on an image, y refers to front/back (or anterior/posterior), and the z direction refers to up/down (superior/inferior).  The actual direction depends on the header information of the NIfTI image.

@@ -1,6 +1,17 @@
-# Installing devtools
-John Muschelli  
-`r Sys.Date()`  
+---
+title: "Installing devtools"
+author: "John Muschelli"
+date: "2021-02-16"
+output: 
+  html_document:
+    keep_md: true
+    theme: cosmo
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+    number_sections: true
+---
 
 All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/installing_devtools/index.R).
 
@@ -88,43 +99,61 @@ devtools::session_info()
 ```
 
 ```
-## Session info -------------------------------------------------------------
-```
-
-```
+## ─ Session info ───────────────────────────────────────────────────────────────
 ##  setting  value                       
-##  version  R version 3.3.2 (2016-10-31)
-##  system   x86_64, darwin13.4.0        
+##  version  R version 4.0.2 (2020-06-22)
+##  os       macOS Catalina 10.15.7      
+##  system   x86_64, darwin17.0          
 ##  ui       X11                         
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
+##  ctype    en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2017-02-16
-```
-
-```
-## Packages -----------------------------------------------------------------
-```
-
-```
-##  package   * version     date       source                            
-##  backports   1.0.5       2017-01-18 cran (@1.0.5)                     
-##  colorout  * 1.1-0       2015-04-20 Github (jalvesaq/colorout@1539f1f)
-##  devtools    1.12.0.9000 2017-01-23 Github (hadley/devtools@1ce84b0)  
-##  digest      0.6.12      2017-01-27 cran (@0.6.12)                    
-##  evaluate    0.10        2016-10-11 CRAN (R 3.3.0)                    
-##  htmltools   0.3.6       2016-12-08 Github (rstudio/htmltools@4fbf990)
-##  knitr       1.15.1      2016-11-22 cran (@1.15.1)                    
-##  magrittr    1.5         2014-11-22 CRAN (R 3.2.0)                    
-##  memoise     1.0.0       2016-01-29 CRAN (R 3.2.3)                    
-##  pkgbuild    0.0.0.9000  2016-12-08 Github (r-pkgs/pkgbuild@65eace0)  
-##  pkgload     0.0.0.9000  2016-12-08 Github (r-pkgs/pkgload@def2b10)   
-##  Rcpp        0.12.8.2    2016-12-08 Github (RcppCore/Rcpp@8c7246e)    
-##  rmarkdown   1.3         2017-01-03 Github (rstudio/rmarkdown@3276760)
-##  rprojroot   1.2         2017-01-16 cran (@1.2)                       
-##  stringi     1.1.2       2016-10-01 CRAN (R 3.3.0)                    
-##  stringr     1.1.0       2016-08-19 cran (@1.1.0)                     
-##  withr       1.0.2       2016-06-20 CRAN (R 3.3.0)                    
-##  yaml        2.1.14      2016-11-12 CRAN (R 3.3.2)
+##  date     2021-02-16                  
+## 
+## ─ Packages ───────────────────────────────────────────────────────────────────
+##  package     * version date       lib source                            
+##  assertthat    0.2.1   2019-03-21 [2] CRAN (R 4.0.0)                    
+##  cachem        1.0.4   2021-02-13 [1] CRAN (R 4.0.2)                    
+##  callr         3.5.1   2020-10-13 [1] CRAN (R 4.0.2)                    
+##  cli           2.3.0   2021-01-31 [1] CRAN (R 4.0.2)                    
+##  colorout    * 1.2-2   2020-06-01 [2] Github (jalvesaq/colorout@726d681)
+##  crayon        1.4.1   2021-02-08 [1] CRAN (R 4.0.2)                    
+##  desc          1.2.0   2020-06-01 [2] Github (muschellij2/desc@b0c374f) 
+##  devtools      2.3.2   2020-09-18 [1] CRAN (R 4.0.2)                    
+##  digest        0.6.27  2020-10-24 [1] CRAN (R 4.0.2)                    
+##  ellipsis      0.3.1   2020-05-15 [2] CRAN (R 4.0.0)                    
+##  evaluate      0.14    2019-05-28 [2] CRAN (R 4.0.0)                    
+##  fastmap       1.1.0   2021-01-25 [1] CRAN (R 4.0.2)                    
+##  fs            1.5.0   2020-07-31 [2] CRAN (R 4.0.2)                    
+##  glue          1.4.2   2020-08-27 [1] CRAN (R 4.0.2)                    
+##  htmltools     0.5.1.1 2021-01-22 [1] CRAN (R 4.0.2)                    
+##  knitr         1.31    2021-01-27 [1] CRAN (R 4.0.2)                    
+##  lifecycle     1.0.0   2021-02-15 [1] CRAN (R 4.0.2)                    
+##  magrittr      2.0.1   2020-11-17 [1] CRAN (R 4.0.2)                    
+##  memoise       2.0.0   2021-01-26 [1] CRAN (R 4.0.2)                    
+##  pkgbuild      1.2.0   2020-12-15 [1] CRAN (R 4.0.2)                    
+##  pkgload       1.1.0   2020-05-29 [2] CRAN (R 4.0.0)                    
+##  prettyunits   1.1.1   2020-01-24 [2] CRAN (R 4.0.0)                    
+##  processx      3.4.5   2020-11-30 [1] CRAN (R 4.0.2)                    
+##  ps            1.5.0   2020-12-05 [1] CRAN (R 4.0.2)                    
+##  purrr         0.3.4   2020-04-17 [2] CRAN (R 4.0.0)                    
+##  R6            2.5.0   2020-10-28 [1] CRAN (R 4.0.2)                    
+##  remotes       2.2.0   2020-07-21 [2] CRAN (R 4.0.2)                    
+##  rlang         0.4.10  2020-12-30 [1] CRAN (R 4.0.2)                    
+##  rmarkdown     2.6     2020-12-14 [1] CRAN (R 4.0.2)                    
+##  rprojroot     2.0.2   2020-11-15 [1] CRAN (R 4.0.2)                    
+##  rstudioapi    0.13    2020-11-12 [1] CRAN (R 4.0.2)                    
+##  sessioninfo   1.1.1   2018-11-05 [2] CRAN (R 4.0.0)                    
+##  stringi       1.5.3   2020-09-09 [1] CRAN (R 4.0.2)                    
+##  stringr       1.4.0   2019-02-10 [2] CRAN (R 4.0.0)                    
+##  testthat      3.0.2   2021-02-14 [1] CRAN (R 4.0.2)                    
+##  usethis       2.0.1   2021-02-10 [1] CRAN (R 4.0.2)                    
+##  withr         2.4.1   2021-01-26 [1] CRAN (R 4.0.2)                    
+##  xfun          0.21    2021-02-10 [1] CRAN (R 4.0.2)                    
+##  yaml          2.2.1   2020-02-01 [2] CRAN (R 4.0.0)                    
+## 
+## [1] /Users/johnmuschelli/Library/R/4.0/library
+## [2] /Library/Frameworks/R.framework/Versions/4.0/Resources/library
 ```
 

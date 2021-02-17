@@ -1,13 +1,15 @@
-## ----setup, include=FALSE------------------------------------------------
+## ----setup, include=FALSE-----------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "")
 
-## ----libs, cache = FALSE-------------------------------------------------
+
+## ----libs, cache = FALSE------------------------------------------------------
 library(methods)
 library(fslr)
 library(neurobase)
 library(extrantsr)
 
-## ---- eval = FALSE-------------------------------------------------------
+
+## ---- eval = FALSE------------------------------------------------------------
 ## packages = installed.packages()
 ## packages = packages[, "Package"]
 ## if (!"kirby21.base" %in% packages) {
@@ -19,7 +21,8 @@ library(extrantsr)
 ##   neuroc_install("kirby21.fmri")
 ## }
 
-## ----data----------------------------------------------------------------
+
+## ----data---------------------------------------------------------------------
 library(kirby21.fmri)
 library(kirby21.base)
 fnames = get_image_filenames_df(ids = 113, 
@@ -30,7 +33,8 @@ t1_fname = fnames$T1[1]
 fmri_fname = fnames$fMRI[1]
 base_fname = nii.stub(fmri_fname, bn = TRUE)
 
-## ----par_data------------------------------------------------------------
+
+## ----par_data-----------------------------------------------------------------
 library(R.utils)
 par_file = system.file("visit_1/113/113-01-fMRI.par.gz", 
                        package = "kirby21.fmri")
@@ -40,18 +44,21 @@ con = gunzip(par_file, temporary = TRUE,
 info = readLines(con = con)
 info[11:23]
 
-## ----fmri, cache = TRUE--------------------------------------------------
+
+## ----fmri, cache = TRUE-------------------------------------------------------
 fmri = readnii(fmri_fname)
 ortho2(fmri, w = 1, add.orient = FALSE)
 rm(list = "fmri") # just used for cleanup 
 
-## ----subset_run, eval = TRUE, cache = FALSE------------------------------
+
+## ----subset_run, eval = TRUE, cache = FALSE-----------------------------------
 fmri = readnii(fmri_fname)
 tr = 2 # 2 seconds
 first_scan = floor(10.0 / tr) + 1 # 10 seconds "stabilization of signal"
 sub_fmri = subset_4d(fmri, first_scan:ntim(fmri))
 
-## ----slice_timer, cache = FALSE------------------------------------------
+
+## ----slice_timer, cache = FALSE-----------------------------------------------
 library(fslr)
 scorr_fname = paste0(base_fname, "_scorr.nii.gz")
 if (!file.exists(scorr_fname)) {
@@ -63,7 +70,8 @@ if (!file.exists(scorr_fname)) {
   scorr = readnii(scorr_fname)
 }
 
-## ----mcflirt, cache = FALSE----------------------------------------------
+
+## ----mcflirt, cache = FALSE---------------------------------------------------
 moco_fname = paste0(base_fname, 
                     "_motion_corr.nii.gz")
 par_file = paste0(nii.stub(moco_fname), ".par")
@@ -94,7 +102,8 @@ moco_params = t(moco_params)
 colnames(moco_params) = paste0("MOCOparam", 1:ncol(moco_params))
 head(moco_params)
 
-## ----ts_run, echo = TRUE, cache = FALSE----------------------------------
+
+## ----ts_run, echo = TRUE, cache = FALSE---------------------------------------
 moco_avg_img = fslmaths(moco_fname, opts = "-Tmean")
 maskImage = oMask(moco_avg_img, 
     mean(moco_avg_img), 
@@ -106,21 +115,24 @@ bet_mask = fslbet(moco_avg_img) > 0
 bet_mask_fname = paste0(base_fname, "_bet_mask.nii.gz")
 writenii(bet_mask, filename = bet_mask_fname)
 
-## ----plot_masks, cache = TRUE--------------------------------------------
+
+## ----plot_masks, cache = TRUE-------------------------------------------------
 double_ortho(moco_avg_img, maskImage, 
   col.y = "white")
 double_ortho(moco_avg_img, bet_mask, 
   col.y = "white")
 ortho_diff( moco_avg_img, roi = maskImage, pred = bet_mask )
 
-## ----boldmat, cache=FALSE------------------------------------------------
+
+## ----boldmat, cache=FALSE-----------------------------------------------------
 moco_avg_img[maskImage == 0] = 0
 boldMatrix = img_ts_to_matrix(
     moco_img)
 boldMatrix = t(boldMatrix)
 boldMatrix = boldMatrix[ , maskImage == 1]
 
-## ----compute_dvars, echo = TRUE------------------------------------------
+
+## ----compute_dvars, echo = TRUE-----------------------------------------------
 dvars = ANTsR::computeDVARS(boldMatrix)
 dMatrix = apply(boldMatrix, 2, diff)
 dMatrix = rbind(rep(0, ncol(dMatrix)), dMatrix)
@@ -128,13 +140,15 @@ my_dvars = sqrt(rowMeans(dMatrix^2))
 head(cbind(dvars = dvars, my_dvars = my_dvars))
 print(mean(my_dvars))
 
-## ----compute_fd, echo = TRUE---------------------------------------------
+
+## ----compute_fd, echo = TRUE--------------------------------------------------
 mp = moco_params
 mp[, 1:3] = mp[, 1:3] * 50
 mp = apply(mp, 2, diff)
 mp = rbind(rep(0, 6), mp)
 mp = abs(mp)
 fd = rowSums(mp)
+
 
 ## ----moco_run_plot, echo = TRUE, cache = FALSE, fig.height = 4, fig.width= 8----
 mp = moco_params
@@ -152,7 +166,8 @@ for (i in 2:ncol(mp)) {
 }
 rm(list = "mp")
 
-## ----ts_heatmap, echo = TRUE, fig.height = 3.5, fig.width = 8------------
+
+## ----ts_heatmap, echo = TRUE, fig.height = 3.5, fig.width = 8-----------------
 library(RColorBrewer)
 library(matrixStats)
 rf <- colorRampPalette(rev(brewer.pal(11,'Spectral')))
@@ -176,7 +191,8 @@ sds = rowSds(mat)
 print(which.max(sds))
 rm(list = "mat")
 
-## ----plot_bad_ortho, echo = TRUE, dependson="ts_heatmap"-----------------
+
+## ----plot_bad_ortho, echo = TRUE, dependson="ts_heatmap"----------------------
 library(animation)
 ani.options(autobrowse = FALSE)
 gif_name = "bad_dimension.gif"
@@ -190,6 +206,7 @@ if (!file.exists(gif_name)) {
   }, movie.name = gif_name)
 }
 
-## ---- cache = FALSE------------------------------------------------------
+
+## ---- cache = FALSE-----------------------------------------------------------
 devtools::session_info()
 
