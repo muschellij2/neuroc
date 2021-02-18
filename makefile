@@ -2,6 +2,7 @@ LIST = installing_devtools installing_ANTsR
 LIST += faq
 LIST += nifti_basics
 LIST += label_image
+LIST += ct_ich_seg
 LIST += brain_extraction
 LIST += tissue_class_segmentation
 LIST += cortical_thickness

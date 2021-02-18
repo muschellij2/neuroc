@@ -1,7 +1,7 @@
 ---
 title: "Multiple Sclerosis Lesion Segmentation"
 author: "John Muschelli"
-date: '2017-12-06'
+date: '2021-02-16'
 output: 
   html_document:
     keep_md: true
@@ -133,8 +133,8 @@ print(unique(df$modality))
 ```
 
 ```
-[1] "Mask"         "preprocessed" "FLAIR"        "PD"          
-[5] "T1"           "T2"          
+[1] "Mask"         "preprocessed" "FLAIR"        "PD"           "T1"          
+[6] "T2"          
 ```
 
 ```r
@@ -311,23 +311,23 @@ Smoothing Images: Sigma = 10
 ```
 
 ```
-fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f70ef45de.nii.gz"  -s 10 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f6cd42bbe";
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc7fdff54e.nii.gz"  -s 10 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc48621578";
 ```
 
 ```
-fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f5d83fec3.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f4cae42c.nii.gz"  -s 10 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f244a0729"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f244a0729" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f6cd42bbe.nii.gz" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f4cae42c.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f244a0729";
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc1f6f9e68.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc5908cdf7.nii.gz"  -s 10 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc510a40cb"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc510a40cb" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc48621578.nii.gz" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc5908cdf7.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc510a40cb";
 ```
 
 ```
-fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f781c275b.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f5c04f8.nii.gz"  -s 10 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f194a35f7"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f194a35f7" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f6cd42bbe.nii.gz" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f5c04f8.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f194a35f7";
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc7823f8fd.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc1afe7aa.nii.gz"  -s 10 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc43924ac3"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc43924ac3" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc48621578.nii.gz" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc1afe7aa.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc43924ac3";
 ```
 
 ```
-fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f571cf819.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f2ee45dfd.nii.gz"  -s 10 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f12d6a518"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f12d6a518" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f6cd42bbe.nii.gz" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f2ee45dfd.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f12d6a518";
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc396a6add.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc798df09d.nii.gz"  -s 10 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc55b011c3"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc55b011c3" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc48621578.nii.gz" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc798df09d.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc55b011c3";
 ```
 
 ```
-fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f49f0d451.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f620337c3.nii.gz"  -s 10 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f4142157a"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f4142157a" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f6cd42bbe.nii.gz" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f620337c3.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f4142157a";
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc1a5e4528.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc230e529e.nii.gz"  -s 10 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc152150d"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc152150d" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc48621578.nii.gz" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc230e529e.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc152150d";
 ```
 
 ```
@@ -335,23 +335,23 @@ Smoothing Images: Sigma = 20
 ```
 
 ```
-fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f59901e0e.nii.gz"  -s 20 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f4a55712";
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc33e40928.nii.gz"  -s 20 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc40153bb5";
 ```
 
 ```
-fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f2f76120.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f3f097d65.nii.gz"  -s 20 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f8079238"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f8079238" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f4a55712.nii.gz" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f3f097d65.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f8079238";
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc320308f1.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc65401fdd.nii.gz"  -s 20 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc54ec1a19"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc54ec1a19" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc40153bb5.nii.gz" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc65401fdd.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc54ec1a19";
 ```
 
 ```
-fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f29109ea6.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f21fb95a.nii.gz"  -s 20 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f70c1c4cc"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f70c1c4cc" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f4a55712.nii.gz" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f21fb95a.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f70c1c4cc";
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc58a58add.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc5c3fe0a2.nii.gz"  -s 20 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc65b4dafe"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc65b4dafe" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc40153bb5.nii.gz" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc5c3fe0a2.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc65b4dafe";
 ```
 
 ```
-fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f415f66e9.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f5e5d6c86.nii.gz"  -s 20 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f478001d0"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f478001d0" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f4a55712.nii.gz" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f5e5d6c86.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f478001d0";
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc44958ddc.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc369489b1.nii.gz"  -s 20 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc51dbdf75"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc51dbdf75" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc40153bb5.nii.gz" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc369489b1.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc51dbdf75";
 ```
 
 ```
-fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f24f7235c.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f5d327ff9.nii.gz"  -s 20 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f1e6fe43c"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f1e6fe43c" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f4a55712.nii.gz" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f5d327ff9.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f1e6fe43c";
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc3a2ba44f.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc7305c5f.nii.gz"  -s 20 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc780064a8"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc780064a8" -div "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc40153bb5.nii.gz" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc7305c5f.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc780064a8";
 ```
 
 ```r
@@ -392,7 +392,7 @@ prob_map = fslsmooth(pred_img, sigma = 1.25,
 ```
 
 ```
-fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0ff346219.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f38145f1b.nii.gz"  -s 1.25 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f41700260"; fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f38145f1b.nii.gz" -s 1.25 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f20ac0e30.nii.gz"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f41700260" -div "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f20ac0e30.nii.gz" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpGlq9Db/file9d0f38145f1b.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpGlq9Db/file9d0f41700260";
+fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc4365b6a7.nii.gz"  -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc4abab082.nii.gz"  -s 1.25 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc269a4d22"; fslmaths "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc4abab082.nii.gz" -s 1.25 "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc5c3e06fa.nii.gz"; fslmaths "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc269a4d22" -div "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc5c3e06fa.nii.gz" -mas "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpud9DMH/file142fc4abab082.nii.gz" "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmpud9DMH/file142fc269a4d22";
 ```
 
 ```r

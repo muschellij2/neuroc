@@ -41,6 +41,7 @@ ms_lesion/*_cache
 ss_ct/*_cache
 fmri_analysis_spm12r/*_cache
 fmri_analysis_fslr/*_cache
+*/*_cache
 
 fmri_analysis_ANTsR/113-01-fMRI_moco_img.nii.gz
 fmri_analysis_ANTsR/113-01-fMRI_moco_nuisance_filtered.nii.gz

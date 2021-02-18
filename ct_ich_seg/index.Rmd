@@ -1,5 +1,5 @@
 ---
-title: "Skull Stripping CT data"
+title: "Segmentation of Hemorrhagic Stroke in CT data"
 author: "John Muschelli"
 date: "`r Sys.Date()`"
 output: 
@@ -14,232 +14,155 @@ output:
 ---
 
 
-All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/ss_ct/index.R).
+All code for this document is located at [here](https://raw.githubusercontent.com/muschellij2/neuroc/master/ct_ich_seg/index.R).
 
 
 ```{r setup, include=FALSE}
-library(dcm2niir)
 library(ichseg)
 library(dplyr)
-library(fslr)
-library(extrantsr)
-library(TCIApathfinder)
+library(readr)
 knitr::opts_chunk$set(echo = TRUE, cache = TRUE, comment = "")
 ```
 
 
 # Goal
-In this tutorial, we will discuss skull-stripping (or brain-extracting) x_ray computed tomography (CT) scans.  We will use data from TCIA (http://www.cancerimagingarchive.net/) as there is a great package called [`TCIApathfinder`](https://CRAN.R-project.org/package=TCIApathfinder) to interface with TCIA.
+In this tutorial, we will discuss segmentation of X-ray computed tomography (CT) scans.  The data is discussed in Validated automatic brain extraction of head CT images" (http://doi.org/10.1016/j.neuroimage.2015.03.074).  The data is located at https://archive.data.jhu.edu/dataset.xhtml?persistentId=doi:10.7281/T1/CZDPSX and was from the MISTIE (https://doi.org/10.1016/S1474-4422(16)30234-4Get) and CLEAR (https://doi.org/10.1111/ijs.12097) studies.  The MISTIE study focused on patients with intraparenchymal/intracerebral hemorrhage (ICH) and CLEAR focused on intraventricular hemorrhage (IVH), but also has patients with ICH.
 
-## Using TCIApathfinder
 
-In order to use `TCIApathfinder`, please see the [vignette to obtain API keys](https://cran.r-project.org/web/packages/TCIApathfinder/vignettes/introduction.html).  Here we will look at the collections:
 
-```{r get_mods}
-library(TCIApathfinder)
-library(dplyr)
-collections = get_collection_names()
-collections = collections$collection_names
-head(collections)
+## Setting up the Dataverse
 
-mods = get_modality_names(body_part = "BREAST")
-head(mods$modalities)
+The JHU archive is a [Dataverse](https://guides.dataverse.org/en/latest/) archive.  We can use the [`dataverse`](https://github.com/iqss/dataverse-client-r) package.  We will set the `DATAVERSE_SERVER` variable as this is the default variable that is used in the `dataverse` package.  I have set the environment variable `JHU_DATAVERSE_API_TOKEN` with the API token for this repository.  
 
+
+```{r}
+library(dataverse)
+Sys.setenv("DATAVERSE_SERVER" = "archive.data.jhu.edu")
+token = Sys.getenv("JHU_DATAVERSE_API_TOKEN")
 ```
 
-## Getting Body Part Information
-Here we can see all the parts of the body examined.
+With these set up, we can use the `dataverse` functions, by passing in `key = token` for all functions.  Alternatively, we can set:
+```{r}
+Sys.setenv("DATAVERSE_KEY" = Sys.getenv("JHU_DATAVERSE_API_TOKEN"))
+```
+and not have to set anything again.
 
-```{r get_body_part}
-bp = get_body_part_names()
-bp$body_parts
+## Finding the ID of the Dataset
+Although we know the DOI is `10.7281/T1/CZDPSX` as we can see this in the URL itself https://archive.data.jhu.edu/dataset.xhtml?persistentId=doi:10.7281/T1/CZDPSX, we will use the `dataverse` functionality:
+```{r}
+x = dataverse_search("muschelli AND head ct")
+doi = x$global_id
+doi
 ```
 
-Particularly, these areas are of interest.  There seems to be a "bug" in `TCIApathfinder::get_series_info` which is acknowledged in the help file.  Namely, the `body_part_examined` is not always a parameter to be set.  We could get all the series info for all the collections from the code below, but it takes some times (> 15 minutes):
-```{r bp_get, eval = FALSE}
-# could look for any of these
-get_bp = c("BRAIN", "HEAD", "HEADNECK")
+## Listing the Data Files
 
-# takes a long time
-res = pbapply::pblapply(collections, function(collection) {
-  x = get_series_info(
-    collection = collection, 
-    modality = "CT")
-  x$series
-})
+We will get the tiles from the data set so that we can download individual files and show how to segment a specific scan.
+
+```{r}
+files = dataverse::get_dataset(doi)
+files
 ```
 
-## Getting Series
+We can download the demographics data from the repository so we can see some information about these patients.  We will create a wrapper function as the `get_file` function always returns a raw vector:
 
-Here we will gather the series information for a study we know to have head CT data:
-
-```{r series_info}
-collection = "CPTAC-GBM"
-series = get_series_info(
-  collection = collection, 
-  modality = "CT")
-series = series$series
-head(series)
-```
-
-Here we grab the first series ID from this data which has a description of "HEAD STD" for standard head:
-
-```{r download_unzip, cache=FALSE}
-std_head = series %>% 
-  filter(grepl("HEAD STD", series_description))
-series_instance_uid = std_head$series_instance_uid[1]
-
-download_unzip_series = function(series_instance_uid,
-                                 verbose = TRUE) {
-  tdir = tempfile()
-  dir.create(tdir, recursive = TRUE)
-  tfile = tempfile(fileext = ".zip")
-  tfile = basename(tfile)
-  if (verbose) {
-    message("Downloading Series")
-  }
-  res = save_image_series(
-    series_instance_uid = series_instance_uid, 
-    out_dir = tdir, 
-    out_file_name = tfile)
-  if (verbose) {
-    message("Unzipping Series")
-  }  
-  stopifnot(file.exists(res$out_file))
-  tdir = tempfile()
-  dir.create(tdir, recursive = TRUE)
-  res = unzip(zipfile = res$out_file, exdir = tdir)
-  L = list(files = res,
-           dirs = unique(dirname(normalizePath(res))))
-  return(L)
+```{r dl_file}
+library(readr)
+dl_file = function(file, ...) {
+  outfile = file.path(tempdir(), basename(file))
+  out = get_file(file, ...)
+  writeBin(out, outfile)
+  return(outfile)
 }
-# Download and unzip the image series
-
-file_list = download_unzip_series(
-  series_instance_uid = series_instance_uid)
+fname = grep("Demog", files$files$label, value = TRUE)
+demo_file = dl_file(fname, dataset = doi)
+demo = readr::read_csv(demo_file)
+head(demo)
 ```
 
-## Converting DICOM to NIfTI
+Here we will grab one patient, download the tarball, and then `untar` the files:
 
-We will use [`dcm2niix`](https://github.com/rordenlab/dcm2niix) to convert from DICOM to NIfTI.  The function `dcm2niix` is wrapped in `dcm2niir`.  We will use `dcm2niir::dcm2nii` to convert the file.  We use `check_dcm2nii` to grab the relevant output files:
- 
-```{r dcm2nii, cache = FALSE}
-library(dcm2niir)
-dcm_result = dcm2nii(file_list$dirs)
-result = check_dcm2nii(dcm_result)
+```{r download_tarball}
+library(dplyr)
+set.seed(20210217)
+run_id = demo %>% 
+  filter(dx == "ICH") %>% 
+  sample_n(1) %>% 
+  pull(id)
+fname = paste0(run_id, ".tar.xz")
+tarball = dl_file(fname, dataset = doi)
+xz_files = untar(tarball, list = TRUE)
 ```
+
+Here we create a temporary directory and extract the tarball to that directory.  We create a vector of the file names and extract specifically the image and the mask:
+```{r extract_data}
+tdir = tempfile()
+dir.create(tdir)
+untar(tarball, exdir = tdir)
+nii_files = list.files(path = tdir, recursive = TRUE, full.names = TRUE)
+nii_file = nii_files[!grepl("Mask", nii_files) & grepl(".nii.gz", nii_files)]
+mask_file = nii_files[grepl("_Mask.nii.gz", nii_files)]
+```
+
+## Reading in the Data
 
 Here we read the data into `R` into a `nifti` object:
 ```{r readnii, cache = FALSE}
 library(neurobase)
-img = readnii(result)
+img = readnii(nii_file)
+mask = readnii(mask_file)
 ortho2(img)
 range(img)
 ```
 
-Here we will use `neurobase::rescale_img` to make sure the minimum is $-1024$ and the maximum is $3071$.  The minimum can be lower for areas outside the field of view (FOV).  Here we plot the image and the Winsorized version to see the brain tissue:
+Here we plot the image and the Winsorized version to see the brain tissue:
 
 ```{r}
-img = rescale_img(img, min.val = -1024, max.val = 3071)
-ortho2(img)
 ortho2(img, window = c(0, 100))
+masked = window_img(mask_img(img, mask))
+ortho2(masked)
 ```
 
-## Skull Strip
+## Segment Image
 
-We can skull strip the image using `CT_Skull_Strip` or `CT_Skull_Stripper`.  The `CT_Skull_Stripper` has a simple switch to use `CT_Skull_Strip` or `CT_Skull_Strip_robust`.  
-```{r ss}
+We can segment the image using `ichseg::ich_segment` to segment the image using PItcHPERFeCT (https://doi.org/10.1016/j.nicl.2017.02.007).  We will use the `ichseg::predict_deepbleed`, which implements the DeepBleed model from https://github.com/msharrock/deepbleed (https://doi.org/10.1007/s12021-020-09493-5).  We will pass in the image and the mask.  The model weights will be downloaded and the model will be run.  The `outdir` argument can be used if you would like to download the model weights to a temporary directory or if you cannot write to your R library folder. 
+
+```{r seg}
 library(ichseg)
-ss = CT_Skull_Strip(img, verbose = FALSE)
-ortho2(img, ss > 0, 
-       window = c(0, 100),
-       col.y = scales::alpha("red", 0.5))
+segmentation = ichseg::predict_deepbleed(nii_file, mask_file)
+print(names(segmentation))
+print(segmentation)
 ```
 
-The `CT_Skull_Strip_robust` function does 2 neck removals using `remove_neck` from `extrantsr` and then find the center of gravity (COG) twice to make sure the segmentation focuses on the head.  In some instances, the whole neck is included in the scan, such as some of the head-neck studies in TCIA.
-
-
-# Showing a Robust Example with the neck
-
-## Getting Series
-
-Here we will gather the series information for the `Head-Neck Cetuximab` collection:
-
-```{r robust_neck}
-collection = "Head-Neck Cetuximab"
-series = get_series_info(
-  collection = collection, 
-  modality = "CT")
-series = series$series
-whole_body = series %>% 
-  filter(grepl("WB", series_description))
+We see the segmentation returns a number of things, and we want to overlay the image with the segmentation in native space (template space registered and predicted images are also included):
+```{r segplot}
+ortho2(masked, segmentation$native_prediction)
 ```
 
+We see that some areas are dark in this image, which is because the prediction is not binary.  Areas with any values > 0 are imposed on the data.  Here we will threshold the data at a number of thresholds to show the segmentation overlaid on the image
 
-```{r download_unzip_robust, cache=FALSE}
-file_list = download_unzip_series(
-  series_instance_uid = series$series_instance_uid[1])
+```{r seg_thresh}
+ortho2(masked, segmentation$native_prediction > 0.5, col.y = scales::alpha("red", 0.5))
+ortho2(masked, segmentation$native_prediction > 0.9, col.y = scales::alpha("red", 0.5))
 ```
 
-```{r dcm2nii_robust, cache=FALSE}
-dcm_result = dcm2nii(file_list$dirs, merge_files = TRUE)
-result = check_dcm2nii(dcm_result)
+## Wrapper Function
+
+We can create a simple function to perform the extraction and segmentation of any of the patient data in our complete data set:
+
+```{r func}
+predict_ich_data = function(id) {
+  fname = paste0(id, ".tar.xz")
+  tarball = dl_file(fname, dataset = doi)
+  xz_files = untar(tarball, list = TRUE)
+  tdir = tempfile()
+  dir.create(tdir)
+  untar(tarball, exdir = tdir)
+  nii_files = list.files(path = tdir, recursive = TRUE, full.names = TRUE)
+  nii_file = nii_files[!grepl("Mask", nii_files) & grepl(".nii.gz", nii_files)]
+  mask_file = nii_files[grepl("_Mask.nii.gz", nii_files)]
+  ichseg::predict_deepbleed(nii_file, mask_file)
+}
 ```
 
-Here we see the original data has a lot of the neck and some of the shoulders in the scan:
-```{r readnii2}
-img = readnii(result)
-img = rescale_img(img, min.val = -1024, max.val = 3071)
-ortho2(img, window = c(0, 100))
-```
-
-We will try `CT_Skull_Strip` without adding any robust options:
-```{r ss2}
-ss_wb = CT_Skull_Strip(img, verbose = FALSE)
-ortho2(ss_wb, window = c(0, 100))
-```
-
-We see that this does not work very well.  We will use the robust version.  Here we use `CT_Skull_Stripper`, which will call `CT_Skull_Strip_robust`.  This will run `extrantsr::remove_neck`, runs `CT_Skull_Strip`, then estimates a new center of gravity (COG) and then run `CT_Skull_Strip` again, and then run some hole filling:
-
-```{r ss_robust}
-ss_wb_robust = CT_Skull_Stripper(img, verbose = FALSE, robust = TRUE)
-ortho2(ss_wb_robust, window = c(0, 100))
-```
-
-We see that this robust version works well for even data with the neck.  We can try it on a whole body image as well.  
-
-# The website data
-We could also look at the website, but these do not always correspond to the API and get all the necessary results.
-
-```{r tabler}
-library(rvest)
-library(dplyr)
-x = read_html("https://www.cancerimagingarchive.net/collections/")
-tab = html_table(x)[[1]]
-head_tab = tab %>% 
-  filter(grepl("Head|Brain", Location),
-         grepl("CT", `Image Types`), 
-         Access == "Public")
-brain_tab = tab %>% 
-  filter(grepl("Brain", Location),
-         grepl("CT", `Image Types`), 
-         Access == "Public")
-brain_tab
-```
-
-In `brain_tab`, we see we have a few collections.  We are going to use the collection `r collection` from above.
-
-## Getting Patient Information
-
-We could sample patients from the collection here and get the patient information:
-
-```{r seeded}
-set.seed(20181203)
-
-patients = get_patient_info(collection = collection)
-info = patients$patients
-head(info)
-```
-
-Though we are not guaranteed the data will have Brain CT data.  We will use the `series` variable to grab a relevant scan.
 

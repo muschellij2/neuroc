@@ -1,4 +1,4 @@
-## ----setup, include=FALSE------------------------------------------------
+## ----setup, include=FALSE-----------------------------------------------------
 library(methods)
 library(oasis)
 library(extrantsr)
@@ -7,7 +7,8 @@ library(dplyr)
 library(git2r)
 knitr::opts_chunk$set(echo = TRUE, cache = FALSE, comment = "")
 
-## ----ver_check-----------------------------------------------------------
+
+## ----ver_check----------------------------------------------------------------
 library(dplyr)
 loaded_package_version = function(pkg) {
   packs = devtools::session_info()$packages
@@ -30,7 +31,8 @@ if (!check) {
   neuroc_install("oasis")  
 }
 
-## ----get_data------------------------------------------------------------
+
+## ----get_data-----------------------------------------------------------------
 library(git2r)
 if (!dir.exists("data")) {
   repo = clone(url = "https://github.com/muschellij2/fslr_data",
@@ -40,14 +42,16 @@ if (!dir.exists("data")) {
   file.remove(file.path("data", "Brain_Mask.nii.gz"))
 }
 
-## ----filenames, cache = FALSE--------------------------------------------
+
+## ----filenames, cache = FALSE-------------------------------------------------
 df = list.files(path = "data", 
                    pattern = "[.]nii[.]gz$", 
                    full.names = TRUE)
 df = data.frame(file = df, stringsAsFactors = FALSE)
 print(head(df))
 
-## ----filenames2, cache = FALSE-------------------------------------------
+
+## ----filenames2, cache = FALSE------------------------------------------------
 df$fname = nii.stub(df$file, bn = TRUE)
 df$id = gsub("^(\\d\\d)-.*", "\\1", df$fname)
 df$timepoint = gsub("^\\d\\d-(.*)_.*$", "\\1", df$fname)
@@ -56,7 +60,8 @@ print(unique(df$id))
 print(unique(df$modality))
 print(head(df))
 
-## ----split_data----------------------------------------------------------
+
+## ----split_data---------------------------------------------------------------
 ss = split(df, df$timepoint)
 ss = lapply(ss, function(x){
   mods = x$modality
@@ -65,7 +70,8 @@ ss = lapply(ss, function(x){
   return(xx)
 })
 
-## ----oasis_stuff, cache = FALSE, eval = TRUE-----------------------------
+
+## ----oasis_stuff, cache = FALSE, eval = TRUE----------------------------------
 dat = ss[[1]]
 print(dat)
 # preparing output filenames
@@ -92,19 +98,22 @@ if (!all(file.exists(outfiles))) {
   writenii(pre$brain_mask, filename  = outfiles["brain_mask"])
 }
 
-## ----read_imgs, cache=FALSE----------------------------------------------
+
+## ----read_imgs, cache=FALSE---------------------------------------------------
 imgs = lapply(outfiles[c("T1", "T2", "FLAIR", "PD")], readnii)
 brain_mask = readnii(outfiles["brain_mask"])
 imgs = lapply(imgs, robust_window)
 norm_imgs = lapply(imgs, zscore_img, margin = NULL, mask = brain_mask)
 
-## ----drop_dims-----------------------------------------------------------
+
+## ----drop_dims----------------------------------------------------------------
 dd = dropEmptyImageDimensions(brain_mask, other.imgs = norm_imgs)
 red_mask = dd$outimg
 norm_imgs = dd$other.imgs
 norm_imgs = lapply(norm_imgs, mask_img, mask = red_mask)
 
-## ----overlay_plots-------------------------------------------------------
+
+## ----overlay_plots------------------------------------------------------------
 z = floor(nsli(norm_imgs[[1]])/2)
 multi_overlay(
   norm_imgs, 
@@ -117,7 +126,8 @@ multi_overlay(
   text.cex = 
     rep(2.5, length(norm_imgs)))
 
-## ----oasis_df, cache = FALSE, eval = TRUE--------------------------------
+
+## ----oasis_df, cache = FALSE, eval = TRUE-------------------------------------
 df_list = oasis_train_dataframe(
   flair = outfiles["FLAIR"],
   t1 = outfiles["T1"],
@@ -131,7 +141,8 @@ oasis_dataframe = df_list$oasis_dataframe
 brain_mask = df_list$brain_mask
 top_voxels = df_list$voxel_selection
 
-## ----pred, cache = FALSE-------------------------------------------------
+
+## ----pred, cache = FALSE------------------------------------------------------
 ## make the model predictions
 predictions = predict( oasis::oasis_model,
                         newdata = oasis_dataframe,
@@ -146,7 +157,8 @@ prob_map = fslsmooth(pred_img, sigma = 1.25,
 threshold = 0.16
 binary_map = prob_map > threshold
 
-## ----pred_plot, cache = TRUE---------------------------------------------
+
+## ----pred_plot, cache = TRUE--------------------------------------------------
 library(scales)
 
 reduced_binary_map = apply_empty_dim(img = binary_map,
@@ -171,14 +183,16 @@ multi_overlay(
   text.cex = 
     rep(2.5, length(norm_imgs)))
 
-## ----extrantsr_ver_check-------------------------------------------------
+
+## ----extrantsr_ver_check------------------------------------------------------
 check = check_package_version("extrantsr", min_version = "2.2.1")
 if (!check) {
   source("https://neuroconductor.org/neurocLite.R")
   neuroc_install("extrantsr") 
 }
 
-## ----ants_preproc, cache = FALSE, eval = TRUE----------------------------
+
+## ----ants_preproc, cache = FALSE, eval = TRUE---------------------------------
 dat = ss[[1]]
 print(dat)
 # preparing output filenames
@@ -218,7 +232,8 @@ if (!all(file.exists(ants_outfiles))) {
   
 }
 
-## ----ants_df, eval = FALSE-----------------------------------------------
+
+## ----ants_df, eval = FALSE----------------------------------------------------
 ## L = oasis_train_dataframe(
 ##   flair = ants_outfiles["FLAIR"],
 ##   t1 = ants_outfiles["T1"],
@@ -232,7 +247,7 @@ if (!all(file.exists(ants_outfiles))) {
 ## ants_brain_mask = L$brain_mask
 ## ants_top_voxels = L$voxel_selection
 
-## ----cluster, eval = FALSE-----------------------------------------------
+## ----cluster, eval = FALSE----------------------------------------------------
 ## library(cluster)
 ## km = kmeans(x = ants_oasis_dataframe, centers = 4)
 ## km_img = niftiarr(ants_brain_mask, 0)
