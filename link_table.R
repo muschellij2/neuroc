@@ -17,7 +17,7 @@ df = df %>%
     out_file = paste0(file, ".html")
     )
 df$command = paste0("wget -O ", df$out_file, " ", df$url)
-write_csv(df, path = "link_table.csv")
+write_csv(df, file = "link_table.csv")
 
 writeLines(df$command, con = "wget_link_table.sh")
 
