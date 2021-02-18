@@ -1,7 +1,7 @@
 ---
 title: "Rxnat: Query and retrieves neuroimaging sets from XNAT projects"
 author: "Adi Gherman"
-date: "`r Sys.Date()`"
+date: "2021-02-18"
 output: 
   html_document:
     keep_md: true
@@ -14,10 +14,7 @@ output:
 bibliography: ../refs.bib
 ---
 
-```{r setup, include=FALSE}
-library(Rxnat)
-knitr::opts_chunk$set(echo = TRUE, cache = FALSE, comment = "")
-```
+
 
 # XNAT
 [XNAT](https://www.xnat.org) is an open source imaging informatics platform developed by the Neuroinformatics Research Group at Washington University. XNAT was originally developed in the Buckner Lab at Washington University, now at Harvard University. It facilitates common management, productivity, and quality assurance tasks for imaging and associated data. Thanks to its extensibility, XNAT can be used to support a wide range of imaging-based projects. 
@@ -33,8 +30,8 @@ For a more complete list of XNAT implementations around the world you can click 
 ## Installing the Rxnat package
 
 You can install `Rxnat` from Neuroconductor (Rxnat will be incorporated with the  Feb 2019 release) or from GitHub with:
-``` {r  eval=FALSE}
 
+```r
 source("http://neuroconductor.org/neurocLite.R")
 neuro_install("Rxnat", release = "stable")
 
@@ -56,7 +53,8 @@ The `Rxnat` package will accept credentials provided in the function call or rea
 
 #### Function parameters
 To establish a connection using the credentials as function parameters we can call the `xnat_connect` function:
-``` {r eval=FALSE}
+
+```r
 nitrc <- xnat_connect('https://nitrc.org/ir', username='XXXX', password='YYYY', xnat_name=NULL)
 ```
 
@@ -65,13 +63,15 @@ To use system environment variables we need to add them to the `.Renviron` file 
 The `Rxnat` package will be able to automatically read / use a system environment variable provided the following format is used: `XXXX_Rxnat_USER` and `XXXX_Rxnat_PASS`. `XXXX` is provided as an argument when an XNAT connection is initiated. 
 
 As an example `NITRC` is used as argument and the system environment variables names should be `NITRC_Rxnat_USER`, and `NITRC_Rxnat_PASS`.
-``` {r eval=FALSE}
+
+```r
 nitrc <- xnat_connect('https://nitrc.org/ir', xnat_name='NITRC')
 ```
 
 ## Get list of available XNAT projects
 Once a connection is established using the `xnat_connect` function a list of available projects can be easily retrieved by using the class internal function `projects`:
-``` {r eval=FALSE}
+
+```r
 hcp <-xnat_connect('https://db.humanconnectome.org', xnat_name = "hcp")
 hcp_projects <- hcp$projects()
 head(hcp_projects[c('id','name')])
@@ -86,7 +86,8 @@ head(hcp_projects[c('id','name')])
 
 ## Retrieve a list with all accessible subjects
 A full list of subjects for each XNAT connection can be retrieved using the `subjects` function:
-``` {r eval=FALSE}
+
+```r
 hcp_subjects <- hcp$subjects()
 head(hcp_subjects)
        project                  ID  label gender handedness yob education ses group race ethnicity
@@ -100,7 +101,8 @@ head(hcp_subjects)
 
 ## Get full list of experiments
 To obtain a full list of experiments the `experiments` function will be used:
-``` {r eval=FALSE}
+
+```r
 hcp_experiments <- hcp$experiments()
 head(hcp_experiments)
        project subject                  ID                type      label age
@@ -114,7 +116,8 @@ head(hcp_experiments)
 
 ## Get the complete list of resources for a specific experiment
 The scan resources for an experiment can be retrieved using the `get_xnat_experiment_resources` function:
-``` {r eval=FALSE}
+
+```r
 ConnectomeDB_E13304_resources <- hcp$get_xnat_experiment_resources('ConnectomeDB_E13304')
 head(ConnectomeDB_E13304_resources[c('Name','URI')])
                                  Name                                                                                                        URI
@@ -145,7 +148,8 @@ If you are interested just in a subset of subjects/experiments that match a cert
 - orientation - image orientation
 
 To retrieve a list of all subject IDs and associated experiment IDs we can use the `query_scan_resources` function. In the example below, we are querying the HCP XNAT database for all subjects belonging the the HCP_500 project with scans taken at age 26.
-``` {r eval=FALSE}
+
+```r
 hcp_500_age_26 <- query_scan_resources(hcp,age='26', project='HCP_500')
 head(hcp_500_age_26[c("subject_ID","experiment_ID", "Project", "Age")])
            subject_ID       experiment_ID Project Age
@@ -159,7 +163,8 @@ head(hcp_500_age_26[c("subject_ID","experiment_ID", "Project", "Age")])
 
 ## Getting Data: Download a single scan image/resource file
 To download a single file we will use the `download_file` function. Using the first `experiment_ID` from the above example, we will get all scan resources associated with it first.
-``` {r eval=FALSE}
+
+```r
 scan_resources <- get_scan_resources(hcp,'ConnectomeDB_E03657')
 scan_resources[1,"Name"]
 [1] "100307_3T_BIAS_BC.nii.gz"
@@ -167,22 +172,92 @@ scan_resources[1,"Name"]
 [1] "/data/experiments/ConnectomeDB_E03657/scans/101/resources/69128/files/100307_3T_BIAS_BC.nii.gz"
 ```
 To download the resource file (100307_3T_BIAS_BC.nii.gz) we will do:
-``` {r eval=FALSE}
+
+```r
 > download_xnat_file(hcp,"/data/experiments/ConnectomeDB_E03657/scans/101/resources/69128/files/100307_3T_BIAS_BC.nii.gz")
 [1] "/var/folders/wb/l7jtkdy14f761vm4xr9zxjj80000gn/T//RtmpFfYbQ7/100307_3T_BIAS_BC.nii.gz"
 ```
 
 ## Getting Data: Download a directory of data
 To download all the T2w type images from experiment ConnectomeDB_E03657 we will use the `download_xnat_dir` function.
-``` {r eval=FALSE}
+
+```r
 download_xnat_dir(hcp, experiment_ID='ConnectomeDB_E03657',scan_type='T2w', verbose=TRUE)
 Downloading: 28 MB     [1] "/var/folders/wb/l7jtkdy14f761vm4xr9zxjj80000gn/T//RtmpFfYbQ7/ConnectomeDB_E03657.zip"
 
 
 # Session Info
+```
 
-```{r}
+```r
 devtools::session_info()
+```
+
+```
+─ Session info ───────────────────────────────────────────────────────────────
+ setting  value                       
+ version  R version 4.0.2 (2020-06-22)
+ os       macOS Catalina 10.15.7      
+ system   x86_64, darwin17.0          
+ ui       X11                         
+ language (EN)                        
+ collate  en_US.UTF-8                 
+ ctype    en_US.UTF-8                 
+ tz       America/New_York            
+ date     2021-02-18                  
+
+─ Packages ───────────────────────────────────────────────────────────────────
+ package     * version  date       lib source                            
+ assertthat    0.2.1    2019-03-21 [2] CRAN (R 4.0.0)                    
+ bitops        1.0-6    2013-08-17 [2] CRAN (R 4.0.0)                    
+ cachem        1.0.4    2021-02-13 [1] CRAN (R 4.0.2)                    
+ callr         3.5.1    2020-10-13 [1] CRAN (R 4.0.2)                    
+ cli           2.3.0    2021-01-31 [1] CRAN (R 4.0.2)                    
+ colorout    * 1.2-2    2020-06-01 [2] Github (jalvesaq/colorout@726d681)
+ crayon        1.4.1    2021-02-08 [1] CRAN (R 4.0.2)                    
+ desc          1.2.0    2020-06-01 [2] Github (muschellij2/desc@b0c374f) 
+ devtools      2.3.2    2020-09-18 [1] CRAN (R 4.0.2)                    
+ digest        0.6.27   2020-10-24 [1] CRAN (R 4.0.2)                    
+ ellipsis      0.3.1    2020-05-15 [2] CRAN (R 4.0.0)                    
+ evaluate      0.14     2019-05-28 [2] CRAN (R 4.0.0)                    
+ fastmap       1.1.0    2021-01-25 [1] CRAN (R 4.0.2)                    
+ fs            1.5.0    2020-07-31 [2] CRAN (R 4.0.2)                    
+ glue          1.4.2    2020-08-27 [1] CRAN (R 4.0.2)                    
+ htmltools     0.5.1.1  2021-01-22 [1] CRAN (R 4.0.2)                    
+ httr          1.4.2    2020-07-20 [2] CRAN (R 4.0.2)                    
+ knitr         1.31     2021-01-27 [1] CRAN (R 4.0.2)                    
+ lifecycle     1.0.0    2021-02-15 [1] CRAN (R 4.0.2)                    
+ magrittr      2.0.1    2020-11-17 [1] CRAN (R 4.0.2)                    
+ memoise       2.0.0    2021-01-26 [1] CRAN (R 4.0.2)                    
+ pillar        1.4.7    2020-11-20 [1] CRAN (R 4.0.2)                    
+ pkgbuild      1.2.0    2020-12-15 [1] CRAN (R 4.0.2)                    
+ pkgconfig     2.0.3    2019-09-22 [2] CRAN (R 4.0.0)                    
+ pkgload       1.1.0    2020-05-29 [2] CRAN (R 4.0.0)                    
+ prettyunits   1.1.1    2020-01-24 [2] CRAN (R 4.0.0)                    
+ processx      3.4.5    2020-11-30 [1] CRAN (R 4.0.2)                    
+ ps            1.5.0    2020-12-05 [1] CRAN (R 4.0.2)                    
+ purrr         0.3.4    2020-04-17 [2] CRAN (R 4.0.0)                    
+ R6            2.5.0    2020-10-28 [1] CRAN (R 4.0.2)                    
+ RCurl         1.98-1.2 2020-04-18 [2] CRAN (R 4.0.0)                    
+ remotes       2.2.0    2020-07-21 [2] CRAN (R 4.0.2)                    
+ rlang         0.4.10   2020-12-30 [1] CRAN (R 4.0.2)                    
+ rmarkdown     2.6      2020-12-14 [1] CRAN (R 4.0.2)                    
+ rprojroot     2.0.2    2020-11-15 [1] CRAN (R 4.0.2)                    
+ rstudioapi    0.13     2020-11-12 [1] CRAN (R 4.0.2)                    
+ Rxnat       * 1.0.14   2020-10-15 [1] Github (adigherman/Rxnat@14a60c1) 
+ sessioninfo   1.1.1    2018-11-05 [2] CRAN (R 4.0.0)                    
+ stringi       1.5.3    2020-09-09 [1] CRAN (R 4.0.2)                    
+ stringr       1.4.0    2019-02-10 [2] CRAN (R 4.0.0)                    
+ testthat      3.0.2    2021-02-14 [1] CRAN (R 4.0.2)                    
+ tibble        3.0.6    2021-01-29 [1] CRAN (R 4.0.2)                    
+ usethis       2.0.1    2021-02-10 [1] CRAN (R 4.0.2)                    
+ vctrs         0.3.6    2020-12-17 [1] CRAN (R 4.0.2)                    
+ withr         2.4.1    2021-01-26 [1] CRAN (R 4.0.2)                    
+ xfun          0.21     2021-02-10 [1] CRAN (R 4.0.2)                    
+ yaml          2.2.1    2020-02-01 [2] CRAN (R 4.0.0)                    
+
+[1] /Users/johnmuschelli/Library/R/4.0/library
+[2] /Library/Frameworks/R.framework/Versions/4.0/Resources/library
 ```
 
 # References

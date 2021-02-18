@@ -55,7 +55,7 @@ Here we will show some ways to convert from one format to another.  Note, you sh
 
 The `RNifti` function `asNifti` allows for a direct conversion of formats.  
 
-```{r}
+```{r asNifti_check}
 asNifti(oro_img)
 all(asNifti(oro_img) == rnif_img)
 ```
@@ -64,13 +64,13 @@ all(asNifti(oro_img) == rnif_img)
 
 The `oro.nifti` function `nii2oro` will convert from `niftiImage` object to `nifti` objects.  
 
-```{r}
+```{r nii2oro_check}
 nii2oro(rnif_img)
 all(oro_img == nii2oro(rnif_img))
 ```
 Note, the slots for the header are directly copied from the output of `niftiHeader`, even if they are inconsistent in what `readnii` would give.  For example, the `scl_slope` argument may not be the same:
 
-```{r}
+```{r scl_slope}
 scl_slope(oro_img)
 scl_slope(nii2oro(rnif_img))
 ```
@@ -79,19 +79,19 @@ scl_slope(nii2oro(rnif_img))
 
 The `extrantsr` functions `ants2oro` will convert from `ANTsRCore` `antsImage` to `oro.nifti` `nifti` objects:
 
-```{r}
+```{r ants2oro}
 ants2oro(ants_img)
 ```
 
 By default, this will write the image to disk and then read it in using `readnii`, but you can pass in a `reference` image that header information will be copied from (but not checked for consistency):
 
-```{r}
+```{r ants2oro_ref}
 ants2oro(ants_img, reference = oro_img)
 ```
 
 
 which we see is much faster:
-```{r}
+```{r ants2oro+time}
 system.time(ants2oro(ants_img))
 system.time(ants2oro(ants_img, reference = oro_img))
 ```
@@ -100,23 +100,23 @@ system.time(ants2oro(ants_img, reference = oro_img))
 
 The `extrantsr` functions `oro2ants` will convert from  `oro.nifti` `nifti` to `ANTsRCore` `antsImage` objects.  Note, this essentially writes the output to disk, then reads it back in using `antsImageRead`, but is a convenience image for this:
 
-```{r}
+```{r oro2ants}
 oro2ants(oro_img)
 ```
 
 The `as.antsImage` function should work as well (and is much faster), but doesn't carry the appropriate header information:
 
-```{r}
+```{r turn_ants}
 as.antsImage(oro_img)
 ```
 
 And can error as the header information is different:
-```{r, error = TRUE}
+```{r check_fail, error = TRUE}
 as.antsImage(oro_img) == ants_img
 ```
 
 You can specify this with a reference, or the arguments of `spacing`, `origin`, and `direction` (which may be difficult), however:
-```{r}
+```{r quickcheck}
 all(as.array(as.antsImage(oro_img, reference = ants_img) == ants_img) == 1)
 ```
 
@@ -139,13 +139,13 @@ The `fslr` package calls FSL to perform operations on images that are on disk.  
 
 Let's just display the pixel dimensions of the original image:
 
-```{r}
+```{r show_pixdim}
 oro_img@pixdim[2:4]
 ```
 
 The `fsl_resample` function allows you to resample an image on disk.  Thus, if you have the character path of the image or `nifti` object, these images can be resampled using `fsl_resample`.  This code calls `flirt` from FSL and uses the `applyisoxfm` to perform isotoropic sampling (all the same size).  Thus, `fsl_resample` can only resample images to cubes with all the same side length.  Some of the examples below have more flexibility.
 
-```{r fslresample}
+```{r fslresample, cache=TRUE}
 res = fsl_resample(file = fname, voxel_size = 1)
 res
 oro_res = fsl_resample(oro_img, voxel_size = 1)
@@ -157,26 +157,26 @@ res@pixdim[2:4]
 
 To resample a `niftiImage` object, you need to use the `RNiftyReg` package.  In this case, the `scales` argument is the "Scale factors along each axis", which is *not* the voxel sizes.  The output dimensions will be the current dimensions *multiplied* by the scale factors.  Alternatively, you can think of the output voxel dimensions as the current voxel dimensions *divided* by the scale factors.  Thus, if we run the following code:
 
-```{r}
+```{r rescale_rnif}
 niftiHeader(rnif_img)$pixdim[2:4]
 RNiftyReg::rescale(rnif_img, c(2,1.5,1))
 ```
 The image will be scaled by 2 in the x-direction, 1.5 in the y-direction and stay the same for the z-direction.  Thus, if we want an image to be `1x1x1`, then we need to scale the dimensions as follows:
 
-```{r}
+```{r rescale_ratio}
 RNiftyReg::rescale(rnif_img, c(1.2,1,1))
 ```
 
 If we want to make the output image 2.5 mm$^3$, then we can run:
 
-```{r}
+```{r pdim_to_vox}
 pdim = niftiHeader(rnif_img)$pixdim[2:4]
 RNiftyReg::rescale(rnif_img, pdim / c(2.5, 2.5, 2.5))
 ```
 
 Or we can refactor the arguments such that if we want an image to be `2.5x2.3x3` we can run:
 
-```{r}
+```{r rescale2_func}
 rescale2 = function(img, voxel_size = c(1,1,1), ...) {
   pdim = niftiHeader(rnif_img)$pixdim[2:4]
   scales = pdim / voxel_size
@@ -186,13 +186,13 @@ rescale2(rnif_img, c(2.5, 2.3, 3))
 ```
 
 **NB**: you can pass in `nifti` objects as well, and the output is converted to a niftiImage
-```{r}
+```{r rescale2}
 rescale2(oro_img, c(2.5, 2.3, 3))
 ```
 
 which you can wrap in `nii2oro`:
 
-```{r}
+```{r niirescale2}
 nii2oro(rescale2(oro_img, c(2.5, 2.3, 3)))
 ```
 
@@ -200,7 +200,7 @@ nii2oro(rescale2(oro_img, c(2.5, 2.3, 3)))
 
 The `interpolation` argument in `rescale`, which is passed to `applyTransform` in `RNiftyReg` can also specify the interpolation done, using `0 (nearest neighbour), 1 (trilinear) or 3 (cubic spline)`, where cubic spline is the default:
 
-```{r diff_interp}
+```{r diff_interp, cache=TRUE}
 interp0 = nii2oro(rescale2(oro_img, c(2.5, 2.3, 3), interpolation = 0L))
 interp3 = nii2oro(rescale2(oro_img, c(2.5, 2.3, 3), interpolation = 3L))
 double_ortho(interp0, interp3)

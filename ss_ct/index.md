@@ -1,7 +1,7 @@
 ---
 title: "Skull Stripping CT data"
 author: "John Muschelli"
-date: "2020-10-02"
+date: "2021-02-18"
 output: 
   html_document:
     keep_md: true
@@ -21,7 +21,7 @@ All code for this document is located at [here](https://raw.githubusercontent.co
 
 
 # Goal
-In this tutorial, we will discuss skull-stripping (or brain-extracting) x_ray computed tomography (CT) scans.  We will use data from TCIA (http://www.cancerimagingarchive.net/) as there is a great package called [`TCIApathfinder`](https://CRAN.R-project.org/package=TCIApathfinder) to interface with TCIA.
+In this tutorial, we will discuss skull-stripping (or brain-extracting) X-ray computed tomography (CT) scans.  We will use data from TCIA (http://www.cancerimagingarchive.net/) as there is a great package called [`TCIApathfinder`](https://CRAN.R-project.org/package=TCIApathfinder) to interface with TCIA.
 
 ## Using TCIApathfinder
 
@@ -47,7 +47,7 @@ head(mods$modalities)
 ```
 
 ```
-[1] "CT"  "MG"  "MR"  "OT"  "PT"  "SEG"
+[1] "CR" "CT" "MG" "MR" "OT" "PT"
 ```
 
 ## Getting Body Part Information
@@ -74,12 +74,12 @@ bp$body_parts
 [45] "LIVER"           "LUMBO-SACRAL SP" "LUNG"            "MEDIASTINUM"    
 [49] "NECK"            "OUTSIDE FIL"     "OVARY"           "PANCREAS"       
 [53] "Pelvis"          "PELVIS"          "PET_ABDOMEN_PEL" "PET_CT SCAN CHE"
-[57] "Phantom"         "PHANTOM"         "PROSTATE"        "RECTUM"         
-[61] "SEG"             "SELLA"           "SKULL"           "SPI CHEST 5MM"  
-[65] "STOMACH"         "TH CT CHEST WO " "Thorax"          "THORAX"         
-[69] "THORAX CT _AH05" "THORAX CT _OT01" "THORAX_1HEAD_NE" "THORAXABD"      
-[73] "THYROID"         "TSPINE"          "UNDEFINED"       "UTERUS"         
-[77] "WHOLEBODY"       "WO INTER"       
+[57] "Phantom"         "PHANTOM"         "PORT CHEST"      "PROSTATE"       
+[61] "RECTUM"          "SEG"             "SELLA"           "SKULL"          
+[65] "SPI CHEST 5MM"   "STOMACH"         "TH CT CHEST WO " "Thorax"         
+[69] "THORAX"          "THORAX CT _AH05" "THORAX CT _OT01" "THORAX_1HEAD_NE"
+[73] "THORAXABD"       "THYROID"         "TSPINE"          "UNDEFINED"      
+[77] "UTERUS"          "WHOLEBODY"       "WO INTER"       
 ```
 
 Particularly, these areas are of interest.  There seems to be a "bug" in `TCIApathfinder::get_series_info` which is acknowledged in the help file.  Namely, the `body_part_examined` is not always a parameter to be set.  We could get all the series info for all the collections from the code below, but it takes some times (> 15 minutes):
@@ -120,40 +120,40 @@ head(series)
 5         NA  CPTAC-GBM
 6         NA  CPTAC-GBM
                                                 study_instance_uid
-1 1.3.6.1.4.1.14519.5.2.1.7085.2626.152038797759059676757908129170
-2 1.3.6.1.4.1.14519.5.2.1.7085.2626.152038797759059676757908129170
-3 1.3.6.1.4.1.14519.5.2.1.7085.2626.152038797759059676757908129170
-4 1.3.6.1.4.1.14519.5.2.1.7085.2626.152038797759059676757908129170
-5 1.3.6.1.4.1.14519.5.2.1.7085.2626.152038797759059676757908129170
-6 1.3.6.1.4.1.14519.5.2.1.7085.2626.152038797759059676757908129170
+1 1.3.6.1.4.1.14519.5.2.1.2857.3707.221249410799063035815783816913
+2 1.3.6.1.4.1.14519.5.2.1.2857.3707.221249410799063035815783816913
+3 1.3.6.1.4.1.14519.5.2.1.2857.3707.221249410799063035815783816913
+4 1.3.6.1.4.1.14519.5.2.1.2857.3707.170705714007862724678123629040
+5 1.3.6.1.4.1.14519.5.2.1.2857.3707.170705714007862724678123629040
+6 1.3.6.1.4.1.14519.5.2.1.2857.3707.170705714007862724678123629040
                                                series_instance_uid modality
-1 1.3.6.1.4.1.14519.5.2.1.7085.2626.266389668431277785910473784392       CT
-2 1.3.6.1.4.1.14519.5.2.1.7085.2626.271135940248690454987590009541       CT
-3 1.3.6.1.4.1.14519.5.2.1.7085.2626.316379244620470116710983822059       CT
-4 1.3.6.1.4.1.14519.5.2.1.7085.2626.553702562283708139549481090858       CT
-5 1.3.6.1.4.1.14519.5.2.1.7085.2626.133541559422492408312749080472       CT
-6 1.3.6.1.4.1.14519.5.2.1.7085.2626.331402094428484964438653951551       CT
-  protocol_name series_date  series_description body_part_examined
-1 CHEST_ABD_PEL  2010-04-10   ABD  3.0  I30f  2            ABDOMEN
-2 CHEST_ABD_PEL  2010-04-10 TOPOGRAM  0.6  T20s              CHEST
-3 CHEST_ABD_PEL  2010-04-10            SAGITTAL              CHEST
-4 CHEST_ABD_PEL  2010-04-10            CORONALS              CHEST
-5 CHEST_ABD_PEL  2010-04-10 CHEST  3.0  I70f  2              CHEST
-6 CHEST_ABD_PEL  2010-04-10 CHEST  3.0  I31f  2              CHEST
-  series_number annotations_flag manufacturer  manufacturer_model_name
-1      6.000000               NA      SIEMENS SOMATOM Definition Flash
-2      1.000000               NA      SIEMENS SOMATOM Definition Flash
-3      5.000000               NA      SIEMENS SOMATOM Definition Flash
-4      4.000000               NA      SIEMENS SOMATOM Definition Flash
-5      3.000000               NA      SIEMENS SOMATOM Definition Flash
-6      2.000000               NA      SIEMENS SOMATOM Definition Flash
-  software_versions image_count
-1    syngo CT 2012B         154
-2    syngo CT 2012B           1
-3    syngo CT 2012B         118
-4    syngo CT 2012B          75
-5    syngo CT 2012B          84
-6    syngo CT 2012B          84
+1 1.3.6.1.4.1.14519.5.2.1.2857.3707.100565015879506080275493644685       CT
+2 1.3.6.1.4.1.14519.5.2.1.2857.3707.176470763322052742670285487681       CT
+3 1.3.6.1.4.1.14519.5.2.1.2857.3707.272098545527401893663335969793       CT
+4 1.3.6.1.4.1.14519.5.2.1.2857.3707.254723691164851053423448594844       CT
+5 1.3.6.1.4.1.14519.5.2.1.2857.3707.531177247834252562951224965872       CT
+6 1.3.6.1.4.1.14519.5.2.1.2857.3707.225513954801691101397384975174       CT
+                            protocol_name series_date series_description
+1         1.6 CTA HEAD WITH WAND PROTOCOL  2001-01-15     SAG 10 X 2 MIP
+2         1.6 CTA HEAD WITH WAND PROTOCOL  2001-01-15      AX 10 X 2 MIP
+3         1.6 CTA HEAD WITH WAND PROTOCOL  2001-01-15      COR10 X 2 MIP
+4 1.8 CTV HEAD Auto Transfer 75mL Iso 300  2001-01-23            CTV COR
+5 1.8 CTV HEAD Auto Transfer 75mL Iso 300  2001-01-23            CTV SAG
+6 1.8 CTV HEAD Auto Transfer 75mL Iso 300  2001-01-23          CTV AXIAL
+  body_part_examined series_number annotations_flag       manufacturer
+1               <NA>    603.000000               NA GE MEDICAL SYSTEMS
+2               <NA>    601.000000               NA GE MEDICAL SYSTEMS
+3               <NA>    602.000000               NA GE MEDICAL SYSTEMS
+4               <NA>    602.000000               NA GE MEDICAL SYSTEMS
+5               <NA>    603.000000               NA GE MEDICAL SYSTEMS
+6               <NA>    601.000000               NA GE MEDICAL SYSTEMS
+  manufacturer_model_name software_versions image_count
+1          LightSpeed VCT              <NA>          93
+2          LightSpeed VCT              <NA>         124
+3          LightSpeed VCT              <NA>         101
+4          LightSpeed VCT              <NA>         107
+5          LightSpeed VCT              <NA>          89
+6          LightSpeed VCT              <NA>          53
 ```
 
 Here we grab the first series ID from this data which has a description of "HEAD STD" for standard head:
@@ -221,7 +221,7 @@ dcm_result = dcm2nii(file_list$dirs)
 ```
 
 ```
-'/Library/Frameworks/R.framework/Versions/4.0/Resources/library/dcm2niir/dcm2niix' -9  -v 1 -z y -f %p_%t_%s '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmp3YhZ1g/file9b7051955e4c'
+'/Library/Frameworks/R.framework/Versions/4.0/Resources/library/dcm2niir/dcm2niix' -9  -v 1 -z y -f %p_%t_%s '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpq5zQ7W/file586955006f99'
 ```
 
 ```r
@@ -325,7 +325,7 @@ dcm_result = dcm2nii(file_list$dirs, merge_files = TRUE)
 ```
 
 ```
-'/Library/Frameworks/R.framework/Versions/4.0/Resources/library/dcm2niir/dcm2niix' -9  -m y  -v 1 -z y -f %p_%t_%s '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmp3YhZ1g/file9b7053a8436c'
+'/Library/Frameworks/R.framework/Versions/4.0/Resources/library/dcm2niir/dcm2niix' -9  -m y  -v 1 -z y -f %p_%t_%s '/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/Rtmpq5zQ7W/file58693e41bd33'
 ```
 
 ```r
@@ -396,7 +396,7 @@ brain_tab
                                  Collection             Cancer Type Location
 1 ACRIN-DSC-MR-Brain (ACRIN 6677/RTOG 0625) Glioblastoma Multiforme    Brain
 2                                 CPTAC-GBM Glioblastoma Multiforme    Brain
-3            Acrin-FMISO-Brain (ACRIN 6684)            Glioblastoma    Brain
+3            ACRIN-FMISO-Brain (ACRIN 6684)            Glioblastoma    Brain
 4                                    IvyGAP            Glioblastoma    Brain
 5                                  TCGA-LGG        Low Grade Glioma    Brain
 6                                  TCGA-GBM Glioblastoma Multiforme    Brain

@@ -82,7 +82,7 @@ img = reor$img
 ## Brain Extraction
 
 Here we will use `fslbet_robust` to skull strip the image.  The "robust"
-```{r bet}
+```{r bet, cache=TRUE}
 library(extrantsr)
 bet = fslbet_robust(img, swapdim = FALSE)
 ```
@@ -91,7 +91,7 @@ bet = fslbet_robust(img, swapdim = FALSE)
 ortho2(robust_window(img), bet)
 ```
 
-```{r obet}
+```{r obet, cache=TRUE}
 rb = robust_window(img)
 bet2 = fslbet_robust(rb, swapdim = FALSE)
 ```

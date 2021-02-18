@@ -44,7 +44,7 @@ reor = rpi_orient(fcp_data)
 img = reor$img
 
 
-## ----bet----------------------------------------------------------------------
+## ----bet, cache=TRUE----------------------------------------------------------
 library(extrantsr)
 bet = fslbet_robust(img, swapdim = FALSE)
 
@@ -53,7 +53,7 @@ bet = fslbet_robust(img, swapdim = FALSE)
 ortho2(robust_window(img), bet)
 
 
-## ----obet---------------------------------------------------------------------
+## ----obet, cache=TRUE---------------------------------------------------------
 rb = robust_window(img)
 bet2 = fslbet_robust(rb, swapdim = FALSE)
 

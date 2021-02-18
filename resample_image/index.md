@@ -1,7 +1,7 @@
 ---
 title: "Resampling an Image"
 author: "John Muschelli"
-date: "2020-09-22"
+date: "2021-02-18"
 output: 
   html_document:
     keep_md: true
@@ -62,7 +62,7 @@ antsImage
   Voxel Spacing       : 1.20000004768372x1x1 
   Origin              : 202.8 0 0 
   Direction           : -1 0 0 0 1 0 0 0 1 
-  Filename           : /Library/Frameworks/R.framework/Versions/4.0/Resources/library/kirby21.t1/visit_1/113/113-01-T1.nii.gz 
+  Filename           : /Users/johnmuschelli/Library/R/4.0/library/kirby21.t1/visit_1/113/113-01-T1.nii.gz 
 ```
 
 
@@ -160,7 +160,7 @@ NIfTI-1 format
   Slice Code      : 0 (Unknown)
   Intent Code     : 0 (None)
   Qform Code      : 1 (Scanner_Anat)
-  Sform Code      : 0 (Unknown)
+  Sform Code      : 1 (Scanner_Anat)
   Dimension       : 170 x 256 x 256
   Pixel Dimension : 1.2 x 1 x 1
   Voxel Units     : mm
@@ -198,7 +198,7 @@ system.time(ants2oro(ants_img))
 
 ```
    user  system elapsed 
-  4.426   0.116   4.567 
+  3.352   0.106   3.475 
 ```
 
 ```r
@@ -207,7 +207,7 @@ system.time(ants2oro(ants_img, reference = oro_img))
 
 ```
    user  system elapsed 
-  0.894   0.026   0.920 
+  0.898   0.035   0.935 
 ```
 
 ##  `oro.nifti` `nifti` to `ANTsRCore` `antsImage` format
@@ -227,7 +227,7 @@ antsImage
   Voxel Spacing       : 1.20000004768372x1x1 
   Origin              : 202.8 0 0 
   Direction           : -1 0 0 0 1 0 0 0 1 
-  Filename           : /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpT19arO/file8e0a66a2519e.nii.gz 
+  Filename           : /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpKB5yJj/file6025783bd5b3.nii.gz 
 ```
 
 The `as.antsImage` function should work as well (and is much faster), but doesn't carry the appropriate header information:
@@ -282,7 +282,7 @@ antsImage
   Voxel Spacing       : 1.20000004768372x1x1 
   Origin              : 202.8 0 0 
   Direction           : -1 0 0 0 1 0 0 0 1 
-  Filename           : /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpT19arO/file8e0a74b17cdf.nii.gz 
+  Filename           : /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpKB5yJj/file6025776f6b5.nii.gz 
 ```
 
 but does not work directly with `as.antsImage`
@@ -320,15 +320,7 @@ res = fsl_resample(file = fname, voxel_size = 1)
 ```
 
 ```
-Warning in get.fsl(): Setting fsl.path to /usr/local/fsl
-```
-
-```
-Warning in get.fsloutput(): Can't find FSLOUTPUTTYPE, setting to NIFTI_GZ
-```
-
-```
-FSLDIR='/usr/local/fsl'; PATH=${FSLDIR}/bin:${PATH};export PATH FSLDIR; sh "${FSLDIR}/etc/fslconf/fsl.sh"; FSLOUTPUTTYPE=NIFTI_GZ; export FSLOUTPUTTYPE; ${FSLDIR}/bin/flirt -in "/Library/Frameworks/R.framework/Versions/4.0/Resources/library/kirby21.t1/visit_1/113/113-01-T1.nii.gz"  -ref /Library/Frameworks/R.framework/Versions/4.0/Resources/library/kirby21.t1/visit_1/113/113-01-T1.nii.gz -applyisoxfm 1 -out "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpT19arO/file8e0a7c296b3c";
+flirt -in "/Users/johnmuschelli/Library/R/4.0/library/kirby21.t1/visit_1/113/113-01-T1.nii.gz"  -ref /Users/johnmuschelli/Library/R/4.0/library/kirby21.t1/visit_1/113/113-01-T1.nii.gz -applyisoxfm 1 -out "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpKB5yJj/file6025407a6c6a";
 ```
 
 ```r
@@ -343,7 +335,7 @@ NIfTI-1 format
   Slice Code      : 0 (Unknown)
   Intent Code     : 0 (None)
   Qform Code      : 1 (Scanner_Anat)
-  Sform Code      : 1 (Scanner_Anat)
+  Sform Code      : 0 (Unknown)
   Dimension       : 204 x 256 x 256
   Pixel Dimension : 1 x 1 x 1
   Voxel Units     : mm
@@ -355,7 +347,7 @@ oro_res = fsl_resample(oro_img, voxel_size = 1)
 ```
 
 ```
-FSLDIR='/usr/local/fsl'; PATH=${FSLDIR}/bin:${PATH};export PATH FSLDIR; sh "${FSLDIR}/etc/fslconf/fsl.sh"; FSLOUTPUTTYPE=NIFTI_GZ; export FSLOUTPUTTYPE; ${FSLDIR}/bin/flirt -in "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpT19arO/file8e0a33f6fd3.nii.gz"  -ref /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpT19arO/file8e0a33f6fd3.nii.gz -applyisoxfm 1 -out "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpT19arO/file8e0a39c6874f";
+flirt -in "/private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpKB5yJj/file60252563c438.nii.gz"  -ref /private/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T/RtmpKB5yJj/file60252563c438.nii.gz -applyisoxfm 1 -out "/var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpKB5yJj/file602538e74bb5";
 ```
 
 ```r
@@ -551,7 +543,7 @@ NIfTI-1 format
   Slice Code      : 0 (Unknown)
   Intent Code     : 0 (None)
   Qform Code      : 1 (Scanner_Anat)
-  Sform Code      : 0 (Unknown)
+  Sform Code      : 1 (Scanner_Anat)
   Dimension       : 204 x 256 x 256
   Pixel Dimension : 1 x 1 x 1
   Voxel Units     : mm
@@ -634,13 +626,13 @@ interp3 = resample_image(ants_img, parameters = c(2.5, 2.3, 3), interpolator = "
 double_ortho(interp0, interp3)
 ```
 
-![](index_files/figure-html/unnamed-chunk-23-1.png)<!-- -->
+![](index_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
 
 ```r
 ortho2(interp0, interp3 - interp0, col.y = scales::alpha(hotmetal(), 0.5))
 ```
 
-![](index_files/figure-html/unnamed-chunk-23-2.png)<!-- -->
+![](index_files/figure-html/unnamed-chunk-6-2.png)<!-- -->
 
 
 
@@ -656,162 +648,91 @@ devtools::session_info()
 ─ Session info ───────────────────────────────────────────────────────────────
  setting  value                       
  version  R version 4.0.2 (2020-06-22)
- os       macOS Catalina 10.15.6      
+ os       macOS Catalina 10.15.7      
  system   x86_64, darwin17.0          
  ui       X11                         
  language (EN)                        
  collate  en_US.UTF-8                 
  ctype    en_US.UTF-8                 
  tz       America/New_York            
- date     2020-09-22                  
+ date     2021-02-18                  
 
 ─ Packages ───────────────────────────────────────────────────────────────────
- package      * version     date       lib
- abind          1.4-5       2016-07-21 [2]
- ANTsR          0.5.6.1     2020-06-01 [2]
- ANTsRCore    * 0.7.4.6     2020-07-07 [2]
- assertthat     0.2.1       2019-03-21 [2]
- backports      1.1.10      2020-09-15 [1]
- bitops         1.0-6       2013-08-17 [2]
- callr          3.4.4       2020-09-07 [1]
- cli            2.0.2       2020-02-28 [2]
- colorout     * 1.2-2       2020-06-01 [2]
- colorspace     1.4-1       2019-03-18 [2]
- crayon         1.3.4       2017-09-16 [2]
- desc           1.2.0       2020-06-01 [2]
- devtools       2.3.1.9000  2020-08-25 [2]
- digest         0.6.25      2020-02-23 [2]
- ellipsis       0.3.1       2020-05-15 [2]
- evaluate       0.14        2019-05-28 [2]
- extrantsr    * 3.9.13.1    2020-09-03 [2]
- fansi          0.4.1       2020-01-08 [2]
- farver         2.0.3       2020-01-16 [2]
- fs             1.5.0       2020-07-31 [2]
- fslr         * 2.24.1      2019-08-05 [2]
- git2r          0.27.1      2020-05-03 [2]
- glue           1.4.2       2020-08-27 [1]
- htmltools      0.5.0       2020-06-16 [2]
- ITKR           0.5.3.2.0   2020-06-01 [2]
- kirby21.base   1.7.3       2020-07-02 [2]
- kirby21.t1   * 1.7.3.1     2020-07-02 [2]
- knitr          1.29        2020-06-23 [2]
- lattice        0.20-41     2020-04-02 [2]
- lifecycle      0.2.0       2020-03-06 [2]
- magrittr       1.5         2014-11-22 [2]
- Matrix         1.2-18      2019-11-27 [2]
- matrixStats    0.56.0      2020-03-13 [2]
- memoise        1.1.0       2017-04-21 [2]
- mgcv           1.8-32      2020-08-19 [2]
- munsell        0.5.0       2018-06-12 [2]
- neurobase    * 1.31.0      2020-09-04 [2]
- nlme           3.1-149     2020-08-23 [2]
- ore            1.6.3       2019-11-02 [2]
- oro.nifti    * 0.11.0      2020-09-04 [2]
- pkgbuild       1.1.0       2020-07-13 [2]
- pkgload        1.1.0       2020-05-29 [2]
- plyr           1.8.6       2020-03-03 [2]
- prettyunits    1.1.1       2020-01-24 [2]
- processx       3.4.4       2020-09-03 [1]
- ps             1.3.4       2020-08-11 [2]
- purrr          0.3.4       2020-04-17 [2]
- R.matlab       3.6.2       2018-09-27 [2]
- R.methodsS3    1.8.0       2020-02-14 [2]
- R.oo           1.23.0      2019-11-03 [2]
- R.utils        2.9.2       2019-12-08 [2]
- R6             2.4.1       2019-11-12 [2]
- Rcpp           1.0.5       2020-07-06 [2]
- RcppEigen      0.3.3.7.0   2019-11-16 [2]
- remotes        2.2.0       2020-07-21 [2]
- rlang          0.4.7.9000  2020-09-09 [1]
- rmarkdown      2.3         2020-06-18 [2]
- RNifti       * 1.2.2       2020-09-07 [1]
- RNiftyReg      2.7.0       2020-09-12 [1]
- rprojroot      1.3-2       2018-01-03 [2]
- rstudioapi     0.11        2020-02-07 [2]
- scales         1.1.1       2020-05-11 [2]
- sessioninfo    1.1.1       2018-11-05 [2]
- stapler        0.7.2       2020-07-09 [2]
- stringi        1.5.3       2020-09-09 [1]
- stringr        1.4.0       2019-02-10 [2]
- testthat       2.99.0.9000 2020-09-17 [1]
- usethis        1.6.1.9001  2020-08-25 [2]
- WhiteStripe    2.3.2       2019-10-01 [2]
- withr          2.2.0       2020-04-20 [2]
- xfun           0.17        2020-09-09 [1]
- yaml           2.2.1       2020-02-01 [2]
- source                                
- CRAN (R 4.0.0)                        
- Github (ANTsX/ANTsR@9c7c9b7)          
- Github (muschellij2/ANTsRCore@61c37a1)
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.2)                        
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.2)                        
- CRAN (R 4.0.0)                        
- Github (jalvesaq/colorout@726d681)    
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.0)                        
- Github (muschellij2/desc@b0c374f)     
- Github (r-lib/devtools@df619ce)       
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.0)                        
- Github (muschellij2/extrantsr@00c75ad)
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.2)                        
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.2)                        
- CRAN (R 4.0.0)                        
- Github (stnava/ITKR@9bdd5f8)          
- local                                 
- local                                 
- CRAN (R 4.0.2)                        
- CRAN (R 4.0.2)                        
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.2)                        
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.2)                        
- CRAN (R 4.0.0)                        
- local                                 
- CRAN (R 4.0.2)                        
- CRAN (R 4.0.0)                        
- local                                 
- CRAN (R 4.0.2)                        
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.2)                        
- CRAN (R 4.0.2)                        
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.2)                        
- Github (r-lib/rlang@60c0151)          
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.2)                        
- CRAN (R 4.0.2)                        
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.0)                        
- Github (muschellij2/stapler@79e23d2)  
- CRAN (R 4.0.2)                        
- CRAN (R 4.0.0)                        
- Github (r-lib/testthat@fbbd667)       
- Github (r-lib/usethis@860c1ea)        
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.0)                        
- CRAN (R 4.0.2)                        
- CRAN (R 4.0.0)                        
+ package      * version   date       lib source                                
+ abind          1.4-5     2016-07-21 [2] CRAN (R 4.0.0)                        
+ ANTsR          0.5.7.5   2021-02-16 [1] Github (ANTsX/ANTsR@4abee8d)          
+ ANTsRCore    * 0.7.4.9   2021-02-16 [1] Github (ANTsX/ANTsRCore@ddf445b)      
+ assertthat     0.2.1     2019-03-21 [2] CRAN (R 4.0.0)                        
+ bitops         1.0-6     2013-08-17 [2] CRAN (R 4.0.0)                        
+ cachem         1.0.4     2021-02-13 [1] CRAN (R 4.0.2)                        
+ callr          3.5.1     2020-10-13 [1] CRAN (R 4.0.2)                        
+ cli            2.3.0     2021-01-31 [1] CRAN (R 4.0.2)                        
+ codetools      0.2-18    2020-11-04 [1] CRAN (R 4.0.2)                        
+ colorout     * 1.2-2     2020-06-01 [2] Github (jalvesaq/colorout@726d681)    
+ colorspace     2.0-0     2020-11-11 [1] CRAN (R 4.0.2)                        
+ crayon         1.4.1     2021-02-08 [1] CRAN (R 4.0.2)                        
+ desc           1.2.0     2020-06-01 [2] Github (muschellij2/desc@b0c374f)     
+ devtools       2.3.2     2020-09-18 [1] CRAN (R 4.0.2)                        
+ digest         0.6.27    2020-10-24 [1] CRAN (R 4.0.2)                        
+ ellipsis       0.3.1     2020-05-15 [2] CRAN (R 4.0.0)                        
+ evaluate       0.14      2019-05-28 [2] CRAN (R 4.0.0)                        
+ extrantsr    * 3.9.13.1  2020-09-03 [2] Github (muschellij2/extrantsr@00c75ad)
+ farver         2.0.3     2020-01-16 [2] CRAN (R 4.0.0)                        
+ fastmap        1.1.0     2021-01-25 [1] CRAN (R 4.0.2)                        
+ fs             1.5.0     2020-07-31 [2] CRAN (R 4.0.2)                        
+ fslr         * 2.25.0    2021-02-16 [1] local                                 
+ git2r          0.28.0    2021-01-11 [1] Github (ropensci/git2r@4e342ca)       
+ glue           1.4.2     2020-08-27 [1] CRAN (R 4.0.2)                        
+ highr          0.8       2019-03-20 [2] CRAN (R 4.0.0)                        
+ htmltools      0.5.1.1   2021-01-22 [1] CRAN (R 4.0.2)                        
+ ITKR           0.5.3.3.0 2021-02-15 [1] Github (stnava/ITKR@ea0ac19)          
+ kirby21.base   1.7.4     2020-10-01 [1] local                                 
+ kirby21.t1   * 1.7.3.2   2021-01-09 [1] local                                 
+ knitr          1.31      2021-01-27 [1] CRAN (R 4.0.2)                        
+ lattice        0.20-41   2020-04-02 [2] CRAN (R 4.0.2)                        
+ lifecycle      1.0.0     2021-02-15 [1] CRAN (R 4.0.2)                        
+ magrittr       2.0.1     2020-11-17 [1] CRAN (R 4.0.2)                        
+ Matrix         1.3-2     2021-01-06 [1] CRAN (R 4.0.2)                        
+ matrixStats    0.58.0    2021-01-29 [1] CRAN (R 4.0.2)                        
+ memoise        2.0.0     2021-01-26 [1] CRAN (R 4.0.2)                        
+ mgcv           1.8-33    2020-08-27 [1] CRAN (R 4.0.2)                        
+ munsell        0.5.0     2018-06-12 [2] CRAN (R 4.0.0)                        
+ neurobase    * 1.31.0    2020-10-07 [1] local                                 
+ nlme           3.1-152   2021-02-04 [1] CRAN (R 4.0.2)                        
+ ore            1.6.3     2019-11-02 [2] CRAN (R 4.0.0)                        
+ oro.nifti    * 0.11.0    2020-09-04 [2] local                                 
+ pkgbuild       1.2.0     2020-12-15 [1] CRAN (R 4.0.2)                        
+ pkgload        1.1.0     2020-05-29 [2] CRAN (R 4.0.0)                        
+ plyr           1.8.6     2020-03-03 [2] CRAN (R 4.0.0)                        
+ prettyunits    1.1.1     2020-01-24 [2] CRAN (R 4.0.0)                        
+ processx       3.4.5     2020-11-30 [1] CRAN (R 4.0.2)                        
+ ps             1.5.0     2020-12-05 [1] CRAN (R 4.0.2)                        
+ purrr          0.3.4     2020-04-17 [2] CRAN (R 4.0.0)                        
+ R.matlab       3.6.2     2018-09-27 [2] CRAN (R 4.0.0)                        
+ R.methodsS3    1.8.1     2020-08-26 [1] CRAN (R 4.0.2)                        
+ R.oo           1.24.0    2020-08-26 [1] CRAN (R 4.0.2)                        
+ R.utils        2.10.1    2020-08-26 [1] CRAN (R 4.0.2)                        
+ R6             2.5.0     2020-10-28 [1] CRAN (R 4.0.2)                        
+ Rcpp           1.0.6     2021-01-15 [1] CRAN (R 4.0.2)                        
+ RcppEigen      0.3.3.9.1 2020-12-17 [1] CRAN (R 4.0.2)                        
+ remotes        2.2.0     2020-07-21 [2] CRAN (R 4.0.2)                        
+ rlang          0.4.10    2020-12-30 [1] CRAN (R 4.0.2)                        
+ rmarkdown      2.6       2020-12-14 [1] CRAN (R 4.0.2)                        
+ RNifti       * 1.3.0     2020-12-04 [1] CRAN (R 4.0.2)                        
+ RNiftyReg      2.7.0     2020-10-08 [1] Github (jonclayden/RNiftyReg@20c419f) 
+ rprojroot      2.0.2     2020-11-15 [1] CRAN (R 4.0.2)                        
+ rstudioapi     0.13      2020-11-12 [1] CRAN (R 4.0.2)                        
+ scales         1.1.1     2020-05-11 [2] CRAN (R 4.0.0)                        
+ sessioninfo    1.1.1     2018-11-05 [2] CRAN (R 4.0.0)                        
+ stapler        0.7.2     2020-07-09 [2] Github (muschellij2/stapler@79e23d2)  
+ stringi        1.5.3     2020-09-09 [1] CRAN (R 4.0.2)                        
+ stringr        1.4.0     2019-02-10 [2] CRAN (R 4.0.0)                        
+ testthat       3.0.2     2021-02-14 [1] CRAN (R 4.0.2)                        
+ usethis        2.0.1     2021-02-10 [1] CRAN (R 4.0.2)                        
+ WhiteStripe    2.3.2     2019-10-01 [2] CRAN (R 4.0.0)                        
+ withr          2.4.1     2021-01-26 [1] CRAN (R 4.0.2)                        
+ xfun           0.21      2021-02-10 [1] CRAN (R 4.0.2)                        
+ yaml           2.2.1     2020-02-01 [2] CRAN (R 4.0.0)                        
 
 [1] /Users/johnmuschelli/Library/R/4.0/library
 [2] /Library/Frameworks/R.framework/Versions/4.0/Resources/library
