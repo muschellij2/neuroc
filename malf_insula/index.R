@@ -1,8 +1,13 @@
-## ----setup, include=FALSE------------------------------------------------
+## ----setup, include=FALSE-----------------------------------------------------
 library(methods)
 knitr::opts_chunk$set(echo = TRUE, cache = FALSE, comment = "")
+if (!is.na(Sys.getenv("HCP_AWS_ACCESS_KEY_ID", unset = NA))) {
+  Sys.setenv(AWS_ACCESS_KEY_ID = Sys.getenv("HCP_AWS_ACCESS_KEY_ID"))
+  Sys.setenv(AWS_SECRET_ACCESS_KEY = Sys.getenv("HCP_AWS_SECRET_ACCESS_KEY"))
+}
 
-## ------------------------------------------------------------------------
+
+## -----------------------------------------------------------------------------
 ver = installed.packages()["neurohcp", "Version"]
 if (compareVersion(ver, "0.5") < 0) {
   stop(paste0("Need to update neurohcp, ", 
@@ -11,7 +16,8 @@ if (compareVersion(ver, "0.5") < 0) {
   )
 }
 
-## ----get_data------------------------------------------------------------
+
+## ----get_data-----------------------------------------------------------------
 library(neurohcp)
 fcp_data = download_hcp_file(
     paste0("data/Projects/ABIDE/RawData/", 
@@ -21,43 +27,52 @@ fcp_data = download_hcp_file(
     sign = FALSE)
 print(fcp_data)
 
-## ----orig_ortho----------------------------------------------------------
+
+## ----orig_ortho---------------------------------------------------------------
 library(neurobase)
 std_img = readnii(fcp_data)
 ortho2(std_img)
 
-## ----forms---------------------------------------------------------------
+
+## ----forms--------------------------------------------------------------------
 library(fslr)
 getForms(fcp_data)[c("ssor", "sqor")]
 
-## ----reor----------------------------------------------------------------
+
+## ----reor---------------------------------------------------------------------
 reor = rpi_orient(fcp_data)
 img = reor$img
 
-## ----bet-----------------------------------------------------------------
+
+## ----bet----------------------------------------------------------------------
 library(extrantsr)
 bet = fslbet_robust(img, swapdim = FALSE)
 
-## ----plot_bet------------------------------------------------------------
+
+## ----plot_bet-----------------------------------------------------------------
 ortho2(robust_window(img), bet)
 
-## ----obet----------------------------------------------------------------
+
+## ----obet---------------------------------------------------------------------
 rb = robust_window(img)
 bet2 = fslbet_robust(rb, swapdim = FALSE)
 
-## ----obet2---------------------------------------------------------------
+## ----obet2--------------------------------------------------------------------
 ortho2(robust_window(img), bet2)
 
-## ----dropping------------------------------------------------------------
+
+## ----dropping-----------------------------------------------------------------
 dd = dropEmptyImageDimensions(bet > 0,
     other.imgs = bet)
 run_img = dd$other.imgs
 
-## ----orun----------------------------------------------------------------
+
+## ----orun---------------------------------------------------------------------
 ortho2(run_img)
 ortho2(robust_window(run_img))
 
-## ----get_labs, eval = FALSE----------------------------------------------
+
+## ----get_labs, eval = FALSE---------------------------------------------------
 ## root_template_dir = file.path(
 ##     "/dcl01/smart/data",
 ##     "structural",
@@ -66,7 +81,8 @@ ortho2(robust_window(run_img))
 ## template_dir = file.path(root_template_dir,
 ##     "all-images")
 
-## ----labs, eval = FALSE--------------------------------------------------
+
+## ----labs, eval = FALSE-------------------------------------------------------
 ## library(readr)
 ## labs = read_csv(file.path(root_template_dir,
 ##     "MICCAI-Challenge-2012-Label-Information.csv"))
@@ -92,7 +108,8 @@ ortho2(robust_window(run_img))
 ## indices = labs[grep("sula", tolower(labs$name)),]
 ## indices = indices$label
 
-## ----reading_data, eval = FALSE------------------------------------------
+
+## ----reading_data, eval = FALSE-----------------------------------------------
 ## library(pbapply)
 ## lab_list = pblapply(df$label,
 ##     function(x) {
@@ -108,7 +125,8 @@ ortho2(robust_window(run_img))
 ## tlist = temp_list[inds]
 ## llist = lab_list[inds]
 
-## ----running_malf, eval = FALSE------------------------------------------
+
+## ----running_malf, eval = FALSE-----------------------------------------------
 ## res = malf(infile = run_img,
 ##     template.images = tlist,
 ##     template.structs = llist,

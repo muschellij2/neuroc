@@ -1,7 +1,7 @@
 ---
 title: "Installing on the Windows Subsystem for Linux (WSL)"
 author: "John Muschelli"
-date: "2019-11-14"
+date: "2021-02-18"
 output: 
   html_document:
     keep_md: true

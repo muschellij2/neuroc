@@ -1,7 +1,7 @@
 ---
 title: "Painlessly Building R Packages"
 author: "John Muschelli"
-date: "2018-06-04"
+date: "2021-02-18"
 output: 
   html_document:
     keep_md: true

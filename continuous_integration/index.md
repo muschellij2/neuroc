@@ -1,6 +1,18 @@
-# Continuous Integration and Testing
-John Muschelli  
-`r Sys.Date()`  
+---
+title: "Continuous Integration and Testing"
+author: "John Muschelli"
+date: "2021-02-18"
+output: 
+  html_document:
+    keep_md: true
+    theme: cosmo
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+    number_sections: true      
+bibliography: ../refs.bib      
+---
 
 
 
@@ -180,49 +192,60 @@ devtools::session_info()
 ```
 
 ```
-## Session info -------------------------------------------------------------
-```
-
-```
+## ─ Session info ───────────────────────────────────────────────────────────────
 ##  setting  value                       
-##  version  R version 3.4.1 (2017-06-30)
-##  system   x86_64, darwin15.6.0        
+##  version  R version 4.0.2 (2020-06-22)
+##  os       macOS Catalina 10.15.7      
+##  system   x86_64, darwin17.0          
 ##  ui       X11                         
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
+##  ctype    en_US.UTF-8                 
 ##  tz       America/New_York            
-##  date     2017-08-31
-```
-
-```
-## Packages -----------------------------------------------------------------
-```
-
-```
-##  package   * version date       source                            
-##  backports   1.1.0   2017-05-22 CRAN (R 3.4.0)                    
-##  base      * 3.4.1   2017-07-07 local                             
-##  colorout  * 1.1-0   2015-04-20 Github (jalvesaq/colorout@1539f1f)
-##  compiler    3.4.1   2017-07-07 local                             
-##  datasets  * 3.4.1   2017-07-07 local                             
-##  devtools  * 1.13.3  2017-08-02 CRAN (R 3.4.1)                    
-##  digest      0.6.12  2017-01-27 CRAN (R 3.4.0)                    
-##  evaluate    0.10.1  2017-06-24 cran (@0.10.1)                    
-##  graphics  * 3.4.1   2017-07-07 local                             
-##  grDevices * 3.4.1   2017-07-07 local                             
-##  htmltools   0.3.6   2017-04-28 CRAN (R 3.4.0)                    
-##  knitr       1.17    2017-08-10 cran (@1.17)                      
-##  magrittr    1.5     2014-11-22 CRAN (R 3.4.0)                    
-##  memoise     1.1.0   2017-04-21 CRAN (R 3.4.0)                    
-##  methods     3.4.1   2017-07-07 local                             
-##  Rcpp        0.12.12 2017-07-15 cran (@0.12.12)                   
-##  rmarkdown   1.6     2017-06-15 cran (@1.6)                       
-##  rprojroot   1.2     2017-01-16 CRAN (R 3.4.0)                    
-##  stats     * 3.4.1   2017-07-07 local                             
-##  stringi     1.1.5   2017-04-07 CRAN (R 3.4.0)                    
-##  stringr     1.2.0   2017-02-18 CRAN (R 3.4.0)                    
-##  tools       3.4.1   2017-07-07 local                             
-##  utils     * 3.4.1   2017-07-07 local                             
-##  withr       2.0.0   2017-07-28 cran (@2.0.0)                     
-##  yaml        2.1.14  2016-11-12 CRAN (R 3.4.0)
+##  date     2021-02-18                  
+## 
+## ─ Packages ───────────────────────────────────────────────────────────────────
+##  package     * version date       lib source                            
+##  assertthat    0.2.1   2019-03-21 [2] CRAN (R 4.0.0)                    
+##  cachem        1.0.4   2021-02-13 [1] CRAN (R 4.0.2)                    
+##  callr         3.5.1   2020-10-13 [1] CRAN (R 4.0.2)                    
+##  cli           2.3.0   2021-01-31 [1] CRAN (R 4.0.2)                    
+##  colorout    * 1.2-2   2020-06-01 [2] Github (jalvesaq/colorout@726d681)
+##  crayon        1.4.1   2021-02-08 [1] CRAN (R 4.0.2)                    
+##  desc          1.2.0   2020-06-01 [2] Github (muschellij2/desc@b0c374f) 
+##  devtools    * 2.3.2   2020-09-18 [1] CRAN (R 4.0.2)                    
+##  digest        0.6.27  2020-10-24 [1] CRAN (R 4.0.2)                    
+##  ellipsis      0.3.1   2020-05-15 [2] CRAN (R 4.0.0)                    
+##  evaluate      0.14    2019-05-28 [2] CRAN (R 4.0.0)                    
+##  fastmap       1.1.0   2021-01-25 [1] CRAN (R 4.0.2)                    
+##  fs            1.5.0   2020-07-31 [2] CRAN (R 4.0.2)                    
+##  glue          1.4.2   2020-08-27 [1] CRAN (R 4.0.2)                    
+##  htmltools     0.5.1.1 2021-01-22 [1] CRAN (R 4.0.2)                    
+##  knitr         1.31    2021-01-27 [1] CRAN (R 4.0.2)                    
+##  lifecycle     1.0.0   2021-02-15 [1] CRAN (R 4.0.2)                    
+##  magrittr      2.0.1   2020-11-17 [1] CRAN (R 4.0.2)                    
+##  memoise       2.0.0   2021-01-26 [1] CRAN (R 4.0.2)                    
+##  pkgbuild      1.2.0   2020-12-15 [1] CRAN (R 4.0.2)                    
+##  pkgload       1.1.0   2020-05-29 [2] CRAN (R 4.0.0)                    
+##  prettyunits   1.1.1   2020-01-24 [2] CRAN (R 4.0.0)                    
+##  processx      3.4.5   2020-11-30 [1] CRAN (R 4.0.2)                    
+##  ps            1.5.0   2020-12-05 [1] CRAN (R 4.0.2)                    
+##  purrr         0.3.4   2020-04-17 [2] CRAN (R 4.0.0)                    
+##  R6            2.5.0   2020-10-28 [1] CRAN (R 4.0.2)                    
+##  remotes       2.2.0   2020-07-21 [2] CRAN (R 4.0.2)                    
+##  rlang         0.4.10  2020-12-30 [1] CRAN (R 4.0.2)                    
+##  rmarkdown     2.6     2020-12-14 [1] CRAN (R 4.0.2)                    
+##  rprojroot     2.0.2   2020-11-15 [1] CRAN (R 4.0.2)                    
+##  rstudioapi    0.13    2020-11-12 [1] CRAN (R 4.0.2)                    
+##  sessioninfo   1.1.1   2018-11-05 [2] CRAN (R 4.0.0)                    
+##  stringi       1.5.3   2020-09-09 [1] CRAN (R 4.0.2)                    
+##  stringr       1.4.0   2019-02-10 [2] CRAN (R 4.0.0)                    
+##  testthat      3.0.2   2021-02-14 [1] CRAN (R 4.0.2)                    
+##  usethis     * 2.0.1   2021-02-10 [1] CRAN (R 4.0.2)                    
+##  withr         2.4.1   2021-01-26 [1] CRAN (R 4.0.2)                    
+##  xfun          0.21    2021-02-10 [1] CRAN (R 4.0.2)                    
+##  yaml          2.2.1   2020-02-01 [2] CRAN (R 4.0.0)                    
+## 
+## [1] /Users/johnmuschelli/Library/R/4.0/library
+## [2] /Library/Frameworks/R.framework/Versions/4.0/Resources/library
 ```

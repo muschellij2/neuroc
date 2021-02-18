@@ -1,7 +1,7 @@
 ---
 title: "Preparing Your Package for for Submission"
 author: "John Muschelli"
-date: "2018-11-29"
+date: "2021-02-18"
 output: 
   html_document:
     keep_md: true
@@ -235,7 +235,7 @@ where you'd change `my-vignette` to the **filename** of the vignette (which mean
 ---
 title: "Vignette Title"
 author: "Vignette Author"
-date: "2018-11-29"
+date: "2021-02-18"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
