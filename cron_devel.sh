@@ -14,6 +14,7 @@ wget https://raw.githubusercontent.com/muschellij2/neuroc/master/ss_ct/index_not
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/tissue_class_segmentation/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/tissue_class_segmentation.html
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/label_image/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/label_image.html
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/preprocess_mri_within/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/preprocess_mri_within.html
+wget https://raw.githubusercontent.com/muschellij2/neuroc/master/ct_ich_seg/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/ct_ich_seg.html
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/cortical_thickness/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/cortical_thickness.html
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/fmri_analysis_ANTsR/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/fmri_analysis_ANTsR.html
 wget https://raw.githubusercontent.com/muschellij2/neuroc/master/fmri_analysis_fslr/index_notoc.html -O /var/www/neuroc_development/html/sites/default/files/help/fmri_analysis_fslr.html

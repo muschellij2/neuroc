@@ -1,6 +1,6 @@
 ---
 title: "Neuroconductor"
-date: '2020-09-22'
+date: '2021-02-17'
 output: 
   html_document:
     keep_md: true
@@ -45,6 +45,7 @@ Please visit the [FAQ](faq/index.html) for information on how to begin.
 3. [Tissue-Class Segmentation](tissue_class_segmentation/index.html)
 4. [Labeling Brain Structures](label_image/index.html)
 5. [Processing Within-Visit Structural MRI](preprocess_mri_within/index.html)
+2. [Hemorrhagic Stroke Segmentation in CT](ct_ich_seg/index.html)
 6. [Cortical Thickness Estimation (NOT DONE)](cortical_thickness/index.html)
 
 ## fMRI 

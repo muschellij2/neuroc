@@ -14,6 +14,7 @@ wget -O ss_ct.html https://raw.githubusercontent.com/muschellij2/neuroc/master/s
 wget -O tissue_class_segmentation.html https://raw.githubusercontent.com/muschellij2/neuroc/master/tissue_class_segmentation/index_notoc.html
 wget -O label_image.html https://raw.githubusercontent.com/muschellij2/neuroc/master/label_image/index_notoc.html
 wget -O preprocess_mri_within.html https://raw.githubusercontent.com/muschellij2/neuroc/master/preprocess_mri_within/index_notoc.html
+wget -O ct_ich_seg.html https://raw.githubusercontent.com/muschellij2/neuroc/master/ct_ich_seg/index_notoc.html
 wget -O cortical_thickness.html https://raw.githubusercontent.com/muschellij2/neuroc/master/cortical_thickness/index_notoc.html
 wget -O fmri_analysis_ANTsR.html https://raw.githubusercontent.com/muschellij2/neuroc/master/fmri_analysis_ANTsR/index_notoc.html
 wget -O fmri_analysis_fslr.html https://raw.githubusercontent.com/muschellij2/neuroc/master/fmri_analysis_fslr/index_notoc.html
